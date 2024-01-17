@@ -12,15 +12,20 @@ import LogoAndName from "./LogoAndName";
 import Navlinks from "./NavLinks";
 
 const Navbar = () => {
+  
+  const handleReveal = () => {
+    console.log('click')
+  }
+
   return (
     <nav className="container mx-auto bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between md:justify-around mx-auto p-4">
         <LogoAndName />
-        {/* Hambarger menu for small device  */}
         {/* All Nav links  */}
         <Navlinks />
+        {/* Hambarger menu for small device  */}
         <div />
-        <MenuBar />
+        <MenuBar handleReveal={handleReveal} />
         <div className=" hidden md:block">
         <PrimaryButton
           buttonText="Get started"
