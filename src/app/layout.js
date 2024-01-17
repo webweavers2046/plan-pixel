@@ -15,7 +15,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className={lato.className}>{children}</body>
+            <body className={lato.className}>
+                <header className="text-center bg-red-400">Header</header>
+                {children}
+                <footer className="text-center bg-purple-500">Footer</footer>
+                </body>
         </html>
     );
 }
