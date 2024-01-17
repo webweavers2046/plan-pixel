@@ -8,16 +8,16 @@ const SignIn = () => {
     return (
         <section
             className="
-        grid grid-cols-9 h-screen"
+        grid md:grid-cols-9 h-screen"
         >
-            <div className="col-span-3">
+            <div className="col-span-3 md:block hidden">
                 <Image
                     className="w-full h-full object-cover"
                     src={signInBg}
                     alt="sign in background"
                 ></Image>
             </div>
-            <div className="col-span-6 flex justify-center items-center">
+            <div className="col-span-6 flex justify-center items-center px-3">
                 <div className="text-start">
                     <div className="space-y-2 mb-6">
                         <h2 className="text-4xl font-bold">Sign In</h2>
