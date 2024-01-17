@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const SignIn = () => {
     return (
@@ -10,12 +11,20 @@ const SignIn = () => {
             className="
         grid md:grid-cols-9 h-screen"
         >
-            <div className="col-span-3 md:block hidden">
+            <div className="col-span-3 md:block hidden relative">
                 <Image
                     className="w-full h-full object-cover"
                     src={signInBg}
                     alt="sign in background"
                 ></Image>
+                <div className="absolute top-20 right-0">
+                    <Link href={"/"}>
+                        <span className=" bg-white py-3 px-6 text-sm font-medium">
+                            <IoArrowBackOutline className="inline mb-0.5" />{" "}
+                            Back to Home
+                        </span>
+                    </Link>
+                </div>
             </div>
             <div className="col-span-6 flex justify-center items-center px-3">
                 <div className="text-start">
