@@ -15,9 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <header className="text-center bg-red-400">Header</header>
+      <header className="text-center bg-red-400">Header (dev)</header>
       {children}
-      <footer className="text-center bg-purple-500">Footer</footer>
+      <footer className="text-center bg-purple-500">Footer (dev)</footer>
     </html>
   );
 }
