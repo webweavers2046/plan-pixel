@@ -101,7 +101,9 @@ const SignIn = () => {
                         <p className="text-sm mt-6">
                             Don&#39;t have any account?{" "}
                             <Link href={"/register"}>
-                                <span className="text-primary">Register</span>
+                                <span className="text-primary font-medium">
+                                    Register
+                                </span>
                             </Link>
                         </p>
                     </div>
