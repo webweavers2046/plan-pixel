@@ -1,8 +1,8 @@
-const Container = ({children}) => {
+const Container = ({children,marginY}) => {
     return (
-        <div className="container mx-auto">
-            {children}
-        </div>
+      <section className={`container px-5 lg:px-0 my-${marginY} md:mx-auto`}>
+        {children}
+      </section>
     );
 };
 export default Container;
