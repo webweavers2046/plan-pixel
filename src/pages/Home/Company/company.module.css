@@ -1,0 +1,6 @@
+.gridLayout{
+      display: grid !important;
+      gap: 20px;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
+}

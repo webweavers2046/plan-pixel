@@ -15,6 +15,8 @@ module.exports = {
             colors: {
                 primary: "#50B577",
                 secondary: "#93C648",
+                bgBlack: "#0F141A",
+                darkParaColor:""
             },
         },
     },

@@ -1,9 +1,16 @@
+import KeyFeatures from "@/pages/Home/KeyFeature/KeyFeatures";
+import OurCompany from "@/pages/Home/Company/OurCompany";
+import HowWorks from "@/pages/Home/howWorks/HowWorks";
+ 
 export default function Home() {
-    return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div>
-                <h2 className="text-6xl">Welcome to plan pixel</h2>
-            </div>
-        </main>
-    );
+  return (
+    <main className="">
+      
+      <div className="bg-[#e2e2e267] py-8">
+        <OurCompany />
+      </div>
+      <KeyFeatures/>
+      {/* <HowWorks /> */}
+    </main>
+  );
 }
