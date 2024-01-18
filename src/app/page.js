@@ -1,8 +1,12 @@
+import OurCompany from "@/pages/Home/Company/OurCompany";
+
 export default function Home() {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main className="">
             <div>
-                <h2 className="text-6xl">Welcome to plan pixel</h2>
+                {/* <h2 className="text-6xl">Welcome to plan pixel</h2> */}
+                <div className="bg-[#F2F2F2] w-full py-8"><OurCompany/></div>
+                
             </div>
         </main>
     );
