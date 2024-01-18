@@ -7,7 +7,7 @@ import Image from "next/image";
 const OurCompany = () => {
   return (
     <div>
-      <h1 className="text-center mb-6">Trusted by Fast - Growing Companies</h1>
+      <h1 className="text-[13px] md:text-[16px] text-center mb-6">Trusted by Fast - Growing Companies</h1>
       <div className={`${style.gridLayout} container md:mx-auto md:px-28 px-3 `}>
         {logos?.map((img) => (
           <div
