@@ -1,3 +1,4 @@
+import OurCompany from "@/pages/Home/Company/OurCompany";
 import HowWorks from "@/pages/Home/howWorks/HowWorks";
 
 export default function Home() {
@@ -5,5 +6,5 @@ export default function Home() {
     <main className="">
       <HowWorks />
     </main>
-  );
+  )
 }
