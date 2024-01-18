@@ -1,4 +1,4 @@
-import KeyFeatures from "@/pages/Home/Company/KeyFeature/KeyFeatures";
+import KeyFeatures from "@/pages/Home/KeyFeature/KeyFeatures";
 import OurCompany from "@/pages/Home/Company/OurCompany";
 import HowWorks from "@/pages/Home/howWorks/HowWorks";
  
