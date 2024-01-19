@@ -1,40 +1,123 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { TbMenu } from "react-icons/tb";
+import { IoClose } from "react-icons/io5";
+import logo from "@/assets/Logo.png";
+import { useState } from "react";
 
 const Navbar = () => {
+    const [closeMenu, setCloseMenu] = useState(false);
+    const navLinks = [
+        {
+            route: "Home",
+            path: "/",
+        },
+        {
+            route: "Pricing",
+            path: "/pricing",
+        },
+
+        {
+            route: "About Us",
+            path: "/about",
+        },
+        {
+            route: "Contact Us",
+            path: "/contact",
+        },
+    ];
     return (
-        <div className="py-11 px-24 grid grid-cols-3">
-            <Link href="/">
-                <Image
-                    width={150}
-                    height={90}
-                    src="/asset/img/logo1.png"
-                    alt="logo"
-                />
-            </Link>
-            <div className="flex justify-center items-center gap-7">
-                <Link href="/" className="font-bold">
-                    Home
-                </Link>
-                <Link href="/" className="font-bold">
-                    Pricing
-                </Link>
-                <Link href="/" className="font-bold">
-                    About Us
-                </Link>
-                <Link href="/" className="font-bold">
-                    Contact Us
-                </Link>
+        <header className="backdrop:blur-2xl">
+            <div className="container mx-auto relative py-4 xl:px-0 lg:px-6 px-2">
+                <div className=" rounded-full pt-4 pb-4 text-base font-semibold">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-16">
+                            <div className="">
+                                <Image
+                                    className="h-10 w-auto lg:mb-0.5  mb-2.5"
+                                    src={logo}
+                                    alt="heartbeat givers' logo"
+                                ></Image>
+                            </div>
+                            <nav className="lg:block hidden">
+                                <ul className="flex gap-2">
+                                    {navLinks.map((link, idx) => (
+                                        <Link
+                                            href={link?.path}
+                                            className="px-3 text-base font-medium"
+                                            key={idx}
+                                        >
+                                            {link?.route}
+                                        </Link>
+                                    ))}
+                                </ul>
+                            </nav>
+                        </div>
+                        <div className="lg:block hidden items-center gap-3">
+                            <Link
+                                className="py-3 px-6 bg-gradient-to-br from-[#93C648] to-[#50B577] text-white font-bold text-base rounded-sm"
+                                href="/sign-in"
+                            >
+                                Get Started
+                            </Link>
+                        </div>
+                        {/* mobile menu button  */}
+                        <div className="block lg:hidden">
+                            <button
+                                className=" font-bold text-2xl text-primary rounded-full"
+                                onClick={() => setCloseMenu(!closeMenu)}
+                            >
+                                <TbMenu />
+                            </button>
+                        </div>
+                    </div>
+                    {closeMenu && (
+                        <div className="bg-gray-300 h-screen  absolute top-0 right-0 w-80">
+                            <div className="flex justify-between p-10 items-end">
+                                <div className="">
+                                    <Image
+                                        className="h-8 w-auto mb-2.5"
+                                        src={logo}
+                                        alt="heartbeat givers' logo"
+                                    ></Image>
+                                </div>
+                                <div className="block lg:hidden">
+                                    <button
+                                        onClick={() => setCloseMenu(!closeMenu)}
+                                        className=" font-bold text-2xl text-primary rounded-full pt-3 mb-0"
+                                    >
+                                        <IoClose />
+                                    </button>
+                                </div>
+                            </div>
+                            <nav className="">
+                                <ul className="flex flex-col px-10 gap-y-2">
+                                    {navLinks.map((link, idx) => (
+                                        <Link
+                                            href={link?.path}
+                                            className=" text-sm font-medium"
+                                            key={idx}
+                                        >
+                                            {link?.route}
+                                        </Link>
+                                    ))}
+                                </ul>
+                            </nav>
+                            <div className="ps-8 mt-3">
+                                <Link
+                                    href={"/register"}
+                                    className="py-3 font-medium px-2  text-primary rounded-full"
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className="flex items-center justify-end">
-                <Link
-                    className="py-2 px-6 bg-gradient-to-br from-[#93C648] to-[#50B577] text-white font-bold text-lg rounded-md"
-                    href="/sign-in"
-                >
-                    Get Started
-                </Link>
-            </div>
-        </div>
+        </header>
     );
 };
 
