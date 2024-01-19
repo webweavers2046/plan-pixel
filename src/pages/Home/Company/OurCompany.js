@@ -6,13 +6,13 @@ import Image from "next/image";
 
 const OurCompany = () => {
   return (
-    <div>
+    <div className="py-16">
       <h1 className="text-[13px] md:text-[16px] text-center mb-6">Trusted by Fast - Growing Companies</h1>
       <div className={`${style.gridLayout} container md:mx-auto md:px-28 px-3 `}>
         {logos?.map((img) => (
           <div
             key={img.id}
-            className="bg-white py-2 h-20 px-4 flex justify-center items-center rounded-lg shadow-sm">
+            className="py-2 h-20 px-4 flex justify-center items-center rounded-lg">
             <Image
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."

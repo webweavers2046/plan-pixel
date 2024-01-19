@@ -1,7 +1,7 @@
 import { Lato } from "next/font/google";
 import "../styles/globals.css";
-import Navbar from "@/components/Common/header/Navbar";
 import Footer from "@/components/Common/footer/Footer";
+import Navbar from "@/components/Common/Navbar/Navbar";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={lato.className}>
+      <body className={`${lato.className} mx-auto max-w-screen-xl`}>
         <Navbar/>
         {children}
         <Footer/>
