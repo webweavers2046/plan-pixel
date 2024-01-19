@@ -16,7 +16,8 @@ module.exports = {
                 primary: "#50B577",
                 secondary: "#93C648",
                 bgBlack: "#0F141A",
-                darkParaColor:""
+                footer: "#E9F5E3",
+                darkParaColor: "",
             },
         },
     },
