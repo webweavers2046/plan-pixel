@@ -25,7 +25,7 @@ const Footer = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className="grid md:grid-cols-4 items-start justify-between mt-16">
+                    <div className="grid md:grid-cols-4 items-start justify-between mt-16 gap-6">
                         <div className="opacity-70 space-y-3">
                             <h4 className="text-xl font-semibold">
                                 Quick Links
