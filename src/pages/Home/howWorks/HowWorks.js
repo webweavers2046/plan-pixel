@@ -3,7 +3,7 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 
 const HowWorks = () => {
   return (
-    <Container marginY={'28'}>
+    <Container marginBottom={"110px"} marginTop={"110px"}>
       <SectionTitle
         isSetWidth={true}
         title={"How It Works & Get Best Output"}
@@ -12,19 +12,19 @@ const HowWorks = () => {
         <span className="bg-[#FBBC05] px-3 py-1 text-white rounded-full">
           1
         </span>
-        <span className="border-2 border-dashed border-black flex grow"></span>
+        <span className=" border-t-2 border-dashed border-black flex grow"></span>
         <span className="bg-[#93C648] px-3 py-1 text-white rounded-full">
           2
         </span>
-        <span className="border-t border-2 border-dashed border-black flex-grow"></span>
+        <span className=" border-t-2 border-dashed border-black flex-grow"></span>
         <span className="bg-[#50B577] px-3 py-1 text-white rounded-full">
           3
         </span>
-        <span className="border-t border-2 border-dashed border-black flex-grow"></span>
+        <span className=" border-t-2 border-dashed border-black flex-grow"></span>
       </div>
       {/* divider */}
 
-      <div className="grid lg:grid-cols-3 gap-5 md:gap-0 mt-10">
+      <div className="grid lg:grid-cols-3  gap-6 mt-10">
         {/* card */}
         {cardsData.map((card, index) => (
           <Card key={index} {...card} />
@@ -38,7 +38,7 @@ export default HowWorks;
 
 const Card = ({ title, description }) => (
   <div className="">
-    <h3 className="text-2xl font-bold md:text-4xl">{title}</h3>
+    <h3 className="text-2xl font-bold md:text-[32px]">{title}</h3>
     <p className="text-xl mt-3 md:mt-6">{description}</p>
   </div>
 );

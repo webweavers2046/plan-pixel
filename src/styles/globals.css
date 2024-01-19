@@ -3,10 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-body{
-      /* remove horizontal scroll bar */
-      overflow-x: hidden; 
-      min-width: 240px;
+body {
+    /* remove horizontal scroll bar */
+    overflow-x: hidden;
+    min-width: 240px;
 }

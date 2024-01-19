@@ -1,7 +1,17 @@
 "use client";
-import { logos } from "./companiesLogosData";
-import style from "./company.module.css";
+
 import Image from "next/image";
+// import logos from "./companiesLogosData";
+import style from "./company.module.css";
+
+const logos = [
+  { id: 1, src: "/asset/img/google.png", alt: "Google" },
+  { id: 2, src: "/asset/img/meta.png", alt: "Meta" },
+  { id: 3, src: "/asset/img/netflix.png", alt: "Netflix" },
+  { id: 4, src: "/asset/img/microsoft2.png", alt: "Microsoft" },
+  { id: 5, src: "/asset/img/paypal.png", alt: "PayPal" },
+];
+
 
 
 const OurCompany = () => {
