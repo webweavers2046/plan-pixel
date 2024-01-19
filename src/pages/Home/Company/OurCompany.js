@@ -1,18 +1,28 @@
 "use client";
-import { logos } from "./companiesLogosData";
-import style from "./company.module.css";
+
 import Image from "next/image";
+// import logos from "./companiesLogosData";
+import style from "./company.module.css";
+
+const logos = [
+  { id: 1, src: "/asset/img/google.png", alt: "Google" },
+  { id: 2, src: "/asset/img/meta.png", alt: "Meta" },
+  { id: 3, src: "/asset/img/netflix.png", alt: "Netflix" },
+  { id: 4, src: "/asset/img/microsoft2.png", alt: "Microsoft" },
+  { id: 5, src: "/asset/img/paypal.png", alt: "PayPal" },
+];
+
 
 
 const OurCompany = () => {
   return (
-    <div className="py-16">
+    <div>
       <h1 className="text-[13px] md:text-[16px] text-center mb-6">Trusted by Fast - Growing Companies</h1>
       <div className={`${style.gridLayout} container md:mx-auto md:px-28 px-3 `}>
         {logos?.map((img) => (
           <div
             key={img.id}
-            className="py-2 h-20 px-4 flex justify-center items-center rounded-lg">
+            className="bg-white py-2 h-20 px-4 flex justify-center items-center rounded-lg shadow-sm">
             <Image
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
