@@ -4,24 +4,24 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 const GetUpdate = () => {
 
     return (
-      <Container marginT={"28"}>
+      <Container  marginBottom={"50px"} marginTop={'50px'}>
         <SectionTitle
           isSetWidth={true}
-          marginT={'12'}
+          marginT={"12"}
           title={"Get upcoming update to your inbox"}
         />
         <form className="flex items-center justify-center">
           <input
-            className="border-l-2  border-b-2  border-t-2  py-4 px-3 max-w-72 placeholder:font-semibold focus:outline-green-400 "
+            className="border-l-2  border-b-2  border-t-2  py-3 px-3 max-w-72 placeholder:font-semibold focus:outline-green-400 "
             placeholder="Your Name"
             type="text"
           />
           <input
-            className="border-l-2 border-b-2 border-t-2  py-4 px-3 lg:w-96 placeholder:font-semibold focus:outline-green-400"
+            className="border-l-2 border-b-2 border-t-2  py-3 px-3 lg:w-96 placeholder:font-semibold focus:outline-green-400"
             placeholder="Your Email"
             type="email"
           />
-          <button className="px-4 py-4 bg-green-500 text-xl text-white text-bold rounded-r hover:bg-green-400">
+          <button className="px-10 py-3 bg-gradient-to-r from-[#50B577] to-[#93C648] text-xl text-white text-bold rounded-r hover:bg-green-400">
             Subscribe
           </button>
         </form>
