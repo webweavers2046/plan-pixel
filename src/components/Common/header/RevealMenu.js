@@ -23,14 +23,14 @@ const RevealMenu = ({ isOpenMenu, handleToggleMenu}) => {
           
       return (
         <div
-          className={` transition-all duration-500 ease-in-out transform ${isOpenMenu ? 'w-full sm:w-1/2 md:w-0 opacity-100' : 'w-0 opacity-0'} absolute top-0 right-0 bg-bgBlack h-[100%] text-white pt-24`}
+          className={` transition-all duration-500 ease-in-out transform ${isOpenMenu ? 'w-full sm:w-1/2 md:w-0 opacity-100' : 'w-0 opacity-0'} fixed z-40 top-0 right-0  bg-bgBlack h-[100%] text-white pt-24`}
         >
       {/* <div className="outline outline-[1px] outline-[#2e2e2e]"></div> */}
         <MenuTitle isOpenMenu={isOpenMenu}/>
         {/* passing handler to close the menu */}
         <CloseMenu handleToggleMenu={handleToggleMenu}/>
               {navLinksData?.map((navLink,index) => (
-            <div className="hover:bg-[#000] relative justify-between cursor-pointer flex transition-all transform px-2 sm:px-6 items-center mt-2" key={navLink.id}>
+            <div className={`${isOpenMenu?"block":"hidden"} hover:bg-[#000] relative justify-between cursor-pointer flex transition-all transform px-2 sm:px-6 items-center mt-2`} key={navLink.id}>
               <div className="flex items-center">
               <div className={`${isOpenMenu?"block":"hidden"} h-6 w-6 rounded-full p-1 flex justify-center items-center`}>{menuItemIcons[index]}</div>
               <Link
