@@ -3,7 +3,7 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 
 const HowWorks = () => {
   return (
-    <Container marginY={28}>
+    <Container marginY={'28'}>
       <SectionTitle
         isSetWidth={true}
         title={"How It Works & Get Best Output"}
@@ -12,7 +12,7 @@ const HowWorks = () => {
         <span className="bg-[#FBBC05] px-3 py-1 text-white rounded-full">
           1
         </span>
-        <span className="border-t border-2 border-dashed border-black flex-grow"></span>
+        <span className="border-2 border-dashed border-black flex grow"></span>
         <span className="bg-[#93C648] px-3 py-1 text-white rounded-full">
           2
         </span>
