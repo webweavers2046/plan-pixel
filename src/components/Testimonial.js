@@ -9,7 +9,7 @@ const Testimonial = () => {
                 <div className="grid lg:grid-cols-2 xl:gap-10 gap-6">
                     <div className="">
                         <div className="">
-                            <h2 className="xl:text-6xl text-5xl 2xl:w-6/12 lg:w-8/12">
+                            <h2 className="xl:text-6xl md:text-5xl text-3xl 2xl:w-7/12 lg:w-8/12">
                                 What People Say About Us?{" "}
                             </h2>
                             <p className="2xl:w-7/12 lg:w-10/12 pt-4">
