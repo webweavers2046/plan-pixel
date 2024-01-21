@@ -3,8 +3,8 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 
 const HowWorks = () => {
     return (
-        <Container marginBottom={"110px"} marginTop={"110px"}>
-            <div className="md:px-24 px-2 ">
+        // <Container marginBottom={"110px"} marginTop={"110px"}>
+            <div className="md:px-24 px-2 mt-40 mb-60">
                 <SectionTitle
                     isSetWidth={true}
                     title={"How It Works & Get Best Output"}
@@ -32,7 +32,7 @@ const HowWorks = () => {
                     ))}
                 </div>
             </div>
-        </Container>
+        // </Container>
     );
 };
 export default HowWorks;
