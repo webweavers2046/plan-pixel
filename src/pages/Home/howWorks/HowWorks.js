@@ -4,7 +4,7 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 const HowWorks = () => {
     return (
         <Container marginBottom={"110px"} marginTop={"110px"}>
-            <div className="lg:px-6 px-2 ">
+            <div className="md:px-24 px-2 ">
                 <SectionTitle
                     isSetWidth={true}
                     title={"How It Works & Get Best Output"}

@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${lato.className} mx-auto max-w-screen-xl`}>
+      <body className={`${lato.className} mx-auto max-w-screen-2xl`}>
         <Navbar/>
         {children}
         <Footer/>
