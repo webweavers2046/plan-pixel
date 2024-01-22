@@ -4,7 +4,7 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 const HowWorks = () => {
     return (
         // <Container marginBottom={"110px"} marginTop={"110px"}>
-            <div className="md:px-24 px-2 mt-40 mb-60">
+            <div className="md:px-24 px-2 mt-40 mb-48">
                 <SectionTitle
                     isSetWidth={true}
                     title={"How It Works & Get Best Output"}
@@ -39,8 +39,8 @@ export default HowWorks;
 
 const Card = ({ title, description }) => (
     <div className="">
-        <h3 className="text-2xl font-bold md:text-[32px]">{title}</h3>
-        <p className="text-xl mt-3 md:mt-6">{description}</p>
+        <h3 className="text-2xl font-bold md:text-[25px]">{title}</h3>
+        <p className="text-[16px] text-[#494949] mt-2 md:mt-3">{description}</p>
     </div>
 );
 

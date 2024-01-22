@@ -1,7 +1,7 @@
 "use client";
 import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 // import taskManagementArray, { collaborationArray, customizationArray } from "./keyFeatureData";
-// import style from "./key.module.css"
+import style from "./key.module.css"
 import ArrowBoldSign from "./ArrowBoldSign";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
@@ -28,14 +28,14 @@ export const customizationArray = [
 
 const KeyFeatures = () => {
   return (
-    <div className="px-3 relative z-20 overflow-hidden">
+    <div className={style.scaleDown}>
       <GradientBg />
       <SectionTitle  title={"Our Key Features."} />
-      <div className="container mx-auto">
+      <div className="ml-[38px] container overflow-x-hidden">
         <div>
           {/* Task management (smaller card) */}
-          <div className="relative bg-[#99d3a9] shadow-md p-6 text-[11px] sm:text-[15px] ml-0 md:text-[14px] lg:text-[16px] mx-3 md:ml-24 lg:ml-32 mb-7 w-full md:w-[600px] rounded-md">
-            <ArrowBoldSign leftSpace={"-left-[1020px]"} />
+          <div className="relative bg-[#99d3a9] shadow-md p-6 text-[11px] sm:text-[15px] ml-0 md:text-[14px] lg:text-[16px] mx-3 md:ml-24 lg:ml-[10%] mb-7 w-full md:w-[600px] rounded-md">
+            <ArrowBoldSign leftSpace={"-left-[1615px]"} />
             <li className="text-[19px] font-bold list-none pl-3">Intuitive Task Creation and Management</li>
             <ol className={`mt-2 pl-4`}>
               {taskManagementArray?.map((task, index) => (
@@ -47,8 +47,8 @@ const KeyFeatures = () => {
           </div>
 
           {/* Collaboration (medium card) */}
-          <div className="bg-gradient-to-r text-[11px] sm:text-[15px] bg-[#c9e2a3] relative shadow-md p-6 ml-0 md:ml-36 lg:ml-72 mb-7 w-full md:w-[600px] md:text-[14px] lg:text-[16px] rounded-md">
-            <ArrowBoldSign leftSpace={"-left-[1020px]"} />
+          <div className="bg-gradient-to-r text-[11px] sm:text-[15px] bg-[#c9e2a3] relative shadow-md p-6 ml-0 md:ml-36 lg:ml-[25%] mb-7 w-full md:w-[600px] md:text-[14px] lg:text-[16px] rounded-md">
+            <ArrowBoldSign leftSpace={"-left-[1615px]"} />
             <li className="text-[19px] font-bold list-none pl-3">Real-time Collaboration and Communication</li>
             <ol className="mt-2 pl-4">
               {collaborationArray?.map((task, index) => (
@@ -60,8 +60,8 @@ const KeyFeatures = () => {
           </div>
 
           {/* Customization (larger card) */}
-          <div className="bg-[#fddd82] relative shadow-md p-6 mx-3 ml-0 text-[11px] sm:text-[15px] lg:text-[16px] md:ml-48 lg:ml-[420px] mb-7 w-full md:w-[600px] rounded-md">
-            <ArrowBoldSign leftSpace={"-left-[1020px]"} />
+          <div className="bg-[#fddd82] relative shadow-md p-6 mx-3 ml-0 text-[11px] sm:text-[15px] lg:text-[16px] md:ml-48 lg:ml-[40%] mb-7 w-full md:w-[600px] rounded-md">
+            <ArrowBoldSign leftSpace={"-left-[1615px]"} />
             <li className="text-[19px] font-bold list-none pl-3">Customizable Workflows and Boards.</li>
             <ol className="mt-2 pl-4">
               {customizationArray?.map((task, index) => (

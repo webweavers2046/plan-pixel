@@ -29,7 +29,7 @@ const Navbar = () => {
         },
     ];
     return (
-        <header className="backdrop:blur-2xl md:px-24">
+        <header className="backdrop:blur-2xl md:px-24 sticky top-0">
             <div className="container mx-auto relative py-4 xl:px-0 lg:px-6 px-2">
                 <div className=" rounded-full pt-4 pb-4 text-base font-semibold">
                     <div className="flex items-center justify-between">

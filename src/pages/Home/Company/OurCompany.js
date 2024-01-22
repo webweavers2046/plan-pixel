@@ -14,17 +14,17 @@ const logos = [
 
 const OurCompany = () => {
     return (
-        <div className="pb-4 pt-20">
-                <h1 className="text-[13px] md:text-[16px] text-center mb-1">
+        <div className="md:px-18 my-16">
+                <h1 className="text-[13px] md:text-[20px] text-center mb-4">
                 Trusted by Fast - Growing Companies
             </h1>
             <div
-                className={`${style.gridLayout} container md:mx-auto md:px-28 px-3 `}
+                className={`${style.gridLayout} container mx-auto`}
             >
-                {logos?.map((img) => (
+                {logos?.map(((img,index) => (
                     <div
                         key={img.id}
-                        className=" h-20 px-4 flex justify-center items-center rounded-lg shadow-sm"
+                        className={` h-20  grid rounded-lg shadow-sm justify-center`}
                     >
                         <Image
                             placeholder="blur"
@@ -35,7 +35,7 @@ const OurCompany = () => {
                             alt={img.alt}
                         />
                     </div>
-                ))}
+                )))}
             </div>
         </div>
     );
