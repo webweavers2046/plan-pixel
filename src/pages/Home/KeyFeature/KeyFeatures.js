@@ -30,7 +30,7 @@ const KeyFeatures = () => {
   return (
     <div className="px-3 relative z-20 overflow-hidden">
       <GradientBg />
-      <SectionTitle marginB={"32"} title={"Our Key Features."} />
+      <SectionTitle  title={"Our Key Features."} />
       <div className="container mx-auto">
         <div>
           {/* Task management (smaller card) */}
