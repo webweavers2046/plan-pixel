@@ -8,14 +8,14 @@ const logos = [
     { id: 1, src: "/asset/img/google.png", alt: "Google" },
     { id: 2, src: "/asset/img/meta.png", alt: "Meta" },
     { id: 3, src: "/asset/img/netflix.png", alt: "Netflix" },
-    { id: 4, src: "/asset/img/microsoft2.png", alt: "Microsoft" },
-    { id: 5, src: "/asset/img/paypal.png", alt: "PayPal" },
+    { id: 4, src: "/asset/img/pandg 1.png", alt: "Microsoft" },
+    { id: 5, src: "/asset/img/paypal (1).png", alt: "PayPal" },
 ];
 
 const OurCompany = () => {
     return (
         <div className="py-16">
-            <h1 className="text-[13px] md:text-[16px] text-center mb-6">
+                <h1 className="text-[13px] md:text-[16px] text-center mb-1">
                 Trusted by Fast - Growing Companies
             </h1>
             <div
