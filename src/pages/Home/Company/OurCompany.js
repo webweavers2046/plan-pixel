@@ -8,34 +8,34 @@ const logos = [
     { id: 1, src: "/asset/img/google.png", alt: "Google" },
     { id: 2, src: "/asset/img/meta.png", alt: "Meta" },
     { id: 3, src: "/asset/img/netflix.png", alt: "Netflix" },
-    { id: 4, src: "/asset/img/microsoft2.png", alt: "Microsoft" },
-    { id: 5, src: "/asset/img/paypal.png", alt: "PayPal" },
+    { id: 4, src: "/asset/img/pandg 1.png", alt: "Microsoft" },
+    { id: 5, src: "/asset/img/paypal (1).png", alt: "PayPal" },
 ];
 
 const OurCompany = () => {
     return (
-        <div className="py-16">
-            <h1 className="text-[13px] md:text-[16px] text-center mb-6">
+        <div className="md:px-18 my-16">
+                <h1 className="text-[13px] md:text-[20px] text-center mb-4">
                 Trusted by Fast - Growing Companies
             </h1>
             <div
-                className={`${style.gridLayout} container md:mx-auto md:px-28 px-3 `}
+                className={`${style.gridLayout} container mx-auto`}
             >
-                {logos?.map((img) => (
+                {logos?.map(((img,index) => (
                     <div
                         key={img.id}
-                        className="bg-white py-2 h-20 px-4 flex justify-center items-center rounded-lg shadow-sm"
+                        className={` h-20  grid rounded-lg shadow-sm justify-center`}
                     >
                         <Image
                             placeholder="blur"
                             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
-                            width={110}
+                            width={100}
                             height={80}
                             src={img.src}
                             alt={img.alt}
                         />
                     </div>
-                ))}
+                )))}
             </div>
         </div>
     );

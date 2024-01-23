@@ -6,16 +6,14 @@ import Testimonial from "@/pages/Home/Testimonial/Testimonial";
 import Header from "@/pages/Home/Header/Header";
 
 export default function Home() {
-    return (
-        <main className="">
-            <Header/>
-            <div>
-                <OurCompany />
-            </div>
-            <KeyFeatures />
-            <HowWorks />
-            <Testimonial />
-            <GetUpdate />
-        </main>
-    );
+  return (
+    <main className="">
+      <Header />
+      <OurCompany />
+      <KeyFeatures />
+      <HowWorks />
+      <Testimonial />
+      <GetUpdate />
+    </main>
+  );
 }

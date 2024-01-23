@@ -12,7 +12,7 @@ const Testimonial = () => {
                             <h2 className="xl:text-6xl md:text-5xl text-3xl 2xl:w-7/12 lg:w-8/12">
                                 What People Say About Us?{" "}
                             </h2>
-                            <p className="2xl:w-7/12 lg:w-10/12 pt-4">
+                            <p className="2xl:w-7/12 lg:w-10/12 pt-4"> 
                                 I don’t know what do you say about us. But I
                                 don’t give a lNow go and cry you bitch. Laurum
                                 Ipsum idk.
