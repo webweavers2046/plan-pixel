@@ -1,10 +1,12 @@
 import { FaLinkedinIn, FaFacebookF, FaTwitter } from "react-icons/fa";
+import MessageForm from "./MessageForm/MessageForm";
+
 
 const page = () => {
     return (
-        <div className="mt-40 mb-32 lg:px-24">
+        <div className="lg:mt-40 mt-16 mb-32 lg:px-24 flex flex-col-reverse lg:flex-row ">
             {/* Contact information */}
-            <div>
+            <div className="lg:w-3/5 mx-auto mt-6">
                 <h2 className="text-5xl font-bold mb-16">Contact Us</h2>
                 <ul className="text-xl mb-8 space-y-4">
                     <li>
@@ -28,6 +30,10 @@ const page = () => {
                         <FaTwitter className="text-4xl"></FaTwitter>
                     </a>
                 </div>
+            </div>
+            {/* Messaging Form */}
+            <div className="w-full px-3 md:px-0 md:w-4/5  mx-auto">
+                <MessageForm></MessageForm>
             </div>
         </div>
     );
