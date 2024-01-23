@@ -4,7 +4,7 @@ import EnterpriseOffer from './EnterpriseOffers/EnterpriseOffers';
 
 const page = () => {
     return (
-        <div className='lg:px-[190px] px-4'>
+        <div className='lg:px-24 px-4'>
             {/* Pricing plans */}
             <PricePlans></PricePlans>
             {/* EnterpriseOffers */}
