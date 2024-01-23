@@ -21,7 +21,7 @@ const Navbar = () => {
 
         {
             route: "About Us",
-            path: "/about",
+            path: "/about-us",
         },
         {
             route: "Contact Us",
