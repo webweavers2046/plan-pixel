@@ -3,6 +3,7 @@ import Footer from '@/components/Common/footer/Footer';
 import React from 'react';
 import Hero from './Sections/AboutUsHero/Hero';
 import OurTeamMembers from './Sections/OurTeamMembers/OurTeamMembers';
+import OurVision from './Sections/OurVision/OurVision';
 
 const index = () => {
     return (
@@ -10,6 +11,7 @@ const index = () => {
             <Navbar/>
             <Hero/>
             <OurTeamMembers/>
+            <OurVision/>
             <Footer/>
         </div>
     );
