@@ -33,11 +33,11 @@ const PricePlans = () => {
 
 
     return (
-        <section className='mt-20 mb-44'>
+        <section className='lg:mt-20 md:mt-12 mt-6 lg:mb-44 mb-32'>
             <h5 className='text-[#50B577] text-center text-xl font-bold'>Pricing</h5>
-            <h3 className='text-5xl font-bold mt-3 text-center'>Right plan for you</h3>
+            <h3 className='md:text-5xl text-3xl font-bold mt-3 text-center'>Right plan for you</h3>
 
-            <div className='mt-16 grid grid-cols-3 gap-5'>
+            <div className='mt-16 grid lg:grid-cols-3 md:grid-cols-1 gap-5 md:w-3/4 lg:w-full mx-auto  p-3 lg:p-0'>
                 {/* Basic plan */}
                 <div>
                     <h4 className='text-2xl font-bold px-9 rounded-t-lg pt-14 bg-[#FBBC0580]'>Basic Plan</h4>
@@ -60,7 +60,7 @@ const PricePlans = () => {
                 </div>
                 {/* Enterprise Plan */}
 
-                <div>
+                <div >
                     <h4 className='text-2xl font-bold px-9 rounded-t-lg pt-14 bg-[#50B57780]'>Enterprise Plan</h4>
                     <div className='px-9 rounded-b-lg mt-[2px] pt-14 bg-[#50B57780]'>
                         <h2 className='font-bold text-6xl italic'>$30 <span className='text-xl'>/Month</span></h2>
