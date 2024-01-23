@@ -5,7 +5,7 @@ import camera from "@/assets/icons/camera-icon.png";
 const OurVision = () => {
   return (
     <div className="px-24 py-28 grid grid-cols-2 place-items-center">
-      {/* Text Content */}
+      {/* Left Text Content */}
       <div>
         <h2 className="text-[40px] font-bold mb-10">Our Vision</h2>
         <div className="text-lg leading-normal pl-6 space-y-5">
@@ -30,6 +30,8 @@ const OurVision = () => {
           </div>
         </div>
       </div>
+
+      {/* Right Image Content */}
       <div className="flex justify-end w-full ml-10">
         <Image
           className="h-120 w-auto"
