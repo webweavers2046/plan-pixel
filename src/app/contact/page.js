@@ -4,7 +4,7 @@ import MessageForm from "./MessageForm/MessageForm";
 
 const page = () => {
     return (
-        <div className="lg:mt-40 mt-16 mb-32 lg:px-24 flex flex-col-reverse lg:flex-row ">
+        <div className="lg:mt-40 mt-16 mb-32 md:px-24 flex flex-col-reverse lg:flex-row ">
             {/* Contact information */}
             <div className="lg:w-3/5 mx-auto mt-6">
                 <h2 className="text-5xl font-bold mb-16">Contact Us</h2>
