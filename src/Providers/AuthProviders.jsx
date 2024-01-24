@@ -1,4 +1,4 @@
-
+'use client'
 import auth, { googleProvider } from "@/firebase/firebase.auth";
 import {
   createUserWithEmailAndPassword,
@@ -16,7 +16,7 @@ export const AuthContext = createContext(null);
 
 
 
-const AuthProviders = () => {
+const AuthProviders = ({ children }) => {
 
     
 
