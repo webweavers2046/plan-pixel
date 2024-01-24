@@ -3,13 +3,12 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 
 const HowWorks = () => {
     return (
-        // <Container marginBottom={"110px"} marginTop={"110px"}>
-            <div className="md:px-24 px-2 mt-40 mb-48">
+            <div className="md:px-24 px-2 my-10 md:mt-40 md:mb-48">
                 <SectionTitle
                     isSetWidth={true}
                     title={"How It Works & Get Best Output"}
                 />
-                <div className="flex items-center justify-center  gap-2">
+                <div className="flex items-center justify-center  gap-2 mx-4 lg:mx-0">
                     <span className="bg-[#FBBC05] px-3 py-1 text-white rounded-full">
                         1
                     </span>
@@ -32,13 +31,13 @@ const HowWorks = () => {
                     ))}
                 </div>
             </div>
-        // </Container>
+
     );
 };
 export default HowWorks;
 
 const Card = ({ title, description }) => (
-    <div className="">
+    <div className="mx-4 lg:mx-0">
         <h3 className="text-2xl font-bold md:text-[25px]">{title}</h3>
         <p className="text-[16px] text-[#494949] mt-2 md:mt-3">{description}</p>
     </div>
