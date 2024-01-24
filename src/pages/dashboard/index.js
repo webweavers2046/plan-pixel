@@ -1,3 +1,6 @@
+import DashboardBody from "./Dashboard/DashboardBody";
+import DashboardNavbar from "./Dashboard/DashboardNavbar";
+import Sidebar from "./Dashboard/Sidebar";
 
 
 const Dashboard = () => {
