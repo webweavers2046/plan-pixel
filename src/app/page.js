@@ -4,6 +4,7 @@ import GetUpdate from "@/pages/Home/GetUpdate/GetUpdate";
 import HowWorks from "@/pages/Home/howWorks/HowWorks";
 import Testimonial from "@/pages/Home/Testimonial/Testimonial";
 import Header from "@/pages/Home/Header/Header";
+import Articles from "@/pages/Home/Articles/Articles";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <HowWorks />
       <Testimonial />
       <GetUpdate />
+      <Articles/>
     </main>
   );
 }
