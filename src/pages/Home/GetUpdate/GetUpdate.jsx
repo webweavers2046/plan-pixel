@@ -3,7 +3,7 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 
 const GetUpdate = () => {
     return (
-        <Container marginBottom={"50px"} marginTop={"50px"}>
+        <div className="container mx-auto py-4 xl:px-0 lg:px-6 px-2 my-0 md:my-24">
             <div className="py-16">
                 <SectionTitle
                     isSetWidth={true}
@@ -26,7 +26,7 @@ const GetUpdate = () => {
                     </button>
                 </form>
             </div>
-        </Container>
+        </div>
     );
 };
 export default GetUpdate;

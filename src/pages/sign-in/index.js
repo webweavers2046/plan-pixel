@@ -10,7 +10,7 @@ const SignIn = () => {
     return (
         <section
             className="
-        grid md:grid-cols-9 h-screen"
+        grid md:grid-cols-9 h-screen max-w-screen-2xl mx-auto"
         >
             <div className="col-span-3 md:block hidden relative">
                 <Image
