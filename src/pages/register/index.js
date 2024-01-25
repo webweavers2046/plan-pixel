@@ -17,7 +17,7 @@ import { useContext } from "react";
 const Register = () => {
 
 
-    const {createUser, signIn} = useContext(AuthContext);
+    const {createUser, googleSignIn} = useContext(AuthContext);
     
     
     
