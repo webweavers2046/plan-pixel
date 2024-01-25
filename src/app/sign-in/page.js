@@ -5,11 +5,11 @@ import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-const Register = () => {
+const SignIn = () => {
     return (
         <section
             className="
-            grid md:grid-cols-9 md:gap-6 h-screen max-w-screen-2xl mx-auto"
+        grid md:grid-cols-9 h-screen max-w-screen-2xl mx-auto"
         >
             <div className="col-span-3 md:block hidden relative">
                 <Image
@@ -29,7 +29,11 @@ const Register = () => {
             <div className="col-span-6 flex justify-center items-center px-3">
                 <div className="text-start">
                     <div className="space-y-2 mb-6">
-                        <h2 className="text-4xl font-bold">Register</h2>
+                        <h2 className="text-4xl font-bold">Sign In</h2>
+                        <p className="text-sm ">
+                            Hey welcome to PlanPixel.io Please sign in your
+                            account.
+                        </p>
                     </div>
                     <div className="space-y-3">
                         <button className="py-4 w-full  border rounded-lg">
@@ -60,36 +64,6 @@ const Register = () => {
                     </div>
                     <div className="">
                         <form>
-                            <div className="md:flex items-center justify-between gap-3 pb-2">
-                                <div className="mt-3">
-                                    <label
-                                        htmlFor="email"
-                                        className="text-sm font-medium"
-                                    >
-                                        First Name
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Enter your first name"
-                                        className="placeholder:text-black/25 placeholder:text-sm w-full border p-3.5 rounded-lg mt-2"
-                                    />
-                                </div>
-                                <div className="mt-3">
-                                    <label
-                                        htmlFor="email"
-                                        className="text-sm font-medium"
-                                    >
-                                        Last Name
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="Enter your last name"
-                                        className="placeholder:text-black/25 placeholder:text-sm w-full border p-3.5 rounded-lg mt-2"
-                                    />
-                                </div>
-                            </div>
                             <div className="">
                                 <label
                                     htmlFor="email"
@@ -119,16 +93,16 @@ const Register = () => {
                                 />
                             </div>
                             <button className="py-4 rounded-lg text-white font-medium mt-4 w-full bg-primary">
-                                Register
+                                Sign In
                             </button>
                         </form>
                     </div>
                     <div className="">
                         <p className="text-sm mt-6">
                             Don&#39;t have any account?{" "}
-                            <Link href={"/sign-in"}>
+                            <Link href={"/register"}>
                                 <span className="text-primary font-medium">
-                                    Sign In
+                                    Register
                                 </span>
                             </Link>
                         </p>
@@ -139,4 +113,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default SignIn;

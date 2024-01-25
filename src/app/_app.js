@@ -1,5 +1,5 @@
 import MainLayout from "@/components/layout/MainLayout";
-import "../styles/globals.css";
+import "@/styles/globals.css";
 
 const MyApp = ({ Component, pageProps }) => {
     const getLayout = Component.getLayout || ((page) => page);

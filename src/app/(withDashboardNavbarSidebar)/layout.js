@@ -1,5 +1,6 @@
 import DashboardNavbar from "./dashboard/Components/DashboardNavbar";
 import DashboardSidebar from "./dashboard/Components/DashboardSidebar";
+import "@/styles/globals.css";
 
 export default function DashboardLayout({
     children, // will be a page or nested layout
