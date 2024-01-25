@@ -8,7 +8,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useContext } from "react";
-import { AuthContext } from "@/Providers/AuthProviders";
+import AuthContext from "@/context/AuthContext";
 
 const SignIn = () => {
   const {
@@ -17,7 +17,11 @@ const SignIn = () => {
     formState: { errors },
   } = useForm();
 
-  const {signIn, googleSignIn} = useContext(AuthContext);
+  const {googleSignIn, signIn} = useContext(AuthContext);
+  // console.log(authInfo);
+  console.log();
+  
+
 
   const handleLogin = (data) => {
     const email = data.email;
@@ -35,25 +39,23 @@ const SignIn = () => {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
-      navigate(from, { replace: true });
     });
 };
 
 
 const handleGoogleSignIn = () => {
-    googleSignIn()
-    .then((res) => {
-      res && navigate(location?.state ? location.state : '/')
-      Swal.fire({
-        title: "User Login Successful.",
-        showClass: {
-          popup: "animate__animated animate__fadeInDown",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutUp",
-        },
-      });
-    })
+  googleSignIn()
+  .then((res) => {
+    Swal.fire({
+      title: "User Login Successful.",
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
+    });
+  })
   }
 
 

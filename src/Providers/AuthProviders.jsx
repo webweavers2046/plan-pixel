@@ -10,10 +10,9 @@ import {
 import { createContext, useEffect, useState } from "react";
 import React from 'react';
 import PropTypes from "prop-types";
+import AuthContext from "@/context/AuthContext";
 
 
-
-export const AuthContext = createContext(null);
 
 
 
