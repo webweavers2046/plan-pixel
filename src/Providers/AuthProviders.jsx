@@ -7,7 +7,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import React from 'react';
 import PropTypes from "prop-types";
 import AuthContext from "@/context/AuthContext";
