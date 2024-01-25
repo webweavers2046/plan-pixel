@@ -54,6 +54,22 @@ const handleRegister = (data) => {
 }
 
 
+const handleGoogleSignIn = () => {
+    googleSignIn()
+    .then((res) => {
+      Swal.fire({
+        title: "User Login Successful.",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+    })
+    }
+
+
 
 
 
@@ -84,7 +100,7 @@ const handleRegister = (data) => {
             <h2 className="text-4xl font-bold">Register</h2>
           </div>
           <div className="space-y-3">
-            <button className="py-4 w-full  border rounded-lg">
+            <button onClick={handleGoogleSignIn} className="py-4 w-full  border rounded-lg">
               <p className="flex items-center justify-center">
                 <FcGoogle className="inline w-6 h-6 me-3" />{" "}
                 <span className="text-sm font-semibold">
