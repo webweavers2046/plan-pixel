@@ -9,7 +9,7 @@ const Register = () => {
     return (
         <section
             className="
-            grid md:grid-cols-9 md:gap-6 h-screen max-w-screen-2xl mx-auto"
+            grid md:grid-cols-9 md:gap-6 h-screen mx-auto"
         >
             <div className="col-span-3 md:block hidden relative">
                 <Image
