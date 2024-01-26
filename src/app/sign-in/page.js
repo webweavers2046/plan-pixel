@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import "@/styles/globals.css";
 import { useContext } from "react";
 // Auth Provider
-import { AuthContext } from "@/providers/AuthProviders";
+import { AuthContext } from "@/Providers/AuthProviders";
 
 const SignIn = () => {
     const {

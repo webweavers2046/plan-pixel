@@ -1,6 +1,6 @@
 import { Lato } from "next/font/google";
 import "@/styles/globals.css";
-import AuthProviders from "@/providers/AuthProviders";
+import AuthProviders from "@/Providers/AuthProviders";
 
 const lato = Lato({
     weight: ["100", "300", "400", "700", "900"],

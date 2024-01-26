@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import "@/styles/globals.css";
-import { AuthContext } from "@/providers/AuthProviders";
+import { AuthContext } from "@/Providers/AuthProviders";
 
 const Register = () => {
     const { createUser, googleSignIn } = useContext(AuthContext);
