@@ -8,9 +8,11 @@ import { FiPlusSquare } from "react-icons/fi";
 import Task from "./Task";
 import "@/styles/globals.css";
 import { useEffect, useState } from "react";
+import TaskModal from "../Components/TaskModal";
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -45,7 +47,7 @@ const Tasks = () => {
                     </p>
                 </div>
                 <div className="">
-                    <button className="bg-white text-black text-sm px-5 py-3 rounded-md font-bold">
+                    <button onClick={() => setOpenModal(!openModal)} className="bg-white text-black text-sm px-5 py-3 rounded-md font-bold">
                         <FiPlusSquare className="inline mb-1 me-2 text-xl" />{" "}
                         Add Task
                     </button>
@@ -131,6 +133,7 @@ const Tasks = () => {
                     </div>
                 </div>
             </div>
+            <TaskModal openModal={openModal} setOpenModal={setOpenModal}></TaskModal>
         </section>
     );
 };

@@ -1,7 +1,14 @@
 import "@/styles/globals.css";
 
 const Dashboard = () => {
-    return <div>bye tata dashboard</div>;
+
+    return <div>
+       Dashboard
+    </div>;
 };
 
+
 export default Dashboard;
+
+
+

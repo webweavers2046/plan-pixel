@@ -1,0 +1,239 @@
+[
+    {
+        "id": 1,
+        "title": "Upcoming Project Kickoff",
+        "description": "Prepare for the upcoming project kickoff meeting.",
+        "tags": ["meeting", "planning"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-02-15"
+        },
+        "priority": "High",
+        "todo-list": [
+            { "task": "Create agenda", "status": "done" },
+            { "task": "Invite team contributors", "status": "done" }
+        ],
+        "contributors": [
+            { "id": "user1", "name": "John Doe" },
+            { "id": "user2", "name": "Jane Smith" },
+            { "id": "user3", "name": "Bob Johnson" }
+        ],
+        "comments": [
+            {
+                "id": 1,
+                "text": "Discuss project goals and milestones during the kickoff."
+            },
+            {
+                "id": 2,
+                "text": "Ensure all team contributors are available for the meeting."
+            }
+        ],
+        "status": "Upcoming"
+    },
+    
+    {
+        "id": 2,
+        "title": "To-Do Feature Implementation",
+        "description": "Implement new features for the upcoming release.",
+        "tags": ["development", "feature"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-03-01"
+        },
+        "priority": "Medium",
+        "todo-list": [
+            { "task": "Code review", "status": "done" },
+            { "task": "Testing", "status": "done" },
+            { "task": "Documentation", "status": "pending" }
+        ],
+        "contributors": [
+            { "id": "user4", "name": "Alice Brown" },
+            { "id": "user5", "name": "Charlie Green" }
+        ],
+        "comments": [
+            {
+                "id": 3,
+                "text": "Coordinate with the QA team for thorough testing."
+            },
+            {
+                "id": 4,
+                "text": "Update documentation to reflect the new features."
+            }
+        ],
+        "status": "To-Do"
+    },
+    {
+        "id": 3,
+        "title": "Working On Marketing Campaign",
+        "description": "Execute the marketing campaign for the new product launch.",
+        "tags": ["marketing", "campaign"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-02-28"
+        },
+        "priority": "High",
+        "todo-list": [
+            { "task": "Create social media posts", "status": "done" },
+            { "task": "Prepare email newsletters", "status": "done" }
+        ],
+        "contributors": [
+            { "id": "user6", "name": "Eva White" },
+            { "id": "user7", "name": "David Black" }
+        ],
+        "comments": [
+            {
+                "id": 5,
+                "text": "Coordinate with the design team for engaging visuals."
+            },
+            {
+                "id": 6,
+                "text": "Monitor social media channels for user engagement."
+            }
+        ],
+        "status": "Working On"
+    },
+    {
+        "id": 4,
+        "title": "Completed Server Maintenance",
+        "description": "Perform routine maintenance on the company's servers.",
+        "tags": ["IT", "maintenance"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-01-25"
+        },
+        "priority": "Low",
+        "todo-list": [
+            { "task": "Backup data", "status": "done" },
+            { "task": "Update security patches", "status": "done" }
+        ],
+        "contributors": [{ "id": "user8", "name": "Frank Grey" }],
+        "comments": [
+            {
+                "id": 7,
+                "text": "Ensure all critical data is backed up before starting the maintenance."
+            },
+            {
+                "id": 8,
+                "text": "Verify the successful completion of the server maintenance."
+            }
+        ],
+        "status": "Completed"
+    },
+    {
+        "id": 5,
+        "title": "Research and Development Sprint",
+        "description": "Conduct a sprint for research and development activities.",
+        "tags": ["research", "development"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-03-10"
+        },
+        "priority": "Medium",
+        "todo-list": [
+            { "task": "Define research goals", "status": "done" },
+            { "task": "Develop prototypes", "status": "done" }
+        ],
+        "contributors": [
+            { "id": "user9", "name": "Grace Red" },
+            { "id": "user10", "name": "Harry Blue" }
+        ],
+        "comments": [
+            {
+                "id": 13,
+                "text": "Collaborate with the research team to set clear objectives."
+            },
+            {
+                "id": 14,
+                "text": "Review and iterate on prototypes based on feedback."
+            }
+        ],
+        "status": "Upcoming"
+    },
+    {
+        "id": 6,
+        "title": "Website Redesign",
+        "description": "Redesign the company website for a more modern look and feel.",
+        "tags": ["design", "website"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-03-15"
+        },
+        "priority": "High",
+        "todo-list": [
+            { "task": "Create wireframes", "status": "done" },
+            { "task": "Implement responsive design", "status": "done" }
+        ],
+        "contributors": [
+            { "id": "user11", "name": "Ivy Purple" },
+            { "id": "user12", "name": "Jack Yellow" }
+        ],
+        "comments": [
+            {
+                "id": 15,
+                "text": "Gather user feedback on the current website for improvement insights."
+            },
+            {
+                "id": 16,
+                "text": "Ensure the new design is consistent with the company's branding."
+            }
+        ],
+        "status": "To-Do"
+    },
+    {
+        "id": 7,
+        "title": "Content Creation for Blog",
+        "description": "Generate engaging content for the company blog.",
+        "tags": ["content", "blog"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-02-28"
+        },
+        "priority": "Medium",
+        "todo-list": [
+            { "task": "Write blog posts", "status": "done" },
+            { "task": "Create multimedia content", "status": "pending" }
+        ],
+        "contributors": [{ "id": "user13", "name": "Oliver Orange" }],
+        "comments": [
+            {
+                "id": 17,
+                "text": "Research trending topics in the industry for blog post ideas."
+            },
+            {
+                "id": 18,
+                "text": "Optimize content for SEO to improve visibility."
+            }
+        ],
+        "status": "Working On"
+    },
+    {
+        "id": 8,
+        "title": "Financial Report Preparation",
+        "description": "Compile and prepare financial reports for the quarterly review.",
+        "tags": ["finance", "reporting"],
+        "dates": {
+            "startDate": null,
+            "dueDate": "2024-03-05"
+        },
+        "priority": "High",
+        "todo-list": [
+            { "task": "Gather financial data", "status": "done" },
+            { "task": "Generate reports", "status": "done" }
+        ],
+        "contributors": [
+            { "id": "user14", "name": "Nina Brown" },
+            { "id": "user15", "name": "Peter Grey" }
+        ],
+        "comments": [
+            {
+                "id": 19,
+                "text": "Verify the accuracy of financial data before generating reports."
+            },
+            {
+                "id": 20,
+                "text": "Ensure compliance with accounting standards in report preparation."
+            }
+        ],
+        "status": "Completed"
+    }
+]
