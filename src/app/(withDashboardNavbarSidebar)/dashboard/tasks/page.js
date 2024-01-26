@@ -75,7 +75,7 @@ const Tasks = () => {
                                     <Task
                                         idx={idx}
                                         key={task._id}
-                                        refetch={refetch}
+                                        // refetch={refetch}
                                         task={task}
                                     />
                                 )
@@ -94,7 +94,7 @@ const Tasks = () => {
                                     <Task
                                         idx={idx}
                                         key={task._id}
-                                        refetch={refetch}
+                                        // refetch={refetch}
                                         task={task}
                                     />
                                 )
@@ -135,7 +135,7 @@ const Tasks = () => {
                                 task.status === "complete" && (
                                     <Task
                                         key={task._id}
-                                        refetch={refetch}
+                                        // refetch={refetch}
                                         idx={idx}
                                         task={task}
                                     />
