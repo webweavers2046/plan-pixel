@@ -1,0 +1,27 @@
+.scrollbarCustom {
+	height: 200vh;
+	margin: auto;
+	max-width: 95%;
+
+}
+
+
+.scrollbarCustom::-webkit-scrollbar-track
+{
+	border: 2px solid white;
+	/* // border color does not support transparent on scrollbar */
+	border-color: transparent;
+	background-color: #b2bec3;
+}
+
+.scrollbarCustom::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #dfe6e9;
+}
+
+.scrollbarCustom::-webkit-scrollbar-thumb
+{
+	background-color: rgba(80, 181, 119, 0.2);
+	border-radius: 10px;
+}
