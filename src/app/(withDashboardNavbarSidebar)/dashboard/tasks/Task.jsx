@@ -8,6 +8,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useForm } from "react-hook-form";
 
 const Task = ({ task, refetch }) => {
+    console.log(task);
     const [requiredError, setRequiredError] = useState("");
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
@@ -27,50 +28,50 @@ const Task = ({ task, refetch }) => {
     let mm = String(today.getMonth() + 1).padStart(2, "0");
     let yyyy = String(today.getFullYear());
     today = `${yyyy}-${mm}-${dd}`;
-    let speed = idx * 0.3;
+    // let speed = idx * 0.3;
 
-    // const handleDeleteTask = () => {
-    //     setOpenDeleteModal(true);
-    // };
-    // const onSubmit = (data) => {
-    //     setButtonLoading(true);
-    //     if (new Date(data.deadline) > new Date(today)) {
-    //         const description = descriptionRef.current.value;
-    //         if (!description) {
-    //             return setRequiredError("Required *");
-    //         }
-    //         setRequiredError("");
-    //         const taskData = {
-    //             title: data.title,
-    //             priority: data.priority,
-    //             status: data.status,
-    //             deadline: data.deadline,
-    //             description: description,
-    //         };
-    //         fetch(
-    //             `https://task-management-server-cyan-omega.vercel.app/tasks/${task._id}`,
-    //             {
-    //                 method: "PUT",
-    //                 headers: {
-    //                     "content-type": "application/json",
-    //                 },
-    //                 body: JSON.stringify(taskData),
-    //             }
-    //         )
-    //             .then((res) => res.json())
-    //             .then((result) => {
-    //                 console.log(result);
-    //                 setButtonLoading(false);
-    //                 reset();
-    //                 refetch();
+    const handleDeleteTask = () => {
+        setOpenDeleteModal(true);
+    };
+    const onSubmit = (data) => {
+        setButtonLoading(true);
+        if (new Date(data.deadline) > new Date(today)) {
+            const description = descriptionRef.current.value;
+            if (!description) {
+                return setRequiredError("Required *");
+            }
+            setRequiredError("");
+            const taskData = {
+                title: data.title,
+                priority: data.priority,
+                status: data.status,
+                deadline: data.deadline,
+                description: description,
+            };
+            fetch(
+                `/task.json/tasks/${task._id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    body: JSON.stringify(taskData),
+                }
+            )
+                .then((res) => res.json())
+                .then((result) => {
+                    console.log(result);
+                    setButtonLoading(false);
+                    reset();
+                    refetch();
 
-    //                 toast.success("New Task Added");
-    //             });
-    //     } else {
-    //         setButtonLoading(false);
-    //         return setDateErrorMessage("Please provide a valid Date");
-    //     }
-    // };
+                    toast.success("New Task Added");
+                });
+        } else {
+            setButtonLoading(false);
+            return setDateErrorMessage("Please provide a valid Date");
+        }
+    };
     return (
         <div className="mt-3 bg-[#1E2530] rounded-md p-6">
             <div className=" flex items-center gap-2 justify-between">
@@ -81,7 +82,7 @@ const Task = ({ task, refetch }) => {
                 <p className="pt-3 flex items-center gap-2">
                     <BsStopwatchFill className="text-green-500" />{" "}
                     <span className="text-xs pt-0.5">
-                        {task.deadline.split("T")[0]}
+                        {/* {task.deadline.split("T")[0]} */}
                     </span>
                 </p>
                 <p className="pt-3 flex items-center gap-2">
