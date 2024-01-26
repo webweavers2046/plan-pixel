@@ -30,6 +30,7 @@ const SignIn = () => {
         signIn(email, password).then((result) => {
             const user = result.user;
             console.log(user);
+            window.location.replace('/dashboard')
             Swal.fire({
                 title: "User Login Successful.",
                 showClass: {
@@ -44,6 +45,7 @@ const SignIn = () => {
 
     const handleGoogleSignIn = () => {
         googleSignIn().then((res) => {
+            window.location.replace('/dashboard')
             Swal.fire({
                 title: "User Login Successful.",
                 showClass: {
