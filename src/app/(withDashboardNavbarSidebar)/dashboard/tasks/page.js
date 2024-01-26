@@ -14,26 +14,35 @@ const Tasks = () => {
     const [tasks, setTasks] = useState([]);
     const [openModal, setOpenModal] = useState(false);
 
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await fetch("../../../../../public/task.json");
+  useEffect(() => {
+    fetch('https://task-management-server-topaz.vercel.app/tasks')
+    .then(res => res.json())
+    .then(data => {
+        // console.log(data);
+        setTasks(data)
+    })
+    
+    // const fetchTasks = async () => {
+    //   try {
+    //     const response = await fetch("/public/task.json");
 
-                if (!response.ok) {
-                    throw new Error("Failed to fetch tasks");
-                }
+    //     if (!response.ok) {
+    //       throw new Error("Failed to fetch tasks");
+    //     }
 
-                const data = await response.json();
-                setTasks(data);
-            } catch (error) {
-                console.error("Error fetching tasks:", error);
-            }
-        };
+    //     const data = await response.json();
+    //     setTasks(data);
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.error("Error fetching tasks:", error);
+    //   }
+    // };
 
-        fetchTasks();
-    }, []);
+    // fetchTasks();
 
-    console.log(tasks);
+  }, []);
+
+//   console.log(tasks);
 
     return (
         <section className="text-white p-6 w-full">
@@ -93,25 +102,27 @@ const Tasks = () => {
                     </div>
                 </div>
 
-                <div>
-                    <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
-                        <MdOutlineCallMissedOutgoing className="text-2xl" />{" "}
-                        <h2 className="">Working On</h2>
-                    </div>
-                    <div className="mt-8">
-                        {tasks.map(
-                            (task, idx) =>
-                                task.status === "ongoing" && (
-                                    <Task
-                                        idx={idx}
-                                        key={task._id}
-                                        refetch={refetch}
-                                        task={task}
-                                    />
-                                )
-                        )}
-                    </div>
-                </div>
+        <div>
+          <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
+            <MdOutlineCallMissedOutgoing className="text-2xl" />{" "}
+            <h2 className="">Completed</h2>
+          </div>
+          <div className="mt-8">
+            {tasks.map(
+              (task, idx) =>
+                task.status === "completed" && (
+                  <Task
+                    idx={idx}
+                    key={task._id}
+                    // refetch={refetch}
+                    task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                  />
+                )
+            )}
+          </div>
+        </div>
 
                 <div>
                     <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
