@@ -1,5 +1,4 @@
 "use client";
-
 import { BsStopwatchFill } from "react-icons/bs";
 import { MdDoubleArrow } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
@@ -10,8 +9,9 @@ import Swal from "sweetalert2";
 // import { HiOutlineExclamationCircle } from "react-icons/hi";
 // import { useForm } from "react-hook-form";
 
-const Task = ({ task, refetch }) => {
+const Task = ({ task, tasks, setTasks, refetch }) => {
     console.log(task);
+    console.log(tasks);
     // const [requiredError, setRequiredError] = useState("");
     // const [openDeleteModal, setOpenDeleteModal] = useState(false);
     // const [buttonLoading, setButtonLoading] = useState(false);
@@ -44,12 +44,26 @@ const Task = ({ task, refetch }) => {
             confirmButtonText: "Delete it!"
           }).then((result) => {
             if (result.isConfirmed) {
-                
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-              });
+                // axios.delete(`https://task-management-server-topaz.vercel.app//deleteTask/${id}`)
+                fetch(`https://task-management-server-topaz.vercel.app/deleteTask/${id}`, {
+                    method: "DELETE",
+
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your task has been deleted.',
+                                'success'
+                            )
+                            // eslint-disable-next-line react/prop-types
+                            const remaining = tasks.filter(task => task._id !== id);
+                            console.log(remaining);
+                            setTasks(remaining);
+                        }
+                    })
             }
           });
         // console.log("id", id);

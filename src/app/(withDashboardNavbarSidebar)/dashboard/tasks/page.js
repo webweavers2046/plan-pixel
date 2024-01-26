@@ -71,6 +71,8 @@ const Tasks = () => {
                     key={task._id}
                     // refetch={refetch}
                     task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
                   />
                 )
             )}
@@ -89,6 +91,8 @@ const Tasks = () => {
                     key={task._id}
                     // refetch={refetch}
                     task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
                   />
                 )
             )}
@@ -109,6 +113,8 @@ const Tasks = () => {
                     key={task._id}
                     // refetch={refetch}
                     task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
                   />
                 )
             )}
