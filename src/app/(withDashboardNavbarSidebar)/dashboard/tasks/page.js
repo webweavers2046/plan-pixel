@@ -13,10 +13,10 @@ const Tasks = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetch('/task.json')
+    fetch('https://task-management-server-topaz.vercel.app/tasks')
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         setTasks(data)
     })
     
@@ -37,6 +37,7 @@ const Tasks = () => {
     // };
 
     // fetchTasks();
+
   }, []);
 
 //   console.log(tasks);
@@ -60,11 +61,11 @@ const Tasks = () => {
       <div className="grid md:grid-cols-4 lg:gap-6 gap-2  mt-6">
         <div>
           <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
-            <LuListTodo className="text-2xl" /> <h2 className="">Upcoming</h2>
+            <LuListTodo className="text-2xl" /> <h2 className="">To Do</h2>
           </div>
           <div className="mt-8">
             {tasks.map((task, idx) =>
-                task.status === "To-Do" && (
+                task.status === "to-do" && (
                   <Task
                     idx={idx}
                     key={task._id}
@@ -77,12 +78,12 @@ const Tasks = () => {
         </div>
         <div>
           <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
-            <LuListTodo className="text-2xl" /> <h2 className="">To Do</h2>
+            <LuListTodo className="text-2xl" /> <h2 className="">Ongoing</h2>
           </div>
           <div className="mt-8">
             {tasks.map(
               (task, idx) =>
-                task.status === "To-Do" && (
+                task.status === "ongoing" && (
                   <Task
                     idx={idx}
                     key={task._id}
@@ -97,12 +98,12 @@ const Tasks = () => {
         <div>
           <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
             <MdOutlineCallMissedOutgoing className="text-2xl" />{" "}
-            <h2 className="">Working On</h2>
+            <h2 className="">Completed</h2>
           </div>
           <div className="mt-8">
             {tasks.map(
               (task, idx) =>
-                task.status === "Ongoing" && (
+                task.status === "completed" && (
                   <Task
                     idx={idx}
                     key={task._id}
@@ -114,7 +115,7 @@ const Tasks = () => {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
             <MdOutlineFileDownloadDone className="text-2xl" />{" "}
             <h2 className="">Complete</h2>
@@ -132,9 +133,8 @@ const Tasks = () => {
                 )
             )}
           </div>
-        </div>
+        </div> */}
       </div>
-      {/* <Task task={tasks}></Task> */}
     </section>
   );
 };
