@@ -8,7 +8,7 @@ const Hero = () => {
       <Image
         className="lg:mb-0.5  mb-2.5"
         src={logo}
-        alt="heartbeat givers' logo"
+        alt="logo"
       ></Image>
       <h1 className="text-4xl md:text-6xl font-semibold mb-7 mt-3">Plan Pixel</h1>
       <p className="md:leading-loose text-lg">
