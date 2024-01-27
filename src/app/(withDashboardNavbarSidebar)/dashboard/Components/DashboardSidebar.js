@@ -1,13 +1,16 @@
-'use client'
+"use client";
+
 import { AuthContext } from "@/Providers/AuthProviders";
 import logo from "@/assets/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import Swal from "sweetalert2";
 const DashboardSidebar = () => {
+    const router = useRouter();
 
-    const {logOut} = useContext(AuthContext);
+    const { logOut } = useContext(AuthContext);
 
     const handleLogOut = () => {
         Swal.fire({
@@ -17,17 +20,21 @@ const DashboardSidebar = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, log out!"
-          }).then((result) => {
+            confirmButtonText: "Yes, log out!",
+        }).then((result) => {
             if (result.isConfirmed) {
                 logOut();
-              Swal.fire({
-                title: "Logged Out",
-                icon: "success"
-              });
+                Swal.fire({
+                    title: "Logged Out",
+                    icon: "success",
+                });
             }
-          });
-    }
+        });
+    };
+    const logOutUser = () => {
+        logOut();
+        router.push("/");
+    };
     return (
         <div className="bg-gray-300/20 h-screen">
             <div className="py-8 px-6">
@@ -106,7 +113,12 @@ const DashboardSidebar = () => {
                         </Link>
                     </li>
                     <li className="flex w-full justify-center  ">
-                        <button onClick={() => handleLogOut()} className="bg-red-600 text-white w-full py-3 font-bold rounded-lg" >Log Out</button>
+                        <button
+                            onClick={() => logOutUser()}
+                            className="bg-red-600 text-white w-full py-3 font-bold rounded-lg"
+                        >
+                            Log Out
+                        </button>
                     </li>
                 </ul>
             </div>
