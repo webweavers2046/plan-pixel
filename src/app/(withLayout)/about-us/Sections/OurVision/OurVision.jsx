@@ -4,7 +4,7 @@ import camera from "@/assets/icons/camera-icon.png";
 
 const OurVision = () => {
   return (
-    <div className="flex justify-between items-center flex-wrap md:my-28">
+    <div className="flex justify-between items-center flex-wrap my-10 md:my-28">
       {/* Left Text Content */}
       <div className="md:w-1/2">
         <h2 className="text-[30px] md:text-[40px] font-bold mb-5 md:mb-10">Our Vision</h2>
