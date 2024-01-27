@@ -4,9 +4,9 @@ import camera from "@/assets/icons/camera-icon.png";
 
 const OurVision = () => {
   return (
-    <div className="md:px-24 py-28 grid lg:grid-cols-2 place-items-center">
+    <div className="flex justify-between items-center flex-wrap md:my-28">
       {/* Left Text Content */}
-      <div>
+      <div className="md:w-1/2">
         <h2 className="text-[30px] md:text-[40px] font-bold mb-5 md:mb-10">Our Vision</h2>
         <div className="text-lg leading-normal space-y-5">
           <p>
@@ -32,13 +32,12 @@ const OurVision = () => {
       </div>
 
       {/* Right Image Content */}
-      <div className="flex justify-end w-full ml-10">
+
         <Image
           className=""
           src={camera}
           alt="camera image"
         ></Image>
-      </div>
     </div>
   );
 };
