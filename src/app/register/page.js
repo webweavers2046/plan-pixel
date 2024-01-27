@@ -31,6 +31,7 @@ const Register = () => {
 
         createUser(email, password).then((res) => {
             if (res) {
+                router.push("/dashboard");
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -38,7 +39,6 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                router.push("/dashboard");
                 reset();
             }
         });
