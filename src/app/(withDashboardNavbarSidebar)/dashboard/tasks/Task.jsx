@@ -10,8 +10,6 @@ import Swal from "sweetalert2";
 // import { useForm } from "react-hook-form";
 
 const Task = ({ task, tasks, setTasks, refetch }) => {
-    console.log(task);
-    console.log(tasks);
     // const [requiredError, setRequiredError] = useState("");
     // const [openDeleteModal, setOpenDeleteModal] = useState(false);
     // const [buttonLoading, setButtonLoading] = useState(false);
