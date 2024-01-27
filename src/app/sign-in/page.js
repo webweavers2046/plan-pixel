@@ -11,8 +11,10 @@ import "@/styles/globals.css";
 import { useContext } from "react";
 // Auth Provider
 import { AuthContext } from "@/Providers/AuthProviders";
+import { useRouter } from "next/router";
 
 const SignIn = () => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -30,7 +32,7 @@ const SignIn = () => {
         signIn(email, password).then((result) => {
             const user = result.user;
             console.log(user);
-            window.location.replace('/dashboard')
+            window.location.replace("/dashboard");
             Swal.fire({
                 title: "User Login Successful.",
                 showClass: {
@@ -45,7 +47,7 @@ const SignIn = () => {
 
     const handleGoogleSignIn = () => {
         googleSignIn().then((res) => {
-            window.location.replace('/dashboard')
+            window.location.replace("/dashboard");
             Swal.fire({
                 title: "User Login Successful.",
                 showClass: {
@@ -55,6 +57,7 @@ const SignIn = () => {
                     popup: "animate__animated animate__fadeOutUp",
                 },
             });
+            router.push("/dashboard");
         });
     };
 

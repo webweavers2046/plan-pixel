@@ -11,8 +11,10 @@ import Swal from "sweetalert2";
 import { useContext } from "react";
 import "@/styles/globals.css";
 import { AuthContext } from "@/Providers/AuthProviders";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+    const router = useRouter();
     const { createUser, googleSignIn } = useContext(AuthContext);
 
     const {
@@ -36,6 +38,7 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
+                router.push("/dashboard");
                 reset();
             }
         });
@@ -52,6 +55,7 @@ const Register = () => {
                     popup: "animate__animated animate__fadeOutUp",
                 },
             });
+            router.push("/dashboard");
         });
     };
 
