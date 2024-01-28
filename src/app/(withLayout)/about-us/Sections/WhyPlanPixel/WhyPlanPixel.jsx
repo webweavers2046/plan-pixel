@@ -2,15 +2,15 @@ import React from "react";
 
 const WhyPlanPixel = () => {
   return (
-    <div className="px-24 pt-20 pb-48 space-y-16">
-        {/* 1st Row */}
-      <div className="flex justify-between">
+    <div className="grid mb-10 md:mb-28">
+      {/* 1st Row */}
+      <div className="flex justify-between flex-wrap gap-6">
         {/* 1st Reason */}
         <div className="text-center">
           <h4 className="px-4 py-2 rounded-full bg-[#FBBC05] inline-block">
             1
           </h4>
-          <h3 className="text-3xl font-semibold mb-3 mt-2">
+          <h3 className="text-2xl md:text-3xl font-semibold mb-3 mt-2">
             Pixel-Perfect Precision
           </h3>
           <p className="leading-normal">
@@ -25,7 +25,7 @@ const WhyPlanPixel = () => {
           <h4 className="px-4 py-2 rounded-full bg-[#93C648] inline-block">
             2
           </h4>
-          <h3 className="text-3xl font-semibold mb-3 mt-2">
+          <h3 className="text-2xl md:text-3xl font-semibold mb-3 mt-2">
             Creative Collaboration
           </h3>
           <p className="leading-normal">
@@ -36,24 +36,20 @@ const WhyPlanPixel = () => {
         </div>
       </div>
 
-
-
-      {/* 2nd Row */}
-
-      <div>
-        <h3 className="text-[#50B577] text-center text-5xl font-bold mt-32 tracking-wide">Why Plane Pixel?</h3>
+      <div className="order-first md:order-none my-10">
+        <h3 className="text-[#50B577] text-center text-4xl md:text-5xl font-bold tracking-wide">
+          Why Plane Pixel?
+        </h3>
       </div>
 
-
-
       {/* 3rd Row */}
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-wrap gap-6">
         {/* 3rd Reason */}
         <div className="text-center">
           <h4 className="px-4 py-2 rounded-full bg-[#50B577] inline-block">
             3
           </h4>
-          <h3 className="text-3xl font-semibold mb-3 mt-2">
+          <h3 className="text-2xl md:text-3xl font-semibold mb-3 mt-2">
             Pixel-Perfect Precision
           </h3>
           <p className="leading-normal">
@@ -68,7 +64,7 @@ const WhyPlanPixel = () => {
           <h4 className="px-4 py-2 rounded-full bg-[#FBBC05] inline-block">
             4
           </h4>
-          <h3 className="text-3xl font-semibold mb-3 mt-2">
+          <h3 className="text-2xl md:text-3xl font-semibold mb-3 mt-2">
             Creative Collaboration
           </h3>
           <p className="leading-normal">
