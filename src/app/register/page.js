@@ -11,8 +11,10 @@ import Swal from "sweetalert2";
 import { useContext } from "react";
 import "@/styles/globals.css";
 import { AuthContext } from "@/Providers/AuthProviders";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+    const router = useRouter();
     const { createUser, googleSignIn } = useContext(AuthContext);
 
     const {
@@ -29,6 +31,7 @@ const Register = () => {
 
         createUser(email, password).then((res) => {
             if (res) {
+                router.push("/dashboard");
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -52,6 +55,7 @@ const Register = () => {
                     popup: "animate__animated animate__fadeOutUp",
                 },
             });
+            router.push("/dashboard");
         });
     };
 

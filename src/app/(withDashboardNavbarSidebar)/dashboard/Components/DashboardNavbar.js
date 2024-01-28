@@ -1,6 +1,11 @@
+"use client";
+import { AuthContext } from "@/Providers/AuthProviders";
 import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
+import { useContext } from "react";
 const DashboardNavbar = () => {
+    const { user } = useContext(AuthContext);
+    console.log(user);
     return (
         <div className="flex justify-between items-center p-4">
             <div>
@@ -59,10 +64,14 @@ const DashboardNavbar = () => {
             </div>
             <div>
                 <div className="absolute mt-[10px] ml-2">
-                    <Image src={image} alt="member" width={25} height={25} />
+                    <img
+                        src={user?.photoURL ? user.photoURL : image}
+                        alt="member"
+                        className="w-8 h-8 rounded-full"
+                    />
                 </div>
                 <select className="bg-gray-100 h-[48px] rounded-md py-2 pl-12">
-                    <option>Abdul Hamid</option>
+                    <option>{user?.displayName}</option>
                     <option>Shuffle the Square</option>
                     <option>Shuffle the Asquare</option>
                 </select>
