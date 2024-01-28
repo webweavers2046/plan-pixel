@@ -25,7 +25,7 @@ const ArticleCard = ({ post }) => {
   const { title, description, author, date, image_url, avatar_url } = post;
 
   return (
-    <div className="max-w-[364px] rounded-lg overflow-hidden shadow-lg bg-white">
+    <div className="lg:max-w-[364px] max-w-[345px] rounded-lg overflow-hidden shadow-lg bg-white">
       <Image
         className="w-full h-48 object-cover"
         src={image_url}

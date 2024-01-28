@@ -5,7 +5,7 @@ import Image from "next/image";
 const Testimonial = () => {
     return (
         <section className="bg-footer testimonial-bg">
-            <div className="container mx-auto py-32 md:px-24 px-3">
+            <div className="container mx-auto py-32 md:px-24 px-7">
                 <div className="grid lg:grid-cols-2 xl:gap-10 gap-6">
                     <div className="">
                         <div className="">
