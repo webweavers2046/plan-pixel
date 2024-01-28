@@ -5,10 +5,12 @@ import Link from "next/link";
 import { TbMenu } from "react-icons/tb";
 import { IoClose } from "react-icons/io5";
 import logo from "@/assets/Logo.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/Providers/AuthProviders";
 
 const Navbar = () => {
     const [closeMenu, setCloseMenu] = useState(false);
+    const { user } = useContext(AuthContext);
     const navLinks = [
         {
             route: "Home",
@@ -62,7 +64,7 @@ const Navbar = () => {
                         <div className="lg:block hidden items-center gap-3">
                             <Link
                                 className="py-3 px-6 bg-gradient-to-br from-[#93C648] to-[#50B577] text-white font-bold text-base rounded-sm"
-                                href="/sign-in"
+                                href={`${user ? "/dashboard" : "/sign-in"}`}
                             >
                                 Get Started
                             </Link>
