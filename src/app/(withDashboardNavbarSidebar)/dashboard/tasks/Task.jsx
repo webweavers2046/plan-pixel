@@ -3,6 +3,10 @@ import { BsStopwatchFill } from "react-icons/bs";
 import { MdDoubleArrow } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoIosArrowUp } from "react-icons/io";
+
+
 
 // import { BiSolidMessageSquare } from "react-icons/bi";
 // import { useRef, useState } from "react";
@@ -11,7 +15,7 @@ import Swal from "sweetalert2";
 
 const Task = ({ task, tasks, setTasks, refetch }) => {
     console.log(task);
-    console.log(tasks);
+    // console.log(tasks);
     // const [requiredError, setRequiredError] = useState("");
     // const [openDeleteModal, setOpenDeleteModal] = useState(false);
     // const [buttonLoading, setButtonLoading] = useState(false);
@@ -114,6 +118,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
         <div className="mt-3 bg-[#F9F9F9] rounded-md p-6 text-black">
             <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>
+                <BsThreeDotsVertical className="text-xl -mt-10 cursor-pointer" />
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
             <div className="flex justify-between items-center">
@@ -125,7 +130,10 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                 </p>
                 <p className="pt-3 flex items-center gap-2">
                     <span className="text-sm pt-0.5">{task.priority}</span>
-                    <MdDoubleArrow className="-rotate-90 text-red-500" />{" "}
+                    {
+                        task?.priority == "High" ? <MdDoubleArrow className="-rotate-90 text-red-500" /> : task?.priority == "Low" ? <MdDoubleArrow className="rotate-90 text-[#93C648]" />: <IoIosArrowUp className="text-red-500"/>
+                    }
+                    
                 </p>
             </div>
             <hr className="mt-5 bg-black h-[2px]" />
