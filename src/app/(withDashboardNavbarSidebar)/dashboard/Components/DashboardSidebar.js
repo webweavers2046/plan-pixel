@@ -1,7 +1,33 @@
+'use client'
+import { AuthContext } from "@/Providers/AuthProviders";
 import logo from "@/assets/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
+import Swal from "sweetalert2";
 const DashboardSidebar = () => {
+
+    const {logOut} = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, log out!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                logOut();
+              Swal.fire({
+                title: "Logged Out",
+                icon: "success"
+              });
+            }
+          });
+    }
     return (
         <div className="bg-gray-300/20 h-screen">
             <div className="py-8 px-6">
@@ -78,6 +104,9 @@ const DashboardSidebar = () => {
                             </svg>
                             Tasks
                         </Link>
+                    </li>
+                    <li className="flex w-full justify-center  ">
+                        <button onClick={() => handleLogOut()} className="bg-red-600 text-white w-full py-3 font-bold rounded-lg" >Log Out</button>
                     </li>
                 </ul>
             </div>

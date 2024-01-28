@@ -8,30 +8,41 @@ import { FiPlusSquare } from "react-icons/fi";
 import Task from "./Task";
 import "@/styles/globals.css";
 import { useEffect, useState } from "react";
+import TaskModal from "../Components/TaskModal";
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
 
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await fetch("../../../../../public/task.json");
+  useEffect(() => {
+    fetch('https://task-management-server-topaz.vercel.app/tasks')
+    .then(res => res.json())
+    .then(data => {
+        // console.log(data);
+        setTasks(data)
+    })
+    
+    // const fetchTasks = async () => {
+    //   try {
+    //     const response = await fetch("/public/task.json");
 
-                if (!response.ok) {
-                    throw new Error("Failed to fetch tasks");
-                }
+    //     if (!response.ok) {
+    //       throw new Error("Failed to fetch tasks");
+    //     }
 
-                const data = await response.json();
-                setTasks(data);
-            } catch (error) {
-                console.error("Error fetching tasks:", error);
-            }
-        };
+    //     const data = await response.json();
+    //     setTasks(data);
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.error("Error fetching tasks:", error);
+    //   }
+    // };
 
-        fetchTasks();
-    }, []);
+    // fetchTasks();
 
-    console.log(tasks);
+  }, []);
+
+//   console.log(tasks);
 
     return (
         <section className="text-white p-6 w-full">
@@ -45,7 +56,7 @@ const Tasks = () => {
                     </p>
                 </div>
                 <div className="">
-                    <button className="bg-white text-black text-sm px-5 py-3 rounded-md font-bold">
+                    <button onClick={() => setOpenModal(!openModal)} className="bg-white text-black text-sm px-5 py-3 rounded-md font-bold">
                         <FiPlusSquare className="inline mb-1 me-2 text-xl" />{" "}
                         Add Task
                     </button>
@@ -64,7 +75,7 @@ const Tasks = () => {
                                     <Task
                                         idx={idx}
                                         key={task._id}
-                                        refetch={refetch}
+                                        // refetch={refetch}
                                         task={task}
                                     />
                                 )
@@ -83,7 +94,7 @@ const Tasks = () => {
                                     <Task
                                         idx={idx}
                                         key={task._id}
-                                        refetch={refetch}
+                                        // refetch={refetch}
                                         task={task}
                                     />
                                 )
@@ -91,25 +102,27 @@ const Tasks = () => {
                     </div>
                 </div>
 
-                <div>
-                    <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
-                        <MdOutlineCallMissedOutgoing className="text-2xl" />{" "}
-                        <h2 className="">Working On</h2>
-                    </div>
-                    <div className="mt-8">
-                        {tasks.map(
-                            (task, idx) =>
-                                task.status === "ongoing" && (
-                                    <Task
-                                        idx={idx}
-                                        key={task._id}
-                                        refetch={refetch}
-                                        task={task}
-                                    />
-                                )
-                        )}
-                    </div>
-                </div>
+        <div>
+          <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
+            <MdOutlineCallMissedOutgoing className="text-2xl" />{" "}
+            <h2 className="">Completed</h2>
+          </div>
+          <div className="mt-8">
+            {tasks.map(
+              (task, idx) =>
+                task.status === "completed" && (
+                  <Task
+                    idx={idx}
+                    key={task._id}
+                    // refetch={refetch}
+                    task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                  />
+                )
+            )}
+          </div>
+        </div>
 
                 <div>
                     <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
@@ -122,7 +135,7 @@ const Tasks = () => {
                                 task.status === "complete" && (
                                     <Task
                                         key={task._id}
-                                        refetch={refetch}
+                                        // refetch={refetch}
                                         idx={idx}
                                         task={task}
                                     />
@@ -131,6 +144,7 @@ const Tasks = () => {
                     </div>
                 </div>
             </div>
+            <TaskModal openModal={openModal} setOpenModal={setOpenModal}></TaskModal>
         </section>
     );
 };

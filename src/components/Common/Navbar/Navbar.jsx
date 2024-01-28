@@ -27,6 +27,10 @@ const Navbar = () => {
             route: "Contact Us",
             path: "/contact",
         },
+        {
+            route: "Dashboard",
+            path: "/dashboard",
+        },
     ];
     return (
         <header className="backdrop:blur-2xl md:px-24">
