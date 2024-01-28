@@ -69,7 +69,6 @@ const Tasks = () => {
             </div>
             <div className="flex items-center gap-x-2">
               <FaPlus className="text-xl cursor-pointer" />
-              <BsThreeDotsVertical className="text-xl cursor-pointer" />
             </div>
           </div>
           <div className="mt-8">
@@ -96,7 +95,6 @@ const Tasks = () => {
             </div>
             <div className="flex items-center gap-x-2">
               <FaPlus className="text-xl cursor-pointer" onClick={() => setOpenModal(!openModal)}/>
-              <BsThreeDotsVertical className="text-xl cursor-pointer" />
             </div>
           </div>
           <div className="mt-8">
@@ -124,7 +122,6 @@ const Tasks = () => {
             </div>
             <div className="flex items-center gap-x-2">
               <FaPlus className="text-xl cursor-pointer" />
-              <BsThreeDotsVertical className="text-xl cursor-pointer" />
             </div>
           </div>
 
@@ -153,7 +150,6 @@ const Tasks = () => {
             </div>
             <div className="flex items-center gap-x-2">
               <FaPlus className="text-xl cursor-pointer" />
-              <BsThreeDotsVertical className="text-xl cursor-pointer" />
             </div>
           </div>
 

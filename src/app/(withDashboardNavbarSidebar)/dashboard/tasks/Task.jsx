@@ -5,7 +5,8 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoIosArrowUp } from "react-icons/io";
-
+import Dropdown from "./Dropdown";
+import { useState } from "react";
 
 
 // import { BiSolidMessageSquare } from "react-icons/bi";
@@ -14,6 +15,7 @@ import { IoIosArrowUp } from "react-icons/io";
 // import { useForm } from "react-hook-form";
 
 const Task = ({ task, tasks, setTasks, refetch }) => {
+    const [isOpen, setIsOpen] = useState(false)
     console.log(task);
     // console.log(tasks);
     // const [requiredError, setRequiredError] = useState("");
@@ -46,7 +48,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Delete it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 // axios.delete(`https://task-management-server-topaz.vercel.app//deleteTask/${id}`)
                 fetch(`https://task-management-server-topaz.vercel.app/deleteTask/${id}`, {
@@ -69,7 +71,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                         }
                     })
             }
-          });
+        });
         // console.log("id", id);
         // setOpenDeleteModal(true);
 
@@ -116,9 +118,13 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
     // };
     return (
         <div className="mt-3 bg-[#F9F9F9] rounded-md p-6 text-black">
-            <div className=" flex items-center gap-2 justify-between">
-                <h2 className="font-semibold text-lg">{task.title}</h2>
-                <BsThreeDotsVertical className="text-xl -mt-10 cursor-pointer" />
+            <div className=" flex items-center gap-2 ">
+                <h2 className="font-semibold text-lg pr-[10px]">{task.title}</h2>
+                <BsThreeDotsVertical onClick={() => setIsOpen(!isOpen)} className="text-xl absolute ml-[230px] -mt-5 cursor-pointer" />
+                {
+                    isOpen && <Dropdown ></Dropdown>
+                }
+                
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
             <div className="flex justify-between items-center">
@@ -131,15 +137,19 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                 <p className="pt-3 flex items-center gap-2">
                     <span className="text-sm pt-0.5">{task.priority}</span>
                     {
-                        task?.priority == "High" ? <MdDoubleArrow className="-rotate-90 text-red-500" /> : task?.priority == "Low" ? <MdDoubleArrow className="rotate-90 text-[#93C648]" />: <IoIosArrowUp className="text-red-500"/>
+                        task?.priority == "High" ? <MdDoubleArrow className="-rotate-90 text-red-500" /> : task?.priority == "Low" ? <MdDoubleArrow className="rotate-90 text-[#93C648]" /> : <IoIosArrowUp className="text-red-500" />
                     }
-                    
+
                 </p>
             </div>
             <hr className="mt-5 bg-black h-[2px]" />
-            <div className="flex justify-end mt-2 ">
+            <div className="flex justify-between mt-2 ">
+                <div>
+                    
+                </div>
                 <MdDelete onClick={() => handleDeleteTask(task._id)} className="text-xl cursor-pointer" />
             </div>
+
 
         </div>
     );
