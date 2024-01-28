@@ -6,8 +6,8 @@ const page = () => {
         <div className=" container mx-auto lg:mt-40 mt-16 mb-32 lg:px-24 flex flex-col-reverse lg:flex-row ">
             {/* Contact information */}
             <div className="lg:w-3/5 mx-auto mt-6">
-                <h2 className="text-5xl font-bold mb-16">Contact Us</h2>
-                <ul className="text-xl mb-8 space-y-4">
+                <h2 className="text-4xl md:text-5xl font-bold mb-8 md:mb-16">Contact Us</h2>
+                <ul className="text-xl mb-4 md:mb-8 space-y-2 md:space-y-4">
                     <li>Location: Dhaka Bangladesh</li>
                     <li>Email: webweavers2046@gmail.com</li>
                     <li>Phone: +880 197070 6676</li>
