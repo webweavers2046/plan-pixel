@@ -15,7 +15,7 @@ const logos = [
 const OurCompany = () => {
     return (
         <div className="md:px-18 my-16">
-                <h1 className="text-[13px] md:text-[20px] text-center mb-4">
+                <h1 className="text-[13px] md:text-[20px] text-center mb-10">
                 Trusted by Fast - Growing Companies
             </h1>
             <div

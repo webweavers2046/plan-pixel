@@ -49,9 +49,9 @@ export const customizationArray = [
 const KeyFeatures = () => {
     return (
         <div className={style.scaleDown}>
-            <div className="container mx-auto">
-                <SectionTitle title={"Our Key Features."} />
-                <div className="mx-auto ml-[38px] overflow-x-hidden">
+            <div className="container mx-auto ">
+                <SectionTitle title={"Our Key Features"} />
+                <div className="mx-auto lg:ml-[38px] px-5 md:px-0 overflow-x-hidden">
                     <div>
                         {/* Task management (smaller card) */}
                         <div className="relative bg-[#99d3a9] shadow-md p-6 text-[11px] sm:text-[15px] ml-0 md:text-[14px] lg:text-[16px] mx-3 md:ml-24 lg:ml-[10%] mb-7 w-full md:w-[600px] rounded-md">
