@@ -1,33 +1,34 @@
+import index from "@/app/(withLayout)/about-us/page";
 import Container from "@/components/Common/Container/Container";
 import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 
 const HowWorks = () => {
     return (
-        <div className="container mx-auto md:px-24 px-2 my-10 md:mt-40 md:mb-48">
+        <div className="container mx-auto md:px-24 px-5  my-10 md:mt-40 md:mb-48 ">
             <SectionTitle
                 isSetWidth={true}
                 title={"How It Works & Get Best Output"}
             />
             <div className="flex items-center justify-center  gap-2 mx-4 lg:mx-0">
-                <span className="bg-[#FBBC05] px-3 py-1 text-white rounded-full">
+                <span className="bg-[#FBBC05] lg:block hidden px-3 py-1 text-white rounded-full">
                     1
                 </span>
-                <span className=" border-t-2 border-dashed border-black flex grow"></span>
-                <span className="bg-[#93C648] px-3 py-1 text-white rounded-full">
+                <span className=" border-t-2 lg:flex hidden border-dashed border-black  grow"></span>
+                <span className="bg-[#93C648] lg:block hidden px-3 py-1 text-white rounded-full">
                     2
                 </span>
-                <span className=" border-t-2 border-dashed border-black flex-grow"></span>
-                <span className="bg-[#50B577] px-3 py-1 text-white rounded-full">
+                <span className=" border-t-2 border-dashed border-black lg:flex hidden flex-grow"></span>
+                <span className="bg-[#50B577] lg:block hidden px-3 py-1 text-white rounded-full">
                     3
                 </span>
-                <span className=" border-t-2 border-dashed border-black flex-grow"></span>
+                <span className=" border-t-2 lg:flex hidden border-dashed border-black flex-grow"></span>
             </div>
             {/* divider */}
 
             <div className="grid lg:grid-cols-3  gap-6 mt-10">
                 {/* card */}
                 {cardsData.map((card, index) => (
-                    <Card key={index} {...card} />
+                    <Card key={index} index={index} {...card} />
                 ))}
             </div>
         </div>
@@ -35,8 +36,14 @@ const HowWorks = () => {
 };
 export default HowWorks;
 
-const Card = ({ title, description }) => (
+const Card = ({ index,title, description }) => (
     <div className="mx-4 lg:mx-0">
+        <div className="flex items-center lg:hidden gap-3 my-4">
+            <span className="bg-[#FBBC05]  px-3 py-1 text-white rounded-full">
+                {index+1}
+            </span>
+            <span className=" border-t-2 flex  border-dashed border-black  grow"></span>
+        </div>
         <h3 className="text-2xl font-bold md:text-[25px]">{title}</h3>
         <p className="text-[16px] text-[#494949] mt-2 md:mt-3">{description}</p>
     </div>
