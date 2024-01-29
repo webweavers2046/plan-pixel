@@ -16,7 +16,7 @@ import { useState } from "react";
 
 const Task = ({ task, tasks, setTasks, refetch }) => {
     const [isOpen, setIsOpen] = useState(false)
-    console.log(task);
+    // console.log(task);
     // console.log(tasks);
     // const [requiredError, setRequiredError] = useState("");
     // const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -72,10 +72,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                     })
             }
         });
-        // console.log("id", id);
-        // setOpenDeleteModal(true);
-
-
+       
     };
     // const onSubmit = (data) => {
     //     setButtonLoading(true);
@@ -122,7 +119,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                 <h2 className="font-semibold text-lg pr-[10px]">{task.title}</h2>
                 <BsThreeDotsVertical onClick={() => setIsOpen(!isOpen)} className="text-xl absolute ml-[230px] -mt-5 cursor-pointer" />
                 {
-                    isOpen && <Dropdown ></Dropdown>
+                    isOpen && <Dropdown id={task?._id} tasks={tasks} setTasks={setTasks}></Dropdown>
                 }
                 
             </div>
@@ -143,12 +140,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                 </p>
             </div>
             <hr className="mt-5 bg-black h-[2px]" />
-            <div className="flex justify-between mt-2 ">
-                <div>
-                    
-                </div>
-                <MdDelete onClick={() => handleDeleteTask(task._id)} className="text-xl cursor-pointer" />
-            </div>
+            
 
 
         </div>

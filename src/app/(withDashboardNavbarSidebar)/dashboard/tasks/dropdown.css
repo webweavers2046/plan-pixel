@@ -13,4 +13,13 @@
 }
 .threeDotDropdown li{
     cursor: pointer;
+    transition: 500ms;
+}
+.threeDotDropdown li:hover{
+    background: gray;
+    color: white;
+    border-radius: 8px;
+    width: full;
+    padding: 10px;
+
 }
