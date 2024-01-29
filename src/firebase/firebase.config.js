@@ -6,12 +6,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBeV4PsMc-dH27-oVFhUxMbHf3hejFbuWA",
-    authDomain: "sami-taskto.firebaseapp.com",
-    projectId: "sami-taskto",
-    storageBucket: "sami-taskto.appspot.com",
-    messagingSenderId: "818290972194",
-    appId: "1:818290972194:web:69049e522acd4120ff9c7b",
+    apiKey: "AIzaSyDThUAo9_kwLqugtCZIZ3XP6DpXujq9hFc",
+    authDomain: "plan-pixel.firebaseapp.com",
+    projectId: "plan-pixel",
+    storageBucket: "plan-pixel.appspot.com",
+    messagingSenderId: "732251253566",
+    appId: "1:732251253566:web:73ea88ce0fd48a15ed1a6f",
 };
 
 // Initialize Firebase
