@@ -1,0 +1,25 @@
+.threeDotDropdown{
+    position: absolute;
+    width: 250px;
+    border-radius: 8px;
+    padding: 20px ;
+    margin-top: 140px;
+    z-index: 1;
+    transition: all .2s;
+}
+.threeDotDropdown::after{
+    transform: scale(1.1);
+
+}
+.threeDotDropdown li{
+    cursor: pointer;
+    transition: 500ms;
+}
+.threeDotDropdown li:hover{
+    background: gray;
+    color: white;
+    border-radius: 8px;
+    width: full;
+    padding: 10px;
+
+}
