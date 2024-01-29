@@ -1,7 +1,4 @@
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import app from "./firebase.config";
-
-const auth = getAuth(app);
+import { GoogleAuthProvider } from "firebase/auth";
 
 export const googleProvider = new GoogleAuthProvider();
 
