@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+// Plan pixel web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDThUAo9_kwLqugtCZIZ3XP6DpXujq9hFc",
     authDomain: "plan-pixel.firebaseapp.com",
