@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 export const AuthContext = createContext(null);
 
 const AuthProviders = ({ children }) => {
+
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -41,7 +42,6 @@ const AuthProviders = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            console.log(currentUser);
 
             setLoading(false);
         });
@@ -58,7 +58,6 @@ const AuthProviders = ({ children }) => {
         logOut,
         googleSignIn,
     };
-
     return (
         <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
     );

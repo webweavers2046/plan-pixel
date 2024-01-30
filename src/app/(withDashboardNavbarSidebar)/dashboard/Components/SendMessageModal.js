@@ -13,7 +13,6 @@ const SendMessageModal = ({ openModal, setOpenModal }) => {
         reset,
     } = useForm();
     const { user } = useContext(AuthContext);
-    console.log("user", user);
 
     const onSubmit = async (data) => {
         setOpenModal(false);

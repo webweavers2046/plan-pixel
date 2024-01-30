@@ -1,8 +1,14 @@
+"use client"
 import image from "@/assets/person/avatar.jpg";
+
+
 import Image from "next/image";
+
 const DashboardNavbar = () => {
+
     return (
         <div className="flex justify-between items-center p-4">
+
             <div>
                 <select className="w-[250px]">
                     <option>Shuffle the Square</option>

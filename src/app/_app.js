@@ -3,6 +3,9 @@ import "@/styles/globals.css";
 import { Hydrate } from "react-query/hydration";
 import { QueryClient, QueryClientProvider } from "react-query";
 import AuthProviders from "@/Providers/AuthProviders";
+import TaskDndProvider from "@/Providers/TaskDndProvider";
+
+
 
 const queryClient = new QueryClient();
 
@@ -11,13 +14,11 @@ const MyApp = ({ Component, pageProps }) => {
 
     return getLayout(
         <QueryClientProvider client={queryClient}>
-            <AuthProviders>
-                <Hydrate state={pageProps.dehydratedState}>
-                    <MainLayout>
-                        <Component {...pageProps} />
-                    </MainLayout>
-                </Hydrate>
-            </AuthProviders>
+            <Hydrate state={pageProps.dehydratedState}>
+                <MainLayout>
+                    <Component {...pageProps} />
+                </MainLayout>
+            </Hydrate>
         </QueryClientProvider>
     );
 };

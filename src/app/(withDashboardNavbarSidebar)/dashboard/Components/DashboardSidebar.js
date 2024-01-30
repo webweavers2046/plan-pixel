@@ -1,5 +1,6 @@
 'use client'
 import { AuthContext } from "@/Providers/AuthProviders";
+import { taskContext } from "@/Providers/TaskDndProvider";
 import logo from "@/assets/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +9,8 @@ import Swal from "sweetalert2";
 const DashboardSidebar = () => {
 
     const {logOut} = useContext(AuthContext);
+
+
 
     const handleLogOut = () => {
         Swal.fire({
