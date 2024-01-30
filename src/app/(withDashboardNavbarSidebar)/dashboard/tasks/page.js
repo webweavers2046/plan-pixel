@@ -4,7 +4,6 @@ import { LuListTodo } from "react-icons/lu";
 import { MdOutlineCallMissedOutgoing } from "react-icons/md";
 import { MdOutlineFileDownloadDone } from "react-icons/md";
 import { FiPlusSquare } from "react-icons/fi";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 import Task from "./Task";
 import "@/styles/globals.css";
@@ -171,7 +170,6 @@ const Tasks = () => {
         </div>
       </div>
       <TaskModal openModal={openModal} setOpenModal={setOpenModal}></TaskModal>
-      {/* <TodoTaskModal openModal={openModal} setOpenModal={setOpenModal}/> */}
     </section>
   );
 };
