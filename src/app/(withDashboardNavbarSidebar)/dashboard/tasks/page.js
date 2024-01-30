@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import TaskModal from "../Components/TaskModal";
 import useFilterTasks from "@/hooks/useFilterTasks";
 import { useGlobalTaskData } from "@/hooks/useGlobalTaskData";
-// React DND
 
 
 const Tasks = () => {
@@ -17,35 +16,19 @@ const Tasks = () => {
   // manage all your state here..
   const [tasks, setTasks] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const { dropOn, draggingOver, dragOverElementName,isDragging } = useGlobalTaskData()
-
-  useEffect(() => {
-    // fetch('https://task-management-server-topaz.vercel.app/tasks')
-    fetch("http://localhost:5000/tasks", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-      })
-      .catch((error) =>
-        console.error("Error fetching tasks:", error)
-      );
-  }, []);
+  const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging } = useGlobalTaskData()
 
   // Tasks in different status
-  const toDoTasks = useFilterTasks(tasks, "to-do")
-  const upcomingTasks = useFilterTasks(tasks, "upcoming")
-  const doingTasks = useFilterTasks(tasks, "doing")
-  const doneTasks = useFilterTasks(tasks, "done")
-
+  const toDoTasks = useFilterTasks(alltasks, "to-do")
+  const upcomingTasks = useFilterTasks(alltasks, "upcoming")
+  const doingTasks = useFilterTasks(alltasks, "doing")
+  const doneTasks = useFilterTasks(alltasks, "done")
 
 
   return (
     <>
       {typeof window !== "undefined" && (
-        <section className="text-white p-6 w-full">
+        <section className={`transition-all ${isDragging?"pb-32":""}`}>
           {/* header section  */}
           <div className="md:flex justify-between items-end border-b pb-6 border-white/50">
             <div className="">
@@ -63,19 +46,19 @@ const Tasks = () => {
               </button>
             </div>
           </div>
-          <div className="grid md:grid-cols-4 lg:gap-6 gap-2  mt-6">
+          <div className="grid md:grid-cols-4 lg:gap-6 gap-2  mt-6 h-screen">
             {/* upcoming task */}
             <div
               droppable
               onDragOver={(e) => draggingOver(e)}
               onDrop={(e) => dropOn(e)}
               id="upcoming"
-              className={`${isDragging?"z-20 relative":""} px-2 rounded-lg transition-all duration-500 ${dragOverElementName === "upcoming"?"bg-[green]":""}`}>
-              <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
+              className={`${isDragging ? "z-20 relative" : ""} px-2 rounded-lg transition-all duration-1000 ${dragOverElementName === "upcoming" ? "bg-[#E3E4E6]" : ""}`}>
+              <div className={`bg-gray-300/20 text-black px-6 py-4 flex items-center mt-2 gap-4 rounded-md ${dragOverElementName =="upcoming"?"bg-[white]":""}`}>
                 <LuListTodo className="text-2xl" /> <h2 className="font-bold">Upcoming</h2>
               </div>
 
-              {upcomingTasks.map(
+              {upcomingTasks?.map(
                 (task, idx) =>
                   <Task idx={idx} key={task._id} task={task} />
               )}
@@ -87,47 +70,47 @@ const Tasks = () => {
               onDragOver={(e) => draggingOver(e)}
               onDrop={(e) => dropOn(e)}
               id="to-do"
-              className={`px-2 ${dragOverElementName && "realative z-50"} rounded-lg transition-all duration-500 ${dragOverElementName === "to-do"?"bg-[blue]":""}`}
+              className={`px-2 ${dragOverElementName && "realative z-50"} rounded-lg transition-all duration-1000 ${dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""}`}
             >
-              <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
-                <LuListTodo className="text-2xl" /> <h2 className="">To-do</h2>
+              <div className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${dragOverElementName =="to-do"?"bg-[white]":""}`}>
+                <LuListTodo className="text-2xl" /> <h2>To-do</h2>
               </div>
 
-              {toDoTasks.map(
+              {toDoTasks?.map(
                 (task, idx) =>
                   <Task idx={idx} key={task._id} task={task} />
               )}
             </div>
             {/* ongoing/doing tasks */}
-            <div 
-                 droppable
-                 onDragOver={(e) => draggingOver(e)}
-                 onDrop={(e) => dropOn(e)}
-                 id="doing"
-                 className={`px-2 rounded-lg transition-all duration-500 ${dragOverElementName === "doing"?"bg-[black]":""}`}
+            <div
+              droppable
+              onDragOver={(e) => draggingOver(e)}
+              onDrop={(e) => dropOn(e)}
+              id="doing"
+              className={`px-2 rounded-lg transition-all duration-1000 ${dragOverElementName === "doing" ? "bg-[#E3E4E6]" : ""}`}
             >
-              <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
+              <div className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${dragOverElementName =="doing"?"bg-[white]":""}`}>
                 <LuListTodo className="text-2xl" /> <h2 className="">Doing</h2>
               </div>
 
-              {doingTasks.map(
+              {doingTasks?.map(
                 (task, idx) =>
                   <Task idx={idx} key={task._id} task={task} />
               )}
             </div>
             {/* done/completed tasks */}
             <div
-                 droppable
-                 onDragOver={(e) => draggingOver(e)}
-                 onDrop={(e) => dropOn(e)}
-                 id="done"
-                 className={`px-2 rounded-lg transition-all duration-500 ${dragOverElementName === "done"?"bg-[crimson]":""}`}
+              droppable
+              onDragOver={(e) => draggingOver(e)}
+              onDrop={(e) => dropOn(e)}
+              id="done"
+              className={`px-2 rounded-lg transition-all duration-1000 ${dragOverElementName === "done" ? "bg-[#E3E4E6]" : ""}`}
             >
-              <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center gap-4 rounded-md">
+              <div className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${dragOverElementName =="done"?"bg-[white]":""}`}>
                 <LuListTodo className="text-2xl" /> <h2 className="">Done</h2>
               </div>
 
-              {doneTasks.map(
+              {doneTasks?.map(
                 (task, idx) =>
                   <Task idx={idx} key={task._id} task={task} />
               )}

@@ -9,8 +9,7 @@ import Swal from "sweetalert2";
 const Task = ({ task, tasks, setTasks, refetch }) => {
 
     // manage all you state here 
-    const {draggingStarted,isDragging} = useGlobalTaskData()
-
+    const {draggingStarted,isDragging,isDropped,draggingTaskId} = useGlobalTaskData()
 
 
     const handleDeleteTask = (id) => {
@@ -52,9 +51,9 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
     return (
         <div
             draggable
-            onDragStart={(e) => draggingStarted(e, task?._id)}
-            className={`mt-4 bg-[#F9F9F9] rounded-md -z-50 p-6 text-black ${isDragging?"cursor-grabbing":"cursor-pointer"}`}>
-            <div className=" flex items-center gap-2 justify-between">
+            onDragStart={(e) => draggingStarted(e, task?._id,task?.status)}
+            className={`transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-6 text-black cursor-pointer ${isDragging ? "cursor-grabbing": ""} ${isDropped?"transition-all linear 1s":""} ${draggingTaskId === task._id && isDragging ? "bg-[green] text-white " : ""}`}
+>            <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
