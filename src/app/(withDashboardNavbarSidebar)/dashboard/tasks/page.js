@@ -46,7 +46,7 @@ const Tasks = () => {
               </button>
             </div>
           </div>
-          <div className="grid md:grid-cols-4 lg:gap-6 gap-2  mt-6 h-screen">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2  mt-6 h-screen">
             {/* upcoming task */}
             <div
               droppable

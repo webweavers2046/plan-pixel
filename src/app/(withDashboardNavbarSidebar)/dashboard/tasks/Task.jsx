@@ -52,7 +52,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
         <div
             draggable
             onDragStart={(e) => draggingStarted(e, task?._id,task?.status)}
-            className={`transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-6 text-black cursor-pointer ${isDragging ? "cursor-grabbing": ""} ${isDropped?"transition-all linear 1s":""} ${draggingTaskId === task._id && isDragging ? "bg-[green] text-white " : ""}`}
+            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-6 text-black ${isDropped?"transition-all linear 1s":""}`}
 >            <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>
             </div>
