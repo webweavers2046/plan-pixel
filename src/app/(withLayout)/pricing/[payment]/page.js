@@ -18,7 +18,6 @@ export default function Payment({ params }) {
   const [amount, setAmount] = React.useState(0);
   const planName = params.payment;
   React.useEffect(() => {
-
     // Create PaymentIntent as soon as the page loads
     fetch("http://localhost:5000/create-payment-intent", {
       method: "POST",
