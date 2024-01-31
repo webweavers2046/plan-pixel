@@ -2,6 +2,7 @@
 import { useTaskGlobalData } from "@/Providers/TaskDndProvider";
 import { useGlobalTaskData } from "@/hooks/useGlobalTaskData";
 import { BsStopwatchFill } from "react-icons/bs";
+import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
@@ -66,13 +67,15 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                 </p>
                 <p className="pt-3 flex items-center gap-2">
                     <span className="text-sm pt-0.5">{task.priority}</span>
-                    <MdDoubleArrow className="-rotate-90 text-red-500" />{" "}
+                    {
+                        task?.priority == "High" ? <MdDoubleArrow className="-rotate-90 text-red-500" /> : task?.priority == "Low" ? <MdDoubleArrow className="rotate-90 text-[#93C648]" /> : <IoIosArrowUp className="text-red-500" />
+                    }
+
                 </p>
             </div>
             <hr className="mt-5 bg-black h-[2px]" />
-            <div className="flex justify-end mt-2 ">
-                <MdDelete onClick={() => handleDeleteTask(task._id)} className="text-xl cursor-pointer" />
-            </div>
+            
+
 
         </div>
     );

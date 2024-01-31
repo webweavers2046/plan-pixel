@@ -4,11 +4,11 @@ import camera from "@/assets/icons/camera-icon.png";
 
 const OurVision = () => {
   return (
-    <div className="px-24 py-28 grid grid-cols-2 place-items-center">
+    <div className="flex justify-between items-center flex-wrap my-10 md:my-28">
       {/* Left Text Content */}
-      <div>
-        <h2 className="text-[40px] font-bold mb-10">Our Vision</h2>
-        <div className="text-lg leading-normal pl-6 space-y-5">
+      <div className="md:w-1/2">
+        <h2 className="text-[30px] md:text-[40px] font-bold mb-5 md:mb-10">Our Vision</h2>
+        <div className="text-lg leading-normal space-y-5">
           <p>
             We envision a world where projects are executed with precision,
             creativity is celebrated, and collaboration knows no bounds. Plan
@@ -32,13 +32,12 @@ const OurVision = () => {
       </div>
 
       {/* Right Image Content */}
-      <div className="flex justify-end w-full ml-10">
+
         <Image
-          className="h-120 w-auto"
+          className=""
           src={camera}
-          alt="heartbeat givers' logo"
+          alt="camera image"
         ></Image>
-      </div>
     </div>
   );
 };

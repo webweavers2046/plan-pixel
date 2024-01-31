@@ -2,7 +2,7 @@
 "use client"
 import { LuListTodo } from "react-icons/lu";
 import { FiPlusSquare } from "react-icons/fi";
-
+import { FaPlus } from "react-icons/fa6";
 import Task from "./Task";
 import "@/styles/globals.css";
 import { useEffect, useState } from "react";
