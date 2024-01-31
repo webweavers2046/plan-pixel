@@ -10,26 +10,26 @@ const Features = () => {
                 <p className="text- font-semibold mb-2 text-green-500">
                     Key Features
                 </p>
-                <h2 className="text-6xl font-semibold w-6/12 text- ">
+                <h2 className="lg:text-6xl md:text-5xl text-2xl font-semibold 2xl:w-6/12 lg:w-8/12 text- ">
                     A task manager you can trust for teams.
                 </h2>
             </div>
-            <div className="mt-20 mb-10">
-                <div className="bg-[#50B577]/30 rounded-xl px-16 pt-24 pb-14 grid grid-cols-7 justify-between">
-                    <div className="col-span-5 px-6 space-y-4">
+            <div className="md:mt-20 mt-6 mb-10">
+                <div className="bg-[#50B577]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-7 justify-between items-center">
+                    <div className="col-span-5 md:px-6 space-y-4">
                         <div className="flex gap-6">
-                            <div className="flex flex-col items-center gap-2">
+                            <div className="md:flex hidden flex-col items-center gap-2">
                                 <div className="mt-2">
-                                    <div className="w-8 h-8 bg-[#50B577] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#50B577] rounded-full"></div>
                                 </div>
                                 <div className="w-0.5 h-full bg-[#50B577] rounded-full"></div>
                             </div>
                             <div className="">
-                                <div className="text-5xl font-semibold ">
+                                <div className="2xl:text-5xl md:text-4xl text-xl font-semibold ">
                                     <h2 className="">Simple to use,</h2>
                                     <h2 className="">Powerful when need.</h2>
                                 </div>
-                                <p className="w-7/12 font-medium mt-4">
+                                <p className="xl:w-7/12 lg:text-base md:text-sm text-xs font-medium mt-4">
                                     Drag and drop feature enables users to
                                     intuitively move elements by clicking,
                                     dragging, and releasing them onto a
@@ -38,55 +38,55 @@ const Features = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex gap-6">
+                        <div className="flex  md:gap-6">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="mt-0.5">
-                                    <div className="w-8 h-8 bg-[#50B577] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#50B577] rounded-full"></div>
                                 </div>
                             </div>
                             <div className="">
-                                <p className="font-medium px-6 py-2 rounded-full bg-[#50B577] text-white">
+                                <p className="font-medium px-6 py-2 rounded-full bg-[#50B577] text-white lg:text-base md:text-sm text-xs">
                                     Harness the Power of Drag and Drop
                                 </p>
                             </div>
                         </div>
-                        <div className="flex gap-6">
+                        <div className="flex md:gap-6">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="mt-0.5">
-                                    <div className="w-8 h-8 bg-[#50B577] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#50B577] rounded-full"></div>
                                 </div>
                             </div>
                             <div className="">
-                                <p className="font-medium px-6 py-2 rounded-full bg-[#50B577] text-white">
+                                <p className="font-medium px-6 py-2 rounded-full bg-[#50B577] text-white lg:text-base md:text-sm text-xs">
                                     Master Efficiency
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div className="col-span-2 me-0 relative">
+                    <div className="col-span-2 me-0 relative lg:mt-0 mt-10">
                         <Image
-                            className="-mt-40 me-0"
+                            className="2xl:-mt-40 xl:-mt-32 -mt-0 me-0"
                             src={featureImage01}
                             alt="Feature Image"
                         ></Image>
                     </div>
                 </div>
-                <div className="bg-[#FBBC05]/30 rounded-xl px-16 pt-24 pb-14 grid grid-cols-8 justify-between mt-16">
-                    <div className="col-span-4 px-6 space-y-4">
-                        <div className="flex gap-6">
-                            <div className="flex flex-col items-center gap-2">
+                <div className="bg-[#FBBC05]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-8 justify-between items-center md:mt-16 mt-6">
+                    <div className="xl:col-span-4 lg:col-span-5 md:px-6 space-y-4">
+                        <div className="flex md:gap-6">
+                            <div className="md:flex hidden flex-col items-center gap-2">
                                 <div className="mt-2">
-                                    <div className="w-8 h-8 bg-[#FBBC05] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#FBBC05] rounded-full"></div>
                                 </div>
                                 <div className="w-0.5 h-full bg-[#FBBC05] rounded-full"></div>
                             </div>
                             <div className="">
-                                <div className="text-5xl font-semibold ">
+                                <div className="2xl:text-5xl md:text-4xl text-xl font-semibold ">
                                     <h2 className="">
                                         Message Your Team Members Effortlessly!
                                     </h2>
                                 </div>
-                                <p className=" font-medium mt-4">
+                                <p className=" font-medium mt-4 lg:text-base md:text-sm text-xs">
                                     Stay in sync with your team by utilizing the
                                     message team member option, facilitating
                                     quick communication and collaboration on
@@ -94,31 +94,31 @@ const Features = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex gap-6">
+                        <div className="flex  md:gap-6">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="mt-0.5">
-                                    <div className="w-8 h-8 bg-[#FBBC05] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#FBBC05] rounded-full"></div>
                                 </div>
                             </div>
                             <div className="">
-                                <p className=" px-6 py-2 rounded-full bg-[#FBBC05] text-black font-semibold">
+                                <p className=" px-6 py-2 rounded-full bg-[#FBBC05] text-black font-semibold lg:text-base md:text-sm text-xs">
                                     Harness the Power of Drag and Drop
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div className="col-span-3 me-0 relative">
+                    <div className="lg:col-span-3  me-0 relative lg:mt-0 mt-10">
                         <Image
                             className="-mt- me-0"
                             src={featureImage02}
                             alt="Feature Image"
                         ></Image>
                     </div>
-                    <div className="">
+                    <div className="xl:block hidden">
                         <div className="flex gap-2">
                             <div className="flex flex-col items-center">
                                 <div className="mt-0.5">
-                                    <div className="w-8 h-8 bg-[#FBBC05] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#FBBC05] rounded-full"></div>
                                 </div>
                             </div>
                             <div className="">
@@ -129,7 +129,7 @@ const Features = () => {
                         </div>
                     </div>
                 </div>
-                <div className="bg-[#93C648]/30 rounded-xl px-16 py-16 grid grid-cols-8 justify-between mt-16">
+                <div className="bg-[#93C648]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-8 justify-between items-center md:mt-16 mt-6">
                     <div className="col-span-3 me-0 relative ms-6">
                         <Image
                             className="-mt- me-0"
@@ -137,23 +137,23 @@ const Features = () => {
                             alt="Feature Image"
                         ></Image>
                     </div>
-                    <div className=""></div>
-                    <div className="col-span-4 px-6 space-y-4 py-10">
-                        <div className="flex gap-6">
-                            <div className="flex flex-col items-center gap-2">
+                    <div className="xl:block hidden"></div>
+                    <div className="xl:col-span-4 lg:col-span-5 md:px-6 space-y-4 py-10">
+                        <div className="flex  md:gap-6">
+                            <div className="md:flex hidden flex-col items-center gap-2">
                                 <div className="mt-2">
-                                    <div className="w-8 h-8 bg-[#93C648] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#93C648] rounded-full"></div>
                                 </div>
                                 <div className="w-0.5 h-full bg-[#93C648] rounded-full"></div>
                             </div>
                             <div className="">
-                                <div className="text-5xl font-semibold ">
+                                <div className="2xl:text-5xl md:text-4xl text-xl  font-semibold ">
                                     <h2 className="">
                                         Stay on Track: Manage Tasks
                                         Effortlessly!
                                     </h2>
                                 </div>
-                                <p className=" font-medium mt-4">
+                                <p className=" font-medium mt-4 lg:text-base md:text-sm text-xs">
                                     Efficiently track your progress with the
                                     user task function, allowing you to view
                                     both completed and incomplete tasks at a
@@ -164,14 +164,14 @@ const Features = () => {
                         <div className="flex gap-6">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="mt-0.5">
-                                    <div className="w-8 h-8 bg-[#93C648] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#93C648] rounded-full"></div>
                                 </div>
                             </div>
-                            <div className="flex gap-2">
-                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white">
+                            <div className="md:flex hidden gap-2">
+                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white lg:text-base md:text-sm text-xs">
                                     Time Management
                                 </p>
-                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white">
+                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white lg:text-base md:text-sm text-xs">
                                     Task Tracking
                                 </p>
                             </div>
@@ -179,26 +179,26 @@ const Features = () => {
                         <div className="flex gap-6">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="mt-0.5">
-                                    <div className="w-8 h-8 bg-[#93C648] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#93C648] rounded-full"></div>
                                 </div>
                             </div>
                             <div className="">
-                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white">
+                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white lg:text-base md:text-sm text-xs">
                                     Project Organization
                                 </p>
                             </div>
                         </div>
-                        <div className="flex gap-6">
+                        <div className=" md:gap-6 2xl:flex md:hidden ">
                             <div className="flex flex-col items-center gap-2">
                                 <div className="mt-0.5">
-                                    <div className="w-8 h-8 bg-[#93C648] rounded-full"></div>
+                                    <div className="w-8 h-8 md:block hidden bg-[#93C648] rounded-full"></div>
                                 </div>
                             </div>
-                            <div className="flex gap-2">
-                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white">
+                            <div className="md:flex hidden gap-2">
+                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white lg:text-base md:text-sm text-xs">
                                     Efficiency Enhancement
                                 </p>
-                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white">
+                                <p className="font-medium px-6 py-2 rounded-full bg-[#93C648] text-white lg:text-base md:text-sm text-xs">
                                     Goal Management
                                 </p>
                             </div>

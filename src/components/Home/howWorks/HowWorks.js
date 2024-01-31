@@ -5,7 +5,7 @@ import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 const HowWorks = () => {
     return (
         <div className="container mx-auto md:px-24 px-5  mb-10 md:mt-10 md:mb-48 ">
-            <h2 className="text-5xl text-center font-semibold mb-16">
+            <h2 className="lg:text-6xl md:text-5xl text-2xl text-center font-semibold md:mb-16 mb-2">
                 How It Works & Get <br /> Best Output
             </h2>
             <div className="flex items-center justify-center  gap-2 mx-4 lg:mx-0">
@@ -37,9 +37,9 @@ export default HowWorks;
 
 const Card = ({ index, title, description }) => (
     <div
-        className={`mx-4 lg:mx-0 border p-10 rounded-b-2xl rounded-tr-2xl ${
-            index === 2 ? "bg-[#50B577]/30" : "bg-[#FBBC05]/30"
-        } ${index === 1 && "bg-[#93C648]/30"}`}
+        className={`mx-4 lg:mx-0  p-10 rounded-b-2xl rounded-tr-2xl ${
+            index === 1 && "bg-[#93C648]/30"
+        } ${index === 2 ? "bg-[#50B577]/30" : "bg-[#FBBC05]/30"} `}
     >
         <div className="flex items-center lg:hidden gap-3 my-4 ">
             <span className="bg-[#FBBC05]  px-3 py-1 text-white rounded-full">
