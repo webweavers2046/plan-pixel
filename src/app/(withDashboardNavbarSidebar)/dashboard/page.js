@@ -15,8 +15,7 @@ const Dashboard = () => {
       <div>
         <MyTask />
       </div>
-      {/* colum 1 */}
-
+      {/* colum 3 */}
       <div>
         <Calender />
         <TeamMembers />
