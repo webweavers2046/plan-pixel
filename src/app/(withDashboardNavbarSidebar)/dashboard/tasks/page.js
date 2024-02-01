@@ -37,6 +37,7 @@ const Tasks = () => {
                 Create and complete and manage your tasks using TaskTo task board.
               </p>
             </div>
+<<<<<<< HEAD
             <div className="">
               <button
                 onClick={() => setOpenModal(!openModal)}
@@ -62,8 +63,68 @@ const Tasks = () => {
                 (task, idx) =>
                   <Task idx={idx} key={task._id} task={task} />
               )}
+=======
+            <div className="flex items-center gap-x-2">
+              <FaPlus className="text-xl cursor-pointer" />
+            </div>
+          </div>
+          <div className="mt-8">
+            {tasks.map(
+              (task, idx) =>
+                task.status === "upcoming" && (
+                  <Task
+                    idx={idx}
+                    key={task._id}
+                    // refetch={refetch}
+                    task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                  />
+                )
+            )}
+          </div>
+        </div>
+        <div>
+          <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center justify-between gap-4 rounded-md f">
+            <div className="flex items-center gap-x-3">
+              <LuListTodo className="text-2xl" />
+              <h2 className="font-semibold">To Do</h2>
+            </div>
+            <div className="flex items-center gap-x-2">
+              <FaPlus className="text-xl cursor-pointer" onClick={() => setOpenModal(!openModal)}/>
+            </div>
+          </div>
+          <div className="mt-8">
+            {tasks.map(
+              (task, idx) =>
+                task.status === "to-do" && (
+                  <Task
+                    idx={idx}
+                    key={task._id}
+                    // refetch={refetch}
+                    task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                  />
+                )
+            )}
+          </div>
+        </div>
+
+        <div>
+          <div className="bg-gray-300/20 text-black px-6 py-4 flex items-center justify-between gap-4 rounded-md f">
+            <div className="flex items-center gap-x-3">
+              <MdOutlineCallMissedOutgoing className="text-2xl" />
+              <h2 className="font-semibold">Working On</h2>
+            </div>
+            <div className="flex items-center gap-x-2">
+              <FaPlus className="text-xl cursor-pointer" />
+            </div>
+          </div>
+>>>>>>> d3a00d0f4f4cecbaa7d5993ef767f9f0f9472424
 
             </div>
+<<<<<<< HEAD
             {/* to do task */}
             <div
               droppable
@@ -120,6 +181,32 @@ const Tasks = () => {
         </section>
       )}
     </>
+=======
+            <div className="flex items-center gap-x-2">
+              <FaPlus className="text-xl cursor-pointer" />
+            </div>
+          </div>
+
+          <div className="mt-8">
+            {tasks.map(
+              (task, idx) =>
+                task.status === "completed" && (
+                  <Task
+                    key={task._id}
+                    // refetch={refetch}
+                    idx={idx}
+                    task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                  />
+                )
+            )}
+          </div>
+        </div>
+      </div>
+      <TaskModal openModal={openModal} setOpenModal={setOpenModal}></TaskModal>
+    </section>
+>>>>>>> d3a00d0f4f4cecbaa7d5993ef767f9f0f9472424
   );
 };
 

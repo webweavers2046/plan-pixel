@@ -1,5 +1,6 @@
 import Articles from "@/components/Home/Articles/Articles";
 import OurCompany from "@/components/Home/Company/OurCompany";
+import Features from "@/components/Home/Features/Features";
 import GetUpdate from "@/components/Home/GetUpdate/GetUpdate";
 import Header from "@/components/Home/Header/Header";
 import KeyFeatures from "@/components/Home/KeyFeature/KeyFeatures";
@@ -11,7 +12,8 @@ export default function Home() {
         <main className="">
             <Header />
             <OurCompany />
-            <KeyFeatures />
+            {/* <KeyFeatures /> */}
+            <Features />
             <HowWorks />
             <Testimonial />
             <GetUpdate />

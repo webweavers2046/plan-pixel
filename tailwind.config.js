@@ -5,6 +5,8 @@ module.exports = {
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
         "./node_modules/flowbite-react/lib/**/*.js",
+        "./pages/**/*.{ts,tsx}",
+        "./public/**/*.html",
     ],
     theme: {
         extend: {
@@ -22,7 +24,5 @@ module.exports = {
             },
         },
     },
-    plugins: [
-        require("flowbite/plugin")
-    ],
+    plugins: [require("flowbite/plugin")],
 };

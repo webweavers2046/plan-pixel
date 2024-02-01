@@ -16,6 +16,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+<<<<<<< HEAD
     return (
         <html lang="en">
             <body className={`${lato.className}`}>
@@ -29,4 +30,14 @@ export default function RootLayout({ children }) {
             </body>
         </html>
     );
+=======
+  return (
+    <html lang="en">
+      
+      <body className={`${lato.className}`}>
+        <AuthProviders>{children}</AuthProviders>
+      </body>
+    </html>
+  );
+>>>>>>> d3a00d0f4f4cecbaa7d5993ef767f9f0f9472424
 }

@@ -4,6 +4,7 @@ import { useGlobalTaskData } from "@/hooks/useGlobalTaskData";
 import { BsStopwatchFill } from "react-icons/bs";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";
+<<<<<<< HEAD
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 
@@ -56,6 +57,27 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
             className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-6 text-black ${isDropped?"transition-all linear 1s":""}`}
 >            <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>
+=======
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoIosArrowUp } from "react-icons/io";
+import Dropdown from "./Dropdown";
+import { useState } from "react";
+
+
+const Task = ({ task, tasks, setTasks }) => {
+    const [isOpen, setIsOpen] = useState(false)
+    
+
+    return (
+        <div className="mt-3 bg-[#F9F9F9] rounded-md p-6 text-black">
+            <div className=" flex items-center gap-2 ">
+                <h2 className="font-semibold text-lg pr-[10px]">{task.title}</h2>
+                <BsThreeDotsVertical onClick={() => setIsOpen(!isOpen)} className="text-xl absolute ml-[230px] -mt-5 cursor-pointer" />
+                {
+                    isOpen && <Dropdown id={task?._id} task={task} tasks={tasks} setTasks={setTasks}></Dropdown>
+                }
+                
+>>>>>>> d3a00d0f4f4cecbaa7d5993ef767f9f0f9472424
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
             <div className="flex justify-between items-center">
