@@ -3,8 +3,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useGetSocketData from "@/hooks/useGetAllTasks";
-import apiConnector from "@/hooks/useAxios";
 import toast from "react-hot-toast";
+import apiConnector from "@/hooks/useAxios";
+import axios from "axios";
 
 // Global context provider for managing shared state
 export const taskContext = createContext(null);
@@ -64,8 +65,7 @@ export const TaskDndProvider = ({ children }) => {
 
     // Patch http request to change the state
     const url = `/updateTaskState?id=${draggingTaskId}&state=${droppableArea}`;
-    xios
-      .patch(url)
+    xios.patch(url)
       .then((data) => {
         //
         const actualData = data.data;

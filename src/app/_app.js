@@ -17,15 +17,6 @@ const MyApp = ({ Component, pageProps }) => {
             <Toaster/>
         </Hydrate>
 
-        <QueryClientProvider client={queryClient}>
-            <AuthProviders>
-                <Hydrate state={pageProps.dehydratedState}>
-                    <MainLayout>
-                        <Component {...pageProps} />
-                    </MainLayout>
-                </Hydrate>
-            </AuthProviders>
-        </QueryClientProvider>
     );
 };
 
