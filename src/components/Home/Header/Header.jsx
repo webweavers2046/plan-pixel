@@ -21,7 +21,7 @@ const Header = () => {
                 <h4 className="py-2 px-5 bg-[#E9F5E3] rounded-md mb-8 text-xs font-medium">
                     Version 2.4 Released
                 </h4>
-                <h1 className="font-extrabold lg:text-7xl md:text-5xl text-2xl md:leading-[76px]">
+                <h1 className="font-extrabold xl:text-7xl lg:text-6xl md:text-5xl text-2xl md:leading-[76px]">
                     Manage all of your <br /> task activities in one place
                 </h1>
                 <p className="mt-5 mb-12 leading-relaxed md:text-base text-sm">
