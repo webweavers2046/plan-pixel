@@ -3,7 +3,8 @@
 import { io } from "socket.io-client";
 import { useEffect } from "react";
 
-export const socket = io("http://localhost:5000/"); 
+// export const socket = io("http://localhost:5000/"); 
+export const socket = io("https://plan-pixel-backend-jet.vercel.app/"); 
 
 const SocketComponent = ({ children }) => {
   useEffect(() => {
