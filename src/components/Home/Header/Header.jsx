@@ -37,37 +37,37 @@ const Header = () => {
             <div className="flex justify-center gap-8 mt-20">
                 <div className="flex items-center justify-center mb-8">
                     <Image
-                        className="w-32 rounded-t-3xl"
+                        className="w-32 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic2}
                         alt="pic1"
                     />
                 </div>
                 <div className="flex items-end">
                     <Image
-                        className="w-80 rounded-t-3xl"
+                        className="w-80 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic3}
                         alt="pic2"
                     />
                 </div>
                 <div className="flex items-end justify-center">
                     <Image
-                        className="w-80 rounded-t-3xl"
+                        className="w-80 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic4}
                         alt="pic3"
                     />
                 </div>
                 <div className="flex items-end justify-center mb-6">
                     <Image
-                        className="w-32 rounded-t-3xl"
+                        className="w-32 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic5}
                         alt="pic4"
                     />
                 </div>
-                <div className="flex items-end justify-end">
+                <div className="lg:flex hidden items-end justify-end">
                     <Image
                         src={bannerPie}
                         alt="pic4"
-                        className="w-72 rounded-t-3xl"
+                        className="w-72 xl:rounded-t-3xl md:rounded-t-xl"
                     />
                 </div>
             </div>
