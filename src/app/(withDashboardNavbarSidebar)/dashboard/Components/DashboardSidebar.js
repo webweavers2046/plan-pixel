@@ -10,30 +10,9 @@ import Swal from "sweetalert2";
 import { IoSettingsSharp } from "react-icons/io5";
 
 const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
-    const { logOut } = useContext(AuthContext);
-
-    const handleLogOut = () => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, log out!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                logOut();
-                Swal.fire({
-                    title: "Logged Out",
-                    icon: "success",
-                });
-            }
-        });
-    };
     return (
         <div className="sticky top-0">
-            <div className={`  mr-2 h-screen border-r relative `}>
+            <div className={`  mr-2 h-screen border-r-2 relative `}>
                 <IoClose
                     className={`${
                         !openDashboard && "hidden"
@@ -128,14 +107,6 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                                 <IoSettingsSharp className="w-7 h-7" />
                                 Setting
                             </Link>
-                        </li>
-                        <li className="flex w-full justify-center  ">
-                            <button
-                                onClick={() => handleLogOut()}
-                                className="bg-red-600 text-white lg:text-[14px] w-full py-2 font-bold rounded-lg"
-                            >
-                                Log Out
-                            </button>
                         </li>
                     </ul>
                 </div>

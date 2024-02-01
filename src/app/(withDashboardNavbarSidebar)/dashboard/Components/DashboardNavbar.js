@@ -2,20 +2,50 @@
 
 import { AuthContext } from "@/Providers/AuthProviders";
 import image from "@/assets/person/avatar.jpg";
+import Image from "next/image";
 import { useContext } from "react";
+import { Dropdown } from "flowbite-react";
+import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
+import Link from "next/link";
 
 const DashboardNavbar = () => {
     const { user } = useContext(AuthContext);
+    console.log(user);
+
+    const handleLogOut = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, log out!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logOut();
+                Swal.fire({
+                    title: "Logged Out",
+                    icon: "success",
+                });
+            }
+        });
+    };
     return (
-        <div className="flex justify-between items-center p-4">
-            <div>
-                <select className="w-[250px]">
-                    <option>Shuffle the Square</option>
-                    <option>Shuffle the Square</option>
-                    <option>Shuffle the Asquare</option>
-                </select>
+        <div className="flex justify-between items-center p-4 gap-6">
+            <div className=" py-2 px-3 rounded-lg ">
+                <Dropdown
+                    className="bg-gray-100 py-2 px-3 "
+                    inline
+                    label="Workspace 01"
+                >
+                    <Dropdown.Item>Workspace 02</Dropdown.Item>
+                    <Dropdown.Item>Workspace 03</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item icon={HiLogout}>Sign out</Dropdown.Item>
+                </Dropdown>
             </div>
-            <div>
+            <div className="grow">
                 <div className="absolute ml-[20px] mt-[17px]">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +63,7 @@ const DashboardNavbar = () => {
                     </svg>
                 </div>
                 <input
-                    className="w-[550px] h-[48px] rounded-md bg-gray-100 text-sm pl-16 py-2 "
+                    className="w-full rounded-lg bg-gray-100 text-sm pl-16 py-4 border-0 "
                     placeholder="Find The task what you’re looking for..."
                     type="text"
                 ></input>
@@ -62,19 +92,46 @@ const DashboardNavbar = () => {
                     />
                 </svg>
             </div>
-            <div>
-                <div className="absolute mt-[10px] ml-2">
-                    <img
-                        src={user?.photoURL ? user.photoURL : image}
-                        alt="member"
-                        className="w-8 h-8 rounded-full"
-                    />
-                </div>
-                <select className="bg-gray-100 h-[48px] rounded-md py-2 pl-12">
-                    <option>{user?.displayName}</option>
-                    <option>Shuffle the Square</option>
-                    <option>Shuffle the Asquare</option>
-                </select>
+            <div className="border py-2 px-3 rounded-lg bg-gray-100">
+                <Dropdown
+                    className="bg-gray-100 rounded-lg"
+                    inline
+                    label={
+                        <div className="flex items-center">
+                            <Image
+                                src={user?.photoURL}
+                                alt="member"
+                                width={32}
+                                height={32}
+                                className="w-8 h-8 rounded-full mr-2"
+                            />
+                            <div>
+                                <h2 className="text-sm font-semibold">
+                                    {user?.displayName}
+                                </h2>
+                                <span className="block truncate text-xs">
+                                    {user?.email}
+                                </span>
+                            </div>
+                        </div>
+                    }
+                >
+                    <Dropdown.Item className="mt-2" icon={HiViewGrid}>
+                        Dashboard
+                    </Dropdown.Item>
+                    <Dropdown.Item icon={HiCog}>
+                        <Link href={"/dashboard/setting"}>Settings</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item>
+                        <button
+                            onClick={() => handleLogOut()}
+                            className="bg-red-600 text-white lg:text-[14px] w-full py-2 font-bold rounded-lg"
+                        >
+                            Log Out
+                        </button>
+                    </Dropdown.Item>
+                </Dropdown>
             </div>
         </div>
     );
