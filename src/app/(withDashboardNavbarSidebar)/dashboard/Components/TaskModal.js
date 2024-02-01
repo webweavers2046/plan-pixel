@@ -11,7 +11,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
     const { user } = useContext(AuthContext)
-    
+    console.log('user', user)
 
     const onSubmit = async (data) => {
         console.log('update modal data', data)

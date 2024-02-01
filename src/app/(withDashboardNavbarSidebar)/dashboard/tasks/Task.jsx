@@ -1,7 +1,6 @@
 "use client";
 import { useGlobalTaskData } from "@/hooks/useGlobalTaskData";
 import { BsStopwatchFill } from "react-icons/bs";
-import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";

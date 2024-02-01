@@ -17,7 +17,6 @@ import auth from "@/firebase/firebase.config";
 export const AuthContext = createContext(null);
 
 const AuthProviders = ({ children }) => {
-
     const [user, setUser] = useState(null);
     console.log(user);
     const [loading, setLoading] = useState(true);
@@ -47,6 +46,7 @@ const AuthProviders = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
+            console.log(currentUser);
 
             setLoading(false);
         });
@@ -63,6 +63,7 @@ const AuthProviders = ({ children }) => {
         logOut,
         googleSignIn,
     };
+
     return (
         <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
     );
