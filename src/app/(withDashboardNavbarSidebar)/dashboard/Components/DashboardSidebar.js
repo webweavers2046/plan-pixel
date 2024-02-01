@@ -3,12 +3,13 @@
 import logo from "@/assets/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import "@/styles/globals.css";
 
 import { IoClose, IoSettingsSharp } from "react-icons/io5";
+import { usePathname } from "next/navigation";
 
 const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
-    const router = useRouter();
+    const pathname = usePathname();
     return (
         <div className="sticky top-0">
             <div className={`  mr-2 h-screen border-r-2 relative `}>
@@ -33,9 +34,7 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                         <li>
                             <Link
                                 className={`flex items-center  gap-x-4 ${
-                                    router.pathname == "/dashboard"
-                                        ? "bg-gray-100"
-                                        : ""
+                                    pathname == "/dashboard" ? "active" : ""
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard"
                             >
@@ -84,8 +83,8 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                         <li>
                             <Link
                                 className={`flex items-center  gap-x-4 ${
-                                    router.pathname == "/dashboard/tasks"
-                                        ? "bg-gray-100"
+                                    pathname == "/dashboard/tasks"
+                                        ? "active"
                                         : ""
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard/tasks"
@@ -109,8 +108,8 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                         <li>
                             <Link
                                 className={`flex items-center gap-x-4  ${
-                                    router.pathname == "/dashboard/tasks"
-                                        ? "bg-gray-100"
+                                    pathname == "/dashboard/setting"
+                                        ? "active"
                                         : ""
                                 } px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard/setting"
