@@ -1,15 +1,14 @@
 "use client";
-import { AuthContext } from "@/Providers/AuthProviders";
-import { taskContext } from "@/Providers/TaskDndProvider";
+
 import logo from "@/assets/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
-import { IoClose } from "react-icons/io5";
-import Swal from "sweetalert2";
-import { IoSettingsSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+
+import { IoClose, IoSettingsSharp } from "react-icons/io5";
 
 const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
+    const router = useRouter();
     return (
         <div className="sticky top-0">
             <div className={`  mr-2 h-screen border-r-2 relative `}>
@@ -33,7 +32,11 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                     <ul className="mt-12 text-black space-y-2 mx-4">
                         <li>
                             <Link
-                                className="flex items-center  gap-x-4 bg-gray-100 px-4 py-3 rounded-md cursor-pointer font-semibold"
+                                className={`flex items-center  gap-x-4 ${
+                                    router.pathname == "/dashboard"
+                                        ? "bg-gray-100"
+                                        : ""
+                                }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard"
                             >
                                 <svg
@@ -80,7 +83,11 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                         </li>
                         <li>
                             <Link
-                                className="flex items-center gap-x-4 bg-gray-100 px-4 py-3 rounded-md cursor-pointer font-semibold"
+                                className={`flex items-center  gap-x-4 ${
+                                    router.pathname == "/dashboard/tasks"
+                                        ? "bg-gray-100"
+                                        : ""
+                                }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard/tasks"
                             >
                                 <svg
@@ -101,7 +108,11 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                         </li>
                         <li>
                             <Link
-                                className="flex items-center gap-x-4 bg-gray-100 px-4 py-3 rounded-md cursor-pointer font-semibold"
+                                className={`flex items-center gap-x-4  ${
+                                    router.pathname == "/dashboard/tasks"
+                                        ? "bg-gray-100"
+                                        : ""
+                                } px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard/setting"
                             >
                                 <IoSettingsSharp className="w-7 h-7" />
