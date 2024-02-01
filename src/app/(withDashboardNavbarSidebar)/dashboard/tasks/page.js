@@ -49,7 +49,7 @@ const Tasks = () => {
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2  mt-6 h-screen">
             {/* upcoming task */}
             <div
-              droppable
+              droppable="true"
               onDragOver={(e) => draggingOver(e)}
               onDrop={(e) => dropOn(e)}
               id="upcoming"
@@ -66,7 +66,7 @@ const Tasks = () => {
             </div>
             {/* to do task */}
             <div
-              droppable
+              droppable="true"
               onDragOver={(e) => draggingOver(e)}
               onDrop={(e) => dropOn(e)}
               id="to-do"
@@ -83,7 +83,7 @@ const Tasks = () => {
             </div>
             {/* ongoing/doing tasks */}
             <div
-              droppable
+              droppable="true"
               onDragOver={(e) => draggingOver(e)}
               onDrop={(e) => dropOn(e)}
               id="doing"
@@ -100,7 +100,7 @@ const Tasks = () => {
             </div>
             {/* done/completed tasks */}
             <div
-              droppable
+              droppable="true"
               onDragOver={(e) => draggingOver(e)}
               onDrop={(e) => dropOn(e)}
               id="done"
