@@ -3,13 +3,12 @@
 import { io } from "socket.io-client";
 import { useEffect } from "react";
 
-export const socket = io("http://localhost:5000/"); // Replace with your server URL
+export const socket = io("http://localhost:5000/"); 
 
 const SocketComponent = ({ children }) => {
   useEffect(() => {
     // Connect to the socket
     socket.connect();
-
     // Listen for the "connect" event, indicating that the connection is established
     socket.on("connect", () => {
       console.log("Socket connected!");

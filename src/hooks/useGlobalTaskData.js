@@ -1,10 +1,9 @@
-"use client"
+"use client";
+const { taskContext } = require("@/Providers/TaskDndProvider");
+const { useContext } = require("react");
 
-const { taskContext } = require("@/Providers/TaskDndProvider")
-const { useContext } = require("react")
+const useGlobalTaskData = () => {
+  return useContext(taskContext);
+};
 
-const useGlobalTaskData  = () => {
-    return useContext(taskContext)
-}
-
-export default useGlobalTaskData
+export default useGlobalTaskData;

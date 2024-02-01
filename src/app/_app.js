@@ -1,10 +1,7 @@
 import MainLayout from "@/components/layout/MainLayout";
 import "@/styles/globals.css";
 import { Hydrate } from "react-query/hydration";
-import { QueryClient, QueryClientProvider } from "react-query";
-import AuthProviders from "@/Providers/AuthProviders";
-
-const queryClient = new QueryClient();
+import { Toaster } from 'react-hot-toast'
 
 const MyApp = ({ Component, pageProps }) => {
     const getLayout = Component.getLayout || ((page) => page);

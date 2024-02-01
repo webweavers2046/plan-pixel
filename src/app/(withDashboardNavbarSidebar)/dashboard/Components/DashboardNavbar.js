@@ -1,13 +1,13 @@
-"use client";
+"use client"
 import { AuthContext } from "@/Providers/AuthProviders";
 import image from "@/assets/person/avatar.jpg";
-import Image from "next/image";
 import { useContext } from "react";
+
 const DashboardNavbar = () => {
-    const { user } = useContext(AuthContext);
-    console.log(user);
+    const {user} = useContext(AuthContext)
     return (
         <div className="flex justify-between items-center p-4">
+
             <div>
                 <select className="w-[250px]">
                     <option>Shuffle the Square</option>
