@@ -1,8 +1,9 @@
-//centralized importing task&usecontext to avoid duplication
+"use client";
+const { taskContext } = require("@/Providers/TaskDndProvider");
+const { useContext } = require("react");
 
-import { taskContext } from "@/Providers/TaskDndProvider"
-import { useContext } from "react"
+const useGlobalTaskData = () => {
+  return useContext(taskContext);
+};
 
-export const useGlobalTaskData = () => {
-    return useContext(taskContext)
-}
+export default useGlobalTaskData;

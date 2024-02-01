@@ -1,6 +1,6 @@
 "use client";
-import { useTaskGlobalData } from "@/Providers/TaskDndProvider";
-import { useGlobalTaskData } from "@/hooks/useGlobalTaskData";
+
+import useGlobalTaskData from "@/hooks/useGlobalTaskData";
 import { BsStopwatchFill } from "react-icons/bs";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";

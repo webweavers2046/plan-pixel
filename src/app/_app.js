@@ -7,7 +7,6 @@ const MyApp = ({ Component, pageProps }) => {
     const getLayout = Component.getLayout || ((page) => page);
 
     return getLayout(
-
         <Hydrate state={pageProps.dehydratedState}>
             <MainLayout>
                 <Component {...pageProps} />
