@@ -1,6 +1,63 @@
 "use client";
+import { useTaskGlobalData } from "@/Providers/TaskDndProvider";
+import { useGlobalTaskData } from "@/hooks/useGlobalTaskData";
 import { BsStopwatchFill } from "react-icons/bs";
+import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";
+<<<<<<< HEAD
+import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
+
+const Task = ({ task, tasks, setTasks, refetch }) => {
+
+    // manage all you state here 
+    const {draggingStarted,isDragging,isDropped,draggingTaskId} = useGlobalTaskData()
+
+
+    const handleDeleteTask = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // axios.delete(`https://task-management-server-topaz.vercel.app//deleteTask/${id}`)
+                fetch(`https://task-management-server-topaz.vercel.app/deleteTask/${id}`, {
+                    method: "DELETE",
+
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your task has been deleted.',
+                                'success'
+                            )
+                            // eslint-disable-next-line react/prop-types
+                            const remaining = tasks.filter(task => task._id !== id);
+                            console.log(remaining);
+                            setTasks(remaining);
+                        }
+                    })
+            }
+        });
+
+    };
+
+    return (
+        <div
+            draggable
+            onDragStart={(e) => draggingStarted(e, task?._id,task?.status)}
+            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-6 text-black ${isDropped?"transition-all linear 1s":""}`}
+>            <div className=" flex items-center gap-2 justify-between">
+                <h2 className="font-semibold text-lg">{task.title}</h2>
+=======
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoIosArrowUp } from "react-icons/io";
 import Dropdown from "./Dropdown";
@@ -20,6 +77,7 @@ const Task = ({ task, tasks, setTasks }) => {
                     isOpen && <Dropdown id={task?._id} task={task} tasks={tasks} setTasks={setTasks}></Dropdown>
                 }
                 
+>>>>>>> d3a00d0f4f4cecbaa7d5993ef767f9f0f9472424
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
             <div className="flex justify-between items-center">

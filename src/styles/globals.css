@@ -4,13 +4,13 @@
 @tailwind utilities;
 
 body {
-    /* remove horizontal scroll bar */
-    overflow-x: hidden;
-    min-width: 240px;
+  /* remove horizontal scroll bar */
+  overflow-x: hidden;
+  min-width: 240px;
 }
 .banner-bg {
-    background-image: url("../assets/bg.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: bottom;
+  background-image: url("../assets/bg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
 }
