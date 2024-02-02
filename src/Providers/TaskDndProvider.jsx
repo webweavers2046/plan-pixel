@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import useGetSocketData from "@/hooks/useGetAllTasks";
 import toast from "react-hot-toast";
 import apiConnector from "@/hooks/useAxios";
-import axios from "axios";
+import axios, { all } from "axios";
+import useGlobalContext from "@/hooks/useGlobalContext";
 
 // Global context provider for managing shared state
 export const taskContext = createContext(null);
@@ -22,11 +23,15 @@ export const TaskDndProvider = ({ children }) => {
 
   // Fetching all tasks here
   const alltasks  = useGetSocketData() 
+  const {newTask} = useGlobalContext()
 
   //Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    
+      // adding the new task in local environment 
+      alltasks.push(newTask)
+  }, [newTask]);
 
   // dragging start event
   const draggingStarted = (e, _id, status) => {
@@ -69,7 +74,7 @@ export const TaskDndProvider = ({ children }) => {
         const actualData = data.data;
         if (actualData.updated.modifiedCount > 0) {
           setDroppableAreaName(droppableArea);
-          return toast.success(`Changed to ${actualData.state}`);
+          return toast.success(`Changed to ${actualData.state}`,{position:"top-right"});
         }
       })
       .catch((error) => {

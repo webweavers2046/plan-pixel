@@ -16,7 +16,6 @@ const UpdateTask = ({ openModal, setOpenModal, task }) => {
 
 
     const onSubmit = async (data) => {
-        console.log('updated modal data', data)
         const updateTask = {
             title: data?.title,
             description: data?.description,
@@ -28,8 +27,6 @@ const UpdateTask = ({ openModal, setOpenModal, task }) => {
 
             userEmail: user?.email,
         }
-        console.log('updated task', newTask);
-
 
         await axios.put('/updatetask', updateTask)
             .then(res => {
