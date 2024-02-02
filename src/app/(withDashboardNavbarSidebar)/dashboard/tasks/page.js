@@ -244,10 +244,6 @@ const Tasks = () => {
     const doingTasks = useFilterTasks(alltasks, "doing");
     const doneTasks = useFilterTasks(alltasks, "done");
 
-    console.log("todo ", toDoTasks);
-    console.log("Doing ", doingTasks);
-    console.log("all tasks ", alltasks);
-
     return (
         <>
             {typeof window !== "undefined" && (

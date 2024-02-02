@@ -1,6 +1,7 @@
 'use client'
 
 import { AuthContext } from "@/Providers/AuthProviders";
+import apiConnector from "@/hooks/useAxios";
 import axios from "axios";
 import { title } from "process";
 import { useContext } from "react";
@@ -11,6 +12,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
     const { user } = useContext(AuthContext)
+    const xios = apiConnector()
     
 
     const onSubmit = async (data) => {
@@ -30,7 +32,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
         console.log('new task', newTask);
 
 
-        await axios.post('https://task-management-server-topaz.vercel.app/createtask', newTask)
+        await xios.post('/createTask', newTask)
             .then(res => {
                 console.log(res.data);
                 if (res?.data?.insertedId) {
