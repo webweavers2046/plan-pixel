@@ -2,9 +2,11 @@ import { useState } from 'react';
 import UpdateTask from '../Components/UpdateTask';
 import './dropdown.css'
 import Swal from "sweetalert2";
+import apiConnector from '@/hooks/useAxios';
 
 const Dropdown = ({ id, task, tasks, setTasks }) => {
     const [openModal, setOpenModal] = useState(false);
+    const xios = apiConnector()
 
     // console.log(id)
     const handleDeleteTask = (id) => {
@@ -18,11 +20,7 @@ const Dropdown = ({ id, task, tasks, setTasks }) => {
             confirmButtonText: "Delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`https://task-management-server-topaz.vercel.app/deleteTask/${id}`, {
-                    method: "DELETE",
-
-                })
-                    .then(res => res.json())
+                xios.delete(`/deleteTask/${id}`)
                     .then(data => {
                         console.log(data);
                         if (data.deletedCount > 0) {
@@ -41,9 +39,9 @@ const Dropdown = ({ id, task, tasks, setTasks }) => {
         });
 
     };
-    const handleUpdateTask = (id) => {
-        console.log(id);
-    }
+    // const handleUpdateTask = (id) => {
+    //     console.log(id);
+    // }
 
     const onSubmit = (data) => {
         setButtonLoading(true);
@@ -60,17 +58,8 @@ const Dropdown = ({ id, task, tasks, setTasks }) => {
                 deadline: data.deadline,
                 description: description,
             };
-            fetch(
-                `/task.json/tasks/${task._id}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "content-type": "application/json",
-                    },
-                    body: JSON.stringify(taskData),
-                }
-            )
-                .then((res) => res.json())
+            xios.put(
+                `/task.json/tasks/${task._id}`,taskData)
                 .then((result) => {
                     console.log(result);
                     setButtonLoading(false);

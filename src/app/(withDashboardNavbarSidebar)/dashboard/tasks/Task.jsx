@@ -9,8 +9,7 @@ import Swal from "sweetalert2";
 
 const Task = ({ task, tasks, setTasks, refetch }) => {
   // manage all you state here
-  const { draggingStarted, isDragging, isDropped, draggingTaskId } =
-    useGlobalTaskData();
+  const { draggingStarted, isDragging, isDropped, draggingTaskId } = useGlobalTaskData();
 
   const handleDeleteTask = (id) => {
     Swal.fire({
