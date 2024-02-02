@@ -6,6 +6,10 @@ import ArrowBoldSign from "./ArrowBoldSign";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import GradientBg from "@/components/Common/gradientBg/GradientBg";
+import "aos/dist/aos.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 
 const taskManagementArray = [
     {
@@ -54,7 +58,7 @@ const KeyFeatures = () => {
                 <div className="mx-auto lg:ml-[38px] px-5 md:px-0 overflow-x-hidden">
                     <div>
                         {/* Task management (smaller card) */}
-                        <div className="relative bg-[#99d3a9] shadow-md p-6 text-[11px] sm:text-[15px] ml-0 md:text-[14px] lg:text-[16px] mx-3 md:ml-24 lg:ml-[10%] mb-7 w-full md:w-[600px] rounded-md">
+                        <div data-aos="fade-right" className="relative bg-[#99d3a9] shadow-md p-6 text-[11px] sm:text-[15px] ml-0 md:text-[14px] lg:text-[16px] mx-3 md:ml-24 lg:ml-[10%] mb-7 w-full md:w-[600px] rounded-md">
                             <ArrowBoldSign leftSpace={"-left-[1615px]"} />
                             <li className="text-[19px] font-bold list-none pl-3">
                                 Intuitive Task Creation and Management
