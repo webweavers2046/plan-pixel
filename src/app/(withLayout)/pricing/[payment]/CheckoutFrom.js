@@ -103,7 +103,7 @@ export default function CheckoutForm({planName}) {
   };
 
   return (
-    <form id="payment-form" className="" onSubmit={handleSubmit}>
+    <form id="payment-form" className="w-full md:max-w-sm" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button
         disabled={isLoading || !stripe || !elements}

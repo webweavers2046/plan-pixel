@@ -45,7 +45,7 @@ postData()
     <div className="container mx-auto shadow-2xl my-10 p-10">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <div className="flex justify-evenly ">
+          <div className="flex justify-evenly flex-wrap-reverse gap-5">
             <SubscriptionDetails planName={planName} />
 
             <CheckoutForm planName={planName} />
