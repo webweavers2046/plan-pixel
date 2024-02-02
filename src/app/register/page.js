@@ -88,7 +88,7 @@ const Register = () => {
           subscriptionEndDate: null,
         };
 
-        await saveUserInfoDataBase(user); // save user data
+        await saveUserInfoDataBase(user); // save user data to database
 
         router.push("/dashboard");
       }
@@ -101,9 +101,10 @@ const Register = () => {
   const saveUserInfoDataBase = async (user) => {
 
     const {data} =await xios.get('/users')
+    // check user exist or not
     const isExist = data?.find((i) => i.email === user.email);
     if(!isExist){
-
+        // post user data database
         await xios.post("/users", user);
     }
   };
