@@ -7,10 +7,14 @@ import { useContext } from "react";
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const DashboardNavbar = () => {
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     console.log(user);
+
+    const router = useRouter();
 
     const handleLogOut = () => {
         Swal.fire({
@@ -24,6 +28,7 @@ const DashboardNavbar = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 logOut();
+                router.push("/dashboard");
                 Swal.fire({
                     title: "Logged Out",
                     icon: "success",
