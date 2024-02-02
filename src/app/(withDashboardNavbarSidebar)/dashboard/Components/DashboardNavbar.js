@@ -7,10 +7,14 @@ import { useContext } from "react";
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const DashboardNavbar = () => {
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     console.log(user);
+
+    const router = useRouter();
 
     const handleLogOut = () => {
         Swal.fire({
@@ -24,6 +28,7 @@ const DashboardNavbar = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 logOut();
+                router.push("/dashboard");
                 Swal.fire({
                     title: "Logged Out",
                     icon: "success",
@@ -35,14 +40,23 @@ const DashboardNavbar = () => {
         <div className="flex justify-between items-center p-4 gap-6">
             <div className=" py-2 px-3 rounded-lg ">
                 <Dropdown
-                    className="bg-gray-100 py-2 px-3 "
+                    className="bg-gray-100 py-2 px-3 rounded-lg mt-4"
                     inline
-                    label="Workspace 01"
+                    label={
+                        <div className="text-start">
+                            <p className="text-xs opacity-55">workspace -</p>
+                            <h2 className="">Workspace 01</h2>
+                        </div>
+                    }
                 >
                     <Dropdown.Item>Workspace 02</Dropdown.Item>
                     <Dropdown.Item>Workspace 03</Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item icon={HiLogout}>Sign out</Dropdown.Item>
+                    <Dropdown.Item>
+                        <div className=" py-2 px-4 border-dashed border-black border rounded-lg">
+                            <p className="">Add New Workspace</p>
+                        </div>
+                    </Dropdown.Item>
                 </Dropdown>
             </div>
             <div className="grow">

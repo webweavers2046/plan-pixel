@@ -1,6 +1,6 @@
 const fetchTasks = async () => {
     try {
-        const response = await fetch("https://task-management-server-topaz.vercel.app/tasks");
+        const response = await fetch("https://plan-pixel-backend-jet.vercel.app/tasks");
 
         if (!response.ok) {
             throw new Error("Failed to fetch tasks");

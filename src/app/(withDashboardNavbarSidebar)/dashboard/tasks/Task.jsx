@@ -8,9 +8,8 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 
 const Task = ({ task, tasks, setTasks, refetch }) => {
-    // manage all you state here
-    const { draggingStarted, isDragging, isDropped, draggingTaskId } =
-        useGlobalTaskData();
+  // manage all you state here
+  const { draggingStarted, isDragging, isDropped, draggingTaskId } = useGlobalTaskData();
 
     const handleDeleteTask = (id) => {
         Swal.fire({
