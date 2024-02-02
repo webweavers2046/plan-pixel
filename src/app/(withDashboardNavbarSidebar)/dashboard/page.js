@@ -32,7 +32,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center gap-6">
                 {/* colum 1 */}
                 <div>
-                    <TimeTruck />
+                    <TeamMembers />
                 </div>
                 {/* colum 2 */}
 
@@ -42,7 +42,7 @@ const Dashboard = () => {
                 {/* colum 3 */}
                 <div>
                     <Calender />
-                    <TeamMembers />
+                    <TimeTruck />
                 </div>
             </div>
         </div>
