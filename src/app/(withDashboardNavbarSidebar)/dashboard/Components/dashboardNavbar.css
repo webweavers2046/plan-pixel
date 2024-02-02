@@ -1,0 +1,29 @@
+.dropdown{
+    position: absolute;
+    width: 250px;
+    border-radius: 8px;
+    padding: 20px ;
+    margin-top:5px;
+    z-index: 1;
+    transition: all .2s;
+    background: rgb(75 85 99);
+    color: white;
+}
+.dropdown h1{
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+.dropdown ul{
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+.dropdown li{
+    padding: 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.dropdown li:hover{
+    background-color: rgb(107 114 128);
+}
