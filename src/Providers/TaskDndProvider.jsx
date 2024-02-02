@@ -18,7 +18,6 @@ export const TaskDndProvider = ({ children }) => {
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  // const [draggingTaskId, setDraggingTaskId] = useState("");
   const xios = apiConnector();
 
   // Fetching all tasks here
