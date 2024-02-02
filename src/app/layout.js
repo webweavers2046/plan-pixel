@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import AuthProviders from "@/Providers/AuthProviders";
 import TaskDndProvider from "@/Providers/TaskDndProvider";
 import { Toaster } from "react-hot-toast";
-import SocketComponent from "@/components/sockets/Sockets";
+// import SocketComponent from "@/components/sockets/Sockets";
 
 const lato = Lato({
     weight: ["100", "300", "400", "700", "900"],
@@ -17,17 +17,17 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-    return (
-        <html lang="en">
-            <body className={`${lato.className}`}>
-                <TaskDndProvider>
-                    <Toaster />
-                    <AuthProviders>
-                        <SocketComponent>{children}</SocketComponent>
-                        <Toaster />
-                    </AuthProviders>
-                </TaskDndProvider>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body className={`${lato.className}`}>
+        <TaskDndProvider>
+          <AuthProviders>
+            {/* <SocketComponent>{children}</SocketComponent> */}
+            {children}
+            <Toaster />
+          </AuthProviders>
+        </TaskDndProvider>
+      </body>
+    </html>
+  );
 }
