@@ -33,7 +33,7 @@ const useGetSocketData = () => {
 
   return alltasks.length > 0
     ? alltasks
-    : [{ status: "to-do" }, { status: "upcoming" }];
+    : [];
 };
 
 export default useGetSocketData;

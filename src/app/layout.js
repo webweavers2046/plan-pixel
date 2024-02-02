@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import AuthProviders from "@/Providers/AuthProviders";
 import TaskDndProvider from "@/Providers/TaskDndProvider";
 import { Toaster } from "react-hot-toast";
+import GlobalContext from "@/Providers/globalContext";
 // import SocketComponent from "@/components/sockets/Sockets";
 
 const lato = Lato({
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${lato.className}`}>
+        <GlobalContext>
         <TaskDndProvider>
           <AuthProviders>
             {/* <SocketComponent>{children}</SocketComponent> */}
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
             <Toaster />
           </AuthProviders>
         </TaskDndProvider>
+        </GlobalContext>
       </body>
     </html>
   );
