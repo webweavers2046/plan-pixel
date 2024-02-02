@@ -18,11 +18,10 @@ export const TaskDndProvider = ({ children }) => {
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  // const [draggingTaskId, setDraggingTaskId] = useState("");
   const xios = apiConnector();
 
   // Fetching all tasks here
-  const { alltasks } = useGetSocketData();
+  const alltasks  = useGetSocketData() 
 
   //Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {
@@ -67,7 +66,6 @@ export const TaskDndProvider = ({ children }) => {
     const url = `/updateTaskState?id=${draggingTaskId}&state=${droppableArea}`;
     xios.patch(url)
       .then((data) => {
-        //
         const actualData = data.data;
         if (actualData.updated.modifiedCount > 0) {
           setDroppableAreaName(droppableArea);
