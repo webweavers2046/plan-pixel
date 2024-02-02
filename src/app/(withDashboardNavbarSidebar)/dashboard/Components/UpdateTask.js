@@ -31,7 +31,7 @@ const UpdateTask = ({ openModal, setOpenModal, task }) => {
         console.log('updated task', newTask);
 
 
-        await axios.put('https://task-management-server-topaz.vercel.app/updatetask', updateTask)
+        await axios.put('/updatetask', updateTask)
             .then(res => {
                 console.log(res.data);
                 if (res?.data?.modifiedCount>0) {
