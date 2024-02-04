@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 
 const Register = () => {
     const router = useRouter();
-    const { createUser, googleSignIn } = useContext(AuthContext);
+    const { createUser, googleSignIn,loading } = useContext(AuthContext);
 
     const {
         register,

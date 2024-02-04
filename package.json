@@ -13,6 +13,7 @@
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.4.0",
     "@tanstack/react-query": "^5.17.19",
+    "ably": "^1.2.48",
     "axios": "^1.6.7",
     "firebase": "^10.7.2",
     "flowbite": "^2.2.1",
