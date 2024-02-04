@@ -2,19 +2,23 @@ import threeDotIcon from "@/assets/dashboard/threeDot.svg";
 import timeIcon from "@/assets/dashboard/time.svg";
 import Image from "next/image";
 import style from "./Scrollbar.module.css";
+import { useQuery } from "@tanstack/react-query";
+import useTranscatackData from "@/hooks/useTanstack/useTranscatackData ";
+
 
 const MyTask = () => {
+const {data:tasks} = useTranscatackData('/tasks',"tasks")
     return (
         <div
             className={`shadow-md rounded-xl p-6 max-h-dvh overflow-auto ${style.scrollbarCustom} border`}
         >
             <h1 className=" text-2xl font-bold p-4">My Task</h1>
-            {tasks.map((task, index) => (
+            {tasks?.map((task, index) => (
                 <Task
-                    key={task.id}
+                    key={task?._id}
                     index={index}
-                    name={task.name}
-                    completed={task.completed}
+                    name={task?.title}
+                    status={task?.status}
                 />
             ))}
         </div>
@@ -22,7 +26,7 @@ const MyTask = () => {
 };
 export default MyTask;
 
-function Task({ name, completed, index }) {
+function Task({ name, status, index }) {
     return (
         <div className="flex items-center justify-between p-4 rounded-lg bg-[#F9F9F9] mb-3">
             <h3 className="text-sm font-semibold">
