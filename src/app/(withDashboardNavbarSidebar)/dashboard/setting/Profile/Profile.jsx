@@ -6,9 +6,8 @@ import UpdateProfile from "../UpdateProfile/UpdateProfile";
 
 
 
-const Profile = () => {
+const Profile = ({editProfile, setEditProfile}) => {
     const { user } = useContext(AuthContext)
-    const [edit, setEdit] = useState(false);
 
     const socialLinks = [
         {
@@ -39,7 +38,10 @@ const Profile = () => {
                     </div>
                 </div>
                 <div>
-                    <button onClick={() => setEdit(!edit)} className="text-[#00A13E] text-sm font-semibold">Edit</button>
+                    {
+                        !editProfile &&
+                        <button onClick={() => setEditProfile(true)} className="text-[#00A13E] text-sm font-semibold">Edit</button>
+                    }
                 </div>
             </div>
             {/* info */}
@@ -101,7 +103,6 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <UpdateProfile edit={edit} setEdit={setEdit}></UpdateProfile>
         </div>
     );
 };
