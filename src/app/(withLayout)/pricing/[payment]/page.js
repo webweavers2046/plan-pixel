@@ -5,27 +5,32 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./CheckoutFrom";
 import SubscriptionDetails from "./SubscriptionDetails";
-
+import apiConnector from "@/hooks/useAxios";
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
-
 export default function Payment({ params }) {
+  const planName = params.payment;
   const [clientSecret, setClientSecret] = React.useState("");
   const [amount, setAmount] = React.useState(0);
-  const planName = params.payment;
+  const xios = apiConnector();
   React.useEffect(() => {
+
+    const postData = async()=>{
+      try {
+        const res = await xios.post("/create-payment-intent", { plan: planName });
+    
+        setClientSecret(res.data.clientSecret);
+        
+      } catch (error) {
+        
+      }
+    }
+postData()
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:5000/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plan: planName }),
-    })
-      .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
   }, [planName]);
 
   const appearance = {
@@ -40,10 +45,10 @@ export default function Payment({ params }) {
     <div className="container mx-auto shadow-2xl my-10 p-10">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <div className="flex justify-evenly ">
+          <div className="flex justify-evenly flex-wrap-reverse gap-5">
             <SubscriptionDetails planName={planName} />
 
-            <CheckoutForm />
+            <CheckoutForm planName={planName} />
           </div>
         </Elements>
       )}

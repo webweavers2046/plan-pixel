@@ -8,8 +8,8 @@ const SubscriptionDetails = ({planName}) => {
     return (
       <div className="space-y-4">
         <div className="flex">
-          <h3 className="text-4xl font-bold">{plan.name}</h3>
-          <h2 className="font-bold text-5xl italic">
+          <h3 className="text-2xl md:text-4xl font-bold">{plan.name}</h3>
+          <h2 className="font-bold text-3xl md:text-5xl italic">
             {plan.price}<span className="text-xl">/Month</span>
           </h2>
         </div>
