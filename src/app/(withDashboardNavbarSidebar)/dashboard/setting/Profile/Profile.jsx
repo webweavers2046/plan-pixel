@@ -1,11 +1,14 @@
 'use client'
 import { AuthContext } from "@/Providers/AuthProviders";
-import { useContext } from "react";
+import CommonModal from "@/components/Common/CommonModal/CommonModal";
+import { useContext, useState } from "react";
+import UpdateProfile from "../UpdateProfile/UpdateProfile";
 
 
 
 const Profile = () => {
     const { user } = useContext(AuthContext)
+    const [edit, setEdit] = useState(false);
 
     const socialLinks = [
         {
@@ -36,7 +39,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div>
-                    <button className="text-[#00A13E] text-sm font-semibold">Edit</button>
+                    <button onClick={() => setEdit(!edit)} className="text-[#00A13E] text-sm font-semibold">Edit</button>
                 </div>
             </div>
             {/* info */}
@@ -98,6 +101,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+            <UpdateProfile edit={edit} setEdit={setEdit}></UpdateProfile>
         </div>
     );
 };
