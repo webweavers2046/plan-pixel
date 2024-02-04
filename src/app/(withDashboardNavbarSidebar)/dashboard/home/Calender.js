@@ -1,8 +1,14 @@
+"use client";
+import { useState } from "react";
+import Calendar from "react-calendar";
+// import "react-calendar/dist/Calendar.css";
+import "./customCalender.css";
 const Calender = () => {
-    return (
-        <>
-            {/* component */}
-            <div className="flex items-center justify-center pb-8 rounded-xl">
+  const [date, setDate] = useState(new Date());
+  return (
+    <>
+      {/* component */}
+      <div className="flex items-center justify-center pb-8 rounded-xl">
                 <div className=" w-full shadow-lg border rounded-xl">
                     <div className="md:p-8 p-5 dark:bg-gray-800 bg-white rounded-xl">
                         <div className="px-4 flex items-center justify-between">
@@ -360,7 +366,15 @@ const Calender = () => {
                     </div>
                 </div>
             </div>
-        </>
-    );
+
+      <h1 className="text-center">React Calendar</h1>
+      <div className="calendar-container">
+        <Calendar onChange={setDate} value={date} />
+      </div>
+      <p className="text-center">
+        <span className="bold">Selected Date:</span> {date.toDateString()}
+      </p>
+    </>
+  );
 };
 export default Calender;
