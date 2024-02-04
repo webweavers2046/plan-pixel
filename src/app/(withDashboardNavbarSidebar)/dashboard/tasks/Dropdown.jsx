@@ -39,40 +39,8 @@ const Dropdown = ({ id, task, tasks, setTasks }) => {
         });
 
     };
-    // const handleUpdateTask = (id) => {
-    //     console.log(id);
-    // }
 
-    const onSubmit = (data) => {
-        setButtonLoading(true);
-        if (new Date(data.deadline) > new Date(today)) {
-            const description = descriptionRef.current.value;
-            if (!description) {
-                return setRequiredError("Required *");
-            }
-            setRequiredError("");
-            const taskData = {
-                title: data.title,
-                priority: data.priority,
-                status: data.status,
-                deadline: data.deadline,
-                description: description,
-            };
-            xios.put(
-                `/task.json/tasks/${task._id}`,taskData)
-                .then((result) => {
-                    console.log(result);
-                    setButtonLoading(false);
-                    reset();
-                    refetch();
-
-                    toast.success("New Task Added");
-                });
-        } else {
-            setButtonLoading(false);
-            return setDateErrorMessage("Please provide a valid Date");
-        }
-    };
+    
     return (
         <div className="flex flex-col bg-white threeDotDropdown">
             <ul className="flex flex-col gap-4">
