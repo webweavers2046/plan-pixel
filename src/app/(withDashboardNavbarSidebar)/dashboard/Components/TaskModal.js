@@ -1,7 +1,7 @@
 "use client";
 
 import { AuthContext } from "@/Providers/AuthProviders";
-import apiConnector from "@/hooks/useAxios";
+import useAxios from "@/hooks/useAxios";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";

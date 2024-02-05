@@ -5,7 +5,7 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./CheckoutFrom";
 import SubscriptionDetails from "./SubscriptionDetails";
-import apiConnector from "@/hooks/useAxios";
+import useAxios from "@/hooks/useAxios";
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
@@ -16,7 +16,7 @@ export default function Payment({ params }) {
   const planName = params.payment;
   const [clientSecret, setClientSecret] = React.useState("");
   const [amount, setAmount] = React.useState(0);
-  const xios = apiConnector();
+  const xios = useAxios();
   React.useEffect(() => {
 
     const postData = async()=>{
