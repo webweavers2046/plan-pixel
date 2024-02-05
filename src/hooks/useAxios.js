@@ -5,8 +5,9 @@ const axiosInstance = axios.create({
   // baseURL: "https://plan-pixel-backend-esp08h4gq-shakil-ahmmed8882.vercel.app",
   baseURL: "https://plan-pixel-backend-jet.vercel.app",
 });
-const apiConnector = () => {
+
+const useAxios = () => {
   return axiosInstance;
 };
 
-export default apiConnector;
+export default useAxios;

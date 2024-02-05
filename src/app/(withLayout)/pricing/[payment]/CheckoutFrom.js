@@ -6,7 +6,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { AuthContext } from "@/Providers/AuthProviders";
-import apiConnector from "@/hooks/useAxios";
+import useAxios from "@/hooks/useAxios";
 import toast from "react-hot-toast";
 
 
@@ -17,7 +17,7 @@ export default function CheckoutForm({planName}) {
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const {user} = useContext(AuthContext)
-  const xios = apiConnector()
+  const xios = useAxios()
   console.log(user?.email);
 
   React.useEffect(() => {
