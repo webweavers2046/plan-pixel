@@ -1,12 +1,13 @@
 "use client";
 
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import useGetSocketData from "@/hooks/useGetAllTasks";
 import toast from "react-hot-toast";
-import apiConnector from "@/hooks/useAxios";
+import useAxios from "@/hooks/useAxios";
 import axios, { all } from "axios";
 import useGlobalContext from "@/hooks/useGlobalContext";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 // Global context provider for managing shared state
 export const taskContext = createContext(null);
@@ -19,18 +20,27 @@ export const TaskDndProvider = ({ children }) => {
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const xios = apiConnector();
+  const xios = useAxios();
 
   // Fetching all tasks here
-  const alltasks  = useGetSocketData() 
-  const {newTask} = useGlobalContext()
+  const initialTask = useGetSocketData();
+  const { tasks } = useContext(ablyContext);
+  const { newTask } = useGlobalContext();
+
+  // in initial load the all tasks come by http request (initialTask)
+  // then tasks get updated by Ably (tasks)
+  let alltasks = tasks.length > 0 ? tasks : initialTask;
+
+  useEffect(() => {
+    alltasks = tasks;
+  }, [tasks]);
 
   //Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {
     setIsClient(true);
-    
-      // adding the new task in local environment 
-      alltasks.push(newTask)
+
+    // adding the new task in local environment
+    // alltasks.push(newTask);
   }, [newTask]);
 
   // dragging start event
@@ -62,6 +72,7 @@ export const TaskDndProvider = ({ children }) => {
 
     // setting droppable area name to set state and local
     //state change for the latest update without delay
+
     setDroppableAreaName(droppableArea);
     setIsDropped(true);
     const draggingTask = alltasks.find((task) => task._id === draggingTaskId);
@@ -69,12 +80,15 @@ export const TaskDndProvider = ({ children }) => {
 
     // Patch http request to change the state
     const url = `/updateTaskState?id=${draggingTaskId}&state=${droppableArea}`;
-    xios.patch(url)
+    xios
+      .patch(url)
       .then((data) => {
         const actualData = data.data;
         if (actualData.updated.modifiedCount > 0) {
           setDroppableAreaName(droppableArea);
-          return toast.success(`Changed to ${actualData.state}`,{position:"top-right"});
+          return toast.success(`Changed to ${actualData.state}`, {
+            position: "top-right",
+          });
         }
       })
       .catch((error) => {

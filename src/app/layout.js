@@ -4,8 +4,7 @@ import AuthProviders from "@/Providers/AuthProviders";
 import TaskDndProvider from "@/Providers/TaskDndProvider";
 import { Toaster } from "react-hot-toast";
 import GlobalContext from "@/Providers/globalContext";
-import TanstackProvider from "@/Providers/TanstackProvider";
-// import SocketComponent from "@/components/sockets/Sockets";
+import AblyProvider from "@/components/ably/AblyProvider";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -22,17 +21,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${lato.className}`}>
-        {/* <TanstackProvider> */}
-          <GlobalContext>
+        <GlobalContext>
+          <AblyProvider>
             <TaskDndProvider>
               <AuthProviders>
-                {/* <SocketComponent>{children}</SocketComponent> */}
                 {children}
                 <Toaster />
               </AuthProviders>
             </TaskDndProvider>
-          </GlobalContext>
-        {/* </TanstackProvider> */}
+          </AblyProvider>
+        </GlobalContext>
       </body>
     </html>
   );
