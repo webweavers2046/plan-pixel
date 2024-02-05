@@ -1,16 +1,24 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useContext } from "react";
 import {
   PaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { AuthContext } from "@/Providers/AuthProviders";
+import useAxios from "@/hooks/useAxios";
+import toast from "react-hot-toast";
 
-export default function CheckoutForm() {
+
+
+export default function CheckoutForm({planName}) {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const {user} = useContext(AuthContext)
+  const xios = useAxios()
+  console.log(user?.email);
 
   React.useEffect(() => {
     if (!stripe) {
@@ -54,12 +62,9 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
-      },
+      redirect: "if_required",
     });
 
     // This point will only be reached if there is an immediate error when
@@ -67,10 +72,27 @@ export default function CheckoutForm() {
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+    if (error) {
+      if (error.type === "card_error" || error.type === "validation_error") {
+        setMessage(error.message);
+      } else {
+        setMessage("An unexpected error occurred.");
+      }
     } else {
-      setMessage("An unexpected error occurred.");
+      const userInfo = {
+        paymentId: paymentIntent.id,
+        paymentStatus: planName,
+        subscriptionStartDate: new Date(),
+        subscriptionEndDate: null,
+      };
+
+    // save data to database
+      const putData =async()=>{
+        const res = await xios.put(`/users/${user?.email}`,{userInfo})
+
+        toast.success('Payment successful')
+      }
+      putData()
     }
 
     setIsLoading(false);
@@ -81,9 +103,13 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" className="" onSubmit={handleSubmit}>
-      <PaymentElement  id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit" className="px-4 py-2 bg-green-500 text-white hover:bg-green-700 w-full">
+    <form id="payment-form" className="w-full md:max-w-sm" onSubmit={handleSubmit}>
+      <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <button
+        disabled={isLoading || !stripe || !elements}
+        id="submit"
+        className="px-4 py-2 bg-green-500 text-white hover:bg-green-700 w-full"
+      >
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>

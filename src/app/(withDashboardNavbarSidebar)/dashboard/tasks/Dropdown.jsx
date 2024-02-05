@@ -2,11 +2,11 @@ import { useState } from 'react';
 import UpdateTask from '../Components/UpdateTask';
 import './dropdown.css'
 import Swal from "sweetalert2";
-import apiConnector from '@/hooks/useAxios';
+import useAxios from '@/hooks/useAxios';
 
 const Dropdown = ({ id, task, tasks, setTasks }) => {
     const [openModal, setOpenModal] = useState(false);
-    const xios = apiConnector()
+    const xios = useAxios()
 
     // console.log(id)
     const handleDeleteTask = (id) => {
