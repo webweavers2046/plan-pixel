@@ -26,6 +26,7 @@ export const TaskDndProvider = ({ children }) => {
   const initialTask = useGetSocketData();
   const { tasks } = useContext(ablyContext);
   const { newTask } = useGlobalContext();
+  console.log(initialTask);
 
   // in initial load the all tasks come by http request (initialTask)
   // then tasks get updated by Ably (tasks)

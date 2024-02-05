@@ -15,13 +15,30 @@ import Swal from "sweetalert2";
 import Image from "next/image";
 import { Dropdown } from "flowbite-react";
 import UpdateTask from "../Components/UpdateTask";
+import useAxios from "@/hooks/useAxios";
+import axios from "axios";
+import useGetSocketData from "@/hooks/useGetAllTasks";
+import { useEffect, useState } from "react";
 
-const Task = ({ task, alltasks }) => {
+const Task = ({ task }) => {
 
     // manage all you state here
     const { draggingStarted, isDragging, isDropped, draggingTaskId } =
         useGlobalTaskData();
 
+        // const [tasks, setTasks] = useState([])
+
+        // const [allTasks, setTasks] = useGetSocketData();
+        // console.log(allTasks, 'from task ');
+        // console.log(tasks);
+        // const xios = useAxios();
+        // useEffect(() =>{
+        //     xios.get("/tasks")
+        //     .then(res =>{
+        //         setTasks(res.data)
+        //         console.log(res.data);
+        //     })
+        // },[])
     const handleDeleteTask = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -50,9 +67,9 @@ const Task = ({ task, alltasks }) => {
                                 "success"
                             );
                             // eslint-disable-next-line react/prop-types
-                            const remaining = alltasks?.filter((task) => task._id !== id);
+                            const remaining = tasks?.filter((task) => task._id !== id);
                             console.log(remaining);
-                            alltasks(remaining);
+                            setTasks(remaining);
                         }
                     });
             }

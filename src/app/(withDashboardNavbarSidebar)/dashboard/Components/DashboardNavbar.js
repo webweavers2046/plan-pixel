@@ -59,9 +59,7 @@ const DashboardNavbar = () => {
                     </Dropdown.Item>
                 </Dropdown>
             </div>
-            <div>
-                <p className="hover:bg-gray-200 px-4 py-2 rounded-sm transition-all duration-300 cursor-pointer">Create</p>
-            </div>
+            
             <div className="grow">
                 <div className="absolute ml-[20px] mt-[17px]">
                     <svg
