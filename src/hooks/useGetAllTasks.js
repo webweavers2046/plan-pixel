@@ -21,12 +21,11 @@ export default useGetSocketData;
 */
 
 import { useEffect, useState } from "react";
-import apiConnector from "./useAxios";
+import useAxios from "./useAxios";
 
 const useGetSocketData = () => {
-    const xios = apiConnector();
+    const xios = useAxios();
     const [alltasks = [], setAllTasks] = useState([]);
-    console.log(alltasks);
 
     useEffect(() => {
         xios.get("/tasks").then((data) => setAllTasks(data.data));

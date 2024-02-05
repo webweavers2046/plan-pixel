@@ -12,13 +12,13 @@ import { useContext } from "react";
 import "@/styles/globals.css";
 import { AuthContext } from "@/Providers/AuthProviders";
 import { useRouter } from "next/navigation";
-import apiConnector from "@/hooks/useAxios";
+import useAxios from "@/hooks/useAxios";
 import toast from "react-hot-toast";
 
 const Register = () => {
   const router = useRouter();
   const { createUser, googleSignIn } = useContext(AuthContext);
-  const xios = apiConnector();
+  const xios = useAxios();
 
   const {
     register,
