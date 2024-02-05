@@ -5,7 +5,6 @@ import { BsStopwatchFill, BsThreeDotsVertical } from "react-icons/bs";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
@@ -17,7 +16,8 @@ import Image from "next/image";
 import { Dropdown } from "flowbite-react";
 import UpdateTask from "../Components/UpdateTask";
 
-const Task = ({ task, tasks, setTasks, refetch }) => {
+const Task = ({ task, alltasks }) => {
+
     // manage all you state here
     const { draggingStarted, isDragging, isDropped, draggingTaskId } =
         useGlobalTaskData();
@@ -50,11 +50,9 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                                 "success"
                             );
                             // eslint-disable-next-line react/prop-types
-                            const remaining = tasks?.filter(
-                                (task) => task._id !== id
-                            );
+                            const remaining = alltasks?.filter((task) => task._id !== id);
                             console.log(remaining);
-                            setTasks(remaining);
+                            alltasks(remaining);
                         }
                     });
             }
@@ -73,10 +71,10 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
             <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>
                 <Dropdown
-                    className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16"
+                    className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16 cursor-pointer"
                     label=""
                     dismissOnClick={false}
-                    renderTrigger={() => <BsThreeDotsVertical />}
+                    renderTrigger={() => <BsThreeDotsVertical className="cursor-pointer"/>}
                 >
                     <Dropdown.Item className="rounded-md">
                         <button

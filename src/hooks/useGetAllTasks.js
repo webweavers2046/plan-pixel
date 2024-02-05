@@ -26,7 +26,7 @@ import apiConnector from "./useAxios";
 const useGetSocketData = () => {
     const xios = apiConnector();
     const [alltasks = [], setAllTasks] = useState([]);
-    console.log(alltasks);
+    // console.log(alltasks);
 
     useEffect(() => {
         xios.get("/tasks").then((data) => setAllTasks(data.data));

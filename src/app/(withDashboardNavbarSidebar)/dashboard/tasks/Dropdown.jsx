@@ -40,15 +40,33 @@ const Dropdown = ({ id, task, tasks, setTasks }) => {
 
     };
 
-    
+
     return (
         <div className="flex flex-col bg-white threeDotDropdown">
+            {/* <Dropdown
+                className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16 cursor-pointer"
+                label=""
+                dismissOnClick={false}
+                renderTrigger={() => }
+            >
+                <Dropdown.Item className="rounded-md">
+                    <button
+                        onClick={() => handleDeleteTask(task?._id)}
+                        className="w-full"
+                    >
+                        Delete Task
+                    </button>
+                </Dropdown.Item>
+                <Dropdown.Item className="rounded-md">
+                    <button className="w-full">Update Task</button>
+                </Dropdown.Item>
+            </Dropdown> */}
             <ul className="flex flex-col gap-4">
                 <li onClick={() => setOpenModal(!openModal)}>Update Task</li>
                 <hr />
                 <li onClick={() => handleDeleteTask(id)}>Delete Task</li>
             </ul>
-            <UpdateTask task={task} openModal={openModal} setOpenModal={setOpenModal}/>
+            {/* <UpdateTask task={task} openModal={openModal} setOpenModal={setOpenModal} /> */}
         </div>
     );
 };

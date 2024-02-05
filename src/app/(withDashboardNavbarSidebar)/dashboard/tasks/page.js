@@ -241,7 +241,7 @@ const Tasks = () => {
 
     // Tasks in different status
     const toDoTasks = useFilterTasks(alltasks, "to-do");
-    console.log(toDoTasks);
+    // console.log(toDoTasks);
     const upcomingTasks = useFilterTasks(alltasks, "upcoming");
     const doingTasks = useFilterTasks(alltasks, "doing");
     const doneTasks = useFilterTasks(alltasks, "done");
@@ -298,7 +298,7 @@ const Tasks = () => {
                             </div>
 
                             {upcomingTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} />
+                                <Task idx={idx} key={task._id} task={task} alltasks={alltasks}/>
                             ))}
                         </div>
                         {/* to do task */}
