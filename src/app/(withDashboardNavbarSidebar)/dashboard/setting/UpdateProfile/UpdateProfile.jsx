@@ -30,20 +30,7 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
 
     };
 
-    const socialLinks = [
-        {
-            platform: "Linkedin"
-        },
-        {
-            platform: "Facebook"
-        },
-        {
-            platform: "Portfolio"
-        },
-        {
-            platform: "Resume"
-        },
-    ]
+  
 
     const handleUpdateImage = () => {
         // `current` points to the mounted file input element

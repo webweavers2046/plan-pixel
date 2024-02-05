@@ -39,7 +39,7 @@ const Register = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Registredted Successfully",
+          title: "Registration Successful",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -78,10 +78,12 @@ const Register = () => {
         });
         const name = res.user.displayName;
         const email = res.user.email;
+        const image = res?.user?.photoURL
 
         const user = {
           name: name,
           email: email,
+          image : image,
           password: "Google logged user",
           paymentStatus: null,
           subscriptionStartDate: null,
