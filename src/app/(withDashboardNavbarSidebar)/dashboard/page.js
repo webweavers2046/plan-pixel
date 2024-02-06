@@ -8,16 +8,18 @@ import TimeTruck from "./home/TimeTruck";
 import dashboardImage from "@/assets/lustrations.png";
 import { useContext } from "react";
 import { AuthContext } from "@/Providers/AuthProviders";
+import useUser from "@/hooks/useUser";
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
+    const userData = useUser(user?.email);
 
     return (
       <div className="p-6">
         <div className="bg-green-500/20 py-10 px-16 rounded-xl mb-6 flex justify-between items-center">
           <div className="">
             <p className="text-lg font-semibold pb-2">Hi! Welcome Back</p>
-            <h2 className="text-5xl">{user?.displayName}</h2>
+            <h2 className="text-5xl">{userData?.name}</h2>
           </div>
           <div className="">
             <Image src={dashboardImage} width={150} height={150}></Image>
