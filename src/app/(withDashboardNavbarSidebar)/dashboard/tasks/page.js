@@ -237,11 +237,12 @@ import useGetSocketData from "@/hooks/useGetAllTasks";
 const Tasks = () => {
     // manage all your state here..
     const [openModal, setOpenModal] = useState(false);
-    const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging } =
+    const { alltasks, setinitial, dropOn, draggingOver, dragOverElementName, isDragging } =
         useGlobalTaskData();
 
-        const altask = useGetSocketData();
-        console.log(altask);
+        // const altask = useGetSocketData();
+        // console.log(alltasks);
+        // console.log(setinitial);
 
         // const [task, setTask]= useState();
         // console.log(task);
@@ -249,7 +250,7 @@ const Tasks = () => {
 
     // Tasks in different status
     const toDoTasks = useFilterTasks(alltasks, "to-do");
-    console.log(toDoTasks);
+    // console.log(toDoTasks);
     const upcomingTasks = useFilterTasks(alltasks, "upcoming");
     const doingTasks = useFilterTasks(alltasks, "doing");
     const doneTasks = useFilterTasks(alltasks, "done");
@@ -307,7 +308,7 @@ const Tasks = () => {
                             </div>
 
                             {upcomingTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} alltasks={alltasks}/>
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} />
                             ))}
                         </div>
                         {/* to do task */}
@@ -336,7 +337,7 @@ const Tasks = () => {
                             </div>
 
                             {toDoTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} />
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} />
                             ))}
                         </div>
                         {/* ongoing/doing tasks */}
@@ -363,7 +364,7 @@ const Tasks = () => {
                             </div>
 
                             {doingTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} />
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks}/>
                             ))}
                         </div>
                         {/* done/completed tasks */}
@@ -390,7 +391,7 @@ const Tasks = () => {
                             </div>
 
                             {doneTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} />
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks}/>
                             ))}
                         </div>
                     </div>

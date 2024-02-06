@@ -48,7 +48,7 @@ const AblyProvider = ({ children }) => {
   console.log("this is from ably provider", tasks);
 
 
-  return <ablyContext.Provider value={{tasks}}>{children}</ablyContext.Provider>;
+  return <ablyContext.Provider value={{tasks, setTasks}}>{children}</ablyContext.Provider>;
 };
 
 export default AblyProvider;

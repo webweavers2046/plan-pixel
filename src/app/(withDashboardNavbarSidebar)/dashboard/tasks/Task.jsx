@@ -17,28 +17,16 @@ import { Dropdown } from "flowbite-react";
 import UpdateTask from "../Components/UpdateTask";
 import useAxios from "@/hooks/useAxios";
 import axios from "axios";
-import useGetSocketData from "@/hooks/useGetAllTasks";
 import { useEffect, useState } from "react";
 
-const Task = ({ task }) => {
-
+const Task = ({ task, alltasks, setinitial }) => {
+    // console.log(alltasks);
+    // console.log(setinitial);
     // manage all you state here
     const { draggingStarted, isDragging, isDropped, draggingTaskId } =
         useGlobalTaskData();
 
-        // const [tasks, setTasks] = useState([])
 
-        // const [allTasks, setTasks] = useGetSocketData();
-        // console.log(allTasks, 'from task ');
-        // console.log(tasks);
-        // const xios = useAxios();
-        // useEffect(() =>{
-        //     xios.get("/tasks")
-        //     .then(res =>{
-        //         setTasks(res.data)
-        //         console.log(res.data);
-        //     })
-        // },[])
     const handleDeleteTask = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -50,9 +38,8 @@ const Task = ({ task }) => {
             confirmButtonText: "Delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                // axios.delete(`https://task-management-server-topaz.vercel.app//deleteTask/${id}`)
                 fetch(
-                    `https://plan-pixel-backend-jet.vercel.app/deleteTask/${id}`,
+                    `http://localhost:5000/deleteTask/${id}`,
                     {
                         method: "DELETE",
                     }
@@ -67,9 +54,9 @@ const Task = ({ task }) => {
                                 "success"
                             );
                             // eslint-disable-next-line react/prop-types
-                            const remaining = tasks?.filter((task) => task._id !== id);
+                            const remaining = alltasks?.filter((task) => task._id !== id);
                             console.log(remaining);
-                            setTasks(remaining);
+                            setinitial(remaining);
                         }
                     });
             }
@@ -80,9 +67,8 @@ const Task = ({ task }) => {
         <div
             draggable
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
-            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-8 text-black ${
-                isDropped ? "transition-all linear 1s" : ""
-            }`}
+            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-8 text-black ${isDropped ? "transition-all linear 1s" : ""
+                }`}
         >
             {" "}
             <div className=" flex items-center gap-2 justify-between">
@@ -91,7 +77,7 @@ const Task = ({ task }) => {
                     className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16 cursor-pointer"
                     label=""
                     dismissOnClick={false}
-                    renderTrigger={() => <BsThreeDotsVertical className="cursor-pointer"/>}
+                    renderTrigger={() => <BsThreeDotsVertical className="cursor-pointer" />}
                 >
                     <Dropdown.Item className="rounded-md">
                         <button

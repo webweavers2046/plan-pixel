@@ -23,14 +23,14 @@ export const TaskDndProvider = ({ children }) => {
   const xios = useAxios();
 
   // Fetching all tasks here
-  const initialTask = useGetSocketData();
+  const [initialTask, setinitial] = useGetSocketData();
   const { tasks } = useContext(ablyContext);
   const { newTask } = useGlobalContext();
   console.log(initialTask);
 
   // in initial load the all tasks come by http request (initialTask)
   // then tasks get updated by Ably (tasks)
-  let alltasks = tasks.length > 0 ? tasks : initialTask;
+  let alltasks =  initialTask;
 
   useEffect(() => {
     alltasks = tasks;
@@ -100,6 +100,7 @@ export const TaskDndProvider = ({ children }) => {
   //scatter the data across components in its network
   const globalData = {
     alltasks,
+    setinitial,
     draggingStarted,
     dropOn,
     draggingOver,

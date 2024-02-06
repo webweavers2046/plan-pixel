@@ -3,7 +3,6 @@
 import useAxios from "@/hooks/useAxios";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
 
 export const globalContext = createContext(null);
 
@@ -16,10 +15,13 @@ const GlobalContext = ({ children }) => {
   const handleCreateTask = (newTask, setOpenModal) => {
 
     // Calling it above for faster overview
-    setNewTask(newTask)
+   
+    console.log(setNewTask);
+    console.log(newTask);
     xios.post("/createTask", newTask).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res?.data?.insertedId) {
+        setNewTask(newTask);
         setOpenModal(false);
         toast.success("Created a new task", { position: "top-right" });
       }
@@ -29,7 +31,8 @@ const GlobalContext = ({ children }) => {
 
   const data = {
     handleCreateTask,
-    newTask
+    newTask,
+    setNewTask
   };
 
   return (
