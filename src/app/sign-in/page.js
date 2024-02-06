@@ -12,9 +12,11 @@ import { useContext } from "react";
 // Auth Provider
 import { AuthContext } from "@/Providers/AuthProviders";
 import { useRouter } from "next/navigation";
+import useAxios from "@/hooks/useAxios";
 
 const SignIn = () => {
     const router = useRouter();
+    const xios = useAxios();
     const {
         register,
         handleSubmit,
@@ -46,7 +48,7 @@ const SignIn = () => {
     };
 
     const handleGoogleSignIn = () => {
-        googleSignIn().then((res) => {
+        googleSignIn().then(async (res) => {
             Swal.fire({
                 title: "User Login Successful.",
                 showClass: {
@@ -56,8 +58,33 @@ const SignIn = () => {
                     popup: "animate__animated animate__fadeOutUp",
                 },
             });
+            const name = res?.user?.displayName;
+            const email = res?.user?.email;
+            const image = res?.user?.photoURL
+            const user = {
+                name: name,
+                email: email,
+                image: image,
+                paymentStatus: null,
+                subscriptionStartDate: null,
+                subscriptionEndDate: null,
+            };
+
+            await saveUserInfoDataBase(user); // save user data to database
             router.push("/dashboard");
         });
+    };
+
+    const saveUserInfoDataBase = async (user) => {
+
+        const { data } = await xios.get('/users')
+        console.log('is exist', data);
+        // check user exist or not
+        const isExist = data?.find((i) => i.email === user.email);
+        if (!isExist) {
+            // post user data database
+            await xios.post("/users", user);
+        }
     };
 
     return (

@@ -44,7 +44,7 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
             linkedin: data?.linkedin
         }
 
-        console.log("update profile data", updateInfo);
+        // console.log("update profile data", updateInfo);
 
         Swal.fire({
             title: "Are you sure?",
