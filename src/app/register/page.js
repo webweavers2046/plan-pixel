@@ -35,11 +35,11 @@ const Register = () => {
     try {
       const res = await createUser(email, password);
       if (res.user) {
-        router.push("/dashboard");
+        // router.push("/dashboard");
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Registredted Successfully",
+          title: "Registration Successful",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -76,12 +76,14 @@ const Register = () => {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
-        const name = res.user.displayName;
-        const email = res.user.email;
+        const name = res?.user?.displayName;
+        const email = res?.user?.email;
+        const image = res?.user?.photoURL
 
         const user = {
           name: name,
           email: email,
+          image : image,
           password: "Google logged user",
           paymentStatus: null,
           subscriptionStartDate: null,
@@ -100,7 +102,8 @@ const Register = () => {
 
   const saveUserInfoDataBase = async (user) => {
 
-    const {data} =await xios.get('/users')
+    const {data} = await xios.get('/users')
+    console.log( 'is exist', data);
     // check user exist or not
     const isExist = data?.find((i) => i.email === user.email);
     if(!isExist){
