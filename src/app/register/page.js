@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 
 const Register = () => {
   const router = useRouter();
-  const { createUser, googleSignIn } = useContext(AuthContext);
+  const { createUser, googleSignIn, logOut } = useContext(AuthContext);
   const xios = useAxios();
 
   const {
@@ -35,7 +35,7 @@ const Register = () => {
     try {
       const res = await createUser(email, password);
       if (res.user) {
-        // router.push("/dashboard");
+        
         Swal.fire({
           position: "center",
           icon: "success",
@@ -43,10 +43,12 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        logOut();
+        router.push("/sign-in");
         const user = {
           name: firstName + " " + lastName,
           email,
-          password,
+          image : null,
           paymentStatus: null,
           subscriptionStartDate: null,
           subscriptionEndDate: null,
@@ -84,14 +86,12 @@ const Register = () => {
           name: name,
           email: email,
           image : image,
-          password: "Google logged user",
           paymentStatus: null,
           subscriptionStartDate: null,
           subscriptionEndDate: null,
         };
 
         await saveUserInfoDataBase(user); // save user data to database
-
         router.push("/dashboard");
       }
     } catch (error) {
