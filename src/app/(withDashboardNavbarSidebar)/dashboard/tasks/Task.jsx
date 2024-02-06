@@ -63,7 +63,7 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
 
     return (
         <div
-            draggables
+            draggable
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
             className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-8 text-black ${
                 isDropped ? "transition-all linear 1s" : ""

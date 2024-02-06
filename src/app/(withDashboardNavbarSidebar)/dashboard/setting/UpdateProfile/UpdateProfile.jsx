@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { MdEdit } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import Swal from "sweetalert2";
+import Image from "next/image";
+import profileAvatar from '@/assets/person/profileAvatar.png'
 
 // const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_key = '74fd00f7dd14dc3be137326f94c849de'
@@ -30,7 +32,7 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
 
     };
 
-  
+
 
     const handleUpdateImage = () => {
         // `current` points to the mounted file input element
@@ -86,7 +88,14 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
 
             {/* Image */}
             <div className="flex flex-col items-center justify-center mt-6">
-                <img src={user?.photoURL} className="w-32 h-32 rounded-full" alt="" />
+                <Image
+                    src={user?.photoURL ? user?.photoURL : profileAvatar}
+                    alt="member"
+                    width={200}
+                    height={200}
+                    className="w-32 h-32 rounded-full"
+                />
+                {/* <img src={user?.photoURL} className="w-32 h-32 rounded-full" alt="" /> */}
                 <button onClick={handleUpdateImage}
                     className="bg-blue-600 text-white p-2 rounded-full ml-24 -mt-10">
                     <MdEdit className="text-xl"></MdEdit>

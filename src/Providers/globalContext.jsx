@@ -1,6 +1,6 @@
 "use client";
 
-import apiConnector from "@/hooks/useAxios";
+import useAxios from "@/hooks/useAxios";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -11,7 +11,7 @@ const GlobalContext = ({ children }) => {
 
 // manage all of your state here ..
   const [newTask, setNewTask] = useState("")
-  const xios = apiConnector();
+  const xios = useAxios();
 // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal) => {
 

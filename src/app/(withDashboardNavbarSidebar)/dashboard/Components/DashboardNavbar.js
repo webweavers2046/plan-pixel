@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 
 const DashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
-    console.log(user);
 
     const router = useRouter();
 

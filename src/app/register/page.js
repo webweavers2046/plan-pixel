@@ -12,13 +12,13 @@ import { useContext } from "react";
 import "@/styles/globals.css";
 import { AuthContext } from "@/Providers/AuthProviders";
 import { useRouter } from "next/navigation";
-import apiConnector from "@/hooks/useAxios";
+import useAxios from "@/hooks/useAxios";
 import toast from "react-hot-toast";
 
 const Register = () => {
   const router = useRouter();
   const { createUser, googleSignIn } = useContext(AuthContext);
-  const xios = apiConnector();
+  const xios = useAxios();
 
   const {
     register,
@@ -35,7 +35,7 @@ const Register = () => {
     try {
       const res = await createUser(email, password);
       if (res.user) {
-        router.push("/dashboard");
+        // router.push("/dashboard");
         Swal.fire({
           position: "center",
           icon: "success",
@@ -76,8 +76,8 @@ const Register = () => {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
-        const name = res.user.displayName;
-        const email = res.user.email;
+        const name = res?.user?.displayName;
+        const email = res?.user?.email;
         const image = res?.user?.photoURL
 
         const user = {
@@ -102,7 +102,8 @@ const Register = () => {
 
   const saveUserInfoDataBase = async (user) => {
 
-    const {data} =await xios.get('/users')
+    const {data} = await xios.get('/users')
+    console.log( 'is exist', data);
     // check user exist or not
     const isExist = data?.find((i) => i.email === user.email);
     if(!isExist){
