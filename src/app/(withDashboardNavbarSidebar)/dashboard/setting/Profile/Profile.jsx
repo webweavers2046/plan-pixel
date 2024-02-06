@@ -1,10 +1,12 @@
 'use client'
 import { AuthContext } from "@/Providers/AuthProviders";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import profileAvatar from '@/assets/person/profileAvatar.png'
+import Image from "next/image";
 
 
 
-const Profile = () => {
+const Profile = ({ editProfile, setEditProfile }) => {
     const { user } = useContext(AuthContext)
 
     const socialLinks = [
@@ -27,16 +29,26 @@ const Profile = () => {
             {/* image */}
             <div className="flex justify-between">
                 <div className="flex items-end">
-                    <img src={user?.photoURL}
+                    {/* <img src={profileAvatar}
+                        className=""
+                        alt="profile picture" /> */}
+                    <Image
+                        src={user?.photoURL ? user?.photoURL : profileAvatar}
+                        alt="profile"
+                        width={200}
+                        height={200}
                         className="w-48 h-48 rounded-lg"
-                        alt="profile picture" />
+                    />
                     <div className="p-5">
                         <h4 className="text-3xl font-semibold">{user?.displayName}</h4>
                         <p className="text-sm mt-1 font-semibold text-[#00000080]">{user?.email}</p>
                     </div>
                 </div>
                 <div>
-                    <button className="text-[#00A13E] text-sm font-semibold">Edit</button>
+                    {
+                        !editProfile &&
+                        <button onClick={() => setEditProfile(true)} className="text-[#00A13E] text-sm font-semibold">Edit</button>
+                    }
                 </div>
             </div>
             {/* info */}
