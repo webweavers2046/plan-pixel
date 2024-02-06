@@ -3,11 +3,14 @@ import { AuthContext } from "@/Providers/AuthProviders";
 import { useContext, useState } from "react";
 import profileAvatar from '@/assets/person/profileAvatar.png'
 import Image from "next/image";
+import useUser from "@/hooks/useUser";
 
 
 
 const Profile = ({ editProfile, setEditProfile }) => {
     const { user } = useContext(AuthContext)
+    const userData = useUser(user?.email);
+    // console.log(userData);
 
     const socialLinks = [
         {
@@ -29,19 +32,16 @@ const Profile = ({ editProfile, setEditProfile }) => {
             {/* image */}
             <div className="flex justify-between">
                 <div className="flex items-end">
-                    {/* <img src={profileAvatar}
-                        className=""
-                        alt="profile picture" /> */}
                     <Image
-                        src={user?.photoURL ? user?.photoURL : profileAvatar}
+                        src={userData?.image ? userData?.image : profileAvatar}
                         alt="profile"
                         width={200}
                         height={200}
                         className="w-48 h-48 rounded-lg"
                     />
                     <div className="p-5">
-                        <h4 className="text-3xl font-semibold">{user?.displayName}</h4>
-                        <p className="text-sm mt-1 font-semibold text-[#00000080]">{user?.email}</p>
+                        <h4 className="text-3xl font-semibold">{userData?.name}</h4>
+                        <p className="text-sm mt-1 font-semibold text-[#00000080]">{userData?.email}</p>
                     </div>
                 </div>
                 <div>
@@ -55,7 +55,14 @@ const Profile = ({ editProfile, setEditProfile }) => {
             <div className="mt-9">
                 <div className="border-b-2 border-[#00000033] p-3">
                     <p className="text-xs mb-3 font-semibold">Phone Number:</p>
-                    <p>0123654899</p>
+                    <p>
+                        {
+                            userData?.number && userData?.number !== '' ?
+                                userData?.number
+                                :
+                                <span>n/a</span>
+                        }
+                    </p>
                 </div>
                 <div className="border-b-2 border-[#00000033] p-3 mt-1">
                     <p className="text-xs mb-3 font-semibold">Email Address:</p>
@@ -80,20 +87,48 @@ const Profile = ({ editProfile, setEditProfile }) => {
                 </div>
                 <div className="border-b-2 border-[#00000033] p-3 mt-1">
                     <p className="text-xs mb-3 font-semibold">Address:</p>
-                    <p>7/265, Shohid sharak, Zindapark, Chattagram</p>
+                    <p>
+                        {
+                            userData?.address && userData?.address !== '' ?
+                                userData?.address
+                                :
+                                <span>n/a</span>
+                        }
+                    </p>
                 </div>
                 <div className="border-b-2 border-[#00000033] p-3 mt-1">
                     <p className="text-xs mb-3 font-semibold">Profession:</p>
-                    <p>Back-end developer, Plan Pixel.io</p>
+                    <p>
+                        {
+                            userData?.profession && userData?.profession !== '' ?
+                                userData?.profession
+                                :
+                                <span>n/a</span>
+                        }
+                    </p>
                 </div>
                 <div className="flex gap-8">
                     <div className="border-b-2 border-[#00000033] p-3 mt-1 w-full">
                         <p className="text-xs mb-3 font-semibold">Gender:</p>
-                        <p>Male</p>
+                        <p>
+                            {
+                                userData?.gender && userData?.gender !== '' ?
+                                    userData?.gender
+                                    :
+                                    <span>n/a</span>
+                            }
+                        </p>
                     </div>
                     <div className="border-b-2 border-[#00000033] p-3 mt-1 w-full">
                         <p className="text-xs mb-3 font-semibold">Age:</p>
-                        <p>18 Years</p>
+                        <p>
+                            {
+                                userData?.age && userData?.age !== '' ?
+                                    userData?.age
+                                    :
+                                    <span>n/a</span>
+                            }
+                        </p>
                     </div>
                 </div>
                 <div className=" p-3 mt-1 w-full">

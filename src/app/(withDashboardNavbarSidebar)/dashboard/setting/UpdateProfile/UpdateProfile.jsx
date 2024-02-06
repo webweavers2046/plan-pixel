@@ -8,6 +8,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import Swal from "sweetalert2";
 import Image from "next/image";
 import profileAvatar from '@/assets/person/profileAvatar.png'
+import useUser from "@/hooks/useUser";
+import useAxios from "@/hooks/useAxios";
 
 // const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_key = '74fd00f7dd14dc3be137326f94c849de'
@@ -15,8 +17,10 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const UpdateProfile = ({ editProfile, setEditProfile }) => {
     const { user } = useContext(AuthContext)
+    const userData = useUser(user?.email);
+    const xios = useAxios();
     const inputFile = useRef(null)
-    console.log(image_hosting_key);
+    // console.log(image_hosting_key);
 
 
     const {
@@ -28,8 +32,43 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
 
 
     const onSubmit = async (data) => {
-        console.log("update profile data", data);
 
+        const updateInfo = {
+            name: data?.firstName + " " + data?.lastName,
+            number: data?.number,
+            address: data?.address,
+            profession: data?.profession,
+            facebook: data?.facebook,
+            instagram: data?.instagram,
+            twitter: data?.twitter,
+            linkedin: data?.linkedin
+        }
+
+        console.log("update profile data", updateInfo);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, save it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await xios.put(`/users/${user?.email}`, updateInfo);
+                console.log(res?.data);
+                if (res?.data?.update) {
+                    Swal.fire({
+                        title: "saved!",
+                        text: "Your profile has been updated.",
+                        icon: "success"
+                    });
+                    setEditProfile(false);
+                }
+
+            }
+        });
     };
 
 
@@ -39,7 +78,7 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
         inputFile.current.click();
         const imgFile = inputFile.current.files[0]
 
-        console.log('img file', imgFile);
+        // console.log('img file', imgFile);
 
         if (imgFile) {
             Swal.fire({
@@ -60,13 +99,20 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
                             }
                         })
                         const image = res?.data?.data?.url;
-                        console.log(image);
+                        const { data } = await xios.put(`/userImage/${user?.email}`, { image })
+                        // console.log('image update', data);
+
+                        if (data?.update) {
+                            Swal.fire({
+                                title: "Updated!",
+                                text: "Your profile has been updated.",
+                                icon: "success"
+                            });
+                            setEditProfile(false);
+                        }
+
                     }
-                    // Swal.fire({
-                    //     title: "Deleted!",
-                    //     text: "Your file has been deleted.",
-                    //     icon: "success"
-                    // });
+
                 }
             });
         }
@@ -89,7 +135,7 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
             {/* Image */}
             <div className="flex flex-col items-center justify-center mt-6">
                 <Image
-                    src={user?.photoURL ? user?.photoURL : profileAvatar}
+                    src={userData?.image ? userData?.image : profileAvatar}
                     alt="member"
                     width={200}
                     height={200}
@@ -110,13 +156,13 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
                     {/* name */}
                     <div className='w-full'>
                         <h4 className='font-semibold'>First Name</h4>
-                        <input type="text" placeholder='First Name'   {...register("firstName", { required: true })} name="firstName" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                        <input type="text" placeholder='First Name' defaultValue={userData?.name?.split(" ")[0]}   {...register("firstName", { required: true })} name="firstName" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
                         {errors.firstName && <span className='text-red-500'>This field is required</span>}
                     </div>
                     <div className='w-full'>
                         <h4 className=' font-semibold'>Last Name</h4>
-                        <input type="text" placeholder='Last Name'   {...register("lastName", { required: true })} name="lastName" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
-
+                        <input type="text" placeholder='Last Name' defaultValue={userData?.name?.split(" ")[1]}   {...register("lastName", { required: true })} name="lastName" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                        {errors.lastName && <span className='text-red-500'>This field is required</span>}
                     </div>
                 </div>
                 {/* email */}
@@ -129,14 +175,18 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
                 {/* Phone Number */}
                 <div className='w-full mt-3'>
                     <h4 className=' font-semibold'>Contact Number</h4>
-                    <input type="text" placeholder='Number'   {...register("number", { required: true })} name="number" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                    <input type="text" placeholder='Number' defaultValue={userData?.number}   {...register("number")} name="number" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
 
                 </div>
                 {/* Location */}
                 <div className='w-full mt-3'>
                     <h4 className=' font-semibold'>Address</h4>
-                    <input type="text" placeholder='Location'   {...register("location", { required: true })} name="location" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
-
+                    <input type="text" placeholder='Address' defaultValue={userData?.address}  {...register("address")} name="address" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                </div>
+                {/* Profession */}
+                <div className='w-full mt-3'>
+                    <h4 className=' font-semibold'>Profession</h4>
+                    <input type="text" placeholder='Profession' defaultValue={userData?.profession}  {...register("profession")} name="profession" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
                 </div>
 
                 {/* Social Links */}
@@ -144,19 +194,19 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
                 <div className="grid grid-cols-2 w-full gap-6 mt-4">
                     <div className='w-full'>
                         <h4 className='font-semibold'>Facebook (optional)</h4>
-                        <input type="text" placeholder='url'   {...register("facebook", { required: true })} name="facebook" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                        <input type="text" placeholder='url' defaultValue={userData?.facebook}  {...register("facebook")} name="facebook" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
                     </div>
                     <div className='w-full'>
                         <h4 className=' font-semibold'>Instagram (optional)</h4>
-                        <input type="text" placeholder='url'   {...register("instagram", { required: true })} name="instagram" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                        <input type="text" placeholder='url' defaultValue={userData?.instagram}  {...register("instagram")} name="instagram" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
                     </div>
                     <div className='w-full'>
                         <h4 className=' font-semibold'>Twitter (optional)</h4>
-                        <input type="text" placeholder='url'   {...register("twitter", { required: true })} name="twitter" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                        <input type="text" placeholder='url' defaultValue={userData?.twitter}   {...register("twitter")} name="twitter" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
                     </div>
                     <div className='w-full'>
                         <h4 className=' font-semibold'>Linkedin (optional)</h4>
-                        <input type="text" placeholder='url'   {...register("linkedin", { required: true })} name="linkedin" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
+                        <input type="text" placeholder='url' defaultValue={userData?.linkedin} {...register("linkedin")} name="linkedin" className='py-1 pl-4 w-full border border-sky-300 mt-3 rounded-md' id="" />
                     </div>
                 </div>
                 <div className="mt-6">

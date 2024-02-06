@@ -9,9 +9,13 @@ import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import useUser from "@/hooks/useUser";
 
 const DashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
+
+    const userData = useUser(user?.email);
+    console.log('user info',userData);
 
     const router = useRouter();
 
@@ -112,10 +116,10 @@ const DashboardNavbar = () => {
                     label={
                         <div className="flex items-center">
                             {
-                                user?.photoURL ?
+                                userData?.image ?
 
                                 <Image
-                                    src={user?.photoURL}
+                                    src={userData?.image}
                                     alt="member"
                                     width={32}
                                     height={32}
@@ -133,10 +137,10 @@ const DashboardNavbar = () => {
                             }
                             <div>
                                 <h2 className="text-sm font-semibold">
-                                    {user?.displayName}
+                                    {userData?.name?.split(" ")[0]}
                                 </h2>
                                 <span className="block truncate text-xs">
-                                    {user?.email}
+                                    {userData?.email}
                                 </span>
                             </div>
                         </div>
