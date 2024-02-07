@@ -25,13 +25,14 @@ import useAxios from "./useAxios";
 
 const useGetSocketData = () => {
     const xios = useAxios();
-    const [alltasks = [], setAllTasks] = useState([]);
+    const [alltasks, setAllTasks] = useState([]);
 
     useEffect(() => {
         xios.get("/tasks").then((data) => setAllTasks(data.data));
     }, []);
 
-    return alltasks.length > 0 ? alltasks : [];
+    // console.log("all data by http initially", alltasks)
+    return alltasks
 };
 
 export default useGetSocketData;

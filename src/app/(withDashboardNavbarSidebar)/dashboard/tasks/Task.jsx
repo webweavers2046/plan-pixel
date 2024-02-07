@@ -19,7 +19,7 @@ import UpdateTask from "../Components/UpdateTask";
 
 const Task = ({ task, tasks, setTasks, refetch }) => {
     // manage all you state here
-    const { draggingStarted, isDragging, isDropped, draggingTaskId } =
+    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =
         useGlobalTaskData();
 
     const handleDeleteTask = (id) => {
@@ -64,10 +64,15 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
     return (
         <div
             draggable
+            id={task._id}
+            onDragOver={(e) => draggingOver(e,task._id)}
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
-            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-8 text-black ${
-                isDropped ? "transition-all linear 1s" : ""
-            }`}
+            className={` 
+            task-container
+            mt-4 cursor-grabbing transform transition-all 0.5s 
+            ease-in-out  bg-[#F9F9F9] rounded-md p-8 text-black 
+            ${isDropped ? "transition-all linear 1s" : ""} 
+            `}
         >
             {" "}
             <div className=" flex items-center gap-2 justify-between">
