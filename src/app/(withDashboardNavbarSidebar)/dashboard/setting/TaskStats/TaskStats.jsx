@@ -22,7 +22,7 @@ const TaskStats = () => {
                 </h4>
             </div>
             <div className="bg-[#FBBC0559] flex flex-col justify-center items-center font-semibold p-5 rounded-lg">
-                <h5 className="text-xl">Total Finished Task:</h5>
+                <h5 className="text-xl">Total Unfinished Task:</h5>
                 <h4 className="text-6xl mt-2">
                     {
                         doing?.length + todo?.length < 10 ?
