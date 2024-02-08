@@ -39,10 +39,16 @@ const DashboardNavbar = () => {
             }
         });
     };
+
+
+    const handleDropdownClick = () => {
+        console.log("cickc")
+    }
     return (
         <div className="flex justify-between items-center p-4 gap-6">
             <div className=" py-2 px-3 rounded-lg ">
                 <Dropdown
+                    onClick={handleDropdownClick}
                     className="bg-gray-100 py-2 px-3 rounded-lg mt-4"
                     inline
                     label={

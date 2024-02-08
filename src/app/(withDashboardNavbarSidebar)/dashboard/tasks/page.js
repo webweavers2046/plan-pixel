@@ -63,7 +63,7 @@ const Tasks = () => {
                 }`}
               >
                 <LuListTodo className="text-2xl" />{" "}
-                <h2 className="font-bold">Upcoming</h2>
+                <h2 className="">Upcoming</h2>
               </div>
 
               {upcomingTasks?.map((task, idx) => (
