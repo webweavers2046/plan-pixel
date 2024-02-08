@@ -1,11 +1,19 @@
+"use client";
+
+import { Modal } from "flowbite-react";
 import { GoPlus } from "react-icons/go";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
+import modalImage from "@/assets/meeting.png";
+
 import Image from "next/image";
+import { useState } from "react";
 
 const Meetings = () => {
+    const [openModal, setOpenModal] = useState(false);
+
     const meetings = [
         {
             meetingName: "Monthly Team Meeting",
@@ -26,9 +34,19 @@ const Meetings = () => {
 
     return (
         <div className="">
+            <Modal show={openModal} onClose={() => setOpenModal(false)}>
+                <Modal.Header>Send Message</Modal.Header>
+                <Modal.Body>
+                    <Image src={modalImage} alt="Modal image"></Image>
+                </Modal.Body>
+            </Modal>
             <div className="flex items-center justify-between">
                 <h4 className="text-xl font-semibold">Team Meeting</h4>
-                <button className="text-2xl">
+                {/* add new meeting  */}
+                <button
+                    className="text-2xl"
+                    onClick={() => setOpenModal(!openModal)}
+                >
                     <GoPlus />
                 </button>
             </div>
