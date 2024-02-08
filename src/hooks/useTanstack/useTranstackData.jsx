@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import apiConnector from "../useAxios";
 
-const useTranscatackData = (endpoint, key) => {
+const useTranstackData = (endpoint, key) => {
   const xios = apiConnector();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [key],
@@ -14,4 +14,4 @@ const useTranscatackData = (endpoint, key) => {
   return { data, isLoading, error, refetch };
 };
 
-export default useTranscatackData;
+export default useTranstackData;
