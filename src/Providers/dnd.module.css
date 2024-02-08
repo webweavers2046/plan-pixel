@@ -1,0 +1,10 @@
+.dragOverExistingTask {
+    transform: translateY(-100px); /* Adjust this value based on your design */
+    transition: transform 0.3s ease; /* Add a smooth transition effect */
+  }
+  
+.removedragOverExistingTaskStyle {
+    transform: translateY(100px); /* Adjust this value based on your design */
+    transition: transform 0.3s ease; /* Add a smooth transition effect */
+  }
+  

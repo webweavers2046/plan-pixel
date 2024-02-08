@@ -1,37 +1,26 @@
 "use client";
-import { useState } from "react";
-import { Dropdown } from "flowbite-react";
-import { IoIosArrowUp } from "react-icons/io";
-import { MdDoubleArrow } from "react-icons/md";
-import { FaEquals, FaStopwatch } from "react-icons/fa6";
-import { BiSolidMessageSquareDetail } from "react-icons/bi";
-import { BsStopwatchFill, BsThreeDotsVertical } from "react-icons/bs";
 
-import Swal from "sweetalert2";
-import Image from "next/image";
-import useAxios from "@/hooks/useAxios";
-import UpdateTask from "../Components/UpdateTask";
 import FlowBiteModal from "../Components/FlowBiteModal";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
+import {  FaEquals, FaStopwatch } from "react-icons/fa6";
+import Swal from "sweetalert2";
+import Image from "next/image";
+import { Dropdown } from "flowbite-react";
+import useAxios from "@/hooks/useAxios";
 import useGlobalTaskData from "@/hooks/useGlobalTaskData";
-import { Modal } from 'flowbite';
-import TaskModal from "../Components/TaskModal";
+import { MdDoubleArrow } from "react-icons/md";
+import { BiSolidMessageSquareDetail } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 
-const Task = ({ task, alltasks, setinitial, openUpdateModal, setOpenUpdateModal }) => {
-
-    const xios = useAxios();
-
-    const { draggingStarted, isDragging, isDropped, draggingTaskId } =
-        useGlobalTaskData();
-
-    const handleClick = (task) => {
-        console.log(task);
-    };
+const Task = ({ task }) => {
+    // manage all you state here
+    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useGlobalTaskData();
+        const xios = useAxios()
 
     const handleDeleteTask = (id) => {
         Swal.fire({
@@ -63,9 +52,15 @@ const Task = ({ task, alltasks, setinitial, openUpdateModal, setOpenUpdateModal 
     return (
         <div
             draggable
+            id={task._id}
+            onDragOver={(e) => draggingOver(e,task._id)}
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
-            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-8 text-black ${isDropped ? "transition-all linear 1s" : ""
-                }`}
+            className={` 
+            task-container
+            mt-4 cursor-grabbing transform transition-all 0.5s 
+            ease-in-out  bg-[#F9F9F9] rounded-md p-8 text-black 
+            ${isDropped ? "transition-all linear 1s" : ""} 
+            `}
         >
             {" "}
             <div className=" flex items-center gap-2 justify-between">
