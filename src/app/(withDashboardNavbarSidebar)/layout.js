@@ -3,7 +3,6 @@ import DashboardNavbar from "./dashboard/Components/DashboardNavbar";
 import DashboardSidebar from "./dashboard/Components/DashboardSidebar";
 import "@/styles/globals.css";
 import TanstackProvider from "@/Providers/TanstackProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function DashboardLayout({ children }) {
   return (
