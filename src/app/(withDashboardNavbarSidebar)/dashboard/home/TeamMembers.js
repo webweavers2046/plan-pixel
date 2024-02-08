@@ -14,17 +14,22 @@ import MassageIcon from "@/assets/dashboard/Message.svg";
 import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
+import useGlobalContext from "@/hooks/useGlobalContext";
 
 const TeamMembers = () => {
+    const {workspaceBasedMembers} = useGlobalContext()
+    
     return (
         <div className="shadow-md rounded-xl p-6 max-h-dvh overscroll-auto border">
             <h1 className=" text-2xl font-bold p-4">Team Member</h1>
-            {teamMemberData.map((member, index) => (
+            {workspaceBasedMembers?.map((member, index) => (
                 <TeamMember
                     key={index}
                     name={member.name}
                     userEmail={member.email}
-                    avatar={member.avatar}
+                    // avatar={member.avatar}
+                    avatar={member02Img}
+                    
                 />
             ))}
         </div>

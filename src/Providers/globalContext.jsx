@@ -12,6 +12,10 @@ const GlobalContext = ({ children }) => {
 // manage all of your state here ..
   const [newTask, setNewTask] = useState("")
   const xios = useAxios();
+  const [workspaceBasedTasks,setWorkspaceTasks] = useState([])
+  const [workspaceBasedMembers,setWorkspaceMembers] = useState([])
+
+
 // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal) => {
 
@@ -27,9 +31,27 @@ const GlobalContext = ({ children }) => {
   };
 
 
+  // Workspace data hanler 
+  
+  const handleActiveWorkspace = async(e,_id) => {
+    console.log("workspace id", _id)
+    const alltasksAndMembersInIt = await xios.get(`/active-workspace/${_id}`)
+    if(alltasksAndMembersInIt.data){
+        setWorkspaceTasks(alltasksAndMembersInIt.data.tasks)
+        setWorkspaceMembers(alltasksAndMembersInIt.data.members)
+    }
+  }
+
+
+
+
+
   const data = {
     handleCreateTask,
-    newTask
+    newTask,
+    workspaceBasedTasks,
+    workspaceBasedMembers,
+    handleActiveWorkspace
   };
 
   return (
