@@ -37,7 +37,7 @@ const AblyProvider = ({ children }) => {
       ablyChannel.unsubscribe(ablyListener);
       try {
         // await ably.close();
-        console.log("Ably connection closed successfully.");
+        // console.log("Ably connection closed successfully.");
       } catch (error) {
         console.error("Error closing Ably connection:", error);
       }
@@ -45,7 +45,7 @@ const AblyProvider = ({ children }) => {
   }, []);
 
 
-  console.log("this is from ably provider", tasks);
+  // console.log("this is from ably provider", tasks);
 
 
   return <ablyContext.Provider value={{tasks}}>{children}</ablyContext.Provider>;
