@@ -13,11 +13,11 @@ const page = () => {
   console.log('members tasks', tasks);
 
   return (
-    <div className="grid grid-cols-3">
+    <div className="grid grid-cols-3 p-5">
       <div className="">
         <TeamMembers />
       </div>
-      <div className="col-span-2 p-8 ">
+      <div className="col-span-2 px-8 ">
         <div className="bg-gray-200 w-fit pr-6 py-3 rounded-md shadow-md">
           <Dropdown
             className="bg-gray-100 py-2 px-3 rounded-lg mt-4"

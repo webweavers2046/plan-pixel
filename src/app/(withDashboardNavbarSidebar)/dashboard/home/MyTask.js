@@ -3,17 +3,36 @@ import timeIcon from "@/assets/dashboard/time.svg";
 import Image from "next/image";
 import style from "./Scrollbar.module.css";
 import { useQuery } from "@tanstack/react-query";
-import useTranscatackData from "@/hooks/useTanstack/useTranscatackData ";
-import { useState } from "react";
+import useTranstackData from "@/hooks/useTanstack/useTranstackData";
+import { useContext, useEffect, useMemo, useState } from "react";
 import apiConnector from "@/hooks/useAxios";
 import toast from "react-hot-toast";
+import { AuthContext } from "@/Providers/AuthProviders";
 
-const MyTask = () => {
-  const [isDone, setIsDone] = useState(false);
-  const { data: tasks, refetch } = useTranscatackData("/tasks/doing", "tasks"); //api call for get "doing" status data
+const MyTask = ({ date }) => {
+const { user } = useContext(AuthContext);
+const modifyDate = useMemo(() => date.toISOString().substring(0, 10), [date]);
+const apiEndpoint = `/tasksFiltered?targetDate=${modifyDate}&tasksOwner=${user?.email}`;
+const { data, refetch, isLoading } = useTranstackData(apiEndpoint, "tasks");
+const [tasks, setTasks] = useState(data);
+
+useEffect(() => {
+  if (data) {
+    setTasks(data);
+  }
+}, [data]);
+
+useEffect(() => {
+  refetch();
+}, [modifyDate, refetch]);
+
+if (isLoading) {
+  return <p>Loading...</p>;
+}
+
   return (
     <div
-      className={`shadow-md rounded-xl p-6 max-h-dvh overflow-auto ${style.scrollbarCustom} border`}
+      className={`w-full mt-4 shadow-md min-h-80 rounded-xl p-6 overflow-auto border-2 border-[#E6E8EC]`}
     >
       <h1 className=" text-2xl font-bold p-4">My Task</h1>
       {tasks?.map((task, index) => (
@@ -21,10 +40,9 @@ const MyTask = () => {
           key={task?._id}
           index={index}
           name={task?.title}
-          status={task?.status}
-          setIsDone={setIsDone}
           tasksId={task._id}
           refetch={refetch}
+          date={date}
         />
       ))}
     </div>
@@ -32,18 +50,19 @@ const MyTask = () => {
 };
 export default MyTask;
 
-function Task({ name, status, setIsDone, tasksId, refetch, index }) {
+function Task({ name, tasksId, refetch, index }) {
   const xios = apiConnector();
-
-  const handleIsDone = async(e) => {
+  const handleIsDone = async (e) => {
     const isChecked = e.target.checked;
     if (isChecked) {
-      const res = await xios.patch(`/updateTaskState/?id=${tasksId}&&state=${"done"}`);
+      const res = await xios.patch(
+        `/updateTaskState/?id=${tasksId}&&state=${"done"}`
+      );
       console.log(res);
-      if (res.data.updated.modifiedCount > 0){
-        toast.success('Complete task')
+      if (res.data.updated.modifiedCount > 0) {
+        toast.success("Complete task");
         refetch();
-      } 
+      }
     }
   };
   return (
@@ -55,7 +74,7 @@ function Task({ name, status, setIsDone, tasksId, refetch, index }) {
       <div className="inline-flex items-center">
         <label
           className="relative flex items-center p-3 rounded-full cursor-pointer"
-          htmlfor="amber"
+          htmlFor="amber"
         >
           <input
             type="checkbox"
@@ -84,51 +103,3 @@ function Task({ name, status, setIsDone, tasksId, refetch, index }) {
     </div>
   );
 }
-
-const taskss = [
-  {
-    id: 1,
-    name: "Create wireframe",
-    completed: true,
-  },
-  {
-    id: 2,
-    name: "Slack Logo Design and apply on site",
-    completed: true,
-  },
-  {
-    id: 3,
-    name: "Dashboard Design for developers",
-    completed: false,
-  },
-  {
-    id: 4,
-    name: "Attend Daily scam on time",
-    completed: false,
-  },
-  {
-    id: 5,
-    name: "Manage projects",
-    completed: true,
-  },
-  {
-    id: 6,
-    name: "Fix company's website",
-    completed: false,
-  },
-  {
-    id: 7,
-    name: "East and west we are best",
-    completed: false,
-  },
-  {
-    id: 8,
-    name: "No task in my matha",
-    completed: false,
-  },
-  {
-    id: 9,
-    name: "Task Task Plan Pixel Task",
-    completed: false,
-  },
-];

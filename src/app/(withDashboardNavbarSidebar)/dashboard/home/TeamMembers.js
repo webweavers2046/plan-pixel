@@ -17,9 +17,9 @@ import toast from "react-hot-toast";
 
 const TeamMembers = () => {
     return (
-        <div className="shadow-md rounded-xl p-6 max-h-dvh overscroll-auto border">
+        <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
             <h1 className=" text-2xl font-bold p-4">Team Member</h1>
-            {teamMemberData.map((member, index) => (
+            {teamMemberData?.map((member, index) => (
                 <TeamMember
                     key={index}
                     name={member.name}
