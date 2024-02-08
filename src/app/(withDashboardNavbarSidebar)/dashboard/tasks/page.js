@@ -233,20 +233,15 @@ import useFilterTasks from "@/hooks/useFilterTasks ";
 import useGlobalTaskData from "@/hooks/useGlobalTaskData";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useGetSocketData from "@/hooks/useGetAllTasks";
+import UpdateTask from "../Components/UpdateTask";
 
 const Tasks = () => {
     // manage all your state here..
     const [openModal, setOpenModal] = useState(false);
+    const [openUpdateModal, setOpenUpdateModal] = useState(false);
     const { alltasks, setinitial, dropOn, draggingOver, dragOverElementName, isDragging } =
         useGlobalTaskData();
 
-        // const altask = useGetSocketData();
-        // console.log(alltasks);
-        // console.log(setinitial);
-
-        // const [task, setTask]= useState();
-        // console.log(task);
-        // setTask(altask);
 
     // Tasks in different status
     const toDoTasks = useFilterTasks(alltasks, "to-do");
@@ -308,7 +303,7 @@ const Tasks = () => {
                             </div>
 
                             {upcomingTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} />
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}/>
                             ))}
                         </div>
                         {/* to do task */}
@@ -337,7 +332,7 @@ const Tasks = () => {
                             </div>
 
                             {toDoTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} />
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}/>
                             ))}
                         </div>
                         {/* ongoing/doing tasks */}
@@ -364,7 +359,7 @@ const Tasks = () => {
                             </div>
 
                             {doingTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks}/>
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}/>
                             ))}
                         </div>
                         {/* done/completed tasks */}
@@ -391,7 +386,7 @@ const Tasks = () => {
                             </div>
 
                             {doneTasks?.map((task, idx) => (
-                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks}/>
+                                <Task idx={idx} key={task._id} task={task} setinitial={setinitial} alltasks={alltasks} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}/>
                             ))}
                         </div>
                     </div>
@@ -399,6 +394,7 @@ const Tasks = () => {
                         openModal={openModal}
                         setOpenModal={setOpenModal}
                     ></TaskModal>
+                    {/* <UpdateTask task={alltasks} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
                 </section>
             )}
         </>

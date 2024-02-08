@@ -17,7 +17,6 @@ const TaskModal = ({ openModal, setOpenModal }) => {
   const { handleCreateTask, setNewTask } = useGlobalContext();
 
   const onSubmit = async (data) => {
-    console.log("update modal data", data);
     const newTask = {
       title: data?.title,
       description: data?.description,

@@ -1,31 +1,37 @@
 "use client";
-
-import useGlobalTaskData from "@/hooks/useGlobalTaskData";
-import { BsStopwatchFill, BsThreeDotsVertical } from "react-icons/bs";
+import { useState } from "react";
+import { Dropdown } from "flowbite-react";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";
+import { FaEquals, FaStopwatch } from "react-icons/fa6";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
+import { BsStopwatchFill, BsThreeDotsVertical } from "react-icons/bs";
+
+import Swal from "sweetalert2";
+import Image from "next/image";
+import useAxios from "@/hooks/useAxios";
+import UpdateTask from "../Components/UpdateTask";
+import FlowBiteModal from "../Components/FlowBiteModal";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
-import { FaEquals, FaStopwatch } from "react-icons/fa6";
-import Swal from "sweetalert2";
-import Image from "next/image";
-import { Dropdown } from "flowbite-react";
-import UpdateTask from "../Components/UpdateTask";
-import useAxios from "@/hooks/useAxios";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import useGlobalTaskData from "@/hooks/useGlobalTaskData";
+import { Modal } from 'flowbite';
+import TaskModal from "../Components/TaskModal";
 
-const Task = ({ task, alltasks, setinitial }) => {
-    // console.log(alltasks);
-    // console.log(setinitial);
-    // manage all you state here
+
+const Task = ({ task, alltasks, setinitial, openUpdateModal, setOpenUpdateModal }) => {
+
+    const xios = useAxios();
+
     const { draggingStarted, isDragging, isDropped, draggingTaskId } =
         useGlobalTaskData();
 
+    const handleClick = (task) => {
+        console.log(task);
+    };
 
     const handleDeleteTask = (id) => {
         Swal.fire({
@@ -38,27 +44,18 @@ const Task = ({ task, alltasks, setinitial }) => {
             confirmButtonText: "Delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(
-                    `http://localhost:5000/deleteTask/${id}`,
-                    {
-                        method: "DELETE",
-                    }
-                )
-                    .then((res) => res.json())
-                    .then((data) => {
-                        console.log(data);
-                        if (data.deletedCount > 0) {
+                xios.delete(`/deleteTask/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
                             Swal.fire(
                                 "Deleted!",
                                 "Your task has been deleted.",
                                 "success"
                             );
-                            // eslint-disable-next-line react/prop-types
-                            const remaining = alltasks?.filter((task) => task._id !== id);
-                            console.log(remaining);
-                            setinitial(remaining);
                         }
-                    });
+                    })
+
             }
         });
     };
@@ -88,7 +85,8 @@ const Task = ({ task, alltasks, setinitial }) => {
                         </button>
                     </Dropdown.Item>
                     <Dropdown.Item className="rounded-md">
-                        <button className="w-full">Update Task</button>
+                        <button className="w-full"><FlowBiteModal ></FlowBiteModal></button>
+
                     </Dropdown.Item>
                 </Dropdown>
             </div>
@@ -144,7 +142,16 @@ const Task = ({ task, alltasks, setinitial }) => {
                     />
                 </div>
                 <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+
             </div>
+            {/* <UpdateTask task={task} ></UpdateTask> */}
+            {/* <TaskModal
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                ></TaskModal> */}
+
+                
+
         </div>
     );
 };

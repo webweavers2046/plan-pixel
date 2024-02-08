@@ -15,9 +15,7 @@ const GlobalContext = ({ children }) => {
   const handleCreateTask = (newTask, setOpenModal) => {
 
     // Calling it above for faster overview
-   
-    console.log(setNewTask);
-    console.log(newTask);
+    // console.log(newTask);
     xios.post("/createTask", newTask).then((res) => {
       // console.log(res.data);
       if (res?.data?.insertedId) {

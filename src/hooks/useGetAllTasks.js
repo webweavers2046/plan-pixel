@@ -29,17 +29,10 @@ import useGlobalTaskData from "./useGlobalTaskData";
 const useGetSocketData = () => {
   const xios = useAxios();
   const [alltasks, setAllTasks] = useState([]);
-  // console.log(alltasks);
-
-  // const {setSobTasks} = useGlobalTaskData();
-  // console.log(setSobTasks);
-
 
   useEffect(() => {
     xios.get("/tasks").then((data) => setAllTasks(data.data));
-  }, []);
-  // <Task setSobTasks={setSobTasks}></Task>
-
+  }, [alltasks]);
   return [alltasks, setAllTasks];
 };
 
