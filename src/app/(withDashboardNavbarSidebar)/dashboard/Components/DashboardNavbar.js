@@ -15,7 +15,7 @@ const DashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
 
     const userData = useUser(user?.email);
-    console.log('user info',userData);
+    // console.log('user info',userData);
 
     const router = useRouter();
 
