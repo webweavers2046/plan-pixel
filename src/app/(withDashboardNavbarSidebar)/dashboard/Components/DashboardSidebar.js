@@ -11,6 +11,7 @@ import { FaUsers } from "react-icons/fa6";
 import phoneIcon from "@/assets/icons/phone.png";
 
 const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
+    // get current route
     const pathname = usePathname();
     return (
         <div className="sticky top-0">

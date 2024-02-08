@@ -1,26 +1,37 @@
 "use client";
-
-import useGlobalTaskData from "@/hooks/useGlobalTaskData";
-import { BsStopwatchFill, BsThreeDotsVertical } from "react-icons/bs";
+import { useState } from "react";
+import { Dropdown } from "flowbite-react";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdDoubleArrow } from "react-icons/md";
+import { FaEquals, FaStopwatch } from "react-icons/fa6";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { BsStopwatchFill, BsThreeDotsVertical } from "react-icons/bs";
+
+import Swal from "sweetalert2";
+import Image from "next/image";
+import useAxios from "@/hooks/useAxios";
+import UpdateTask from "../Components/UpdateTask";
+import FlowBiteModal from "../Components/FlowBiteModal";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
-import { FaEquals, FaStopwatch } from "react-icons/fa6";
-import Swal from "sweetalert2";
-import Image from "next/image";
-import { Dropdown } from "flowbite-react";
-import UpdateTask from "../Components/UpdateTask";
+import useGlobalTaskData from "@/hooks/useGlobalTaskData";
+import { Modal } from 'flowbite';
+import TaskModal from "../Components/TaskModal";
 
-const Task = ({ task, tasks, setTasks, refetch }) => {
-    // manage all you state here
+
+const Task = ({ task, alltasks, setinitial, openUpdateModal, setOpenUpdateModal }) => {
+
+    const xios = useAxios();
+
     const { draggingStarted, isDragging, isDropped, draggingTaskId } =
         useGlobalTaskData();
+
+    const handleClick = (task) => {
+        console.log(task);
+    };
 
     const handleDeleteTask = (id) => {
         Swal.fire({
@@ -33,30 +44,18 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
             confirmButtonText: "Delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                // axios.delete(`https://task-management-server-topaz.vercel.app//deleteTask/${id}`)
-                fetch(
-                    `https://plan-pixel-backend-jet.vercel.app/deleteTask/${id}`,
-                    {
-                        method: "DELETE",
-                    }
-                )
-                    .then((res) => res.json())
-                    .then((data) => {
-                        console.log(data);
-                        if (data.deletedCount > 0) {
+                xios.delete(`/deleteTask/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
                             Swal.fire(
                                 "Deleted!",
                                 "Your task has been deleted.",
                                 "success"
                             );
-                            // eslint-disable-next-line react/prop-types
-                            const remaining = tasks?.filter(
-                                (task) => task._id !== id
-                            );
-                            console.log(remaining);
-                            setTasks(remaining);
                         }
-                    });
+                    })
+
             }
         });
     };
@@ -65,18 +64,17 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
         <div
             draggable
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
-            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-8 text-black ${
-                isDropped ? "transition-all linear 1s" : ""
-            }`}
+            className={` cursor-grabbing transform transition-all 0.5s ease-in-out mt-4 bg-[#F9F9F9] rounded-md p-8 text-black ${isDropped ? "transition-all linear 1s" : ""
+                }`}
         >
             {" "}
             <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>
                 <Dropdown
-                    className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16"
+                    className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16 cursor-pointer"
                     label=""
                     dismissOnClick={false}
-                    renderTrigger={() => <BsThreeDotsVertical />}
+                    renderTrigger={() => <BsThreeDotsVertical className="cursor-pointer" />}
                 >
                     <Dropdown.Item className="rounded-md">
                         <button
@@ -87,7 +85,8 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                         </button>
                     </Dropdown.Item>
                     <Dropdown.Item className="rounded-md">
-                        <button className="w-full">Update Task</button>
+                        <button className="w-full"><FlowBiteModal ></FlowBiteModal></button>
+
                     </Dropdown.Item>
                 </Dropdown>
             </div>
@@ -143,7 +142,16 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                     />
                 </div>
                 <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+
             </div>
+            {/* <UpdateTask task={task} ></UpdateTask> */}
+            {/* <TaskModal
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                ></TaskModal> */}
+
+                
+
         </div>
     );
 };

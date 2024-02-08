@@ -1,5 +1,5 @@
-const useFilterTasks  = (tasksArray,filter) => {
-    return tasksArray?.filter(task =>  task?.status === filter)
-}
+const useFilterTasks = (tasksArray, filter) => {
+  return tasksArray?.filter((task) => task?.status === filter);
+};
 
-export default useFilterTasks
+export default useFilterTasks;
