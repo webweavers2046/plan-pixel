@@ -5,6 +5,8 @@ const nextConfig = {
         "lh3.googleusercontent.com",
         "firebasestorage.googleapis.com",
         "https://lh3.googleusercontent.com/",
+        "i.ibb.co"
+        
       ],
     },
   };

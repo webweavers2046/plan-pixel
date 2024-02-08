@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 
 const Register = () => {
   const router = useRouter();
-  const { createUser, googleSignIn } = useContext(AuthContext);
+  const { createUser, googleSignIn, logOut } = useContext(AuthContext);
   const xios = useAxios();
 
   const {
@@ -35,18 +35,20 @@ const Register = () => {
     try {
       const res = await createUser(email, password);
       if (res.user) {
-        router.push("/dashboard");
+        
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Registredted Successfully",
+          title: "Registration Successful",
           showConfirmButton: false,
           timer: 1500,
         });
+        logOut();
+        router.push("/sign-in");
         const user = {
           name: firstName + " " + lastName,
           email,
-          password,
+          image : null,
           paymentStatus: null,
           subscriptionStartDate: null,
           subscriptionEndDate: null,
@@ -76,20 +78,20 @@ const Register = () => {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
-        const name = res.user.displayName;
-        const email = res.user.email;
+        const name = res?.user?.displayName;
+        const email = res?.user?.email;
+        const image = res?.user?.photoURL
 
         const user = {
           name: name,
           email: email,
-          password: "Google logged user",
+          image : image,
           paymentStatus: null,
           subscriptionStartDate: null,
           subscriptionEndDate: null,
         };
 
         await saveUserInfoDataBase(user); // save user data to database
-
         router.push("/dashboard");
       }
     } catch (error) {
@@ -100,7 +102,8 @@ const Register = () => {
 
   const saveUserInfoDataBase = async (user) => {
 
-    const {data} =await xios.get('/users')
+    const {data} = await xios.get('/users')
+    console.log( 'is exist', data);
     // check user exist or not
     const isExist = data?.find((i) => i.email === user.email);
     if(!isExist){

@@ -3,7 +3,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 const AllWorkspace = () => {
     return (
-        <div className="w-full px-10">
+        <div className="w-full px-10 mt-10">
             <h3 className="text-xl font-semibold mb-5">All workspace</h3>
             
                 <div className="w-full h-16 bg-gray-200 rounded-md flex items-center justify-between px-5 py-2">

@@ -7,6 +7,8 @@ import "@/styles/globals.css";
 
 import { IoClose, IoSettingsSharp } from "react-icons/io5";
 import { usePathname } from "next/navigation";
+import { FaUsers } from "react-icons/fa6";
+import phoneIcon from "@/assets/icons/phone.png";
 
 const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
     const pathname = usePathname();
@@ -85,7 +87,7 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                                 className={`flex items-center  gap-x-4 ${
                                     pathname == "/dashboard/tasks"
                                         ? "active"
-                                        : ""
+                                        : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard/tasks"
                             >
@@ -107,15 +109,49 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                         </li>
                         <li>
                             <Link
-                                className={`flex items-center gap-x-4  ${
-                                    pathname == "/dashboard/setting"
+                                className={`flex items-center  gap-x-4 ${
+                                    pathname == "/dashboard/members"
                                         ? "active"
-                                        : ""
+                                        : "inactive"
+                                }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                href="/dashboard/members"
+                            >
+                                <div className="flex items-center">
+                                    <FaUsers className="text-3xl me-4" />
+                                    <p>Members</p>
+                                </div>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                className={`flex items-center gap-x-4  ${
+                                    pathname == "/dashboard/profile"
+                                        ? "active"
+                                        : "inactive"
                                 } px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                href="/dashboard/setting"
+                                href="/dashboard/profile"
                             >
                                 <IoSettingsSharp className="w-7 h-7" />
-                                Setting
+                                Profile
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                className={`flex items-center  gap-x-4 ${
+                                    pathname == "/dashboard/meeting"
+                                        ? "active"
+                                        : "inactive"
+                                }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                href="/dashboard/members"
+                            >
+                                <div className="flex items-center">
+                                    <Image
+                                        src={phoneIcon}
+                                        alt="phone icon"
+                                        className="me-3"
+                                    ></Image>
+                                    <p>Meeting</p>
+                                </div>
                             </Link>
                         </li>
                     </ul>
