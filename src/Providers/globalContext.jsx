@@ -1,58 +1,90 @@
 "use client";
 
 import useAxios from "@/hooks/useAxios";
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
+import { AuthContext } from "./AuthProviders";
 
 export const globalContext = createContext(null);
 
 const GlobalContext = ({ children }) => {
-
-// manage all of your state here ..
-  const [newTask, setNewTask] = useState("")
+  // manage all of your state here ..
+  const [newTask, setNewTask] = useState("");
   const xios = useAxios();
-  const [workspaceBasedTasks,setWorkspaceTasks] = useState([])
-  const [workspaceBasedMembers,setWorkspaceMembers] = useState([])
+  const { user } = useContext(AuthContext);
+  const [workspaceBasedTasks, setWorkspaceTasks] = useState([]);
+  const [workspaceBasedMembers, setWorkspaceMembers] = useState([]);
+  const [activeWrokspace, setActiveWorkspace] = useState([]);
+  const [workspaces, setWorkspaces] = useState([]);
 
+  // getting the workspace that recently was active
+  useEffect(() => {
+    xios.get(`/active-workspace`).then((res) => {
+      setActiveWorkspace(res.data);
+    });
+  }, []);
 
-// This funciton will create a new task in the task collection
+  useEffect(() => {
+    // All workspaces list in initial load
+     xios
+      .get(`/userWokspaces/${user ? user.email : "shakilahmmed8882@gmail.com"}`)
+      .then((res) => {
+        setWorkspaces(res.data);
+      });
+  }, []);
+
+  // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal) => {
-
     // Calling it above for faster overview
-    setNewTask(newTask)
+    // console.log(newTask);
     xios.post("/createTask", newTask).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res?.data?.insertedId) {
+        setNewTask(newTask);
         setOpenModal(false);
         toast.success("Created a new task", { position: "top-right" });
       }
     });
   };
 
+  // Workspace data hanler
 
-  // Workspace data hanler 
-  
-  const handleActiveWorkspace = async(e,_id) => {
-    console.log("workspace id", _id)
-    const alltasksAndMembersInIt = await xios.get(`/active-workspace/${_id}`)
-    if(alltasksAndMembersInIt.data){
-        setWorkspaceTasks(alltasksAndMembersInIt.data.tasks)
-        setWorkspaceMembers(alltasksAndMembersInIt.data.members)
+  const handleActiveWorkspace = async (e, _id) => {
+    console.log("workspace id", _id);
+    const alltasksAndMembersInIt = await xios.get(
+      `/active-workspace?workspaceId=${_id}`
+    );
+    if (alltasksAndMembersInIt.data) {
+      setWorkspaceTasks(alltasksAndMembersInIt.data.tasks);
+      setWorkspaceMembers(alltasksAndMembersInIt.data.members);
+      setActiveWorkspace(alltasksAndMembersInIt.data.updatedWorkspace);
     }
-  }
+  };
 
-
-
-
+  // when user click on the dropdown for workspace list fetch
+  // workspace list from the database
+  const handleDropdownClick = async (e) => {
+    e.preventDefault();
+    console.log("down click");
+    const userWorkspaces = await xios.get(
+      `/userWokspaces/${user.email ? user.email : "shakilahmmed8882@gmail.com"}`
+    );
+    setWorkspaces(userWorkspaces.data);
+  };
 
   const data = {
     handleCreateTask,
     newTask,
     workspaceBasedTasks,
     workspaceBasedMembers,
-    handleActiveWorkspace
+    handleActiveWorkspace,
+    setNewTask,
+    activeWrokspace,
+    handleDropdownClick,
+    workspaces,
   };
+
+  console.log(workspaces);
 
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>

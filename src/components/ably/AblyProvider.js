@@ -55,7 +55,7 @@ const AblyProvider = ({ children }) => {
       try {
         // Closing the Ably connection
         // await ably.close();
-        console.log("Ably connection closed successfully.");
+        // console.log("Ably connection closed successfully.");
       } catch (error) {
         console.error("Error closing Ably connection:", error);
       }

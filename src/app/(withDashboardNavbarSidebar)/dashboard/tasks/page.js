@@ -4,11 +4,13 @@ import { FiPlusSquare } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 import Task from "./Task";
 import "@/styles/globals.css";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import TaskModal from "../Components/TaskModal";
 import useFilterTasks from "@/hooks/useFilterTasks ";
 import useGlobalTaskData from "@/hooks/useGlobalTaskData";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import useGetSocketData from "@/hooks/useGetAllTasks";
+import UpdateTask from "../Components/UpdateTask";
 
 const Tasks = () => {
   // manage all your state here..

@@ -18,11 +18,10 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const { handleActiveWorkspace } = useGlobalContext();
+  const { handleActiveWorkspace,handleDropdownClick,workspaces} = useGlobalContext();
 
   const userData = useUser(user?.email);
   const router = useRouter();
-  const [workspaces, setWorkspaces] = useState([]);
   const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
 
   const xios = useAxios();
@@ -47,12 +46,7 @@ const DashboardNavbar = () => {
     });
   };
 
-  const handleDropdownClick = async () => {
-    const userWorkspaces = await xios.get(
-      `/userWokspaces/${user.email && user.email}`
-    );
-    setWorkspaces(userWorkspaces.data);
-  };
+ 
 
   const handleCreateWorkspace = async (title, description) => {
     if (title == "" || description == "")

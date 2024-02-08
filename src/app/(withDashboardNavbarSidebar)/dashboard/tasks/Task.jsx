@@ -1,26 +1,26 @@
 "use client";
 
-import useGlobalTaskData from "@/hooks/useGlobalTaskData";
-import { BsStopwatchFill, BsThreeDotsVertical } from "react-icons/bs";
-import { IoIosArrowUp } from "react-icons/io";
-import { MdDoubleArrow } from "react-icons/md";
-import { BiSolidMessageSquareDetail } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import FlowBiteModal from "../Components/FlowBiteModal";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
-import { FaEquals, FaStopwatch } from "react-icons/fa6";
+import {  FaEquals, FaStopwatch } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Image from "next/image";
 import { Dropdown } from "flowbite-react";
-import UpdateTask from "../Components/UpdateTask";
+import useAxios from "@/hooks/useAxios";
+import useGlobalTaskData from "@/hooks/useGlobalTaskData";
+import { MdDoubleArrow } from "react-icons/md";
+import { BiSolidMessageSquareDetail } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
-const Task = ({ task, tasks, setTasks, refetch }) => {
+
+const Task = ({ task }) => {
     // manage all you state here
-    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =
-        useGlobalTaskData();
+    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useGlobalTaskData();
+        const xios = useAxios()
 
     const handleDeleteTask = (id) => {
         Swal.fire({
@@ -33,30 +33,18 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
             confirmButtonText: "Delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                // axios.delete(`https://task-management-server-topaz.vercel.app//deleteTask/${id}`)
-                fetch(
-                    `https://plan-pixel-backend-jet.vercel.app/deleteTask/${id}`,
-                    {
-                        method: "DELETE",
-                    }
-                )
-                    .then((res) => res.json())
-                    .then((data) => {
-                        console.log(data);
-                        if (data.deletedCount > 0) {
+                xios.delete(`/deleteTask/${id}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.deletedCount > 0) {
                             Swal.fire(
                                 "Deleted!",
                                 "Your task has been deleted.",
                                 "success"
                             );
-                            // eslint-disable-next-line react/prop-types
-                            const remaining = tasks?.filter(
-                                (task) => task._id !== id
-                            );
-                            console.log(remaining);
-                            setTasks(remaining);
                         }
-                    });
+                    })
+
             }
         });
     };
@@ -78,10 +66,10 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
             <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>
                 <Dropdown
-                    className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16"
+                    className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16 cursor-pointer"
                     label=""
                     dismissOnClick={false}
-                    renderTrigger={() => <BsThreeDotsVertical />}
+                    renderTrigger={() => <BsThreeDotsVertical className="cursor-pointer" />}
                 >
                     <Dropdown.Item className="rounded-md">
                         <button
@@ -92,7 +80,8 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                         </button>
                     </Dropdown.Item>
                     <Dropdown.Item className="rounded-md">
-                        <button className="w-full">Update Task</button>
+                        <button className="w-full"><FlowBiteModal ></FlowBiteModal></button>
+
                     </Dropdown.Item>
                 </Dropdown>
             </div>
@@ -148,7 +137,16 @@ const Task = ({ task, tasks, setTasks, refetch }) => {
                     />
                 </div>
                 <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+
             </div>
+            {/* <UpdateTask task={task} ></UpdateTask> */}
+            {/* <TaskModal
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                ></TaskModal> */}
+
+                
+
         </div>
     );
 };
