@@ -16,8 +16,6 @@ const Dashboard = () => {
       new Date()
     );
 
-    console.log(userData?.name);
-
     return (
       <div className="p-6">
         <div className="bg-green-500/20 py-10 px-16 rounded-xl mb-6 flex justify-between items-center">
