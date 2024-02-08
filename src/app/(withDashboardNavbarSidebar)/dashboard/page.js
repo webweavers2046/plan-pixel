@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [date, setDate] = useState(
       new Date()
     );
+    console.log(userData);
 
     return (
       <div className="p-6">
