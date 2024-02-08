@@ -52,16 +52,17 @@ const DashboardNavbar = () => {
                         </div>
                     }
                 >
-                    <Dropdown.Item>Workspace 02</Dropdown.Item>
-                    <Dropdown.Item>Workspace 03</Dropdown.Item>
+                    <Dropdown.Item className="item ">Workspace 02</Dropdown.Item>
+                    <Dropdown.Item className="item ">Workspace 03</Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item>
-                        <div className=" py-2 px-4 border-dashed border-black border rounded-lg">
+                    <Dropdown.Item >
+                        <div className="item py-2 px-4 border-dashed border-black border rounded-lg">
                             <p className="">Add New Workspace</p>
                         </div>
                     </Dropdown.Item>
                 </Dropdown>
             </div>
+            
             <div className="grow">
                 <div className="absolute ml-[20px] mt-[17px]">
                     <svg
