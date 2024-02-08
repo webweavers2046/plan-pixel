@@ -27,7 +27,7 @@ const Meetings = () => {
     return (
         <div className="">
             <div className="flex items-center justify-between">
-                <h4 className="text-xl">Team Meeting</h4>
+                <h4 className="text-xl font-semibold">Team Meeting</h4>
                 <button className="text-2xl">
                     <GoPlus />
                 </button>
