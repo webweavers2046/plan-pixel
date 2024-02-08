@@ -16,12 +16,14 @@ const Dashboard = () => {
       new Date()
     );
 
+    console.log(userData?.name);
+
     return (
       <div className="p-6">
         <div className="bg-green-500/20 py-10 px-16 rounded-xl mb-6 flex justify-between items-center">
           <div className="">
             <p className="text-lg font-semibold pb-2">Hi! Welcome Back</p>
-            <h2 className="text-5xl">{user?.name}</h2>
+            <h2 className="text-5xl">{userData?.name}</h2>
           </div>
           <div className="w-[150px]">
             <Image src={dashboardImage} alt="Dashboard home banner"></Image>
