@@ -37,7 +37,7 @@ const TaskBarGraph = () => {
         },
     ]
     return (
-        <div className="w-[85%] border-2 border-[#E6E8EC] rounded-lg p-5">
+        <div className="w-full h-fit border-2 border-[#E6E8EC] rounded-lg p-5">
             <div className="flex justify-between items-center">
                 <h3 className="text-lg font-bold">Teams Strength</h3>
                 <div className="text-[#00000099] flex gap-2 items-center">

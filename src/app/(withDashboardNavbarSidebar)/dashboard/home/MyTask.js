@@ -32,7 +32,7 @@ if (isLoading) {
 
   return (
     <div
-      className={`shadow-md rounded-xl p-6 max-h-dvh overflow-auto ${style.scrollbarCustom} border`}
+      className={`w-full mt-4 shadow-md min-h-80 rounded-xl p-6 overflow-auto border-2 border-[#E6E8EC]`}
     >
       <h1 className=" text-2xl font-bold p-4">My Task</h1>
       {tasks?.map((task, index) => (
