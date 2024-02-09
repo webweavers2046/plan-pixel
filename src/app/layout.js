@@ -21,16 +21,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${lato.className}`}>
-        <GlobalContext>
-          <AblyProvider>
-            <TaskDndProvider>
-              <AuthProviders>
+        <AuthProviders>
+          <GlobalContext>
+            <AblyProvider>
+              <TaskDndProvider>
                 {children}
                 <Toaster />
-              </AuthProviders>
-            </TaskDndProvider>
-          </AblyProvider>
-        </GlobalContext>
+              </TaskDndProvider>
+            </AblyProvider>
+          </GlobalContext>
+        </AuthProviders>
       </body>
     </html>
   );
