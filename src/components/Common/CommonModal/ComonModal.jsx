@@ -11,7 +11,7 @@ function ComonModal({ heading }) {
     return (
         <div className='max-w-4xl'>
             <button onClick={() => setOpenModal(true)}>{heading}</button>
-            <Modal className='bg-[#02001A33] backdrop-blur-[9px] text-black'  dismissible show={openModal} onClose={() => setOpenModal(false)}>
+            <Modal className='bg-[#02001A33] backdrop-blur-[9px] text-black' dismissible show={openModal} onClose={() => setOpenModal(false)}>
                 {/* <Modal.Header>{heading}</Modal.Header> */}
                 <div className='flex justify-between items-center px-6 pt-3'>
                     <h1 className="font-bold ">{heading}</h1>
@@ -54,26 +54,53 @@ function ComonModal({ heading }) {
                                 </div>
                                 <div className="w-full ">
                                     <div className="mb-2 block">
-                                        <Label value="Priority" />
+                                        <Label value="Type" />
                                     </div>
                                     <Select required>
-                                        <option>Low</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
+                                        <option>Upcomming</option>
+                                        <option>ToDo</option>
+                                        <option>Ongoing</option>
+                                        <option>Done</option>
                                     </Select>
                                 </div>
                             </div>
-                            <div className='flex gap-x-5'>
+                            <div className='flex gap-x-2'>
+                                <div className="w-full">
+                                    <Label value="Start Date" />
+                                    <input
+                                        type="date"
+                                        name="startDate"
+                                        className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
+                                        id=""
+                                    />
+                                    {/* {errors.dueDate && (
+                                        <span className="text-red-500">This field is required</span>
+                                    )} */}
+                                </div>
+                                <div className="w-full">
+                                    <Label value="Due Date" />
+                                    <input
+                                        type="date"
+                                        name="dueDate"
+                                        className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
+                                        id=""
+                                    />
+                                    {/* {errors.dueDate && (
+                                        <span className="text-red-500">This field is required</span>
+                                    )} */}
+                                </div>
+                            </div>
+                            {/* <div className='flex gap-x-5'>
                                 <h1>Todo List: </h1>
                                 <p>1.My Task</p>
                                 <p>1.My Task</p>
                                 <p>1.My Task</p>
-                            </div>
+                            </div> */}
 
-                            <div>
+                            {/* <div>
                                 <TextInput id="todo" type="text" placeholder='Add Todo' required />
 
-                            </div>
+                            </div> */}
                             <div>
                                 <Label className='mb-2 block' value="Add Members" ></Label>
                                 <TextInput id="todo" type="text" required />

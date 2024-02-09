@@ -36,7 +36,7 @@ const GlobalContext = ({ children }) => {
   // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal) => {
     // Calling it above for faster overview
-    // console.log(newTask);
+    console.log(newTask);
     xios.post("/createTask", newTask).then((res) => {
       // console.log(res.data);
       if (res?.data?.insertedId) {
@@ -84,7 +84,7 @@ const GlobalContext = ({ children }) => {
     workspaces,
   };
 
-  console.log(workspaces);
+  // console.log(workspaces);
 
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>

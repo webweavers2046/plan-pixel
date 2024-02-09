@@ -5,7 +5,13 @@ import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { Dropdown } from "flowbite-react";
-import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
+import {
+  HiCog,
+  HiCurrencyDollar,
+  HiLogout,
+  HiViewGrid,
+  
+} from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -18,7 +24,8 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const { handleActiveWorkspace,handleDropdownClick,workspaces} = useGlobalContext();
+  const { handleActiveWorkspace, handleDropdownClick, workspaces } =
+    useGlobalContext();
 
   const userData = useUser(user?.email);
   const router = useRouter();
@@ -46,8 +53,6 @@ const DashboardNavbar = () => {
     });
   };
 
- 
-
   const handleCreateWorkspace = async (title, description) => {
     if (title == "" || description == "")
       return toast.error("Plase add title and description");
@@ -74,29 +79,29 @@ const DashboardNavbar = () => {
     <div className="flex justify-between items-center p-4 gap-6">
       <div onClick={handleDropdownClick} className=" py-2 px-3 rounded-lg ">
         <Dropdown
-          className="bg-gray-100 py-2 px-3 rounded-lg mt-4"
+          className="bg-gray-100  px-3 py-2 rounded-lg mt-4"
           inline
           label={
             <div className="text-start">
-              <p className="text-xs opacity-55">workspace -</p>
-              <h2 className="">Workspace 01</h2>
+              <h2 className="">Workspaces</h2>
             </div>
           }
         >
           {workspaces?.map((workspace) => {
             return (
-              <Dropdown.Item
+              <h1
                 onClick={(e) => handleActiveWorkspace(e, workspace._id)}
+                className="pl-2 py-2 cursor-pointer hover:bg-gray-200 w-full rounded-md transition-all duration-300 text-left"
               >
                 {workspace.title}
-              </Dropdown.Item>
+              </h1>
             );
           })}
           <Dropdown.Divider />
           <Dropdown.Item>
             <div
               onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
-              className=" py-2 px-4 w-full border-dashed border-black border rounded-lg"
+              className=" hover:bg-gray-200 transition-all duration-300  py-2 px-4 w-full border-dashed border-black border rounded-lg"
             >
               <p className="w-full">Add New Workspace</p>
             </div>
@@ -152,7 +157,7 @@ const DashboardNavbar = () => {
       </div>
       <div className="border py-2 px-3 rounded-lg bg-gray-100">
         <Dropdown
-          className="bg-gray-100 rounded-lg"
+          className="bg-gray-100 rounded-lg justify-end"
           inline
           label={
             <div className="flex items-center">
@@ -188,16 +193,11 @@ const DashboardNavbar = () => {
             Dashboard
           </Dropdown.Item>
           <Dropdown.Item icon={HiCog}>
-            <Link href={"/dashboard/setting"}>Settings</Link>
+            <Link href={"/dashboard/profile"}>Profile</Link>
           </Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item>
-            <button
-              onClick={() => handleLogOut()}
-              className="bg-red-600 text-white lg:text-[14px] w-full py-2 font-bold rounded-lg"
-            >
-              Log Out
-            </button>
+          <Dropdown.Divider className="h-2" />
+          <Dropdown.Item icon={HiLogout}>
+            <p onClick={() => handleLogOut()}>Log out</p>
           </Dropdown.Item>
         </Dropdown>
         <div className="">
