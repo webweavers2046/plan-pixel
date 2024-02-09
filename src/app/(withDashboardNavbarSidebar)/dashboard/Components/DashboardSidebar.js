@@ -143,7 +143,7 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                                         ? "active"
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                href="/dashboard/members"
+                                href="/dashboard/meeting"
                             >
                                 <div className="flex items-center">
                                     <Image
