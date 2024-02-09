@@ -17,7 +17,7 @@ export const ablyContext = createContext();
 const AblyProvider = ({ children }) => {
   // State for managing the tasks received from Ably
   const [tasks, setTasks] = useState([]);
-
+  
   useEffect(() => {
     // Function to connect to Ably
     const connectAbly = async () => {
@@ -32,6 +32,8 @@ const AblyProvider = ({ children }) => {
     // Calling the connectAbly function
     connectAbly();
 
+    ablyChannel.publish("userEmail", { userEmail: "abc@gmail.com" });
+    ablyChannel.publish("isTaskDropped", { userEmail: "abc@gmail.com" });
     // Ably listener function to handle incoming messages
     const ablyListener = (message) => {
       // Sorting tasks by position and updatedAt for consistent display
@@ -42,10 +44,14 @@ const AblyProvider = ({ children }) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       });
 
+      
       // Updating state with the sorted tasks
-      setTasks(message.data);
+      setTasks(sortedTasks);
     };
 
+    ablyChannel.subscribe("workspace-update",(message)=> {
+      console.log("workspace-update",message)
+    })
     // Subscribing to the Ably channel with the ablyListener
     ablyChannel.subscribe(ablyListener);
 

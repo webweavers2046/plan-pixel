@@ -83,7 +83,8 @@ const DashboardNavbar = () => {
           inline
           label={
             <div className="text-start">
-              <h2 className="">Workspaces</h2>
+              <p className="text-xs opacity-55">workspace -</p>
+              <h2 className="">{workspaces.map(work => work.isActive == true? work.title:"")}</h2>
             </div>
           }
         >

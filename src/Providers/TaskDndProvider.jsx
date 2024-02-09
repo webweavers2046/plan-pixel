@@ -34,20 +34,21 @@ export const TaskDndProvider = ({ children }) => {
   const { tasks } = useContext(ablyContext);
 
   // Global context for managing shared data
-  const { newTask } = useGlobalContext();
+  const { newTask,workspaceBasedTasks } = useGlobalContext();
 
   // Local state for storing all tasks
-  const [alltasks, setAllTasks] = useState(initialTask);
+  // const [alltasks, setAllTasks] = useState(initialTask);
 
+  const alltasks = workspaceBasedTasks
   // Use effect to update tasks when initialTask changes
-  useEffect(() => {
-    setAllTasks(initialTask);
-  }, [initialTask]);
+  // useEffect(() => {
+  //   setAllTasks(initialTask);
+  // }, [initialTask]);
 
   // Use effect to update tasks when Ably updates tasks
-  useEffect(() => {
-    setAllTasks(tasks);
-  }, [tasks]);
+  // useEffect(() => {
+  //   setAllTasks(tasks);
+  // }, [tasks]);
 
   // Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {

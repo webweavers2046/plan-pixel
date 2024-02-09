@@ -20,17 +20,32 @@ const GlobalContext = ({ children }) => {
   // getting the workspace that recently was active
   useEffect(() => {
     xios.get(`/active-workspace`).then((res) => {
-      setActiveWorkspace(res.data);
+      // Sorting tasks by position and updatedAt for consistent display
+      const sortedTasks = res.data?.sort((a, b) => {
+        if (a.position !== b.position) {
+          return a.position - b.position;
+        }
+        return new Date(b.updatedAt) - new Date(a.updatedAt);
+      });
+
+      setActiveWorkspace(sortedTasks);
     });
   }, []);
 
   useEffect(() => {
     // All workspaces list in initial load
-     xios
+    xios
       .get(`/userWokspaces/${user ? user.email : "shakilahmmed8882@gmail.com"}`)
       .then((res) => {
         setWorkspaces(res.data);
       });
+  }, []);
+
+  useEffect(() => {
+    // All workspaces task in initial load
+    xios.get(`/active-workspace`).then((res) => {
+      setWorkspaceTasks(res.data);
+    });
   }, []);
 
   // This funciton will create a new task in the task collection
@@ -65,13 +80,13 @@ const GlobalContext = ({ children }) => {
   // workspace list from the database
   const handleDropdownClick = async (e) => {
     e.preventDefault();
-    console.log("down click");
     const userWorkspaces = await xios.get(
       `/userWokspaces/${user.email ? user.email : "shakilahmmed8882@gmail.com"}`
     );
     setWorkspaces(userWorkspaces.data);
   };
 
+  console.log(workspaceBasedTasks);
   const data = {
     handleCreateTask,
     newTask,
@@ -83,9 +98,6 @@ const GlobalContext = ({ children }) => {
     handleDropdownClick,
     workspaces,
   };
-
-  // console.log(workspaces);
-
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>
   );
