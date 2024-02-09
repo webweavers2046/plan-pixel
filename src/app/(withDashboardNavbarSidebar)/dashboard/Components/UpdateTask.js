@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 const UpdateTask = ({task ,openUpdateModal,setOpenUpdateModal}) => {
   const xios = useAxios();
-
+  console.log(task);
   const {
     register,
     handleSubmit,
