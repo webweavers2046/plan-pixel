@@ -18,28 +18,7 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 
 const TeamMembers = () => {
     const {workspaceBasedMembers} = useGlobalContext()
-    const teamMemberData = [
-    {
-        name: "Abdul Hamid",
-        email: "smd71430@gmail.com",
-        avatar: memberImg,
-    },
-    {
-        name: "Shakil Ahmed",
-        email: "shakilahmmed8882@gmail.com",
-        avatar: memberImg,
-    },
-    {
-        name: "MD Rahim",
-        email: "alamin102410@gmail.com",
-        avatar: memberImg,
-    },
-    {
-        name: "Ahetesham Sajid",
-        email: "ahteshamsajid8@gmail.com",
-        avatar: memberImg,
-    },
-  ];
+    
     
     return (
         <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
