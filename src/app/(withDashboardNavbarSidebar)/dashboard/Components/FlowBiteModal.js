@@ -7,10 +7,10 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const FlowBiteModal = () => {
+const FlowBiteModal = ({task}) => {
   const [openModal, setOpenModal] = useState(false);
-  //   console.log(task);
-  //   const { title, priority, description, dates } = task;
+    // console.log(task);
+    const { title, priority, description, dates } = task;
   const xios = useAxios();
   const {
     register,
@@ -51,9 +51,9 @@ const FlowBiteModal = () => {
   return (
     <>
       <p className="text-center" onClick={() => setOpenModal(true)}>
-        Toggle modal
+        Update
       </p>
-      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal  show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header></Modal.Header>
         <div
           className={`${openModal ? "block" : "hidden"} 
@@ -86,7 +86,7 @@ const FlowBiteModal = () => {
                   <h4 className="text-lg font-semibold">Title</h4>
                   <input
                     type="text"
-                    // defaultValue={title}
+                    defaultValue={title}
                     placeholder="Title"
                     {...register("title", { required: true })}
                     name="title"
@@ -102,7 +102,7 @@ const FlowBiteModal = () => {
                   <h4 className="text-lg font-semibold">Priority</h4>
                   <select
                     placeholder="Select"
-                    // defaultValue={priority}
+                    defaultValue={priority}
                     name="priority"
                     className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
                     {...register("priority", { required: true })}
@@ -120,7 +120,7 @@ const FlowBiteModal = () => {
                   <h4 className="text-lg font-semibold">Start Date</h4>
                   <input
                     type="date"
-                    // defaultValue={dates.startDate}
+                    defaultValue={dates.startDate}
                     {...register("startDate", { required: true })}
                     name="startDate"
                     className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
@@ -135,7 +135,7 @@ const FlowBiteModal = () => {
                   <h4 className="text-lg font-semibold">Due Date</h4>
                   <input
                     type="date"
-                    // defaultValue={dates.dueDate}
+                    defaultValue={dates.dueDate}
                     {...register("dueDate", { required: true })}
                     name="dueDate"
                     className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
@@ -150,7 +150,7 @@ const FlowBiteModal = () => {
                   <h4 className="text-lg font-semibold">Description</h4>
                   <textarea
                     type="text"
-                    // defaultValue={description}
+                    defaultValue={description}
                     {...register("description", { required: true })}
                     name="description"
                     placeholder="Description"
