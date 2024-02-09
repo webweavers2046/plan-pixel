@@ -18,6 +18,7 @@ const GlobalContext = ({ children }) => {
   const [activeWrokspace, setActiveWorkspace] = useState([]);
   const [workspaces, setWorkspaces] = useState([]);
   const [allTasks, setAllTasks] = useState([])
+  const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   // getting the workspace that recently was active
   useEffect(() => {
     xios.get(`/active-workspace`).then((res) => {
@@ -74,7 +75,7 @@ const GlobalContext = ({ children }) => {
 
   // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
-    console.log("workspace id", _id);
+    setClickedWorkspaceId(_id)
     const alltasksAndMembersInIt = await xios.get(
       `/active-workspace?workspaceId=${_id}`
     );
@@ -107,6 +108,7 @@ const GlobalContext = ({ children }) => {
     activeWrokspace,
     handleDropdownClick,
     workspaces,
+    clickedWorkspaceId
   };
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>
