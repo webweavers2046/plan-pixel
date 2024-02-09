@@ -37,7 +37,9 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                         <li>
                             <Link
                                 className={`flex items-center  gap-x-4 ${
-                                    pathname == "/dashboard" ? "active" : ""
+                                    pathname == "/dashboard"
+                                        ? "active"
+                                        : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/dashboard"
                             >
@@ -143,7 +145,7 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
                                         ? "active"
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                href="/dashboard/members"
+                                href="/dashboard/meeting"
                             >
                                 <div className="flex items-center">
                                     <Image
