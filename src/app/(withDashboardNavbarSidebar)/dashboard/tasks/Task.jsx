@@ -15,9 +15,10 @@ import useGlobalTaskData from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import UpdateTask from "../Components/UpdateTask";
 
 
-const Task = ({ task }) => {
+const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
     // manage all you state here
     const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useGlobalTaskData();
         const xios = useAxios()
@@ -80,7 +81,8 @@ const Task = ({ task }) => {
                         </button>
                     </Dropdown.Item>
                     <Dropdown.Item className="rounded-md">
-                        <button className="w-full"><FlowBiteModal ></FlowBiteModal></button>
+                        {/* <button className="w-full"><FlowBiteModal task={task}></FlowBiteModal></button> */}
+                        <button onClick={() => setOpenUpdateModal(!openUpdateModal)} className="w-full">Update</button>
 
                     </Dropdown.Item>
                 </Dropdown>

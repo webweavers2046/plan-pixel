@@ -6,9 +6,8 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const UpdateTask = () => {
+const UpdateTask = ({task ,openUpdateModal,setOpenUpdateModal}) => {
   const xios = useAxios();
-  const [openModal, setOpenModal] = useState(false);
 
   const {
     register,
@@ -18,8 +17,8 @@ const UpdateTask = () => {
   } = useForm();
   const { user } = useContext(AuthContext);
   // console.log('user', user)
-  //   console.log("updated task", task);
-  //   const { title, priority, description, dates } = task;
+    // console.log("updated task", task);
+    const { title, priority, description, dates,_id } = task;
 
   const onSubmit = async (data) => {
     const updateTask = {
@@ -33,12 +32,13 @@ const UpdateTask = () => {
 
       userEmail: user?.email,
     };
+    // console.log("updated task", updateTask);
 
-    await xios.put(`/updateTask/${id}`, updateTask).then((res) => {
-      console.log(res.data);
+    await xios.put(`/updateTask/${_id}`, updateTask).then((res) => {
+      // console.log(res.data);
       if (res?.data?.modifiedCount > 0) {
         reset();
-        setOpenModal(false);
+        setOpenUpdateModal(false)
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -51,20 +51,15 @@ const UpdateTask = () => {
   };
 
   return (
-    <>
-      <p className="text-center" onClick={() => setOpenModal(true)}>
-        Toggle modal
-      </p>
 
-      <div
-        dismissible
-        show={openModal}
-        onClose={() => setOpenModal(false)}
-        className=" bg-[#FFFFFF] w-full h-full rounded-2xl overflow-auto p-6"
-      >
+    <div
+      className={`${openUpdateModal ? "block" : "hidden"}
+    bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-30 fixed lg:px-40 px-24 lg:py-24 py-16`}
+    >
+      <div className=" bg-[#FFFFFF] w-full h-full rounded-2xl overflow-auto p-6">
         <div className="flex justify-between items-center">
           <p className="text-xl font-bold ">Update The Task</p>
-          <button onClick={() => setOpenModal(false)}>
+          <button onClick={() => setOpenUpdateModal(false)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="34"
@@ -88,7 +83,7 @@ const UpdateTask = () => {
               <h4 className="text-lg font-semibold">Title</h4>
               <input
                 type="text"
-                // defaultValue={title}
+                defaultValue={title}
                 placeholder="Title"
                 {...register("title", { required: true })}
                 name="title"
@@ -104,7 +99,7 @@ const UpdateTask = () => {
               <h4 className="text-lg font-semibold">Priority</h4>
               <select
                 placeholder="Select"
-                // defaultValue={priority}
+                defaultValue={priority}
                 name="priority"
                 className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
                 {...register("priority", { required: true })}
@@ -122,7 +117,7 @@ const UpdateTask = () => {
               <h4 className="text-lg font-semibold">Start Date</h4>
               <input
                 type="date"
-                // defaultValue={dates.startDate}
+                defaultValue={dates.startDate}
                 {...register("startDate", { required: true })}
                 name="startDate"
                 className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
@@ -137,7 +132,7 @@ const UpdateTask = () => {
               <h4 className="text-lg font-semibold">Due Date</h4>
               <input
                 type="date"
-                // defaultValue={dates.dueDate}
+                defaultValue={dates.dueDate}
                 {...register("dueDate", { required: true })}
                 name="dueDate"
                 className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
@@ -152,7 +147,7 @@ const UpdateTask = () => {
               <h4 className="text-lg font-semibold">Description</h4>
               <textarea
                 type="text"
-                // defaultValue={description}
+                defaultValue={description}
                 {...register("description", { required: true })}
                 name="description"
                 placeholder="Description"
@@ -172,7 +167,7 @@ const UpdateTask = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
