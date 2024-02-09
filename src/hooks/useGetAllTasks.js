@@ -32,10 +32,10 @@ const useGetSocketData = () => {
 
     useEffect(() => {
         xios.get("/tasks").then((data) => setAllTasks(data.data));
-    }, []);
+    }, [alltasks]);
 
     // console.log("all data by http initially", alltasks)
-    return alltasks
+    return alltasks;
 };
 
 export default useGetSocketData;
