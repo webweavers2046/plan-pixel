@@ -30,11 +30,11 @@ const Tasks = () => {
       {typeof window !== "undefined" && (
         <section>
           {/* header section  */}
-          <div className="md:flex justify-between items-end border-b pb-6 border-white/50">
+          <div className="md:flex ml-3 justify-between items-end border-b pb-6 border-white/50">
             <div className="">
-              <h6 className="font-medium">TaskTo tasks board</h6>
-              <p className="opacity-70 font-light text-sm">
-                Create and complete and manage your tasks using TaskTo task
+              <h6 className="font-medium text-[20px] ">TaskTo tasks board</h6>
+              <p className="opacity-80 mt-1 font-light text-sm">
+                Create and complete<br/> and manage your tasks using TaskTo task
                 board.
               </p>
             </div>

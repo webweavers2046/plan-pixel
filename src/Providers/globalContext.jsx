@@ -8,6 +8,7 @@ import { AuthContext } from "./AuthProviders";
 export const globalContext = createContext(null);
 
 const GlobalContext = ({ children }) => {
+
   // manage all of your state here ..
   const [newTask, setNewTask] = useState("");
   const xios = useAxios();
@@ -16,7 +17,7 @@ const GlobalContext = ({ children }) => {
   const [workspaceBasedMembers, setWorkspaceMembers] = useState([]);
   const [activeWrokspace, setActiveWorkspace] = useState([]);
   const [workspaces, setWorkspaces] = useState([]);
-
+  const [allTasks, setAllTasks] = useState([])
   // getting the workspace that recently was active
   useEffect(() => {
     xios.get(`/active-workspace`).then((res) => {
@@ -47,6 +48,14 @@ const GlobalContext = ({ children }) => {
       setWorkspaceTasks(res.data);
     });
   }, []);
+  useEffect(()=> {
+    xios.get("/tasks")
+    .then(res => {
+      setAllTasks(res.data)
+    })
+
+  },[])
+
 
   // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal) => {
@@ -62,8 +71,8 @@ const GlobalContext = ({ children }) => {
     });
   };
 
-  // Workspace data hanler
 
+  // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
     console.log("workspace id", _id);
     const alltasksAndMembersInIt = await xios.get(
@@ -86,7 +95,8 @@ const GlobalContext = ({ children }) => {
     setWorkspaces(userWorkspaces.data);
   };
 
-  console.log(workspaceBasedTasks);
+
+
   const data = {
     handleCreateTask,
     newTask,
