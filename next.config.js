@@ -6,6 +6,7 @@ const nextConfig = {
         "firebasestorage.googleapis.com",
         "https://lh3.googleusercontent.com/",
         "i.ibb.co",
+        "https://images.pexels.com"
         
       ],
     },

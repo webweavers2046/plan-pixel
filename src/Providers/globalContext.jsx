@@ -37,7 +37,7 @@ const GlobalContext = ({ children }) => {
   useEffect(() => {
     // All workspaces list in initial load
     xios
-      .get(`/userWokspaces/${user ? user.email : "shakilahmmed8882@gmail.com"}`)
+      .get(`/userWokspaces/${user ? user?.email : "shakilahmmed8882@gmail.com"}`)
       .then((res) => {
         setWorkspaces(res.data);
       });
@@ -54,7 +54,6 @@ const GlobalContext = ({ children }) => {
     .then(res => {
       setAllTasks(res.data)
     })
-
   },[])
 
 
@@ -95,7 +94,6 @@ const GlobalContext = ({ children }) => {
     );
     setWorkspaces(userWorkspaces.data);
   };
-
 
 
   const data = {

@@ -20,12 +20,14 @@ import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const { handleActiveWorkspace, handleDropdownClick, workspaces } = useGlobalContext();
+  const { handleActiveWorkspace, handleDropdownClick, workspaces } =
+    useGlobalContext();
 
   const userData = useUser(user?.email);
   const router = useRouter();
   const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [WillAddMember, setWillAddMember] = useState(false);
   const xios = useAxios();
 
   const handleLogOut = () => {
@@ -68,83 +70,82 @@ const DashboardNavbar = () => {
     }
   };
 
-  // const x = workspaces.map((work) =>
-  //   work?.isActive == true ? work.title : ""
-  // );
 
-  const [WillAddMember, setWillAddMember] = useState(false);
-  const handleAddMember = async(workspaceId, memberEmail) => {
+  const handleAddMember = async (workspaceId, memberEmail, memberName) => {
     const workspaceAndUserEmail = {
       workspaceId,
-      userEmail:memberEmail
+      userEmail: memberEmail,
+    };
+
+    const isAddedMember = await xios.post(
+      "/add-member-to-workspace",
+      workspaceAndUserEmail
+    );
+
+    if (isAddedMember.data.message) {
+      return toast.success(`${memberName} is added to this workspace`);
     }
 
-     const isAddedMember = await xios.post("/add-member-to-workspace",workspaceAndUserEmail)
-     
-     if(isAddedMember.data.message){
-       toast.success(response.message)
-       
-      }
-      
-      toast.error("exiisisiis")
-
-  }
+    toast.error(isAddedMember.data.error);
+  };
 
   return (
     <div className="flex relative justify-between items-center p-4 gap-6">
-    <div
-      onClick={handleDropdownClick}
-      className="py-2 px-3 relative rounded-lg"
-    >
-      <Dropdown
-        dismissOnClick={false}
-        color="white"
-        className="bg-[white] w-60 overflow-hidden relative py-2 px-3 rounded-lg mt-4"
-        inline
-        label={
-          <div className="text-start">
-            <p className="text-xs opacity-55">{}</p>
-          </div>
-        }
-      >
-        <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div>
+      <div
+        onClick={handleDropdownClick} className="py-2 px-3 relative rounded-lg">
+        <Dropdown
+          dismissOnClick={false}
+          color="white"
+          className="bg-[white] w-60 overflow-hidden relative py-2 px-3 rounded-lg mt-4"
+          inline
+          label={
+            <div className="text-start">
+              <p className="text-xs opacity-55">{}</p>
+            </div>
+          }
+        >
+          <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div>
 
-        {workspaces?.map((workspace, index) => {
-          return (
-            <Dropdown.Item
-              onMouseEnter={() => setIsHovered(index)}
-              onMouseLeave={() => setIsHovered(null)}
-              onClick={(e) => handleActiveWorkspace(e, workspace._id)}
-            >
-              {workspace.title}
-
-              <span
-                onClick={() => setWillAddMember(!WillAddMember)}
-                className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
-                  isHovered === index ? "opacity-100" : ""
-                }`}
+          {workspaces?.map((workspace, index) => {
+            return (
+              <Dropdown.Item
+                onMouseEnter={() => setIsHovered(index)}
+                onMouseLeave={() => setIsHovered(null)}
+                onClick={(e) => handleActiveWorkspace(e, workspace._id)}
               >
-                +
-              </span>
-            </Dropdown.Item>
-          );
-        })}
+                {workspace.title}
 
-        <Dropdown.Divider />
-        <Dropdown.Item>
-          <div
-            onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
-            className=" py-2 px-4 w-full shadow-sm hover:bg-transparent  rounded-lg"
-          >
-            <p className="w-full">Add New Workspace +</p>
-          </div>
-        </Dropdown.Item>
-      </Dropdown>
+                <span
+                  onClick={() => setWillAddMember(!WillAddMember)}
+                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
+                    isHovered === index ? "opacity-100" : ""
+                  }`}
+                >
+                  +
+                </span>
+              </Dropdown.Item>
+            );
+          })}
 
-      {/* Add member modal */}
-        
-      <AddMemberModal handleAddMember={handleAddMember} WillAddMember={WillAddMember}/>
-    </div>
+          <Dropdown.Divider />
+          <Dropdown.Item>
+            <div
+              onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
+              className=" py-2 px-4 w-full shadow-sm hover:bg-transparent  rounded-lg"
+            >
+              <p className="w-full">Add New Workspace +</p>
+            </div>
+          </Dropdown.Item>
+        </Dropdown>
+
+        {/* Add member modal */}
+
+        <AddMemberModal
+          handleAddMember={handleAddMember}
+          WillAddMember={WillAddMember}
+          setWillAddMember={setWillAddMember}
+        />
+      </div>
       <div className="grow">
         <div className="absolute ml-[20px] mt-[17px]">
           <svg

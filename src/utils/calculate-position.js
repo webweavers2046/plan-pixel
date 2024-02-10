@@ -25,16 +25,15 @@ const calculatePosition = (alltasks, mouseY, droppableRect) => {
   if (aboveTask && belowTask) {
     const newPosition =
       (aboveTask.position + belowTask.position) / 2 +
-      (belowTask.updatedAt > aboveTask.updatedAt ? 0.5 : -0.5); // Adjust for sorting by date
+      (belowTask.updatedAt > aboveTask.updatedAt ? 0.5 : -0.5); 
     return Math.max(0, Math.min(totalTasks - 1, newPosition));
   }
 
   // If not, calculate the position based on the relativeY
-  const position = Math.round((relativeY / droppableRect.height) * totalTasks);
+  const position = Math.round((relativeY / droppableRect.height) * (totalTasks > 0 ? totalTasks - 1 : 0));
 
   // Ensure the calculated position is within a reasonable range
   return Math.max(0, Math.min(totalTasks - 1, position));
 };
 
 export default calculatePosition;
-
