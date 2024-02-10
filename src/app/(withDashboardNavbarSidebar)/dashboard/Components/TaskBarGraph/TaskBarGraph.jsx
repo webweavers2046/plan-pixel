@@ -1,41 +1,38 @@
 'use client'
-import useGetSocketData from "@/hooks/useGetAllTasks";
+
+import useFilterTasks from "@/hooks/useFilterTasks";
 import { IoIosArrowDown } from "react-icons/io";
 
 const TaskBarGraph = () => {
-    const allTasks = useGetSocketData()
-    const upcomingTasks = allTasks?.filter(task => task.status === 'upcoming')
-    const todoTasks = allTasks?.filter(task => task.status === 'to-do')
-    const doingTasks = allTasks?.filter(task => task.status === 'doing')
-    const doneTasks = allTasks?.filter(task => task.status === 'done')
-    // console.log('stats task', upcomingTasks);
-    // console.log('stats task', todoTasks);
-    // console.log('stats task', doingTasks);
-    // console.log('stats task', doneTasks);
+    
+    const {todo, upcoming, doing, done} = useFilterTasks()
+    
+    
 
     const taskInfo = [
         {
-            tasks: upcomingTasks?.length ,
+            tasks: upcoming?.length ,
             color: '#FABE7A',
             alpha : 'a'
         },
         {
-            tasks: todoTasks?.length,
+            tasks: todo?.length,
             color: '#F6866A',
             alpha : 'b'
 
         },
         {
-            tasks: doingTasks?.length ,
+            tasks: doing?.length ,
             color: '#59E6F6',
             alpha : 'c'
         },
         {
-            tasks: doneTasks?.length ,
+            tasks: done?.length ,
             color: '#7661E2',
             alpha : 'd'
         },
     ]
+    
     return (
         <div className="w-full h-fit border-2 border-[#E6E8EC] rounded-lg p-5">
             <div className="flex justify-between items-center">

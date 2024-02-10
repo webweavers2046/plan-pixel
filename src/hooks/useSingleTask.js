@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxios from "./useAxios";
 
-
 const useSingleTask = (id) => {
-    console.log('id', id);
-    const xios = useAxios();
-    const [task, setTask] = useState(null);
-    console.log('task', task);
+    console.log(id);
+   
+    const axiosPublic = useAxios()
 
-    useEffect(() => {
-        if(id){
-            console.log(id);
-            xios.get(`/singleTask/${id}`).then((data) => setTask(data.data));
+    const {data, refetch, isLoading, isPending} = useQuery({
+        queryKey: ['task',id],
+        queryFn: async () =>{
+           const data = await axiosPublic.get(`/singleTask/${id}`)
+           return await data.data;
         }
-    }, [id]);
+    })
+    console.log('single task',data);
 
-    return task;
+    return {data, refetch, isLoading, isPending};
 };
 
 export default useSingleTask;

@@ -1,33 +1,29 @@
 "use client";
 import { LuListTodo } from "react-icons/lu";
 import { FiPlusSquare } from "react-icons/fi";
-import { FaPlus } from "react-icons/fa6";
 import Task from "./Task";
 import "@/styles/globals.css";
 import { use, useEffect, useState } from "react";
 import TaskModal from "../Components/TaskModal";
-import useFilterTasks from "@/hooks/useFilterTasks ";
 import useGlobalTaskData from "@/hooks/useGlobalTaskData";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import useGetSocketData from "@/hooks/useGetAllTasks";
 import UpdateTask from "../Components/UpdateTask";
+import useAllTasks from "@/hooks/useAllTasks";
+import useFilterTasks from "@/hooks/useFilterTasks";
+// import useFilterTasks from "@/hooks/useFilterTasks";
 
 const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [updateId, setUpdateId] = useState(null);
-  console.log('update Id', updateId);
-  const {  dropOn, draggingOver, dragOverElementName, isDragging } =
+  // console.log('update Id', updateId);
+  const { dropOn, draggingOver, dragOverElementName, isDragging } =
     useGlobalTaskData();
-    const alltasks = useGetSocketData()
-    console.log(alltasks);
+  const allTasks = useAllTasks();
+  // console.log(allTasks);
 
   // Tasks in different status
-  const toDoTasks = useFilterTasks(alltasks, "to-do");
-  const upcomingTasks = useFilterTasks(alltasks, "upcoming");
-  const doingTasks = useFilterTasks(alltasks, "doing");
-  const doneTasks = useFilterTasks(alltasks, "done");
+  const {todo, upcoming, doing, done} = useFilterTasks();
 
   return (
     <>
@@ -38,7 +34,7 @@ const Tasks = () => {
             <div className="">
               <h6 className="font-medium text-[20px] ">TaskTo tasks board</h6>
               <p className="opacity-80 mt-1 font-light text-sm">
-                Create and complete<br/> and manage your tasks using TaskTo task
+                Create and complete<br /> and manage your tasks using TaskTo task
                 board.
               </p>
             </div>
@@ -70,7 +66,7 @@ const Tasks = () => {
                 <h2 className="">Upcoming</h2>
               </div>
 
-              {upcomingTasks?.map((task, idx) => (
+              {upcoming?.map((task, idx) => (
                 <div>
                   <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
                   {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
@@ -94,7 +90,7 @@ const Tasks = () => {
                 <LuListTodo className="text-2xl" /> <h2>To-do</h2>
               </div>
 
-              {toDoTasks?.map((task, idx) => (
+              {todo?.map((task, idx) => (
                 <div>
                   <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
                   {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
@@ -117,7 +113,7 @@ const Tasks = () => {
                 <LuListTodo className="text-2xl" /> <h2 className="">Doing</h2>
               </div>
 
-              {doingTasks?.map((task, idx) => (
+              {doing?.map((task, idx) => (
                 <div>
                   <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
                   {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
@@ -140,7 +136,7 @@ const Tasks = () => {
                 <LuListTodo className="text-2xl" /> <h2 className="">Done</h2>
               </div>
 
-              {doneTasks?.map((task, idx) => (
+              {done?.map((task, idx) => (
                 <div>
                   <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
                   {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}

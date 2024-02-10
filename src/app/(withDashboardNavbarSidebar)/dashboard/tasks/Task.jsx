@@ -152,9 +152,6 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                     openModal={openModal}
                     setOpenModal={setOpenModal}
                 ></TaskModal> */}
-
-
-
         </div>
     );
 };

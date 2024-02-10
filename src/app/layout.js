@@ -5,6 +5,7 @@ import TaskDndProvider from "@/Providers/TaskDndProvider";
 import { Toaster } from "react-hot-toast";
 import GlobalContext from "@/Providers/globalContext";
 import AblyProvider from "@/components/ably/AblyProvider";
+import TanstackProvider from "@/Providers/TanstackProvider";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -21,16 +22,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${lato.className}`}>
-        <AuthProviders>
-          <GlobalContext>
-            <AblyProvider>
-              <TaskDndProvider>
-                {children}
-                <Toaster />
-              </TaskDndProvider>
-            </AblyProvider>
-          </GlobalContext>
-        </AuthProviders>
+        <TanstackProvider>
+          <AuthProviders>
+            <GlobalContext>
+              <AblyProvider>
+                <TaskDndProvider>
+                  {children}
+                  <Toaster />
+                </TaskDndProvider>
+              </AblyProvider>
+            </GlobalContext>
+          </AuthProviders>
+        </TanstackProvider>
       </body>
     </html>
   );

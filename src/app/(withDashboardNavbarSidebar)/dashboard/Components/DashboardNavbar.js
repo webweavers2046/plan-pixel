@@ -21,7 +21,7 @@ const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const { handleActiveWorkspace,handleDropdownClick,workspaces} = useGlobalContext();
 
-  const userData = useUser(user?.email);
+  const {data : userData, refetch} = useUser(user?.email);
   const router = useRouter();
   const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
 
