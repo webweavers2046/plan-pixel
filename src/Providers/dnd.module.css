@@ -1,12 +1,12 @@
 .dragOverExistingTask {
-    transform: translateY(-10px); /* Adjust this value based on your design */
-    transition: transform 0.3s ease; /* Add a smooth transition effect */
-    margin-bottom: 90px;
+    transform: translateY(-80px); /* Adjust this value based on your design */
+    transition: all 0.3s ease; /* Add a smooth transition effect */
+    margin-bottom: 80px;  
   }
   
   .removedragOverExistingTaskStyle {
-    transform: translateY(10px); /* Adjust this value based on your design */
-    transition: transform 0.3s ease; /* Add a smooth transition effect */
-    margin-bottom: 0px;
+    transform: translateY(80px); /* Adjust this value based on your design */
+    transition: all 0.3s ease; /* Add a smooth transition effect */
+    margin-bottom: 0px;  
   }
   

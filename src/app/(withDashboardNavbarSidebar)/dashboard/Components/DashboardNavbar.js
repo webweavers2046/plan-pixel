@@ -16,16 +16,20 @@ import MiniModal from "@/components/Common/CommonModal/MiniModal";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import PaperPieces from "@/components/Common/CommonModal/paperCutPiece";
+import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const { handleActiveWorkspace,handleDropdownClick,workspaces} = useGlobalContext();
+  const { handleActiveWorkspace, handleDropdownClick, workspaces } =
+    useGlobalContext();
 
   const userData = useUser(user?.email);
   const router = useRouter();
   const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
-
+  const [isHovered, setIsHovered] = useState(false);
+  const [WillAddMember, setWillAddMember] = useState(false);
   const xios = useAxios();
+
   const handleLogOut = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -47,12 +51,7 @@ const DashboardNavbar = () => {
     });
   };
 
- 
-
   const handleCreateWorkspace = async (title, description) => {
-    
-      
-
     const workspace = {
       title: title,
       description: description,
@@ -71,17 +70,33 @@ const DashboardNavbar = () => {
     }
   };
 
-  const x = workspaces.map(work => work.isActive == true? work.title:"")
 
-  console.log(x)
-  console.log(workspaces)
+  const handleAddMember = async (workspaceId, memberEmail, memberName) => {
+    const workspaceAndUserEmail = {
+      workspaceId,
+      userEmail: memberEmail,
+    };
+
+    const isAddedMember = await xios.post(
+      "/add-member-to-workspace",
+      workspaceAndUserEmail
+    );
+
+    if (isAddedMember.data.message) {
+      return toast.success(`${memberName} is added to this workspace`);
+    }
+
+    toast.error(isAddedMember.data.error);
+  };
 
   return (
     <div className="flex relative justify-between items-center p-4 gap-6">
-      <div onClick={handleDropdownClick} className=" py-2 px-3 rounded-lg ">
+      <div
+        onClick={handleDropdownClick} className="py-2 px-3 relative rounded-lg">
         <Dropdown
+          dismissOnClick={false}
           color="white"
-          className="bg-[white] overflow-hidden relative py-2 px-3 rounded-lg mt-4"
+          className="bg-[white] w-60 overflow-hidden relative py-2 px-3 rounded-lg mt-4"
           inline
           label={
             <div className="text-start">
@@ -91,15 +106,27 @@ const DashboardNavbar = () => {
         >
           <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div>
 
-          {workspaces?.map((workspace) => {
+          {workspaces?.map((workspace, index) => {
             return (
               <Dropdown.Item
+                onMouseEnter={() => setIsHovered(index)}
+                onMouseLeave={() => setIsHovered(null)}
                 onClick={(e) => handleActiveWorkspace(e, workspace._id)}
               >
                 {workspace.title}
+
+                <span
+                  onClick={() => setWillAddMember(!WillAddMember)}
+                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
+                    isHovered === index ? "opacity-100" : ""
+                  }`}
+                >
+                  +
+                </span>
               </Dropdown.Item>
             );
           })}
+
           <Dropdown.Divider />
           <Dropdown.Item>
             <div
@@ -110,6 +137,14 @@ const DashboardNavbar = () => {
             </div>
           </Dropdown.Item>
         </Dropdown>
+
+        {/* Add member modal */}
+
+        <AddMemberModal
+          handleAddMember={handleAddMember}
+          WillAddMember={WillAddMember}
+          setWillAddMember={setWillAddMember}
+        />
       </div>
       <div className="grow">
         <div className="absolute ml-[20px] mt-[17px]">
@@ -207,7 +242,7 @@ const DashboardNavbar = () => {
               Log Out
             </button>
           </Dropdown.Item>
-          <PaperPieces/>
+          <PaperPieces />
         </Dropdown>
         <div className="">
           {isCreateWokspace ? (

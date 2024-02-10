@@ -11,19 +11,27 @@ import useGlobalTaskData from "@/hooks/useGlobalTaskData";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useGetSocketData from "@/hooks/useGetAllTasks";
 import UpdateTask from "../Components/UpdateTask";
+import useGlobalContext from "@/hooks/useGlobalContext";
 
 const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging } =
+  const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging,draggingTaskId } =
     useGlobalTaskData();
+    
+
 
   // Tasks in different status
-  const toDoTasks = useFilterTasks(alltasks, "to-do");
-  const upcomingTasks = useFilterTasks(alltasks, "upcoming");
-  const doingTasks = useFilterTasks(alltasks, "doing");
-  const doneTasks = useFilterTasks(alltasks, "done");
+  const toDoTasks = useFilterTasks(alltasks, "to-do",draggingTaskId,dragOverElementName);
+  const upcomingTasks = useFilterTasks(alltasks, "upcoming",draggingTaskId,dragOverElementName);
+  const doingTasks = useFilterTasks(alltasks, "doing",draggingTaskId,dragOverElementName);
+  const doneTasks = useFilterTasks(alltasks, "done",draggingTaskId,dragOverElementName);
+
+
+  const {activeWrokspace} = useGlobalContext()
+    const {_id,title,description,creator,members,tasks,isActive} = activeWrokspace
+    
 
   return (
     <>
@@ -32,7 +40,7 @@ const Tasks = () => {
           {/* header section  */}
           <div className="md:flex ml-3 justify-between items-end border-b pb-6 border-white/50">
             <div className="">
-              <h6 className="font-medium text-[20px] ">TaskTo tasks board</h6>
+              <h6 className="font-medium text-[20px] ">{title?title:"your board"}</h6>
               <p className="opacity-80 mt-1 font-light text-sm">
                 Create and complete<br/> and manage your tasks using TaskTo task
                 board.
