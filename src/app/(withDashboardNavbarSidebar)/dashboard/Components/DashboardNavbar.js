@@ -15,6 +15,7 @@ import CommonModal from "@/components/Common/CommonModal/CommonModal";
 import MiniModal from "@/components/Common/CommonModal/MiniModal";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
+import PaperPieces from "@/components/Common/CommonModal/paperCutPiece";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -49,8 +50,8 @@ const DashboardNavbar = () => {
  
 
   const handleCreateWorkspace = async (title, description) => {
-    if (title == "" || description == "")
-      return toast.error("Plase add title and description");
+    
+      
 
     const workspace = {
       title: title,
@@ -70,19 +71,26 @@ const DashboardNavbar = () => {
     }
   };
 
+  const x = workspaces.map(work => work.isActive == true? work.title:"")
+
+  console.log(x)
+  console.log(workspaces)
+
   return (
-    <div className="flex justify-between items-center p-4 gap-6">
+    <div className="flex relative justify-between items-center p-4 gap-6">
       <div onClick={handleDropdownClick} className=" py-2 px-3 rounded-lg ">
         <Dropdown
-          className="bg-gray-100 py-2 px-3 rounded-lg mt-4"
+          color="white"
+          className="bg-[white] overflow-hidden relative py-2 px-3 rounded-lg mt-4"
           inline
           label={
             <div className="text-start">
-              <p className="text-xs opacity-55">workspace -</p>
-              <h2 className="">{workspaces.map(work => work.isActive == true? work.title:"")}</h2>
+              <p className="text-xs opacity-55">{}</p>
             </div>
           }
         >
+          <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div>
+
           {workspaces?.map((workspace) => {
             return (
               <Dropdown.Item
@@ -96,9 +104,9 @@ const DashboardNavbar = () => {
           <Dropdown.Item>
             <div
               onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
-              className=" py-2 px-4 w-full border-dashed border-black border rounded-lg"
+              className=" py-2 px-4 w-full shadow-sm hover:bg-transparent  rounded-lg"
             >
-              <p className="w-full">Add New Workspace</p>
+              <p className="w-full">Add New Workspace +</p>
             </div>
           </Dropdown.Item>
         </Dropdown>
@@ -121,7 +129,7 @@ const DashboardNavbar = () => {
           </svg>
         </div>
         <input
-          className="w-full rounded-lg bg-gray-100 text-sm pl-16 py-4 border-0 "
+          className="w-full rounded-lg text-sm pl-16 py-4 border-0 "
           placeholder="Find The task what you’re looking for..."
           type="text"
         ></input>
@@ -150,9 +158,9 @@ const DashboardNavbar = () => {
           />
         </svg>
       </div>
-      <div className="border py-2 px-3 rounded-lg bg-gray-100">
+      <div className="border py-2 px-3 rounded-lg bg-[white]">
         <Dropdown
-          className="bg-gray-100 rounded-lg"
+          className="bg-white rounded-lg"
           inline
           label={
             <div className="flex items-center">
@@ -199,6 +207,7 @@ const DashboardNavbar = () => {
               Log Out
             </button>
           </Dropdown.Item>
+          <PaperPieces/>
         </Dropdown>
         <div className="">
           {isCreateWokspace ? (
