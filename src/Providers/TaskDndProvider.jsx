@@ -40,15 +40,6 @@ export const TaskDndProvider = ({ children }) => {
   // const [alltasks, setAllTasks] = useState(initialTask);
 
   const alltasks = workspaceBasedTasks
-  // Use effect to update tasks when initialTask changes
-  // useEffect(() => {
-  //   setAllTasks(initialTask);
-  // }, [initialTask]);
-
-  // Use effect to update tasks when Ably updates tasks
-  // useEffect(() => {
-  //   setAllTasks(tasks);
-  // }, [tasks]);
 
   // Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {
@@ -91,16 +82,11 @@ export const TaskDndProvider = ({ children }) => {
     const mouseY = e.clientY;
     const droppableRect = e.target.getBoundingClientRect();
     const position = calculatePosition(alltasks, mouseY, droppableRect);
-    console.log("Position", position);
 
     setDragoverTask({ id: draggingTaskId, position });
 
     // Check if any existing task has the same position as the dragging task
-    const existingTaskPosition = parseInt(e.target.id);
-
-    if (!isNaN(existingTaskPosition)) {
-      const isTaskInSamePosition = existingTaskPosition === position;
-    }
+  
   };
 
   // Event handler for when the dragging element is dropped
