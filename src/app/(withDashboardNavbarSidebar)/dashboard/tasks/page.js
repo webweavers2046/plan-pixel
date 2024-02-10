@@ -16,8 +16,12 @@ const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging } =
+  const [updateId, setUpdateId] = useState(null);
+  console.log('update Id', updateId);
+  const {  dropOn, draggingOver, dragOverElementName, isDragging } =
     useGlobalTaskData();
+    const alltasks = useGetSocketData()
+    console.log(alltasks);
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(alltasks, "to-do");
@@ -68,8 +72,8 @@ const Tasks = () => {
 
               {upcomingTasks?.map((task, idx) => (
                 <div>
-                  <Task idx={idx} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
-                  <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask>
+                  <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
+                  {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
                 </div>
               ))}
             </div>
@@ -92,8 +96,8 @@ const Tasks = () => {
 
               {toDoTasks?.map((task, idx) => (
                 <div>
-                  <Task idx={idx} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
-                  <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask>
+                  <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
+                  {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
                 </div>
               ))}
             </div>
@@ -115,8 +119,8 @@ const Tasks = () => {
 
               {doingTasks?.map((task, idx) => (
                 <div>
-                  <Task idx={idx} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
-                  <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask>
+                  <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
+                  {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
                 </div>
               ))}
             </div>
@@ -138,8 +142,8 @@ const Tasks = () => {
 
               {doneTasks?.map((task, idx) => (
                 <div>
-                  <Task idx={idx} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
-                  <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask>
+                  <Task idx={idx} setUpdateId={setUpdateId} key={task._id} task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal} />
+                  {/* <UpdateTask task={task} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask> */}
                 </div>
               ))}
             </div>
@@ -148,6 +152,7 @@ const Tasks = () => {
             openModal={openModal}
             setOpenModal={setOpenModal}
           ></TaskModal>
+          <UpdateTask updateId={updateId} openUpdateModal={openUpdateModal} setOpenUpdateModal={setOpenUpdateModal}></UpdateTask>
         </section>
       )}
     </>
