@@ -13,7 +13,7 @@ const useSingleTask = (id) => {
            return await data.data;
         }
     })
-    console.log('single task',data);
+    // console.log('single task',data);
 
     return {data, refetch, isLoading, isPending};
 };

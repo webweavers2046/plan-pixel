@@ -3,6 +3,7 @@ import useAxios from "./useAxios";
 
 const useUser = (email) => {
     const axiosPublic = useAxios();
+    // console.log(email);
 
     const {data, refetch} = useQuery({
         queryKey: ['profile',email],
@@ -11,7 +12,7 @@ const useUser = (email) => {
            return await data.data;
         }
     })
-    console.log('user data',data);
+    // console.log('user data',data);
 
     return {data, refetch};
 };
