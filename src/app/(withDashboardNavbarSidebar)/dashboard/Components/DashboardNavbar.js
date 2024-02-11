@@ -185,7 +185,7 @@ const DashboardNavbar = () => {
                     </svg>
                 </div>
                 <input
-                    className="w-full rounded-lg text-sm pl-16 py-4 border-0 "
+                    className="w-full rounded-lg text-sm pl-16 py-4 border-0 bg-dashboardPrimaryColor"
                     placeholder="Find The task what you’re looking for..."
                     type="text"
                 ></input>
