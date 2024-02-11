@@ -37,7 +37,7 @@ const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
     <div className="relative">
       <>
         <div className="flex items-center relative">
-          <div className="bg-white shadow-lg h-[200px] rounded-lg p-4 z-40 fixed left-72 w-[260px] overflow-hidden top-3 mx-auto">
+          <div className="bg-white shadow-lg h-[200px] rounded-lg p-4 z-40 fixed left-[500px] w-[260px] overflow-hidden top-32 mx-auto">
             <div className="flex w-full items-center mb-2">
               <input
                 name="name"

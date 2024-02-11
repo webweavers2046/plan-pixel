@@ -93,7 +93,7 @@ function MemberList({ handleAddMember, setWillAddMember }) {
 const userArray = [
   {
     name: "Majharul Islam",
-    email: "majharul@gmail.com",
+    email: "mdmazharulislam2046@gmail.com",
     profile: "path/to/profile3.jpg",
   },
 

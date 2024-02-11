@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import useGetSocketData from "@/hooks/useGetAllTasks";
 import toast from "react-hot-toast";
 import useAxios from "@/hooks/useAxios";
-import { ablyContext } from "@/components/ably/AblyProvider";
 import calculatePosition from "@/utils/calculate-position";
 import style from "./dnd.module.css";
 import removeAllTaskContainerClasses from "@/utils/removeAllTasksCalsses";
@@ -40,7 +39,6 @@ export const TaskDndProvider = ({ children }) => {
 
   // Local state for storing all tasks
   // const [alltasks, setAllTasks] = useState(initialTask);
-
   const alltasks = workspaceBasedTasks
 
   // Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.

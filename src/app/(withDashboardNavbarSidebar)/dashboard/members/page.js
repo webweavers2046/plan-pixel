@@ -1,13 +1,13 @@
 "use client"
 import React, { useState } from "react";
 import TeamMembers from "./Components/TeamMembers";
-import useGlobalTaskData from "@/hooks/useGlobalTaskData";
+import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { Dropdown } from "flowbite-react";
 import TaskCard from "./Components/TaskCard";
 import useFilterTasks from "@/hooks/useFilterTasks ";
 
 const page = () => {
-  const { alltasks } = useGlobalTaskData();
+  const { alltasks } = useDNDcontext();
   const [filter, setFilter] = useState("to-do")
   const tasks = useFilterTasks(alltasks, filter);
   console.log('members tasks', tasks);

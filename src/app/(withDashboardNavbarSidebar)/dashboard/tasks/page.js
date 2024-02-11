@@ -1,33 +1,35 @@
 "use client";
 import { LuListTodo } from "react-icons/lu";
 import { FiPlusSquare } from "react-icons/fi";
-import { FaPlus } from "react-icons/fa6";
 import Task from "./Task";
 import "@/styles/globals.css";
-import { use, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import TaskModal from "../Components/TaskModal";
 import useFilterTasks from "@/hooks/useFilterTasks ";
-import useGlobalTaskData from "@/hooks/useGlobalTaskData";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import useGetSocketData from "@/hooks/useGetAllTasks";
+import useDNDcontext from "@/hooks/useGlobalTaskData";
 import UpdateTask from "../Components/UpdateTask";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
+
 
 const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging,draggingTaskId } =
-    useGlobalTaskData();
-    
+    useDNDcontext();
 
+    
+  const {allWorkspaceTasks} = useContext(ablyContext)
+ console.log(allWorkspaceTasks)
+  
+  const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
 
   // Tasks in different status
-  const toDoTasks = useFilterTasks(alltasks, "to-do",draggingTaskId,dragOverElementName);
-  const upcomingTasks = useFilterTasks(alltasks, "upcoming",draggingTaskId,dragOverElementName);
-  const doingTasks = useFilterTasks(alltasks, "doing",draggingTaskId,dragOverElementName);
-  const doneTasks = useFilterTasks(alltasks, "done",draggingTaskId,dragOverElementName);
+  const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do",draggingTaskId,dragOverElementName);
+  const upcomingTasks = useFilterTasks(workspaceAllTasks, "upcoming",draggingTaskId,dragOverElementName);
+  const doingTasks = useFilterTasks(workspaceAllTasks, "doing",draggingTaskId,dragOverElementName);
+  const doneTasks = useFilterTasks(workspaceAllTasks, "done",draggingTaskId,dragOverElementName);
 
 
   const {defaultActiveWorkspace} = useGlobalContext()
@@ -43,7 +45,7 @@ const Tasks = () => {
           {/* header section  */}
           <div className="md:flex ml-3 justify-between items-start border-b pb-2 pt-6 border-white/50">
             <div className="">
-              <h6 className="font-medium text-[20px] ">{title?title:"your board"}</h6>
+              <h6 className="font-medium text-[22px] flex gap-1 items-center mb-1"><span className="h-4 w-4 rounded-full bg-gradient-to-br from-[#93C648] to-[#50B577] text-white"></span>{title?title:"your board"}</h6>
               {
                 description?<p className="md:w-full lg:w-[500px] text-gray-400">{description}</p>:(
               <p className="opacity-80 mt-1 font-light text-sm">
