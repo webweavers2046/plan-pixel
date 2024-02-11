@@ -11,31 +11,27 @@ import member05Img from "@/assets/team-members/sajid.jpg";
 import member06Img from "@/assets/team-members/forhad.jpg";
 
 import MassageIcon from "@/assets/dashboard/Message.svg";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import { ablyContext } from "@/components/ably/AblyProvider";
 
 const TeamMembers = () => {
     const {workspaceBasedMembers} = useGlobalContext()
-    const {allWorkspaceMembers} = useContext(ablyContext)
 
-    const membersInWorkspace = allWorkspaceMembers.length > 0? allWorkspaceMembers : workspaceBasedMembers 
-    
-    
+    console.log()
     return (
-        <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
+        <div className="shadow-md rounded-xl p-6 max-h-dvh overscroll-auto border">
             <h1 className=" text-2xl font-bold p-4">Team Member</h1>
-            {membersInWorkspace?.map((member, index) => (
-                <TeamMember
+            {workspaceBasedMembers?.map((member, index) => (
+                <button>
+                    <TeamMember
                     key={index}
                     name={member.name}
                     userEmail={member.email}
-                    // avatar={member.avatar}
-                    avatar={member02Img}
-                    
+                    avatar={member.avatar}
                 />
+                </button>
             ))}
         </div>
     );
@@ -166,7 +162,6 @@ function TeamMember({ name, userEmail, avatar }) {
         </div>
     );
 }
-
 
 const teamMemberData = [
     {

@@ -3,20 +3,44 @@
 import { AuthContext } from "@/Providers/AuthProviders";
 import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import useUser from "@/hooks/useUser";
+import useAxios from "@/hooks/useAxios";
+import CommonModal from "@/components/Common/CommonModal/CommonModal";
+import MiniModal from "@/components/Common/CommonModal/MiniModal";
+import toast from "react-hot-toast";
+import useGlobalContext from "@/hooks/useGlobalContext";
+import PaperPieces from "@/components/Common/CommonModal/paperCutPiece";
+import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 const DashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const {
+        handleActiveWorkspace,
+        handleDropdownClick,
+        workspaces,
+        defaultActiveWorkspace,
+    } = useGlobalContext();
+    const { allWorkspaces } = useContext(ablyContext);
+    const displayWorkspaces =
+        allWorkspaces.length > 0 ? allWorkspaces : workspaces;
+
+    const { activeWorspace } = useContext(ablyContext);
+    const { title } = activeWorspace ||
+        defaultActiveWorkspace || { title: "Demo title" };
 
     const userData = useUser(user?.email);
-
     const router = useRouter();
+    const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [WillAddMember, setWillAddMember] = useState(false);
+    const xios = useAxios();
 
     const handleLogOut = () => {
         Swal.fire({
@@ -38,28 +62,110 @@ const DashboardNavbar = () => {
             }
         });
     };
+
+    const handleCreateWorkspace = async (title, description) => {
+        const workspace = {
+            title: title,
+            description: description,
+            creator: user?.email,
+            members: ["userID2", "userID3"],
+            tasks: [],
+            isActive: false,
+        };
+
+        const response = await xios.post(
+            `/create-workspace/${user.email && user.email}`,
+            workspace
+        );
+        if (response.data.insertedId) {
+            toast.success("Successfully created a workspace. 🏢");
+        }
+    };
+
+    const handleAddMember = async (workspaceId, memberEmail, memberName) => {
+        const workspaceAndUserEmail = {
+            workspaceId,
+            userEmail: memberEmail,
+        };
+
+        const isAddedMember = await xios.post(
+            "/add-member-to-workspace",
+            workspaceAndUserEmail
+        );
+
+        if (isAddedMember.data.message) {
+            return toast.success(`${memberName} is added to this workspace`);
+        }
+
+        toast.error(isAddedMember.data.error);
+    };
+
     return (
-        <div className="flex justify-between items-center p-4 gap-6">
-            <div className=" py-2 px-3 rounded-lg ">
+        <div className="flex relative justify-between items-center p-4 gap-6">
+            <div
+                onClick={handleDropdownClick}
+                className="py-2 px-3 relative rounded-lg"
+            >
                 <Dropdown
-                    className="bg-gray-100 py-2 px-3 rounded-lg mt-4"
+                    dismissOnClick={false}
+                    color="white"
+                    className="bg-[white] w-60 overflow-hidden relative py-2 px-3 rounded-lg mt-4"
                     inline
                     label={
                         <div className="text-start">
-                            <p className="text-xs opacity-55">workspace -</p>
-                            <h2 className="">Workspace 01</h2>
+                            <p className=" opacity-55 text-[15px]">
+                                {title ? title : "Workspace"}
+                            </p>
                         </div>
                     }
                 >
-                    <Dropdown.Item>Workspace 02</Dropdown.Item>
-                    <Dropdown.Item>Workspace 03</Dropdown.Item>
+                    <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div>
+
+                    {displayWorkspaces?.map((workspace, index) => {
+                        return (
+                            <Dropdown.Item
+                                onMouseEnter={() => setIsHovered(index)}
+                                onMouseLeave={() => setIsHovered(null)}
+                                onClick={(e) =>
+                                    handleActiveWorkspace(e, workspace._id)
+                                }
+                            >
+                                {workspace.title}
+
+                                <span
+                                    onClick={() =>
+                                        setWillAddMember(!WillAddMember)
+                                    }
+                                    className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
+                                        isHovered === index ? "opacity-100" : ""
+                                    }`}
+                                >
+                                    +
+                                </span>
+                            </Dropdown.Item>
+                        );
+                    })}
+
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <div className=" py-2 px-4 border-dashed border-black border rounded-lg">
-                            <p className="">Add New Workspace</p>
+                        <div
+                            onClick={() =>
+                                setIsCreateWorkSpace(!isCreateWokspace)
+                            }
+                            className=" py-2 px-4 w-full shadow-sm hover:bg-transparent  rounded-lg"
+                        >
+                            <p className="w-full">Add New Workspace +</p>
                         </div>
                     </Dropdown.Item>
                 </Dropdown>
+
+                {/* Add member modal */}
+
+                <AddMemberModal
+                    handleAddMember={handleAddMember}
+                    WillAddMember={WillAddMember}
+                    setWillAddMember={setWillAddMember}
+                />
             </div>
             <div className="grow">
                 <div className="absolute ml-[20px] mt-[17px]">
@@ -79,7 +185,7 @@ const DashboardNavbar = () => {
                     </svg>
                 </div>
                 <input
-                    className="w-full rounded-lg bg-gray-100 text-sm pl-16 py-4 border-0 "
+                    className="w-full rounded-lg text-sm pl-16 py-4 border-0 bg-dashboardPrimaryColor"
                     placeholder="Find The task what you’re looking for..."
                     type="text"
                 ></input>
@@ -108,15 +214,13 @@ const DashboardNavbar = () => {
                     />
                 </svg>
             </div>
-            <div className="border py-2 px-3 rounded-lg bg-gray-100">
+            <div className="border py-2 px-3 rounded-lg bg-[white]">
                 <Dropdown
-                    className="bg-gray-100 rounded-lg"
+                    className="bg-white rounded-lg"
                     inline
                     label={
                         <div className="flex items-center">
-                            {
-                                userData?.image ?
-
+                            {userData?.image ? (
                                 <Image
                                     src={userData?.image}
                                     alt="member"
@@ -124,7 +228,7 @@ const DashboardNavbar = () => {
                                     height={32}
                                     className="w-8 h-8 rounded-full mr-2"
                                 />
-                                :
+                            ) : (
                                 <Image
                                     src={image}
                                     alt="member"
@@ -132,8 +236,7 @@ const DashboardNavbar = () => {
                                     height={32}
                                     className="w-8 h-8 rounded-full mr-2"
                                 />
-
-                            }
+                            )}
                             <div>
                                 <h2 className="text-sm font-semibold">
                                     {userData?.name?.split(" ")[0]}
@@ -160,7 +263,18 @@ const DashboardNavbar = () => {
                             Log Out
                         </button>
                     </Dropdown.Item>
+                    <PaperPieces />
                 </Dropdown>
+                <div className="">
+                    {isCreateWokspace ? (
+                        <MiniModal
+                            handleCreateWorkspace={handleCreateWorkspace}
+                            setIsCreateWorkSpace={setIsCreateWorkSpace}
+                        />
+                    ) : (
+                        ""
+                    )}
+                </div>
             </div>
         </div>
     );

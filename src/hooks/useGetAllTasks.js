@@ -20,18 +20,22 @@ export default useGetSocketData;
 
 */
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxios from "./useAxios";
+import Task from "@/app/(withDashboardNavbarSidebar)/dashboard/tasks/Task";
+import { taskContext } from "@/Providers/TaskDndProvider";
+import useGlobalTaskData from "./useGlobalTaskData";
 
 const useGetSocketData = () => {
     const xios = useAxios();
-    const [alltasks = [], setAllTasks] = useState([]);
+    const [alltasks, setAllTasks] = useState([]);
 
     useEffect(() => {
         xios.get("/tasks").then((data) => setAllTasks(data.data));
-    }, []);
+    }, [alltasks]);
 
-    return alltasks.length > 0 ? alltasks : [];
+    // console.log("all data by http initially", alltasks)
+    return alltasks
 };
 
 export default useGetSocketData;
