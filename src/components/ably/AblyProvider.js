@@ -13,10 +13,17 @@ const ablyChannel = ably.channels.get("tasks");
 // Creating a context for sharing Ably-related data with components
 export const ablyContext = createContext();
 
-// Component for providing Ably functionality to its children
+
 const AblyProvider = ({ children }) => {
+
   // State for managing the tasks received from Ably
   const [tasks, setTasks] = useState([]);
+
+  // state related to workspace
+  const [allWorkspaces,setAllWrokspaces] = useState([])
+  const [allWorkspaceMembers,setAllworkspaceMembers] = useState([])
+  const [allWorkspaceTasks,setAllWorkspaceTasks] = useState([])
+
   
   useEffect(() => {
     // Function to connect to Ably
@@ -49,9 +56,15 @@ const AblyProvider = ({ children }) => {
       setTasks(sortedTasks);
     };
 
-    ablyChannel.subscribe("workspace-update",(message)=> {
-      console.log("workspace-update",message)
+    // here recieve user workspaces,tasks and member in it. 
+    ablyChannel.subscribe("workspaces",(message)=> {
+      const response = message.data
+      setAllWrokspaces(response.allWorkspaces)
+      setAllworkspaceMembers(response.allMembersInWorkspace)
+      setAllWorkspaceTasks(response.allTasksInWorkspace)
+      // console.log(response.allMembersInWorkspace)
     })
+
     // Subscribing to the Ably channel with the ablyListener
     ablyChannel.subscribe(ablyListener);
 
@@ -68,9 +81,27 @@ const AblyProvider = ({ children }) => {
     };
   }, [tasks]);
 
+
+  console.log(allWorkspaceMembers)
+
+  // Getting active workspace 
+  const activeWorspace = allWorkspaces.find(workspace => workspace.isActive === true)
+  
+
+
+
+  // Distribute all data by 
+  const distributingData = {
+    allWorkspaces,
+    activeWorspace,
+    allWorkspaceMembers,
+    allWorkspaceTasks,
+    tasks
+  }
+
   // Providing the tasks data to its children through the context
   return (
-    <ablyContext.Provider value={{ tasks }}>{children}</ablyContext.Provider>
+    <ablyContext.Provider value={distributingData}>{children}</ablyContext.Provider>
   );
 };
 
