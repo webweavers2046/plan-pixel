@@ -14,7 +14,7 @@ const DashboardSidebar = ({ openDashboard, setOpenDashboard }) => {
     // get current route
     const pathname = usePathname();
     return (
-        <div className="sticky top-0">
+        <div className="sticky lg:block hidden top-0">
             <div className={`  mr-2 h-screen border-r-2 relative `}>
                 <IoClose
                     className={`${

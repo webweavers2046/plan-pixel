@@ -18,11 +18,10 @@ const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  
   const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging,draggingTaskId } =
     useGlobalTaskData();
-    
-
-
+   
   // Tasks in different status
   const toDoTasks = useFilterTasks(alltasks, "to-do",draggingTaskId,dragOverElementName);
   const upcomingTasks = useFilterTasks(alltasks, "upcoming",draggingTaskId,dragOverElementName);
