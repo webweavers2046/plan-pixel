@@ -23,6 +23,8 @@ export const TaskDndProvider = ({ children }) => {
     id: null,
     position: null,
   });
+
+
   const [droppableAreaName, setDroppableAreaName] = useState("");
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
@@ -31,7 +33,7 @@ export const TaskDndProvider = ({ children }) => {
 
   // Fetching all tasks from the server
   const initialTask = useGetSocketData();
-  const { tasks } = useContext(ablyContext);
+  // const { tasks } = useContext(ablyContext);
 
   // Global context for managing shared data
   const { newTask,workspaceBasedTasks } = useGlobalContext();
@@ -100,6 +102,7 @@ export const TaskDndProvider = ({ children }) => {
 
     // Getting the position from the state
     const { id, position } = dragoverTask;
+console.log("from dnd ", position)
 
     // If drop is out of the box
     if (droppableArea === "" || !isNaN(parseInt(droppableArea))) {
@@ -119,6 +122,8 @@ export const TaskDndProvider = ({ children }) => {
 
     if (draggingTask) {
       draggingTask.status = droppableArea;
+      draggingTask.position = parseInt(position)
+      draggingTask.updatedAt = new Date()
     }
 
     if (isDropped) {
@@ -143,6 +148,7 @@ export const TaskDndProvider = ({ children }) => {
       });
   };
 
+
   // Scatter the data across components in its network
   const globalData = {
     alltasks,
@@ -153,8 +159,12 @@ export const TaskDndProvider = ({ children }) => {
     isDragging,
     draggingTaskId,
     dragOverElementName,
+    // position and id
+    dragoverTask,
     droppedAreaName: droppableAreaName,
   };
+
+
 
   // Rendering the component with the provided children
   return (
