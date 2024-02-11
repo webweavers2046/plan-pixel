@@ -102,7 +102,6 @@ export const TaskDndProvider = ({ children }) => {
 
     // Getting the position from the state
     const { id, position } = dragoverTask;
-console.log("from dnd ", position)
 
     // If drop is out of the box
     if (droppableArea === "" || !isNaN(parseInt(droppableArea))) {

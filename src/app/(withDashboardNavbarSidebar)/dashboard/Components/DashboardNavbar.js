@@ -17,11 +17,19 @@ import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import PaperPieces from "@/components/Common/CommonModal/paperCutPiece";
 import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const { handleActiveWorkspace, handleDropdownClick, workspaces } =
+  const { handleActiveWorkspace, handleDropdownClick, workspaces,defaultActiveWorkspace } =
     useGlobalContext();
+  const {allWorkspaces} = useContext(ablyContext)
+  const displayWorkspaces = allWorkspaces.length > 0 ? allWorkspaces : workspaces;
+
+  const {activeWorspace} = useContext(ablyContext)
+  const { title } = activeWorspace || defaultActiveWorkspace || { title: "Demo title" };
+
+  
 
   const userData = useUser(user?.email);
   const router = useRouter();
@@ -100,13 +108,13 @@ const DashboardNavbar = () => {
           inline
           label={
             <div className="text-start">
-              <p className="text-xs opacity-55">{}</p>
+              <p className=" opacity-55 text-[15px]">{title?title:"Workspace"}</p>
             </div>
           }
         >
           <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div>
 
-          {workspaces?.map((workspace, index) => {
+          {displayWorkspaces?.map((workspace, index) => {
             return (
               <Dropdown.Item
                 onMouseEnter={() => setIsHovered(index)}

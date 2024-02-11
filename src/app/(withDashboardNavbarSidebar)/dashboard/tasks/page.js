@@ -4,7 +4,7 @@ import { FiPlusSquare } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 import Task from "./Task";
 import "@/styles/globals.css";
-import { use, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import TaskModal from "../Components/TaskModal";
 import useFilterTasks from "@/hooks/useFilterTasks ";
 import useGlobalTaskData from "@/hooks/useGlobalTaskData";
@@ -12,6 +12,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import useGetSocketData from "@/hooks/useGetAllTasks";
 import UpdateTask from "../Components/UpdateTask";
 import useGlobalContext from "@/hooks/useGlobalContext";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 const Tasks = () => {
   // manage all your state here..
@@ -29,27 +30,33 @@ const Tasks = () => {
   const doneTasks = useFilterTasks(alltasks, "done",draggingTaskId,dragOverElementName);
 
 
-  const {activeWrokspace} = useGlobalContext()
-    const {_id,title,description,creator,members,tasks,isActive} = activeWrokspace
-    
+  const {defaultActiveWorkspace} = useGlobalContext()
+  const {activeWorspace} = useContext(ablyContext)
+  const { title,description } = activeWorspace || defaultActiveWorkspace || { title: "Demo title" };
 
+  
+  
   return (
     <>
       {typeof window !== "undefined" && (
         <section>
           {/* header section  */}
-          <div className="md:flex ml-3 justify-between items-end border-b pb-6 border-white/50">
+          <div className="md:flex ml-3 justify-between items-start border-b pb-2 pt-6 border-white/50">
             <div className="">
               <h6 className="font-medium text-[20px] ">{title?title:"your board"}</h6>
+              {
+                description?<p className="md:w-full lg:w-[500px] text-gray-400">{description}</p>:(
               <p className="opacity-80 mt-1 font-light text-sm">
                 Create and complete<br/> and manage your tasks using TaskTo task
                 board.
               </p>
+              )
+              }
             </div>
-            <div className="">
+            <div className="flex lg:w-52">
               <button
                 onClick={() => setOpenModal(!openModal)}
-                className="bg-white text-black text-sm px-5 py-3 rounded-md font-bold"
+                className="bg-white text-black flex text-sm px-5 py-3 rounded-md font-bold"
               >
                 <FiPlusSquare className="inline mb-1 me-2 text-xl" /> Add Task
               </button>

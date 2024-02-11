@@ -3,10 +3,12 @@ import { TiTick } from "react-icons/ti";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import PaperPieces from "./paperCutPiece";
 import toast from "react-hot-toast";
+import useGlobalContext from "@/hooks/useGlobalContext";
 
 const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const {TriggerWhenNewWorkspaceCreated} = useGlobalContext()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +19,8 @@ const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
 
     // Pass the values to the parent component
     handleCreateWorkspace(name, description);
-
+    setIsCreateWorkSpace(false)
+    TriggerWhenNewWorkspaceCreated()
     // Reset the form values
     setName("");
     setDescription("");

@@ -23,6 +23,11 @@
  * Design plus icon to add new member 
  * fetch the all the some user and display list to add 
  * based on selection request to database to recieve that member email and workspace id 
+ * 
+ * ------------------------------------------
+ * active workspace name display
+ * ------------------------------------------
+ * send 
  */
 
 
