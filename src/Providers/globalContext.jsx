@@ -8,6 +8,7 @@ import { AuthContext } from "./AuthProviders";
 export const globalContext = createContext(null);
 
 const GlobalContext = ({ children }) => {
+
   // manage all of your state here ..
   const [newTask, setNewTask] = useState("");
   const xios = useAxios();
@@ -16,37 +17,43 @@ const GlobalContext = ({ children }) => {
   const [workspaceBasedMembers, setWorkspaceMembers] = useState([]);
   const [activeWrokspace, setActiveWorkspace] = useState([]);
   const [workspaces, setWorkspaces] = useState([]);
+  const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
+  const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
+  const [defaultActiveWorkspace, setDefaultWorkspace] = useState({})
 
-  // getting the workspace that recently was active
+  const [toggleValue,setToggleValue] = useState(false)
+  
   useEffect(() => {
-    xios.get(`/active-workspace`).then((res) => {
-      // Sorting tasks by position and updatedAt for consistent display
-      const sortedTasks = res.data?.sort((a, b) => {
-        if (a.position !== b.position) {
-          return a.position - b.position;
-        }
-        return new Date(b.updatedAt) - new Date(a.updatedAt);
+    // Fetch active workspace, user workspaces, and workspace tasks in one go
+    Promise.all([
+      xios.get('/active-workspace'),
+      xios.get(`/userWokspaces/${user ? user?.email : 'shakilahmmed8882@gmail.com'}`),
+      xios.get('/active-workspace'),
+      xios.get('/api/workspaces/active'),
+    ])
+      .then(([activeWorkspaceRes, userWorkspacesRes, allWorkspaceTasksRes,defaultActiveWokspace]) => {
+        // Sorting tasks by position and updatedAt for consistent display
+        const sortedTasks = activeWorkspaceRes.data?.sort((a, b) => {
+          if (a.position !== b.position) {
+            return a.position - b.position;
+          }
+          return new Date(b.updatedAt) - new Date(a.updatedAt);
+        });
+  
+        // Set state for active workspace, user workspaces, and all workspace tasks
+        setActiveWorkspace(sortedTasks);
+        setWorkspaces(userWorkspacesRes.data);
+        setWorkspaceTasks(allWorkspaceTasksRes.data);
+        setDefaultWorkspace(defaultActiveWokspace.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error(error);
       });
-
-      setActiveWorkspace(sortedTasks);
-    });
   }, []);
+  
 
-  useEffect(() => {
-    // All workspaces list in initial load
-    xios
-      .get(`/userWokspaces/${user ? user.email : "shakilahmmed8882@gmail.com"}`)
-      .then((res) => {
-        setWorkspaces(res.data);
-      });
-  }, []);
-
-  useEffect(() => {
-    // All workspaces task in initial load
-    xios.get(`/active-workspace`).then((res) => {
-      setWorkspaceTasks(res.data);
-    });
-  }, []);
+  
 
   // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal) => {
@@ -62,10 +69,10 @@ const GlobalContext = ({ children }) => {
     });
   };
 
-  // Workspace data hanler
 
+  // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
-    console.log("workspace id", _id);
+    setClickedWorkspaceId(_id)
     const alltasksAndMembersInIt = await xios.get(
       `/active-workspace?workspaceId=${_id}`
     );
@@ -83,10 +90,29 @@ const GlobalContext = ({ children }) => {
     const userWorkspaces = await xios.get(
       `/userWokspaces/${user.email ? user.email : "shakilahmmed8882@gmail.com"}`
     );
-    setWorkspaces(userWorkspaces.data);
+    setSwitchWorkspace(!isWorkspaceSwitched);  
   };
 
-  console.log(workspaceBasedTasks);
+
+
+  
+const TriggerWhenNewWorkspaceCreated = () => {
+  setToggleValue(!toggleValue)
+}
+
+
+console.log(toggleValue)
+useEffect(()=> {
+  xios.get("/api/workspaces/active")
+  .then(res => {
+    if(!res.data) return "coming"
+    setDefaultWorkspace(res?.data)
+  })
+},[isWorkspaceSwitched,toggleValue])
+
+
+
+
   const data = {
     handleCreateTask,
     newTask,
@@ -97,6 +123,13 @@ const GlobalContext = ({ children }) => {
     activeWrokspace,
     handleDropdownClick,
     workspaces,
+    defaultActiveWorkspace,
+    clickedWorkspaceId,
+    setSwitchWorkspace,
+    isWorkspaceSwitched,
+    
+
+    TriggerWhenNewWorkspaceCreated
   };
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>
