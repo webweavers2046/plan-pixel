@@ -6,18 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import "@/styles/globals.css";
 
-import { IoClose, IoSettingsSharp } from "react-icons/io5";
+import { IoSettingsSharp } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { FaUsers } from "react-icons/fa6";
 import phoneIcon from "@/assets/icons/phone.png";
-import { useState } from "react";
-import Drawer from "./Drawer";
 
 const DashboardSidebar = () => {
     // get current route
     const pathname = usePathname();
-    const [openSidebar, setOpenSidebar] = useState(false);
-    console.log(openSidebar);
 
     return (
         <div className="sticky top-0">
@@ -161,19 +157,6 @@ const DashboardSidebar = () => {
                             </li>
                         </ul>
                     </div>
-                </div>
-                {openSidebar && (
-                    <div className="">
-                        <Drawer />
-                    </div>
-                )}
-                <div className="w-5 h-screen border-r-2 xl:hidden block relative">
-                    <button
-                        onClick={() => setOpenSidebar(!openSidebar)}
-                        className="border-2 p-1.5 flex items-center justify-center absolute bg-white rounded-full top-1/2 transform -translate-y-1/2"
-                    >
-                        <IoIosArrowForward className="inline text-2xl" />
-                    </button>
                 </div>
             </div>
         </div>

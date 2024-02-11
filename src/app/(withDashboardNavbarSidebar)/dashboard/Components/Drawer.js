@@ -1,3 +1,5 @@
+"use client";
+
 import logo from "@/assets/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +15,7 @@ const Drawer = () => {
     return (
         <div className="w-full">
             <div
-                className={`  mr-2 h-screen block xl:hidden border-r-2 relative z-50`}
+                className={`   h-screen block xl:hidden border-r-2 relative z-30`}
             >
                 <div className="py-4 px-3">
                     <div className="ms-3 mt-1">
