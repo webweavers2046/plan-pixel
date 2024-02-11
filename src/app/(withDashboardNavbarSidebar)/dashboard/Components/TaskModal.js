@@ -21,7 +21,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
   // Get active wokspace when live change or the default one
   const { handleCreateTask, defaultActiveWorkspace } = useGlobalContext();
   const { activeWorspace} = useContext(ablyContext);
-  const activeWorkspaceId = activeWorspace?activeWorspace._id:defaultActiveWorkspace._id
+  const activeWorkspaceId = activeWorspace?activeWorspace?._id:defaultActiveWorkspace?._id
 
   
   const onSubmit = async (data) => {

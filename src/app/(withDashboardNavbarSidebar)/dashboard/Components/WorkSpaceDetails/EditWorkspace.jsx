@@ -11,7 +11,7 @@ const EditWorkspace = ({setEdit,isEdit}) => {
   const xios = useAxios()
   const { defaultActiveWorkspace } = useGlobalContext();
   const { activeWorspace} = useContext(ablyContext);
-  const activeWorkspaceId = activeWorspace?activeWorspace._id:defaultActiveWorkspace._id
+  const activeWorkspaceId = activeWorspace?activeWorspace?._id:defaultActiveWorkspace?._id
 
   const handleSave = async() => {
    
