@@ -101,7 +101,7 @@ const TriggerWhenNewWorkspaceCreated = () => {
 }
 
 
-console.log(toggleValue)
+// console.log(toggleValue)
 useEffect(()=> {
   xios.get("/api/workspaces/active")
   .then(res => {

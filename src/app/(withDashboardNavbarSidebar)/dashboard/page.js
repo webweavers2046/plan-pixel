@@ -10,7 +10,6 @@ import { AuthContext } from "@/Providers/AuthProviders";
 import useUser from "@/hooks/useUser";
 import WorkSpaceDetails from "./Components/WorkSpaceDetails/WorkSpaceDetails";
 import TaskBarGraph from "./Components/TaskBarGraph/TaskBarGraph";
-import Calendar from "react-calendar";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -18,11 +17,10 @@ const Dashboard = () => {
   const [date, setDate] = useState(
     new Date()
   );
-  console.log(userData);
 
   return (
     <div className="p-6">
-      <div className="bg-green-500/20 py-10 px-16 rounded-xl mb-6 flex justify-between items-center">
+      {/* <div className="bg-green-500/20 py-10 px-16 rounded-xl mb-6 flex justify-between items-center">
         <div className="">
           <p className="text-lg font-semibold pb-2">Hi! Welcome Back</p>
           <h2 className="text-5xl">{userData?.name}</h2>
@@ -30,7 +28,7 @@ const Dashboard = () => {
         <div className="w-[150px]">
           <Image src={dashboardImage} alt="Dashboard home banner"></Image>
         </div>
-      </div>
+      </div> */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center gap-6">
           colum 1
           <div>
@@ -61,7 +59,7 @@ const Dashboard = () => {
 
         </div>
         <div className="w-1/3">
-          <Calendar></Calendar>
+          <Calender date={date} setDate={setDate}></Calender>
           <MyTask date={date} />
         </div>
       </div>
