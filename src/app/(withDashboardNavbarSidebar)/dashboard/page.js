@@ -10,7 +10,6 @@ import { AuthContext } from "@/Providers/AuthProviders";
 import useUser from "@/hooks/useUser";
 import WorkSpaceDetails from "./Components/WorkSpaceDetails/WorkSpaceDetails";
 import TaskBarGraph from "./Components/TaskBarGraph/TaskBarGraph";
-import Calendar from "react-calendar";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -61,7 +60,7 @@ const Dashboard = () => {
 
         </div>
         <div className="w-1/3">
-          <Calendar></Calendar>
+          <Calender date={date} setDate={setDate}></Calender>
           <MyTask date={date} />
         </div>
       </div>
