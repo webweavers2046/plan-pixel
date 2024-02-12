@@ -24,6 +24,8 @@ const AblyProvider = ({ children }) => {
   const [allWorkspaceMembers,setAllworkspaceMembers] = useState([])
   const [allWorkspaceTasks,setAllWorkspaceTasks] = useState([])
 
+
+  
   
   useEffect(() => {
     // Function to connect to Ably
@@ -62,7 +64,7 @@ const AblyProvider = ({ children }) => {
       setAllWrokspaces(response.allWorkspaces)
       setAllworkspaceMembers(response.allMembersInWorkspace)
       setAllWorkspaceTasks(response.allTasksInWorkspace)
-      // console.log(response.allMembersInWorkspace)
+      console.log(response.allTasksInWorkspace)
     })
 
     // Subscribing to the Ably channel with the ablyListener
@@ -81,14 +83,9 @@ const AblyProvider = ({ children }) => {
     };
   }, [tasks]);
 
-
-  console.log(allWorkspaceMembers)
-
   // Getting active workspace 
   const activeWorspace = allWorkspaces.find(workspace => workspace.isActive === true)
   
-
-
 
   // Distribute all data by 
   const distributingData = {

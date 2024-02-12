@@ -7,9 +7,7 @@ const useFilterTasks = (tasksArray, filter, draggingTaskId, droppableArea) => {
   const { position } = dragoverTask || {};
   const filteredTasks = tasksArray?.filter((task) => task?.status === filter);
   const draggingTask = tasksArray.find((task) => task._id === draggingTaskId);
-
-  // console.log("from line number 12", position);
-
+  
   if (droppableArea) {
     const columnSequencedTasks = tasksArray?.filter(
       (task) => task.status === droppableArea
@@ -26,10 +24,6 @@ const useFilterTasks = (tasksArray, filter, draggingTaskId, droppableArea) => {
       columnSequencedTasks[i].position += 1;
     }
 
-    // Now you can update your state or server with the modified positions
-    // ...
-
-    // console.log("Modified Column Sequenced Tasks: ", columnSequencedTasks);
   }
 
   return filteredTasks;
