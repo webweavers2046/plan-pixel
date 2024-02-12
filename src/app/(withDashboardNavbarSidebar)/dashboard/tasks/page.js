@@ -10,12 +10,14 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import UpdateTask from "../Components/UpdateTask";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
+import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
 
 
 const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [openTaskDetails, setOpenTaskDetails] = useState(false);
   const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging,draggingTaskId } =
     useDNDcontext();
 
@@ -227,6 +229,8 @@ const Tasks = () => {
                         openModal={openModal}
                         setOpenModal={setOpenModal}
                     ></TaskModal>
+                    <CardDetailsModal openTaskDetails={openTaskDetails} setOpenTaskDetails={setOpenTaskDetails}></CardDetailsModal>
+                    <button onClick={()=> setOpenTaskDetails(!openTaskDetails)}>Open</button>
                 </section>
             )}
         </>
