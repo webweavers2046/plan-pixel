@@ -1,13 +1,15 @@
-import useGetSocketData from "@/hooks/useGetAllTasks";
+import useAllTasks from "@/hooks/useAllTasks";
+import useFilterTasks from "@/hooks/useFilterTasks";
 
 const TaskStats = () => {
-    const allTasks = useGetSocketData();
-    const todo = allTasks?.filter(task => task?.status === 'to-do');
-    const doing = allTasks?.filter(task => task?.status === 'doing');
-    const done = allTasks?.filter(task => task?.status === 'done');
-    // console.log('todo', todo);
-    // console.log('doing', doing);
-    // console.log('done', done);
+
+    const { data: allTasks } = useAllTasks();
+    // console.log(allTasks);
+
+    const todo = allTasks?.filter(task => task?.status === "to-do");
+    const done = allTasks?.filter(task => task?.status === "done");
+    const doing = allTasks?.filter(task => task?.status === "doing");
+
     return (
         <div className="grid grid-cols-2 px-10  gap-5">
             <div className="bg-[#50B57759] flex flex-col justify-center items-center font-semibold p-5 rounded-lg">

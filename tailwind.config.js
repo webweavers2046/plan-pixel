@@ -18,8 +18,11 @@ module.exports = {
             colors: {
                 primary: "#50B577",
                 secondary: "#93C648",
+                tertiary: "#FBBC05",
+                dashboardPrimaryColor: "#ECECEC",
                 bgBlack: "#0F141A",
                 footer: "#E9F5E3",
+
                 darkParaColor: "",
                 inputBg: "#ECECEC"
             },
