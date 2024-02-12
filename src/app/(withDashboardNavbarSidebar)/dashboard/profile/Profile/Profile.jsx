@@ -9,8 +9,8 @@ import useUser from "@/hooks/useUser";
 
 const Profile = ({ editProfile, setEditProfile }) => {
     const { user } = useContext(AuthContext)
-    const userData = useUser(user?.email);
-    // console.log(userData);
+    const {data : userData, refetch} = useUser(user?.email);
+    console.log(user);
 
     const socialLinks = [
         {

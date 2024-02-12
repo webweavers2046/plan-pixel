@@ -17,7 +17,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const UpdateProfile = ({ editProfile, setEditProfile }) => {
   const { user } = useContext(AuthContext);
-  const userData = useUser(user?.email);
+  const {data : userData, refetch} = useUser(user?.email);
   const xios = useAxios();
   const inputFile = useRef(null);
   // console.log(image_hosting_key);
@@ -56,6 +56,7 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
         const res = await xios.put(`/users/${user?.email}`, updateInfo);
         console.log(res?.data);
         if (res?.data?.update) {
+          refetch();
           Swal.fire({
             title: "saved!",
             text: "Your profile has been updated.",
@@ -99,6 +100,7 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
             // console.log('image update', data);
 
             if (data?.update) {
+              refetch();
               Swal.fire({
                 title: "Updated!",
                 text: "Your profile has been updated.",

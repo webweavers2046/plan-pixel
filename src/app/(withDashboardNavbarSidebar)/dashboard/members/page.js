@@ -1,10 +1,11 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TeamMembers from "./Components/TeamMembers";
 import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { Dropdown } from "flowbite-react";
 import TaskCard from "./Components/TaskCard";
-import useFilterTasks from "@/hooks/useFilterTasks ";
+import useFilterTasks from "@/hooks/useFilterTasks";
+import useAllTasks from "@/hooks/useAllTasks";
 
 const page = () => {
   const { alltasks } = useDNDcontext();
@@ -25,19 +26,28 @@ const page = () => {
             label={
               <div className="text-start px-6 ">
                 {/* <p className="text-xs opacity-55">workspace -</p> */}
-                <h2 className="capitalize ">{filter}</h2>
+                <h2 className="capitalize">{filter}</h2>
               </div>
             }
           >
-            <Dropdown.Item className="hover:text-green-600 font-semibold" onClick={() => setFilter('to-do')}>To-do</Dropdown.Item>
-            <Dropdown.Item className="hover:text-green-600 font-semibold" onClick={() => setFilter('doing')}>Doing</Dropdown.Item>
-            <Dropdown.Item className="hover:text-green-600 font-semibold" onClick={() => setFilter('done')}>Done</Dropdown.Item>
+            <Dropdown.Item className="hover:text-green-600 font-semibold" onClick={() => {
+              setFilter('to-do');
+              // setHeading('To-do')
+            }}>To-do</Dropdown.Item>
+            <Dropdown.Item className="hover:text-green-600 font-semibold" onClick={() => {
+              setFilter('doing');
+              // setHeading('Doing')
+            }}>Doing</Dropdown.Item>
+            <Dropdown.Item className="hover:text-green-600 font-semibold" onClick={() => {
+              setFilter('done');
+              // setHeading('Done');
+            }}>Done</Dropdown.Item>
             <Dropdown.Divider />
 
           </Dropdown>
         </div>
         <div className="gap-4 flex flex-wrap">{
-          tasks.map((task, idx) => (
+          tasks?.map((task, idx) => (
             <TaskCard key={idx} task={task} />
           ))
         }
