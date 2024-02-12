@@ -9,6 +9,7 @@ import calculatePosition from "@/utils/calculate-position";
 import style from "./dnd.module.css";
 import removeAllTaskContainerClasses from "@/utils/removeAllTasksCalsses";
 import useGlobalContext from "@/hooks/useGlobalContext";
+import { AuthContext } from "./AuthProviders";
 
 // Global context provider for managing shared state
 export const taskContext = createContext(null);
@@ -24,6 +25,7 @@ export const TaskDndProvider = ({ children }) => {
   });
 
 
+  const {user} = useContext(AuthContext)
   const [droppableAreaName, setDroppableAreaName] = useState("");
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
@@ -128,7 +130,7 @@ export const TaskDndProvider = ({ children }) => {
     }
 
     // Patch HTTP request to change the state
-    const url = `/updateTaskState?id=${id}&state=${droppableArea}&position=${position}`;
+    const url = `/updateTaskState?id=${id}&state=${droppableArea}&position=${position}&userEmail=${user?user.email:""}`;
     xios
       .patch(url)
       .then((data) => {

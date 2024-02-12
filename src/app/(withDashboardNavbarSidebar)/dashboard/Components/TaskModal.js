@@ -43,7 +43,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
     };
 
     handleCreateTask(newTask, setOpenModal,activeWorkspaceId);
-    reset();
+    // reset();
   };
 
   return (

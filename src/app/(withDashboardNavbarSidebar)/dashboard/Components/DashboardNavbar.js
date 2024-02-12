@@ -30,7 +30,7 @@ const DashboardNavbar = () => {
   } = useGlobalContext();
   const { allWorkspaces } = useContext(ablyContext);
   const displayWorkspaces =
-    allWorkspaces.length > 0 ? allWorkspaces : workspaces;
+    allWorkspaces.length > 0 ? allWorkspaces : workspaces || [];
 
   const { activeWorspace } = useContext(ablyContext);
   const { title } = activeWorspace ||
@@ -75,10 +75,7 @@ const DashboardNavbar = () => {
       isActive: false,
     };
 
-    const response = await xios.post(
-      `/create-workspace/${user.email && user.email}`,
-      workspace
-    );
+    const response = await xios.post(`/create-workspace/${user? user.email:""}`,workspace);
     if (response.data.insertedId) {
       toast.success("Successfully created a workspace. 🏢");
     }
@@ -277,7 +274,7 @@ const DashboardNavbar = () => {
           </Dropdown.Item>
         </Dropdown>
       </div>
-        <div className="translate-x-0 duration-200 absolute left-0">
+        <div className="translate-x-0 duration-200 absolute z-50 left-0">
           {isCreateWokspace ? (
             <MiniModal
             handleClose={handleClose}

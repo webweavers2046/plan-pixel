@@ -185,7 +185,7 @@ const teamMemberData = [
         avatar: member03Img,
     },
     {
-        name: "Shakil Ahmed",
+        name: "Shakil Ahmmed",
         email: "shakilahmmed8882@gmail.com",
         avatar: member04Img,
     },
@@ -197,7 +197,7 @@ const teamMemberData = [
     },
 
     {
-        name: "Forhad hossine",
+        name: "Forhad hossain",
         email: "forhadairdrop@gmail.com",
         avatar: member06Img,
     },

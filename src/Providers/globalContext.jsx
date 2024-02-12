@@ -22,12 +22,16 @@ const GlobalContext = ({ children }) => {
   const [defaultActiveWorkspace, setDefaultWorkspace] = useState({})
 
   const [toggleValue,setToggleValue] = useState(false)
+
+
+
   
   useEffect(() => {
     // Fetch active workspace, user workspaces, and workspace tasks in one go
+
     Promise.all([
       xios.get('/active-workspace'),
-      xios.get(`/userWokspaces/${user ? user?.email : 'shakilahmmed8882@gmail.com'}`),
+      xios.get(`/userWokspaces/${user ? user.email:"shakilahmmed8882@gmail.com"}`),
       xios.get('/active-workspace'),
       xios.get('/api/workspaces/active'),
     ])
@@ -58,8 +62,7 @@ const GlobalContext = ({ children }) => {
   // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal,activeWorkspaceId) => {
     // Calling it above for faster overview
-    console.log("formthe globacl context", activeWorkspaceId)
-    xios.post(`/createTask/${activeWorkspaceId}`, newTask).then((res) => {
+    xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask).then((res) => {
       if (res?.data?.insertedId) {
         setNewTask(newTask);
         setOpenModal(false);
@@ -99,8 +102,6 @@ const TriggerWhenNewWorkspaceCreated = () => {
   setToggleValue(!toggleValue)
 }
 
-
-console.log(toggleValue)
 useEffect(()=> {
   xios.get("/api/workspaces/active")
   .then(res => {
@@ -130,6 +131,9 @@ useEffect(()=> {
 
     TriggerWhenNewWorkspaceCreated
   };
+
+
+
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>
   );
