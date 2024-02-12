@@ -39,6 +39,7 @@ const DashboardNavbar = () => {
     const {data : userData, refetch} = useUser(user?.email)
     const router = useRouter();
     const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [WillAddMember, setWillAddMember] = useState(false);
     const xios = useAxios();

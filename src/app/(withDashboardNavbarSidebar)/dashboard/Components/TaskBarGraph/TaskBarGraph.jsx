@@ -1,38 +1,45 @@
 'use client'
 
+import useAllTasks from "@/hooks/useAllTasks";
 import useFilterTasks from "@/hooks/useFilterTasks";
 import { IoIosArrowDown } from "react-icons/io";
 
 const TaskBarGraph = () => {
-    
-    const {todo, upcoming, doing, done} = useFilterTasks()
-    
-    
+
+    const { data: allTasks } = useAllTasks();
+    // console.log(allTasks);
+
+    const todo = allTasks?.filter(task => task?.status === "to-do");
+    const upcoming = allTasks?.filter(task => task?.status === "upcoming");
+    const doing = allTasks?.filter(task => task?.status === "doing");
+    const done = allTasks?.filter(task => task?.status === "done");
+
+
 
     const taskInfo = [
         {
-            tasks: upcoming?.length ,
+            tasks: upcoming?.length,
             color: '#FABE7A',
-            alpha : 'a'
+            alpha: 'a'
         },
         {
             tasks: todo?.length,
             color: '#F6866A',
-            alpha : 'b'
+            alpha: 'b'
 
         },
         {
-            tasks: doing?.length ,
+            tasks: doing?.length,
             color: '#59E6F6',
-            alpha : 'c'
+            alpha: 'c'
         },
         {
-            tasks: done?.length ,
+            tasks: done?.length,
             color: '#7661E2',
-            alpha : 'd'
+            alpha: 'd'
         },
     ]
-    
+
     return (
         <div className="w-full h-fit border-2 border-[#E6E8EC] rounded-lg p-5">
             <div className="flex justify-between items-center">
@@ -48,7 +55,7 @@ const TaskBarGraph = () => {
                     taskInfo?.map((task, index) => <div key={index} className="flex flex-col space-y-[2px] items-center justify-center w-full">
                         <p className="text-[#828282]">{task?.tasks}</p>
                         <div className={`w-full rounded-t-lg bg-[${task?.color}]`}
-                        style={{height: `${task?.tasks*20}px`, borderBottom: `2px solid ${task?.color}` }}></div>
+                            style={{ height: `${task?.tasks * 20}px`, borderBottom: `2px solid ${task?.color}` }}></div>
                         <p className="text-[#828282]">{task?.alpha}</p>
                     </div>)
                 }

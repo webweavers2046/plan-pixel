@@ -1,20 +1,3 @@
-// import useAllTasks from "./useAllTasks";
-
-// const useFilterTasks = () => {
-//     const {data : allTasks, isLoading} = useAllTasks();
-//     // console.log(allTasks);
-
-//     const todo = allTasks?.filter(task => task?.status === "to-do");
-//     const upcoming = allTasks?.filter(task => task?.status === "upcoming");
-//     const doing = allTasks?.filter(task => task?.status === "doing");
-   
-
-//     return {todo, upcoming, doing, done, isLoading};
-
-// };
-
-// export default useFilterTasks;
-
 const useFilterTasks = (tasks, filter) => {
   // Sort tasks by position and then by updatedAt
   const sortedTasks = tasks?.sort((a, b) => {

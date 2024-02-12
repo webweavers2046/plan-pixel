@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "./useAxios";
 
 const useSingleTask = (id) => {
-    console.log(id);
+    // console.log(id);
    
     const axiosPublic = useAxios()
 

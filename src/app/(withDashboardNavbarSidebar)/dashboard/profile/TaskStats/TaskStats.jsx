@@ -1,8 +1,14 @@
+import useAllTasks from "@/hooks/useAllTasks";
 import useFilterTasks from "@/hooks/useFilterTasks";
 
 const TaskStats = () => {
-   
-   const  {todo, doing, done} =  useFilterTasks();
+
+    const { data: allTasks } = useAllTasks();
+    // console.log(allTasks);
+
+    const todo = allTasks?.filter(task => task?.status === "to-do");
+    const done = allTasks?.filter(task => task?.status === "done");
+    const doing = allTasks?.filter(task => task?.status === "doing");
 
     return (
         <div className="grid grid-cols-2 px-10  gap-5">
