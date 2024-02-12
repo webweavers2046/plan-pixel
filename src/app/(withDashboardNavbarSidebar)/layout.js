@@ -13,7 +13,6 @@ import { usePathname } from "next/navigation";
 export default function DashboardLayout({ children }) {
     const [openSidebar, setOpenSidebar] = useState(false);
     const pathname = usePathname();
-    console.log(pathname);
 
     const toggleSidebar = () => {
         setOpenSidebar(!openSidebar);
