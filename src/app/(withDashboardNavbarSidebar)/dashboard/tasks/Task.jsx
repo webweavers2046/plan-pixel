@@ -147,11 +147,6 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                 <BiSolidMessageSquareDetail className="text-xl opacity-40" />
 
             </div>
-            {/* <UpdateTask task={task} ></UpdateTask> */}
-            {/* <TaskModal
-                    openModal={openModal}
-                    setOpenModal={setOpenModal}
-                ></TaskModal> */}
         </div>
     );
 };

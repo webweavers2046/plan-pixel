@@ -23,6 +23,8 @@ export const TaskDndProvider = ({ children }) => {
     id: null,
     position: null,
   });
+
+
   const [droppableAreaName, setDroppableAreaName] = useState("");
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
@@ -119,6 +121,8 @@ export const TaskDndProvider = ({ children }) => {
 
     if (draggingTask) {
       draggingTask.status = droppableArea;
+      draggingTask.position = parseInt(position)
+      draggingTask.updatedAt = new Date()
     }
 
     if (isDropped) {
@@ -143,6 +147,7 @@ export const TaskDndProvider = ({ children }) => {
       });
   };
 
+
   // Scatter the data across components in its network
   const globalData = {
     alltasks,
@@ -153,8 +158,12 @@ export const TaskDndProvider = ({ children }) => {
     isDragging,
     draggingTaskId,
     dragOverElementName,
+    // position and id
+    dragoverTask,
     droppedAreaName: droppableAreaName,
   };
+
+
 
   // Rendering the component with the provided children
   return (
