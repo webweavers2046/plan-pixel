@@ -127,10 +127,13 @@ const DashboardNavbar = () => {
         </div>
 
         <div
-          className={` min-h-1/2 transition-all duration-200 bg-[white] ${
+          className={`  transition-all duration-200 bg-[white] min-h-48 grid items-end ${
             isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
           } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
+
+
+
           {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
 
           {displayWorkspaces?.map((workspace, index) => {
@@ -165,9 +168,19 @@ const DashboardNavbar = () => {
               </p>
             </div>
           </li>
+          {
 
+displayWorkspaces?.length <= 0 &&
+<div className="absolute -z-20 top-1/3 left-24">
+<Image
+  className=" opacity-50 mx-auto w-11 h-11 left-1/2"
+  src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
+  height={100}
+  width={100}
+/>
+</div>
+}
         </div>
-
         {/* Add member modal */}
 
         <AddMemberModal

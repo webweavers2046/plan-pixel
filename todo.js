@@ -43,37 +43,6 @@
 /*
 
 
-   <ul className="divide-y ">
-          {userArray?.map((user) => (
-            <li className="py-3 sm:py-4">
-              <div className="flex items-center space-x-4">
-                <div className="shrink-0 bg-gray-200 h-7 w-8 rounded-full">
-              
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                      {user?.name}
-                    </p>
-                    <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                      {user?.email}
-                    </p>
-                  </div>
-                  <div
-                    onClick={() =>
-                      handleAddMember(clickedWorkspaceId, user?.email, user?.name)
-                    }
-                    className="text-[13px] inline-flex cursor-pointer items-center text-gray-900 "
-                  >
-                    +Add
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-
-
-
 
               {/* <Image
                     alt="Neil image"

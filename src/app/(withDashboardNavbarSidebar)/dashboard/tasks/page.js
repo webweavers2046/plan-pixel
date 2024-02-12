@@ -21,7 +21,6 @@ const Tasks = () => {
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
- console.log(allWorkspaceTasks)
   
   const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
 
