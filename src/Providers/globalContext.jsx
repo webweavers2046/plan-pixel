@@ -59,7 +59,8 @@ const GlobalContext = ({ children }) => {
   const handleCreateTask = (newTask, setOpenModal,activeWorkspaceId) => {
     // Calling it above for faster overview
     console.log("formthe globacl context", activeWorkspaceId)
-    xios.post(`/createTask/${activeWorkspaceId}`, newTask).then((res) => {
+    // xios.post(`/createTask/${activeWorkspaceId}`, newTask).then((res) => {
+    xios.post(`/createTask/65c9ae0859a83746a96e953f`, newTask).then((res) => {
       if (res?.data?.insertedId) {
         setNewTask(newTask);
         setOpenModal(false);

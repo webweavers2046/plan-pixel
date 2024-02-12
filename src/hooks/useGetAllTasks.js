@@ -27,15 +27,15 @@ import { taskContext } from "@/Providers/TaskDndProvider";
 import useDNDcontext from "./useGlobalTaskData";
 
 const useGetSocketData = () => {
-    const xios = useAxios();
-    const [alltasks, setAllTasks] = useState([]);
+  const xios = useAxios();
+  const [alltasks, setAllTasks] = useState([]);
 
-    useEffect(() => {
-        xios.get("/tasks").then((data) => setAllTasks(data.data));
-    }, [alltasks]);
+  useEffect(() => {
+    xios.get("/tasks").then((data) => setAllTasks(data.data));
+  }, []);
 
-    // console.log("all data by http initially", alltasks)
-    return alltasks
+  // console.log("all data by http initially", alltasks)
+  return alltasks;
 };
 
 export default useGetSocketData;

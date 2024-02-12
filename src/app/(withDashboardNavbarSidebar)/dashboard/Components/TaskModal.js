@@ -42,7 +42,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
       doingTimeStamp:"",
       updatedAt:""
     };
-
+console.log(newTask);
     handleCreateTask(newTask, setOpenModal,activeWorkspaceId);
     reset();
   };
