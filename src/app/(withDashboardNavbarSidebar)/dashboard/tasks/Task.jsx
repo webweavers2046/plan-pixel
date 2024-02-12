@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import Image from "next/image";
 import { Dropdown } from "flowbite-react";
 import useAxios from "@/hooks/useAxios";
-import useGlobalTaskData from "@/hooks/useGlobalTaskData";
+import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -20,8 +20,8 @@ import UpdateTask from "../Components/UpdateTask";
 
 const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
     // manage all you state here
-    const { draggingStarted, isDragging, draggingOver, isDropped, draggingTaskId } = useGlobalTaskData();
-    const xios = useAxios()
+    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useDNDcontext();
+        const xios = useAxios()
 
     const handleDeleteTask = (id) => {
 

@@ -5,7 +5,7 @@ import PaperPieces from "./paperCutPiece";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 
-const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
+const MiniModal = ({isCreateWokspace, handleClose,setIsCreateWorkSpace, handleCreateWorkspace,setDropdownOpen }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const {TriggerWhenNewWorkspaceCreated} = useGlobalContext()
@@ -20,24 +20,18 @@ const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
     // Pass the values to the parent component
     handleCreateWorkspace(name, description);
     setIsCreateWorkSpace(false)
+    setDropdownOpen(false)
     TriggerWhenNewWorkspaceCreated()
     // Reset the form values
     setName("");
     setDescription("");
   };
 
-  const handleClose = () => {
-    // Close the modal
-    setIsCreateWorkSpace(false);
-
-    console.log("close");
-  };
-
   return (
-    <div className="relative">
+    <div className={`${isCreateWokspace?"visible opacity-100":"invisible opacity-0"} transition-all duration-300`}>
       <>
-        <div className="flex items-center relative">
-          <div className="bg-white shadow-lg h-[200px] rounded-lg p-4 z-40 fixed left-72 w-[260px] overflow-hidden top-3 mx-auto">
+        <div className="flex items-center ">
+          <div className="bg-white shadow-lg h-[200px] rounded-lg p-4 z-40 absolute left-[270px] w-[260px] overflow-hidden top-32 mx-auto">
             <div className="flex w-full items-center mb-2">
               <input
                 name="name"
