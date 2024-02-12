@@ -34,8 +34,8 @@ const CardDetailsModal = ({ openTaskDetails, setOpenTaskDetails, children }) => 
             className={`${openTaskDetails ? "block" : "hidden"} 
         bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-30 fixed lg:px-40 px-24  py-16`}
         >
-            <div className=" bg-[#FFFFFF] w-[900px] mx-auto h-full rounded-2xl overflow-auto py-4 pl-10 pr-5">
-                <div className="flex justify-end">
+            <div className=" bg-[#FFFFFF] w-[900px] mx-auto h-full rounded-2xl overflow-auto ">
+                <div className="flex justify-end mt-2 mr-4">
                     <button onClick={() => setOpenTaskDetails(false)}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ const CardDetailsModal = ({ openTaskDetails, setOpenTaskDetails, children }) => 
                         </svg>
                     </button>
                 </div>
-                <div className="flex justify-between h-full">
+                <div className="flex justify-between  h-full py-4 pl-12 pr-8">
                     <div className="space-y-2">
                         {/* card name, description and other info */}
                         <p className="text-2xl font-semibold">{task?.name}</p>
