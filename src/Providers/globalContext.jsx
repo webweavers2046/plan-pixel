@@ -22,6 +22,7 @@ const GlobalContext = ({ children }) => {
   const [defaultActiveWorkspace, setDefaultWorkspace] = useState({})
 
   const [toggleValue,setToggleValue] = useState(false)
+
   
   useEffect(() => {
     // Fetch active workspace, user workspaces, and workspace tasks in one go
@@ -127,9 +128,11 @@ useEffect(()=> {
     setSwitchWorkspace,
     isWorkspaceSwitched,
     
-
     TriggerWhenNewWorkspaceCreated
   };
+
+  console.log(workspaces)
+
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>
   );
