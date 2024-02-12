@@ -16,7 +16,7 @@ const DashboardSidebar = () => {
     const pathname = usePathname();
 
     return (
-        <div className="sticky top-0">
+        <div className="sticky lg:fixed lg:w-[250px] top-0">
             <div className="relative">
                 <div
                     className={`  mr-2 h-screen xl:block hidden border-r-2 relative `}
