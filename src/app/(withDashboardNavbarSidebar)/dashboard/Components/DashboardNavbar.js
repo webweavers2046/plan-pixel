@@ -36,34 +36,34 @@ const DashboardNavbar = () => {
   const { title } = activeWorspace ||
     defaultActiveWorkspace || { title: "Demo title" };
 
-  const userData = useUser(user?.email);
-  const router = useRouter();
-  const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [WillAddMember, setWillAddMember] = useState(false);
-  const xios = useAxios();
+    const {data : userData, refetch} = useUser(user?.email)
+    const router = useRouter();
+    const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [WillAddMember, setWillAddMember] = useState(false);
+    const xios = useAxios();
 
-  const handleLogOut = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, log out!",
-    }).then((result) => {
-      if (result?.isConfirmed) {
-        logOut();
-        router.push("/dashboard");
+    const handleLogOut = () => {
         Swal.fire({
-          title: "Logged Out",
-          icon: "success",
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, log out!",
+        }).then((result) => {
+            if (result?.isConfirmed) {
+                logOut();
+                router.push("/dashboard");
+                Swal.fire({
+                    title: "Logged Out",
+                    icon: "success",
+                });
+            }
         });
-      }
-    });
-  };
+    };
 
   const handleCreateWorkspace = async (title, description) => {
     const workspace = {
