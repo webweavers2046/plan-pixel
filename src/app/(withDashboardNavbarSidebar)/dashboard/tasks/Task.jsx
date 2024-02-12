@@ -6,7 +6,7 @@ import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
-import {  FaEquals, FaStopwatch } from "react-icons/fa6";
+import { FaEquals, FaStopwatch } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Image from "next/image";
 import { Dropdown } from "flowbite-react";
@@ -18,12 +18,13 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import UpdateTask from "../Components/UpdateTask";
 
 
-const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
+const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
     // manage all you state here
     const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useDNDcontext();
         const xios = useAxios()
 
     const handleDeleteTask = (id) => {
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -50,11 +51,16 @@ const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
         });
     };
 
+    const handleUpdate = (id) => {
+        setUpdateId(id)
+        setOpenUpdateModal(!openUpdateModal)
+    }
+
     return (
         <div
             draggable
             id={task._id}
-            onDragOver={(e) => draggingOver(e,task._id)}
+            onDragOver={(e) => draggingOver(e, task._id)}
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
             className={` 
             task-container
@@ -82,7 +88,7 @@ const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
                     </Dropdown.Item>
                     <Dropdown.Item className="rounded-md">
                         {/* <button className="w-full"><FlowBiteModal task={task}></FlowBiteModal></button> */}
-                        <button onClick={() => setOpenUpdateModal(!openUpdateModal)} className="w-full">Update</button>
+                        <button onClick={() => handleUpdate(task?._id)} className="w-full">Update</button>
 
                     </Dropdown.Item>
                 </Dropdown>
@@ -141,14 +147,6 @@ const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
                 <BiSolidMessageSquareDetail className="text-xl opacity-40" />
 
             </div>
-            {/* <UpdateTask task={task} ></UpdateTask> */}
-            {/* <TaskModal
-                    openModal={openModal}
-                    setOpenModal={setOpenModal}
-                ></TaskModal> */}
-
-                
-
         </div>
     );
 };
