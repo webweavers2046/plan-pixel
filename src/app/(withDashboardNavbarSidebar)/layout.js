@@ -56,7 +56,9 @@ export default function DashboardLayout({ children }) {
                                 <div className="">
                                     <DashboardNavbar />
                                 </div>
-                                <TanstackProvider>{children}</TanstackProvider>
+                                <TanstackProvider>
+                                    <div className="p-4">{children}</div>
+                                </TanstackProvider>
                             </div>
                         </div>
                     </div>
