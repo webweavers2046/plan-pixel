@@ -130,7 +130,7 @@ const DashboardNavbar = () => {
         </div>
 
         <div
-          className={` transition-all duration-200 bg-[white] ${
+          className={` min-h-1/2 transition-all duration-200 bg-[white] ${
             isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
           } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
@@ -161,7 +161,7 @@ const DashboardNavbar = () => {
           <li>
             <div
               onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
-              className="w-full  shadow-s px-2 mt-3 hover:bg-transparent  text-center rounded-lg"
+              className="w-full  shadow-s mt-auto px-2  grid justify-self-end hover:bg-transparent  text-center rounded-lg"
             >
               <p className="w-full  text-white text-center py-[6px] cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm  rounded-l  ">
                 Add New Workspace +

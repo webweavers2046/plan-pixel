@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 
 const TaskModal = ({ openModal, setOpenModal }) => {
 
-
   const {
     register,
     handleSubmit,

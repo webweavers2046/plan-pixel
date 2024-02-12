@@ -2,15 +2,18 @@
 
 import PaperPieces from "./paperCutPiece";
 
+
 export function AddMemberModal({
   WillAddMember,
   handleAddMember,
   setWillAddMember,
 }) {
+  
+
   return (
     <div
-      className={`${
-        WillAddMember ? "grid" : "hidden"
+      className={`transition-all duration-200 ${
+        WillAddMember ? "visible opacity-100" : "invisible opacity-0"
       } bg-transparent  px-1 rounded-lg  absolute top-20 -right-[530px]  h-96 items-center gap-4`}
     >
       {/* All the memebers list  */}
@@ -28,57 +31,22 @@ import { Card } from "flowbite-react";
 import Image from "next/image";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useState } from "react";
 
 function MemberList({ handleAddMember, setWillAddMember }) {
   const { clickedWorkspaceId } = useGlobalContext();
+  const [workspaceName, setWorkspaceName] = useState("");
+
   return (
-    <Card className="max-w-sm mt-2 z-50 ">
-      <div className="mb-4 flex gap-2 absolute top-0 pt-16 items-center justify-between">
+    <Card className=" mt-2 z-50 fixed right-0 top-0  ">
+      <div className="mb-4 flex gap-2  justify-between">
         <h5 className="text-xl font-serif font-semibold leading-none text-gray-900">
           Add members{" "}
         </h5>
         <a href="#"
-         className="text-sm  text-primary ml-20">
+         className="text-sm  text-primary ml-20 ">
           See all 
         </a>
-      </div>
-      <div className="pt-14 relative overflow-hidden">
-        <PaperPieces/>
-        <ul className="divide-y ">
-          {userArray?.map((user) => (
-            <li className="py-3 sm:py-4">
-              <div className="flex items-center space-x-4">
-                <div className="shrink-0 bg-gray-200 h-7 w-7 rounded-full">
-                  <Image
-                    alt="Neil image"
-                    height="32"
-                    src="/"
-                    width="32"
-                    className="rounded-full"
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                    {user?.name}
-                  </p>
-                  <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                    {user?.email}
-                  </p>
-                </div>
-                <div
-                  onClick={() =>
-                    handleAddMember(clickedWorkspaceId, user?.email, user?.name)
-                  }
-                  className="text-[13px] inline-flex cursor-pointer items-center text-gray-900 "
-                >
-                  +Add
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-
-      </div>
         <button
         // close the add memeber list
           onClick={()=> setWillAddMember(false)}
@@ -86,6 +54,42 @@ function MemberList({ handleAddMember, setWillAddMember }) {
         >
           <IoIosCloseCircleOutline className="text-[24px] absolute top-5 right-5 cursor-pointer text-red-500" />
         </button>
+      </div>
+
+      {/* Searc memebers to add in workspace*/}
+      <div>
+      <label
+                  htmlFor="product-name"
+                  className="text-sm font-medium text-gray-900 block mb-2"
+                >
+                  Search members
+                </label>
+                <input
+                  type="text"
+                  name="product-name"
+                  id="product-name"
+                  className="shadow-sm placeholder:text-[#808080a6] bg-gray-50 border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:border-none focus-within:outline-none focus:outline-none block w-full p-2.5"
+                  placeholder="forhadhossain@gmail.com"
+                  required
+                  value={workspaceName}
+                  onChange={(e) => setWorkspaceName(e.target.value)}
+                />
+              </div>
+
+           <ul className="h-screen bg-transparent relative">
+            <div className="absolute top-32">
+              {/* Search */}
+            <PaperPieces/>
+
+            </div>
+           </ul>
+
+
+
+      <div className="pt-14 relative overflow-hidden">
+        <PaperPieces/>
+      </div>
+       
     </Card>
   );
 }
