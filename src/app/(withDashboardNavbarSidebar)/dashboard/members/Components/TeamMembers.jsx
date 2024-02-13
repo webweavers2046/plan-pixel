@@ -15,7 +15,7 @@ import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import DeleteConfirmModal from "@/components/Common/CommonModal/DeleteConfirmModal";
+
 
 const TeamMembers = () => {
     const {workspaceBasedMembers} = useGlobalContext()

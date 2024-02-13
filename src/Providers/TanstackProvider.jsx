@@ -6,8 +6,8 @@ import { useState } from "react";
 
 
 const TanstackProvider = ({children}) => {
-    // const queryClient = new QueryClient()
-    const [queryClient] = useState(new QueryClient())
+    const queryClient = new QueryClient()
+    // const [queryClient] = useState(new QueryClient())
    return (
      <QueryClientProvider client={queryClient} contextSharing={true}>
        {children}

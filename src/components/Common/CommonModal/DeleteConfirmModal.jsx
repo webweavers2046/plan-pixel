@@ -24,6 +24,7 @@ const DeleteConfirmModal = ({setDeleteConfirm,data,setIsOpenDeleteModal,workspac
                     className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-red-200 text-red-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2"
                     onClick={(e)=> {
                         handleDeleteWorkspace(e, workspace._id,true)
+                        setIsOpenDeleteModal(false)
                     }}
                   >
                     Delete

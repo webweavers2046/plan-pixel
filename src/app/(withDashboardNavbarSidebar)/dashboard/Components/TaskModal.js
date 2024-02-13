@@ -21,6 +21,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
   const { handleCreateTask, defaultActiveWorkspace } = useGlobalContext();
   const { activeWorkspace} = useContext(ablyContext);
   const activeWorkspaceId = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+  const id = activeWorkspaceId._id
 
 
   
@@ -37,13 +38,13 @@ const TaskModal = ({ openModal, setOpenModal }) => {
       creator: user?.email,
       members:[],
       comments:[],
-      workspace:activeWorkspaceId,
+      workspace:id,
       position:0,
       doingTimeStamp:"",
       updatedAt:""
     };
 
-    handleCreateTask(newTask, setOpenModal,activeWorkspaceId);
+    handleCreateTask(newTask, setOpenModal,id);
     // reset();
   };
 

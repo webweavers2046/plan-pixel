@@ -59,7 +59,7 @@ const GlobalContext = ({ children }) => {
   const handleCreateTask = (newTask, setOpenModal,activeWorkspaceId) => {
     // Calling it above for faster overview
 
-    console.log(activeWorkspaceId)
+    console.log("id id id--------------------------------", activeWorkspaceId)
     xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask).then((res) => {
       if (res?.data?.insertedId) {
         setNewTask(newTask);
@@ -109,19 +109,17 @@ useEffect(()=> {
 // Delete 
 const handleDeleteWorkspace = async (e, _id,isDelete) => {
   e.preventDefault();
+  
   // delete workspace from the database
-
-  console.log(_id,isDelete)
   if (isDelete) {
     const response = await xios.delete(
       `deleteWorkspace/${_id}/${user && user.email}`
     );
     if (response.data) {
-      console.log(response.data.message);
+      toast.success(response.data.message,{position:"top-right"});
    
     }
-    console.log("not deleted");
-    console.log("not deleted");
+  
   }
 };
 

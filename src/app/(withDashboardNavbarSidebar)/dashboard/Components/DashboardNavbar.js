@@ -31,9 +31,19 @@ const DashboardNavbar = () => {
   const { allWorkspaces } = useContext(ablyContext);
   const displayWorkspaces =
     allWorkspaces.length > 0 ? allWorkspaces : workspaces || [];
+    const { activeWorkspace } = useContext(ablyContext);
 
-  const { activeWorkspace } = useContext(ablyContext);
-  const displayActiveWorkspace = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
+
+    let currentSpace = {};
+    
+    if (activeWorkspace) {
+      currentSpace = activeWorkspace;
+    } else {
+      currentSpace = defaultActiveWorkspace;
+    }
+    
+  
 
 
   const userData = useUser(user?.email);
@@ -76,7 +86,7 @@ const DashboardNavbar = () => {
     };
 
     const response = await xios.post(
-      `/create-workspace/${user ? user.email : ""}`,
+      `/create-workspace/${user &&  user.email }`,
       workspace
     );
     if (response.data.insertedId) {
@@ -107,6 +117,10 @@ const DashboardNavbar = () => {
     setIsCreateWorkSpace(false);
   };
 
+
+  
+
+
   return (
     <div className="flex relative justify-between items-center p-4 gap-6">
       <div
@@ -115,10 +129,10 @@ const DashboardNavbar = () => {
       >
         <div
           onClick={() => setDropdownOpen(!isDropdownOpen)}
-          className="text-start flex gap-2 items-center w-28"
+          className="text-start flex gap-2 items-center w-32"
         >
           <p className=" cursor-pointer opacity-55 text-[15px] ">
-            {displayActiveWorkspace? displayActiveWorkspace.title : "Workspace"}
+            { currentSpace?.title}
           </p>
           <IoIosArrowDown
             className={`${
@@ -146,14 +160,18 @@ const DashboardNavbar = () => {
                 {workspace.title}
 
                 <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
-                <span
-                  onClick={() => setWillAddMember(!WillAddMember)}
-                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
-                    isHovered === index ? "opacity-100" : ""
-                  }`}
-                >
-                  +
-                </span>
+                                    <span
+                                        onClick={() =>
+                                            setWillAddMember(!WillAddMember)
+                                        }
+                                        className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
+                                            isHovered === index
+                                                ? "opacity-100"
+                                                : ""
+                                        }`}
+                                    >
+                                        +
+                                    </span>
               </li>
             );
           })}

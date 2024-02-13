@@ -30,7 +30,7 @@ const EditWorkspace = ({setEdit,isEdit}) => {
 
     const response = await xios.put(`/updateWorkspace/${activeWorkspaceId}`,updatedWorkspace)
     if(response.data.modifiedCount > 0) {
-        return toast.success(`${activeWorspace.title} is updated`)
+        return toast.success(`${activeWorkspace.title} is updated`)
     }
 
 

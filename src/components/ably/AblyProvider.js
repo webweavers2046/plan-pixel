@@ -85,8 +85,8 @@ const AblyProvider = ({ children }) => {
     };
   }, [tasks]);
 
-  console.log("form 88 ably", allWorkspaces)
 
+console.log(activeWorkspace)
 
   // Distribute all data by 
   const distributingData = {

@@ -37,7 +37,6 @@ const Tasks = () => {
   const { title,description } = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
 
 
-  console.log(activeWorkspace)
   
   return (
     <>

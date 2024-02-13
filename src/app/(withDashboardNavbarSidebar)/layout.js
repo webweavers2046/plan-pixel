@@ -8,10 +8,11 @@ import TanstackProvider from "@/Providers/TanstackProvider";
 import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
 import Drawer from "./dashboard/Components/Drawer";
+import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({ children }) {
     const [openSidebar, setOpenSidebar] = useState(false);
-    console.log(openSidebar);
+    const pathname = usePathname();
 
     const toggleSidebar = () => {
         setOpenSidebar(!openSidebar);
@@ -33,12 +34,14 @@ export default function DashboardLayout({ children }) {
                             </div>
                         </div>
                     )}
-                    <div className="xl:col-span-2 col-span-0">
+                    <div className="xl:col-span-2 col-span-0 xl:block hidden">
                         <DashboardSidebar />
                     </div>
 
                     <div className="xl:col-span-10 col-span-12 xl:ms-0 ms-5">
-                        <div className="flex">
+                        <div
+                            className={`${pathname === "dashboard" && "flex"}`}
+                        >
                             <div className="sticky top-0">
                                 <div className="w-4 h-screen border-r-2 xl:hidden block relative">
                                     <button
@@ -53,7 +56,9 @@ export default function DashboardLayout({ children }) {
                                 <div className="">
                                     <DashboardNavbar />
                                 </div>
-                                <TanstackProvider>{children}</TanstackProvider>
+                                <TanstackProvider>
+                                    <div className="p-4">{children}</div>
+                                </TanstackProvider>
                             </div>
                         </div>
                     </div>

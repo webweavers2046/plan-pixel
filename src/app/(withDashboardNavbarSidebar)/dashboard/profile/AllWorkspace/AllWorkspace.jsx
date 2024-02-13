@@ -44,10 +44,10 @@ const AllWorkspace = () => {
                 {isOpenDeleteModal && (
                   <div>
                     <DeleteConfirmModal
-                      workspace={workspace}
                       handleDeleteWorkspace={handleDeleteWorkspace}
                       setIsOpenDeleteModal={setIsOpenDeleteModal}
                       isOpenDeleteModal={isOpenDeleteModal}
+                      workspace={workspace}
                       setDeleteConfirm={setDeleteConfirm}
                       data={"Workspace"}
                     />

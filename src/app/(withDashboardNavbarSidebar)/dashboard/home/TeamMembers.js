@@ -21,17 +21,20 @@ const TeamMembers = () => {
     const {workspaceBasedMembers,defaultActiveWorkspace} = useGlobalContext()
     const {allWorkspaceMembers,activeWorkspace} = useContext(ablyContext)
 
-    const { title,description } = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+    const Wspace = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
 
   
-    
+    let membersInWorkspace = []
+    if(allWorkspaceMembers.length < 0) return
+     membersInWorkspace = allWorkspaceMembers.length > 0? allWorkspaceMembers : workspaceBasedMembers 
 
-    const membersInWorkspace = allWorkspaceMembers.length > 0? allWorkspaceMembers : workspaceBasedMembers 
+
+    
     
     
     return (
         <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
-            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">Team Member <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">{title}</span></h1>
+            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">Team Member <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">{Wspace?.title}</span></h1>
             {membersInWorkspace?.map((member, index) => (
                 <TeamMember
                     key={index}
