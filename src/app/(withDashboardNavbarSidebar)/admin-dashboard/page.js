@@ -1,5 +1,11 @@
+import AdminOverviewWidget from "../dashboard/Components/AdminOverviewWidget/AdminOverviewWidget";
+
 const AdminDashboard = () => {
-    return <div>hello</div>;
+    return (
+        <section>
+            <AdminOverviewWidget />
+        </section>
+    );
 };
 
 export default AdminDashboard;
