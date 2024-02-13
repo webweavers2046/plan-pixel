@@ -4,11 +4,29 @@ import useSingleWorkspace from "./useSingleWorkspace";
 
 const useCardTasks = (cardId) => {
 
+    const workSpaceId = "65c0dd24fc0a061772bae410"
+
     const axiosPublic = useAxios();
+    const workSpaceData = useSingleWorkspace(workSpaceId);
+    console.log(workSpaceData);
+  
+
+
+
+
+    const {data, refetch, isLoading, isPending} = useQuery({
+        queryKey: ['cards',cardId],
+        queryFn: async () =>{
+           const data = await axiosPublic.get(`/cardTasks/${cardId}`)
+           return await data.data;
+        }
+    })
+    // console.log(data);
     
-    
-    // const workSpaceData = useSingleWorkspace(workSpaceId);
-    // const workSpace =
+
+    return {data, refetch, isLoading, isPending};
+
+      // const workSpace =
     // {
     //     _id: "1234",
     //     members: [
@@ -43,32 +61,17 @@ const useCardTasks = (cardId) => {
     // const workSpaceMembers = workSpace?.members;
     // const workSpaceCards = workSpace?.cards;
 
-
-
-
-    const {data, refetch, isLoading, isPending} = useQuery({
-        queryKey: ['cards',cardId],
-        queryFn: async () =>{
-           const data = await axiosPublic.get(`/cards/${cardId}`)
-           return await data.data;
-        }
-    })
-    
-
-    return {data, refetch, isLoading, isPending};
-
     // const cardTasks = [
-    //     {
-    //         _id: "xyz",
-    //         cardId: "12345",
-    //         taskMember: "Al-amin Rahim",
-    //         email: "alamin102410@gmail.com",
-    //         task: "Calender Feature Implement",
-    //         checked: true,
-    //     },
+        // {
+        //     cardId: "65c713fbecd9dca9f4aa817e",
+        //     taskMember: "Al-amin Rahim",
+        //     email: "alamin102410@gmail.com",
+        //     task: "Calender Feature Implement",
+        //     checked: true,
+        // },
     //     {
     //         _id: "ddde",
-    //         cardId: "12345",
+    //         cardId: "65c713fbecd9dca9f4aa817e",
     //         taskMember: "Sami Uddin",
     //         email: "sami@gmail.com",
     //         task: "Calender Feature Implement",

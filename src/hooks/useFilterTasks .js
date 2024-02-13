@@ -6,7 +6,7 @@ const useFilterTasks = (tasksArray, filter, draggingTaskId, droppableArea) => {
   const { dragoverTask } = useContext(taskContext);
   const { position } = dragoverTask || {};
   const filteredTasks = tasksArray?.filter((task) => task?.status === filter);
-  const draggingTask = tasksArray.find((task) => task._id === draggingTaskId);
+  const draggingTask = tasksArray?.find((task) => task._id === draggingTaskId);
   
   if (droppableArea) {
     const columnSequencedTasks = tasksArray?.filter(

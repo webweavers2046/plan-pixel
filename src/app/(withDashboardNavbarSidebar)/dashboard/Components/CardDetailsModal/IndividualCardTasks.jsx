@@ -2,14 +2,12 @@
 import { useState } from "react";
 import StyledArrow from "./StyledArrow";
 
-const IndividualCardTasks = ({ email }) => {
-    const [isChecked, setIschecked] = useState(false)
-    const name = email;
-    const myTasks = [
-        { task: "Calender Feature Implement" },
-        { task: "Calender Feature Implement" },
-        { task: "Calender Feature Implement" },
-    ]
+const IndividualCardTasks = ({ member , cardTasks}) => {
+    const [isChecked, setIsChecked] = useState(false)
+    const name = member?.name;
+    const email = member?.email;
+
+    const myTasks = cardTasks?.filter(task => task?.email === member?.email)
     const handleChange = (event) => {
         setAgreement(event.target.checked);
     }

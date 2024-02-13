@@ -2,9 +2,14 @@ import Image from "next/image";
 import CardMembers from "./CardMembers";
 import IndividualCardTasks from "./IndividualCardTasks";
 import member03Img from "@/assets/team-members/rahim.jpg";
+import useCardTasks from "@/hooks/useCardTasks";
 
-const CardDetailsModal = ({ openTaskDetails, setOpenTaskDetails, children }) => {
+const CardDetailsModal = ({ openCardDetails, setOpenCardDetails,  cardId }) => {
 
+    const {data : cardTasks} = useCardTasks(cardId);
+    console.log(cardTasks);
+
+    
     const task = {
         name: 'Task name',
         description: 'A user flow is a visualization of a path that a user takes  through a website'
@@ -12,18 +17,13 @@ const CardDetailsModal = ({ openTaskDetails, setOpenTaskDetails, children }) => 
 
     const members = [
         {
-            email: "Shakil ",
+            name: "Rahim",
+            email: "alamin102410@gmail.com",
         },
         {
-            email: "Sami ",
+            name : "Sami",
+            email: "sami@gmail.com",
         },
-        {
-            email: "Sajid khan",
-        },
-        {
-            email: "Forhad ",
-        },
-
     ]
 
 
@@ -31,12 +31,12 @@ const CardDetailsModal = ({ openTaskDetails, setOpenTaskDetails, children }) => 
 
     return (
         <div
-            className={`${openTaskDetails ? "block" : "hidden"} 
+            className={`${openCardDetails ? "block" : "hidden"} 
         bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-30 fixed lg:px-40 px-24  py-16`}
         >
             <div className=" bg-[#FFFFFF] w-[900px] mx-auto h-full rounded-2xl overflow-auto ">
                 <div className="flex justify-end mt-2 mr-4">
-                    <button onClick={() => setOpenTaskDetails(false)}>
+                    <button onClick={() => setOpenCardDetails(false)}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="34"
@@ -72,7 +72,8 @@ const CardDetailsModal = ({ openTaskDetails, setOpenTaskDetails, children }) => 
                         <div className="pt-8 flex flex-col gap-5">
                             {
                                 members?.map(member =>
-                                    <IndividualCardTasks key={member?.email} email={member?.email}></IndividualCardTasks>)
+                                    <IndividualCardTasks key={member?.email} member={member} 
+                                    cardTasks={cardTasks}></IndividualCardTasks>)
                             }
                         </div>
 
