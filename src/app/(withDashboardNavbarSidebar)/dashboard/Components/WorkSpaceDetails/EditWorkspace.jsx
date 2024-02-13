@@ -10,8 +10,9 @@ const EditWorkspace = ({setEdit,isEdit}) => {
   const [description, setDescription] = useState("");
   const xios = useAxios()
   const { defaultActiveWorkspace } = useGlobalContext();
-  const { activeWorspace} = useContext(ablyContext);
-  const activeWorkspaceId = activeWorspace?activeWorspace?._id:defaultActiveWorkspace?._id
+  const { activeWorkspace} = useContext(ablyContext);
+  const activeWorkspaceId = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
 
   const handleSave = async() => {
    
@@ -29,7 +30,7 @@ const EditWorkspace = ({setEdit,isEdit}) => {
 
     const response = await xios.put(`/updateWorkspace/${activeWorkspaceId}`,updatedWorkspace)
     if(response.data.modifiedCount > 0) {
-        return toast.success(`${activeWorspace.title} is updated`)
+        return toast.success(`${activeWorkspace.title} is updated`)
     }
 
 
