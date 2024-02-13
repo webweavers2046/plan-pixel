@@ -17,21 +17,19 @@ import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 
 const TeamMembers = () => {
-    const {workspaceBasedMembers} = useGlobalContext()
+    const { workspaceBasedMembers } = useGlobalContext();
 
     console.log()
     return (
-        <div className="shadow-md rounded-xl p-6 max-h-dvh overscroll-auto border">
+        <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border">
             <h1 className=" text-2xl font-bold p-4">Team Member</h1>
-            {workspaceBasedMembers?.map((member, index) => (
-                <button>
-                    <TeamMember
+            {teamMemberData?.map((member, index) => (
+                <TeamMember
                     key={index}
                     name={member.name}
                     userEmail={member.email}
                     avatar={member.avatar}
                 />
-                </button>
             ))}
         </div>
     );
@@ -67,10 +65,10 @@ function TeamMember({ name, userEmail, avatar }) {
 
                 toast.success("Message Sended", {
                     duration: 2000,
-                    className: "mt-32",
+                    // className: "mt-32",
                 });
                 setButtonLoading(false);
-                setOpenModal(true);
+                setOpenModal(false);
             })
             .catch((error) => {
                 console.error("Error sending email:", error);
@@ -78,7 +76,7 @@ function TeamMember({ name, userEmail, avatar }) {
     };
 
     return (
-        <div className="flex items-center justify-between p-4 rounded-lg bg-[#F9F9F9] mb-3">
+        <div className="flex items-center justify-between w-[350px] p-4 rounded-lg bg-[#F9F9F9] mb-3">
             {/* modal  */}
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Send Message</Modal.Header>
@@ -140,25 +138,28 @@ function TeamMember({ name, userEmail, avatar }) {
                     </form>
                 </Modal.Body>
             </Modal>
-            <div className="flex items-center gap-4">
-                <Image
-                    width={44}
-                    height={44}
-                    className="rounded-full object-cover w-10 h-10"
-                    src={avatar}
-                    alt="timeIcon"
-                />
+            <div className="flex items-center justify-between w-full gap-x-4">
+                <div className="flex items-center gap-x-4">
+                    <Image
+                        width={44}
+                        height={44}
+                        className="rounded-full object-cover w-10 h-10"
+                        src={avatar}
+                        alt="timeIcon"
+                    />
 
-                <div className="">
-                    <p className="text- font-semibold">{name}</p>
-                    <p className="text-xs font-medium text-black/50">
-                        {userEmail}
-                    </p>
+                    <div className="text-left">
+                        <p className=" font-semibold">{name}</p>
+                        <p className="text-xs font-medium text-black/50">
+                            {userEmail}
+                        </p>
+                    </div>
                 </div>
+                <button onClick={() => setOpenModal(true)} className="flex justify-end">
+                    <Image className="" src={MassageIcon} alt="team member" />
+                </button>
             </div>
-            <button onClick={() => setOpenModal(true)} className="">
-                <Image className="" src={MassageIcon} alt="team member" />
-            </button>
+
         </div>
     );
 }
@@ -192,7 +193,7 @@ const teamMemberData = [
     },
 
     {
-        name: "Forhad hossine",
+        name: "Forhad Hossine",
         email: "forhadairdrop@gmail.com",
         avatar: member06Img,
     },
