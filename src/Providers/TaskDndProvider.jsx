@@ -46,6 +46,7 @@ export const TaskDndProvider = ({ children }) => {
   // Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {
     setIsClient(true);
+    alltasks?.push(newTask)
   }, [newTask]);
 
   // Event handler for when dragging starts

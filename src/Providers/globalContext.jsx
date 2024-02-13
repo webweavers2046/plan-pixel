@@ -23,8 +23,6 @@ const GlobalContext = ({ children }) => {
 
   const [toggleValue,setToggleValue] = useState(false)
 
-
-
   
   useEffect(() => {
     // Fetch active workspace, user workspaces, and workspace tasks in one go
@@ -57,11 +55,11 @@ const GlobalContext = ({ children }) => {
   }, [user]);
   
 
-  
-
   // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal,activeWorkspaceId) => {
     // Calling it above for faster overview
+
+    console.log(activeWorkspaceId)
     xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask).then((res) => {
       if (res?.data?.insertedId) {
         setNewTask(newTask);
@@ -95,9 +93,6 @@ const GlobalContext = ({ children }) => {
     setSwitchWorkspace(!isWorkspaceSwitched);  
   };
 
-
-
-  
 const TriggerWhenNewWorkspaceCreated = () => {
   setToggleValue(!toggleValue)
 }
@@ -111,7 +106,27 @@ useEffect(()=> {
 },[isWorkspaceSwitched,toggleValue,user])
 
 
+// Delete 
+const handleDeleteWorkspace = async (e, _id,isDelete) => {
+  e.preventDefault();
+  // delete workspace from the database
 
+  console.log(_id,isDelete)
+  if (isDelete) {
+    const response = await xios.delete(
+      `deleteWorkspace/${_id}/${user && user.email}`
+    );
+    if (response.data) {
+      console.log(response.data.message);
+   
+    }
+    console.log("not deleted");
+    console.log("not deleted");
+  }
+};
+
+
+  
 
   const data = {
     handleCreateTask,
@@ -127,9 +142,9 @@ useEffect(()=> {
     clickedWorkspaceId,
     setSwitchWorkspace,
     isWorkspaceSwitched,
-    
+    TriggerWhenNewWorkspaceCreated,
 
-    TriggerWhenNewWorkspaceCreated
+    handleDeleteWorkspace
   };
 
 

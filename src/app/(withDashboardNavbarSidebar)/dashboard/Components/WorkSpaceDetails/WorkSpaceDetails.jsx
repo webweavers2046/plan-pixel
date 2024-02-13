@@ -7,8 +7,9 @@ import EditWorkspace from "./EditWorkspace";
 const WorkSpaceDetails = () => {
     const {defaultActiveWorkspace} = useGlobalContext()
     
-  const {activeWorspace} = useContext(ablyContext)
-  const { title,description, creator} = activeWorspace || defaultActiveWorkspace || {title:"Demo title",description:"What is a coworking space?Coworking - Wikipedia Coworking is an arrangement in which workers for different companies share an office space. It allows cost savings and convenience through the use of common infrastructures, such as equipment, utilities and receptionist and custodial services, and in some",creator:"Demo creator" };
+  const {activeWorkspace} = useContext(ablyContext)
+  const { title,description, creator} = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
   const [isEdit,setEdit] = useState(false)
 
     return (

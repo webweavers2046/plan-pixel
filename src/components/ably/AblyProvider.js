@@ -23,7 +23,7 @@ const AblyProvider = ({ children }) => {
   const [allWorkspaceMembers,setAllworkspaceMembers] = useState([])
   const [allWorkspaceTasks,setAllWorkspaceTasks] = useState([])
   const [activeWorkspace,setSetActiveWorkspace] = useState({})
-  
+
 
   
 
@@ -46,16 +46,16 @@ const AblyProvider = ({ children }) => {
     // Ably listener function to handle incoming messages
     const ablyListener = (message) => {
       // Sorting tasks by position and updatedAt for consistent display
-      const sortedTasks = message?.data?.sort((a, b) => {
-        if (a.position !== b.position) {
-          return a.position - b.position;
-        }
-        return new Date(b.updatedAt) - new Date(a.updatedAt);
-      });
+      // const sortedTasks = message?.data?.sort((a, b) => {
+      //   if (a.position !== b.position) {
+      //     return a.position - b.position;
+      //   }
+      //   return new Date(b.updatedAt) - new Date(a.updatedAt);
+      // });
 
       
       // Updating state with the sorted tasks
-      setTasks(sortedTasks);
+      // setTasks(sortedTasks);
     };
 
     // here recieve user workspaces,tasks and member and active workspace. 
@@ -71,7 +71,6 @@ const AblyProvider = ({ children }) => {
     ablyChannel.subscribe(ablyListener);
 
 
-    console.log(activeWorkspace)
 
     // Cleanup function to unsubscribe from the channel and close the Ably connection
     return async () => {
@@ -86,6 +85,7 @@ const AblyProvider = ({ children }) => {
     };
   }, [tasks]);
 
+  console.log("form 88 ably", allWorkspaces)
 
 
   // Distribute all data by 

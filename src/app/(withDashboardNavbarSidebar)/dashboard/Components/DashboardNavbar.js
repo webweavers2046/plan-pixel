@@ -32,9 +32,9 @@ const DashboardNavbar = () => {
   const displayWorkspaces =
     allWorkspaces.length > 0 ? allWorkspaces : workspaces || [];
 
-  const { activeWorspace } = useContext(ablyContext);
-  const { title } = activeWorspace ||
-    defaultActiveWorkspace || { title: "Demo title" };
+  const { activeWorkspace } = useContext(ablyContext);
+  const displayActiveWorkspace = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
 
   const userData = useUser(user?.email);
   const router = useRouter();
@@ -75,7 +75,10 @@ const DashboardNavbar = () => {
       isActive: false,
     };
 
-    const response = await xios.post(`/create-workspace/${user? user.email:""}`,workspace);
+    const response = await xios.post(
+      `/create-workspace/${user ? user.email : ""}`,
+      workspace
+    );
     if (response.data.insertedId) {
       toast.success("Successfully created a workspace. 🏢");
     }
@@ -99,15 +102,10 @@ const DashboardNavbar = () => {
     toast.error(isAddedMember.data.error);
   };
 
-
-  
   const handleClose = () => {
     // Close the modal
-    setIsCreateWorkSpace(false);    
-
+    setIsCreateWorkSpace(false);
   };
-
-
 
   return (
     <div className="flex relative justify-between items-center p-4 gap-6">
@@ -120,20 +118,20 @@ const DashboardNavbar = () => {
           className="text-start flex gap-2 items-center w-28"
         >
           <p className=" cursor-pointer opacity-55 text-[15px] ">
-            {title ? title : "Workspace"}
+            {displayActiveWorkspace? displayActiveWorkspace.title : "Workspace"}
           </p>
-          <IoIosArrowDown className={`${isDropdownOpen?"rotate-180":"rotate-0"} transition-all duration-300`}/>
-
+          <IoIosArrowDown
+            className={`${
+              isDropdownOpen ? "rotate-180" : "rotate-0"
+            } transition-all duration-300`}
+          />
         </div>
 
         <div
-          className={`  transition-all duration-200 bg-[white] min-h-48 grid items-end ${
+          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${
             isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
           } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
-
-
-
           {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
 
           {displayWorkspaces?.map((workspace, index) => {
@@ -144,7 +142,7 @@ const DashboardNavbar = () => {
                 onMouseLeave={() => setIsHovered(null)}
                 onClick={(e) => handleActiveWorkspace(e, workspace._id)}
                 className="flex hover:bg-[#8091670c] px-4 transition-all cursor-pointer duration-300 items-center gap-2 py-4 relative"
-                >
+              >
                 {workspace.title}
 
                 <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
@@ -169,21 +167,18 @@ const DashboardNavbar = () => {
               </p>
             </div>
           </li>
-          {
-
-displayWorkspaces?.length <= 0 &&
-<div className="absolute -z-20 top-1/3 left-24">
-<Image
-  className=" opacity-50 mx-auto w-11 h-11 left-1/2"
-  src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
-  height={100}
-  width={100}
-/>
-</div>
-}
+          {displayWorkspaces?.length <= 0 && (
+            <div className="absolute -z-20 bottom-[70px] left-24">
+              <Image
+                className=" opacity-50 mx-auto w-11 h-11 left-1/2"
+                src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
+                height={100}
+                width={100}
+              />
+            </div>
+          )}
         </div>
         {/* Add member modal */}
-
         <AddMemberModal
           handleAddMember={handleAddMember}
           WillAddMember={WillAddMember}
@@ -288,19 +283,19 @@ displayWorkspaces?.length <= 0 &&
           </Dropdown.Item>
         </Dropdown>
       </div>
-        <div className="translate-x-0 duration-200 absolute z-50 left-0">
-          {isCreateWokspace ? (
-            <MiniModal
+      <div className="translate-x-0 duration-200 absolute z-50 left-0">
+        {isCreateWokspace ? (
+          <MiniModal
             handleClose={handleClose}
             setDropdownOpen={setDropdownOpen}
-              handleCreateWorkspace={handleCreateWorkspace}
-              setIsCreateWorkSpace={setIsCreateWorkSpace}
-              isCreateWokspace={isCreateWokspace}
-            />
-          ) : (
-            ""
-          )}
-        </div>
+            handleCreateWorkspace={handleCreateWorkspace}
+            setIsCreateWorkSpace={setIsCreateWorkSpace}
+            isCreateWokspace={isCreateWokspace}
+          />
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

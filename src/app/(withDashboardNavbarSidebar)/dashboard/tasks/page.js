@@ -22,7 +22,8 @@ const Tasks = () => {
     
   const {allWorkspaceTasks} = useContext(ablyContext)
   
-  const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
+  const workspaceAllTasks = allWorkspaceTasks?.length > 0 ? allWorkspaceTasks: alltasks
+  console.log("it is coming from page filter", workspaceAllTasks)
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do",draggingTaskId,dragOverElementName);
@@ -32,10 +33,11 @@ const Tasks = () => {
 
 
   const {defaultActiveWorkspace} = useGlobalContext()
-  const {activeWorspace} = useContext(ablyContext)
-  const { title,description } = activeWorspace || defaultActiveWorkspace || { title: "Demo title" };
+  const {activeWorkspace} = useContext(ablyContext)
+  const { title,description } = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
 
-  
+
+  console.log(activeWorkspace)
   
   return (
     <>

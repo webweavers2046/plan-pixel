@@ -19,8 +19,9 @@ const TaskModal = ({ openModal, setOpenModal }) => {
   
   // Get active wokspace when live change or the default one
   const { handleCreateTask, defaultActiveWorkspace } = useGlobalContext();
-  const { activeWorspace} = useContext(ablyContext);
-  const activeWorkspaceId = activeWorspace?activeWorspace?._id:defaultActiveWorkspace?._id
+  const { activeWorkspace} = useContext(ablyContext);
+  const activeWorkspaceId = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
 
   
   const onSubmit = async (data) => {
@@ -79,6 +80,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
               <input
                 type="text"
                 placeholder="Title"
+                defaultValue={"title"}
                 {...register("title", { required: true })}
                 name="title"
                 className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
@@ -94,6 +96,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
               <select
                 placeholder="Select"
                 name="priority"
+                defaultValue={"high"}
                 className="py-3 pl-4 w-full border border-gray-300 mt-3 rounded-md"
                 {...register("priority", { required: true })}
               >
@@ -109,6 +112,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
             <div className="">
               <h4 className="text-lg font-semibold">Start Date</h4>
               <input
+              defaultValue={"01/32/2023"}
                 type="date"
                 {...register("startDate", { required: true })}
                 name="startDate"
@@ -123,6 +127,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
             <div className="">
               <h4 className="text-lg font-semibold">Due Date</h4>
               <input
+              defaultValue={"01/32/2025"}
                 type="date"
                 {...register("dueDate", { required: true })}
                 name="dueDate"
@@ -137,6 +142,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
             <div className="">
               <h4 className="text-lg font-semibold">Description</h4>
               <textarea
+              defaultValue={"Thanks for creating new task. We are happy that you are enjoying our features . "}
                 type="text"
                 {...register("description", { required: true })}
                 name="description"

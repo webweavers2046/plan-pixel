@@ -19,9 +19,10 @@ import { ablyContext } from "@/components/ably/AblyProvider";
 
 const TeamMembers = () => {
     const {workspaceBasedMembers,defaultActiveWorkspace} = useGlobalContext()
-    const {allWorkspaceMembers,activeWorspace} = useContext(ablyContext)
+    const {allWorkspaceMembers,activeWorkspace} = useContext(ablyContext)
 
-    const { title,description } = activeWorspace || defaultActiveWorkspace || { title: "Demo title" };
+    const { title,description } = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
   
     
 

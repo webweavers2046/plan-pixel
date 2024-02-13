@@ -39,7 +39,8 @@ import { ablyContext } from "@/components/ably/AblyProvider";
 function MemberList({ handleAddMember, setWillAddMember }) {
   const { clickedWorkspaceId,defaultActiveWorkspace } = useGlobalContext();
   const { activeWorkspace } = useContext(ablyContext);
-  const ClickBasedActiveWorkspace = activeWorkspace ? activeWorkspace : defaultActiveWorkspace || {}
+  const ClickBasedActiveWorkspace = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
   const xios = useAxios();
   const [suggestions, setSuggestions] = useState([]);
 
