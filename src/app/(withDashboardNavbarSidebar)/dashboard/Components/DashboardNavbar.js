@@ -109,13 +109,9 @@ const DashboardNavbar = () => {
         setIsCreateWorkSpace(false);
     };
 
-    const { currentTime, currentDate, currentDay } = useDateTime();
-
-    console.log({ currentTime, currentDate, currentDay });
-
     return (
         <div className="flex relative justify-between items-center p-4 gap-6">
-            {pathname === "dashboard" ? (
+            {pathname === "/dashboard" ? (
                 <div
                     onClick={handleDropdownClick}
                     className="py-2 px-3 relative rounded-lg"
