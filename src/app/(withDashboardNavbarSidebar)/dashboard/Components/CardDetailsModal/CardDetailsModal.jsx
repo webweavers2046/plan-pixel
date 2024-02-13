@@ -12,16 +12,16 @@ const CardDetailsModal = ({ openTaskDetails, setOpenTaskDetails, children }) => 
 
     const members = [
         {
-            email: "Shakil Talukdar",
+            email: "Shakil ",
         },
         {
-            email: "Sami Apu",
+            email: "Sami ",
         },
         {
             email: "Sajid khan",
         },
         {
-            email: "Forhad kapali",
+            email: "Forhad ",
         },
 
     ]
