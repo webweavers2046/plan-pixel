@@ -18,15 +18,15 @@ const AblyProvider = ({ children }) => {
 
   // State for managing the tasks received from Ably
   const [tasks, setTasks] = useState([]);
-
   // state related to workspace
   const [allWorkspaces,setAllWrokspaces] = useState([])
   const [allWorkspaceMembers,setAllworkspaceMembers] = useState([])
   const [allWorkspaceTasks,setAllWorkspaceTasks] = useState([])
-
+  const [activeWorkspace,setSetActiveWorkspace] = useState({})
+  
 
   
-  
+
   useEffect(() => {
     // Function to connect to Ably
     const connectAbly = async () => {
@@ -46,7 +46,7 @@ const AblyProvider = ({ children }) => {
     // Ably listener function to handle incoming messages
     const ablyListener = (message) => {
       // Sorting tasks by position and updatedAt for consistent display
-      const sortedTasks = message.data?.sort((a, b) => {
+      const sortedTasks = message?.data?.sort((a, b) => {
         if (a.position !== b.position) {
           return a.position - b.position;
         }
@@ -58,17 +58,20 @@ const AblyProvider = ({ children }) => {
       setTasks(sortedTasks);
     };
 
-    // here recieve user workspaces,tasks and member in it. 
+    // here recieve user workspaces,tasks and member and active workspace. 
     ablyChannel.subscribe("workspaces",(message)=> {
       const response = message.data
       setAllWrokspaces(response.allWorkspaces)
       setAllworkspaceMembers(response.allMembersInWorkspace)
       setAllWorkspaceTasks(response.allTasksInWorkspace)
-      console.log(response.allTasksInWorkspace)
-    })
+      setSetActiveWorkspace(response.activeWorkspace)
+      })
 
     // Subscribing to the Ably channel with the ablyListener
     ablyChannel.subscribe(ablyListener);
+
+
+    console.log(activeWorkspace)
 
     // Cleanup function to unsubscribe from the channel and close the Ably connection
     return async () => {
@@ -83,14 +86,12 @@ const AblyProvider = ({ children }) => {
     };
   }, [tasks]);
 
-  // Getting active workspace 
-  const activeWorspace = allWorkspaces.find(workspace => workspace.isActive === true)
-  
+
 
   // Distribute all data by 
   const distributingData = {
     allWorkspaces,
-    activeWorspace,
+    activeWorkspace,
     allWorkspaceMembers,
     allWorkspaceTasks,
     tasks

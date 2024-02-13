@@ -139,6 +139,7 @@ const DashboardNavbar = () => {
           {displayWorkspaces?.map((workspace, index) => {
             return (
               <li
+                key={workspace?._id}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
                 onClick={(e) => handleActiveWorkspace(e, workspace._id)}

@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }) {
     return (
         <section>
             <PrivateRoute>
-                <div className="grid grid-cols-12 h-screen relative">
+                <div className="grid grid-cols-12 min-h-screen relative">
                     {openSidebar && (
                         <div className="absolute w-full left-0 top-0 h-screen bg-slate-200/10 backdrop-blur-2xl z-50 xl:hidden block">
                             <div className="w-80 bg-white h-full relative">

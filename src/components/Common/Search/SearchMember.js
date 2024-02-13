@@ -12,9 +12,8 @@ const SearchMember = ({handleInputChange}) => {
         name="product-name"
         id="product-name"
         className="shadow-sm placeholder:text-[#808080a6] bg-gray-50 border border-gray-100 text-gray-900 sm:text-sm rounded-lg focus:border-none focus-within:outline-none focus:outline-none block w-full p-2.5"
-        placeholder="forhadhossain@gmail.com"
+        placeholder="Name,Email,Skills or Location"
         required
-        // value={}
         onChange={(e) => handleInputChange(e.target.value)}
       />
     </div>

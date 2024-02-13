@@ -1,6 +1,7 @@
 "use client";
 
 import PaperPieces from "./paperCutPiece";
+import { TiTick } from "react-icons/ti";
 
 export function AddMemberModal({
   WillAddMember,
@@ -28,28 +29,33 @@ import { Card } from "flowbite-react";
 import Image from "next/image";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SearchMember from "../Search/SearchMember";
 import useAxios from "@/hooks/useAxios";
 import TeamMembers from "@/app/(withDashboardNavbarSidebar)/dashboard/members/Components/TeamMembers";
 import AssignColorAndStyle from "./AsignAlphabelColor";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 function MemberList({ handleAddMember, setWillAddMember }) {
-  const { clickedWorkspaceId } = useGlobalContext();
-  const xios = useAxios()
-  const [workspaceName, setWorkspaceName] = useState("");
-
+  const { clickedWorkspaceId,defaultActiveWorkspace } = useGlobalContext();
+  const { activeWorkspace } = useContext(ablyContext);
+  const ClickBasedActiveWorkspace = activeWorkspace ? activeWorkspace : defaultActiveWorkspace || {}
+  const xios = useAxios();
   const [suggestions, setSuggestions] = useState([]);
-  const handleInputChange = async(searchQuery) => {
-    const response = await xios.get(`/api/members/search?query=${searchQuery}`)
-    setSuggestions(response.data)
-    if(searchQuery === ""){
-      setSuggestions([])
+
+  const handleInputChange = async (searchQuery) => {
+    const response = await xios.get(`/api/members/search?query=${searchQuery}`);
+    setSuggestions(response.data);
+    if (searchQuery === "") {
+      setSuggestions([]);
     }
-  }
+  };
+
+
+
 
   return (
-    <Card className=" mt-2 z-50 fixed w-[370px] right-0 top-0 overflow-hidden ">
+    <Card className=" mt-2 z-50 fixed w-[370px] right-0 top-0 overflow-auto ">
       <div className="mb-4 flex gap-2  justify-between">
         <h5 className="text-xl font-serif font-semibold leading-none text-gray-900">
           Add members{" "}
@@ -67,33 +73,47 @@ function MemberList({ handleAddMember, setWillAddMember }) {
       </div>
 
       {/* Your search input to find the members to add */}
-      <SearchMember handleInputChange={handleInputChange}/>
+      <SearchMember handleInputChange={handleInputChange} />
 
-   <ul className="divide-y ">
-          {suggestions?.map((user) => (
-            <li className="py-3 sm:py-4">
-              <div className="flex items-center space-x-4">
-                <AssignColorAndStyle user={user}/>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                      {user?.name}
-                    </p>
-                    <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                      {user?.email}
-                    </p>
-                  </div>
-                  <div
-                    onClick={() =>
-                      handleAddMember(clickedWorkspaceId, user?.email, user?.name)
-                    }
-                    className="text-[13px] inline-flex cursor-pointer items-center text-gray-900 "
-                  >
-                    +Add
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+      <ul className="divide-y ">
+        {suggestions?.map((user) => {
+          const isMemberAlreadyExist = ClickBasedActiveWorkspace?.members?.includes(user?.email)
+          return <li key={user._id} className="py-3 sm:py-4">
+          <div className="flex items-center space-x-4">
+            <AssignColorAndStyle user={user} />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                {user?.name}
+              </p>
+              <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                {user?.email}
+              </p>
+            </div>
+            {!isMemberAlreadyExist?
+              <div
+                onClick={() =>
+                  handleAddMember(clickedWorkspaceId, user?.email, user?.name)
+                }
+                className={`text-[13px] inline-flex cursor-pointer items-center ${
+                  isMemberAlreadyExist
+                    ? "text-red-600 cursor-not-allowed"
+                    : "text-gray-900"
+                }`}
+                // Disable the button if the user is already added
+                disabled={isMemberAlreadyExist}
+              >
+                +Add
+              </div>:
+              <div className="text-[#50B577]">
+              <TiTick />
+            </div>
+            
+
+            }
+          </div>
+        </li>
+        })}
+      </ul>
 
       <ul className="h-screen bg-transparent relative">
         <div className="absolute top-32">
@@ -102,23 +122,23 @@ function MemberList({ handleAddMember, setWillAddMember }) {
         </div>
       </ul>
 
-      <TeamMembers/>
+      <TeamMembers />
       <div className="pt-14 relative overflow-hidden">
         <PaperPieces />
       </div>
-      {
-
-        suggestions?.length <= 0 &&
-        <div className="absolute -z-20 top-1/4">
-        <Image
-          className=" opacity-50 mx-auto w-32 h-32   "
-          src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
-          height={100}
-          width={100}
-        />
-        <p className="text-center text-gray-500">No matching members found.(name,email,skills or location)</p>
+      {suggestions?.length <= 0 && (
+        <div className="absolute -z-20 top-[280px]">
+          <Image
+            className=" opacity-50 mx-auto w-32 h-32   "
+            src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
+            height={100}
+            width={100}
+          />
+          <p className="text-center text-gray-500">
+            No matching members found.(name,email,skills or location)
+          </p>
         </div>
-      }
+      )}
     </Card>
   );
 }

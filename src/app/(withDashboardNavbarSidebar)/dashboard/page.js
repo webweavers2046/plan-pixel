@@ -18,10 +18,10 @@ const Dashboard = () => {
   const [date, setDate] = useState(
     new Date()
   );
-  console.log(userData);
+
 
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <div className="bg-green-500/20 py-10 px-16 rounded-xl mb-6 flex justify-between items-center">
         <div className="">
           <p className="text-lg font-semibold pb-2">Hi! Welcome Back</p>

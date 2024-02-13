@@ -31,9 +31,9 @@ const GlobalContext = ({ children }) => {
 
     Promise.all([
       xios.get('/active-workspace'),
-      xios.get(`/userWokspaces/${user ? user.email:"shakilahmmed8882@gmail.com"}`),
-      xios.get('/active-workspace'),
-      xios.get('/api/workspaces/active'),
+      xios.get(`/userWokspaces/${user ? user.email:""}`),
+      xios.get(`/active-workspace?userEmail=${user?user.email:""}`),
+      xios.get(`/api/workspaces/active/${user?user.email:""}`),
     ])
       .then(([activeWorkspaceRes, userWorkspacesRes, allWorkspaceTasksRes,defaultActiveWokspace]) => {
         // Sorting tasks by position and updatedAt for consistent display
@@ -54,7 +54,7 @@ const GlobalContext = ({ children }) => {
         // Handle errors
         console.error(error);
       });
-  }, []);
+  }, [user]);
   
 
   
@@ -103,12 +103,12 @@ const TriggerWhenNewWorkspaceCreated = () => {
 }
 
 useEffect(()=> {
-  xios.get("/api/workspaces/active")
+  xios.get(`/api/workspaces/active/${user && user.email}`)
   .then(res => {
     if(!res.data) return "coming"
     setDefaultWorkspace(res?.data)
   })
-},[isWorkspaceSwitched,toggleValue])
+},[isWorkspaceSwitched,toggleValue,user])
 
 
 
