@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxios from "./useAxios";
 
-
 const useUser = (email) => {
-    const xios = useAxios();
-    const [user = [], setUser] = useState([]);
+    const axiosPublic = useAxios();
+    // console.log(email);
 
-    useEffect(() => {
-        xios.get(`/users/${email}`).then((data) => setUser(data.data));
-    }, []);
+    const {data, refetch} = useQuery({
+        queryKey: ['profile',email],
+        queryFn: async () =>{
+           const data = await axiosPublic.get(`/users/${email}`)
+           return await data.data;
+        }
+    })
+    // console.log('user data',data);
 
-    return user;
+    return {data, refetch};
 };
 
 export default useUser;

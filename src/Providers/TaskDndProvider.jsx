@@ -2,13 +2,14 @@
 "use client";
 import React, { createContext, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import useGetSocketData from "@/hooks/useGetAllTasks";
 import toast from "react-hot-toast";
 import useAxios from "@/hooks/useAxios";
 import calculatePosition from "@/utils/calculate-position";
 import style from "./dnd.module.css";
 import removeAllTaskContainerClasses from "@/utils/removeAllTasksCalsses";
 import useGlobalContext from "@/hooks/useGlobalContext";
+import useAllTasks from "@/hooks/useAllTasks";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 // Global context provider for managing shared state
 export const taskContext = createContext(null);
@@ -31,8 +32,8 @@ export const TaskDndProvider = ({ children }) => {
   const xios = useAxios();
 
   // Fetching all tasks from the server
-  const initialTask = useGetSocketData();
-  // const { tasks } = useContext(ablyContext);
+  const {data : initialTask} = useAllTasks();
+  const { tasks } = useContext(ablyContext);
 
   // Global context for managing shared data
   const { newTask,workspaceBasedTasks } = useGlobalContext();

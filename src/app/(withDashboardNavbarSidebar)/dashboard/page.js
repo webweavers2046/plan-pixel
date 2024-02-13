@@ -13,7 +13,7 @@ import TaskBarGraph from "./Components/TaskBarGraph/TaskBarGraph";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  const userData = useUser(user?.email);
+  const {data : userData} = useUser(user?.email);
   const [date, setDate] = useState(
     new Date()
   );
