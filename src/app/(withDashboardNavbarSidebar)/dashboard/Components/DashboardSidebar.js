@@ -1,5 +1,6 @@
 "use client";
 
+import { TbHelpSquareRoundedFilled } from "react-icons/tb";
 import { IoIosArrowForward } from "react-icons/io";
 import logo from "@/assets/Logo.png";
 import Image from "next/image";
@@ -242,6 +243,24 @@ const DashboardSidebar = () => {
                                         </div>
                                     </Link>
                                 ) : undefined}
+                            </li>
+                            <li>
+                                {pathname === "/dashboard" ? undefined : (
+                                    <Link
+                                        className={`flex items-center  gap-x-4 ${
+                                            pathname ==
+                                            "/admin-dashboard/support"
+                                                ? "active"
+                                                : "inactive"
+                                        }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                        href="/dashboard/meeting"
+                                    >
+                                        <div className="flex items-center">
+                                            <TbHelpSquareRoundedFilled className="text-4xl me-3" />
+                                            <p>Support Users</p>
+                                        </div>
+                                    </Link>
+                                )}
                             </li>
                         </ul>
                     </div>
