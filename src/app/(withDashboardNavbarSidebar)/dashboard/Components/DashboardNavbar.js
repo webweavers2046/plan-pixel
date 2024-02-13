@@ -132,10 +132,10 @@ const DashboardNavbar = () => {
           className="text-start flex gap-2 items-center w-32"
         >
           <p className=" cursor-pointer opacity-55 text-[15px] ">
-            { currentSpace?.title}
+            { currentSpace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
-            className={`${
+            className={` cursor-pointer ${
               isDropdownOpen ? "rotate-180" : "rotate-0"
             } transition-all duration-300`}
           />
