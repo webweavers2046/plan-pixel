@@ -53,6 +53,7 @@ const AuthProviders = ({ children }) => {
         };
     }, [user]);
 
+
     const authInfo = {
         user,
         loading,

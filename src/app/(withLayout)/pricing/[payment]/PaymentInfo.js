@@ -24,9 +24,9 @@ const PaymentInfo = ({ planName }) => {
 
         const res = await xios.post("/sslPayment", payInfo);
         router.push(res.data.url);
+        console.log(res.data.url);
       } else if (payOption === "stripe") {
-        console.log("stripe");
-        router.push(`http://localhost:3000/pricing/stripe/${planName}`);
+        router.push(`/pricing/stripe/${planName}`);
       } else {
         toast.error("please select payment option");
       }

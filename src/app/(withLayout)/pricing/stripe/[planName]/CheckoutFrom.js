@@ -65,6 +65,7 @@ export default function CheckoutForm({planName}) {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       redirect: "if_required",
+      // return_url: `http://localhost:3000/payment-success/`,
     });
 
     // This point will only be reached if there is an immediate error when

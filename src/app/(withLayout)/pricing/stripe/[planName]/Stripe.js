@@ -15,18 +15,16 @@ const stripePromise = loadStripe(
 export default function Stripe({planName}) {
     // const planName = params.payment;
     // const planName = useParams()
-
-    console.log(planName);
   const [clientSecret, setClientSecret] = React.useState("");
   const [amount, setAmount] = React.useState(0);
   const xios = useAxios();
   React.useEffect(() => {
     const postData = async () => {
       try {
-        const res = await xios.post("/create-payment-intent", {
+        const res = await xios.post("/stripePayment", {
           plan: planName,
         });
-console.log(res);
+
         setClientSecret(res.data.clientSecret);
       } catch (error) {}
     };
