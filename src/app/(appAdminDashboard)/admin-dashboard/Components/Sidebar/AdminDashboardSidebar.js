@@ -21,7 +21,7 @@ const AdminDashboardSidebar = () => {
                     className={`  mr-2 h-screen xl:block hidden border-r-2 relative `}
                 >
                     <div className="py-4 px-3">
-                        <div className="ms-3 mt-1">
+                        <div className="ms-7 mt-1">
                             <Link href={"/"}>
                                 <Image
                                     className="w-auto max-h-9 lg:mb-0.5  mb-2.5"
