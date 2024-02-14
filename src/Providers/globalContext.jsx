@@ -22,14 +22,16 @@ const GlobalContext = ({ children }) => {
   const [defaultActiveWorkspace, setDefaultWorkspace] = useState({})
 
   const [toggleValue,setToggleValue] = useState(false)
+
   
   useEffect(() => {
     // Fetch active workspace, user workspaces, and workspace tasks in one go
+
     Promise.all([
       xios.get('/active-workspace'),
-      xios.get(`/userWokspaces/${user ? user?.email : 'shakilahmmed8882@gmail.com'}`),
-      xios.get('/active-workspace'),
-      xios.get('/api/workspaces/active'),
+      xios.get(`/userWokspaces/${user ? user.email:""}`),
+      xios.get(`/active-workspace?userEmail=${user?user.email:""}`),
+      xios.get(`/api/workspaces/active/${user?user.email:""}`),
     ])
       .then(([activeWorkspaceRes, userWorkspacesRes, allWorkspaceTasksRes,defaultActiveWokspace]) => {
         // Sorting tasks by position and updatedAt for consistent display
@@ -50,16 +52,15 @@ const GlobalContext = ({ children }) => {
         // Handle errors
         console.error(error);
       });
-  }, []);
-  
-
+  }, [user]);
   
 
   // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal,activeWorkspaceId) => {
     // Calling it above for faster overview
-    console.log("formthe globacl context", activeWorkspaceId)
-    xios.post(`/createTask/${activeWorkspaceId}`, newTask).then((res) => {
+
+    console.log("id id id--------------------------------", activeWorkspaceId)
+    xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask).then((res) => {
       if (res?.data?.insertedId) {
         setNewTask(newTask);
         setOpenModal(false);
@@ -92,25 +93,38 @@ const GlobalContext = ({ children }) => {
     setSwitchWorkspace(!isWorkspaceSwitched);  
   };
 
-
-
-  
 const TriggerWhenNewWorkspaceCreated = () => {
   setToggleValue(!toggleValue)
 }
 
-
-console.log(toggleValue)
 useEffect(()=> {
-  xios.get("/api/workspaces/active")
+  xios.get(`/api/workspaces/active/${user && user.email}`)
   .then(res => {
     if(!res.data) return "coming"
     setDefaultWorkspace(res?.data)
   })
-},[isWorkspaceSwitched,toggleValue])
+},[isWorkspaceSwitched,toggleValue,user])
 
 
+// Delete 
+const handleDeleteWorkspace = async (e, _id,isDelete) => {
+  e.preventDefault();
+  
+  // delete workspace from the database
+  if (isDelete) {
+    const response = await xios.delete(
+      `deleteWorkspace/${_id}/${user && user.email}`
+    );
+    if (response.data) {
+      toast.success(response.data.message,{position:"top-right"});
+   
+    }
+  
+  }
+};
 
+
+  
 
   const data = {
     handleCreateTask,
@@ -126,10 +140,13 @@ useEffect(()=> {
     clickedWorkspaceId,
     setSwitchWorkspace,
     isWorkspaceSwitched,
-    
+    TriggerWhenNewWorkspaceCreated,
 
-    TriggerWhenNewWorkspaceCreated
+    handleDeleteWorkspace
   };
+
+
+
   return (
     <globalContext.Provider value={data}>{children}</globalContext.Provider>
   );

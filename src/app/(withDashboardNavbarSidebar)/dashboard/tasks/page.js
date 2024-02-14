@@ -21,9 +21,9 @@ const Tasks = () => {
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
- console.log(allWorkspaceTasks)
   
-  const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
+  const workspaceAllTasks = allWorkspaceTasks?.length > 0 ? allWorkspaceTasks: alltasks
+  console.log("it is coming from page filter", workspaceAllTasks)
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do",draggingTaskId,dragOverElementName);
@@ -33,17 +33,17 @@ const Tasks = () => {
 
 
   const {defaultActiveWorkspace} = useGlobalContext()
-  const {activeWorspace} = useContext(ablyContext)
-  const { title,description } = activeWorspace || defaultActiveWorkspace || { title: "Demo title" };
+  const {activeWorkspace} = useContext(ablyContext)
+  const { title,description } = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
 
-  
+
   
   return (
     <>
       {typeof window !== "undefined" && (
         <section>
           {/* header section  */}
-          <div className="md:flex ml-3 justify-between items-start border-b pb-2 pt-6 border-white/50">
+          <div className="  ml-3 flex justify-between  border-b pb-2 pt-6 border-white/50">
             <div className="">
               <h6 className="font-medium text-[22px] flex gap-1 items-center mb-1"><span className="h-4 w-4 rounded-full bg-gradient-to-br from-[#93C648] to-[#50B577] text-white"></span>{title?title:"your board"}</h6>
               {
@@ -55,10 +55,10 @@ const Tasks = () => {
               )
               }
             </div>
-            <div className="flex lg:w-52">
+            <div className="flex lg:w-52 ">
               <button
                 onClick={() => setOpenModal(!openModal)}
-                className="bg-white text-black flex text-sm px-5 py-3 rounded-md font-bold"
+                className="bg-white text-black flex justify-between text-sm px-5 py-3 rounded-md font-bold"
               >
                 <FiPlusSquare className="inline mb-1 me-2 text-xl" /> Add Task
               </button>
