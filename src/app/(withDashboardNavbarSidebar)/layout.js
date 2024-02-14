@@ -50,7 +50,7 @@ export default function DashboardLayout({ children }) {
                                     </button>
                                 </div>
                             </div>
-                            <div className="">
+                            <div className="grow">
                                 <div className="">
                                     <DashboardNavbar />
                                 </div>
