@@ -1,5 +1,5 @@
-import AdminOverviewWidget from "../dashboard/Components/AdminOverviewWidget/AdminOverviewWidget";
-import UsersOverview from "../dashboard/Components/UsersOverview/UsersOverview";
+import AdminOverviewWidget from "./Components/AdminOverviewWidget/AdminOverviewWidget";
+import UsersOverview from "./Components/UsersOverview/UsersOverview";
 
 const AdminDashboard = () => {
     const chartData = {
