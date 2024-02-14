@@ -1,4 +1,5 @@
 const page = ({params}) => {
+  console.log(params);
     return (
       <>
         {/* component */}
