@@ -8,6 +8,8 @@ import calculatePosition from "@/utils/calculate-position";
 import style from "./dnd.module.css";
 import removeAllTaskContainerClasses from "@/utils/removeAllTasksCalsses";
 import useGlobalContext from "@/hooks/useGlobalContext";
+
+import { AuthContext } from "./AuthProviders";
 import useAllTasks from "@/hooks/useAllTasks";
 import { ablyContext } from "@/components/ably/AblyProvider";
 
@@ -25,6 +27,7 @@ export const TaskDndProvider = ({ children }) => {
   });
 
 
+  const {user} = useContext(AuthContext)
   const [droppableAreaName, setDroppableAreaName] = useState("");
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
@@ -45,6 +48,7 @@ export const TaskDndProvider = ({ children }) => {
   // Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {
     setIsClient(true);
+    alltasks?.push(newTask)
   }, [newTask]);
 
   // Event handler for when dragging starts
@@ -129,7 +133,7 @@ export const TaskDndProvider = ({ children }) => {
     }
 
     // Patch HTTP request to change the state
-    const url = `/updateTaskState?id=${id}&state=${droppableArea}&position=${position}`;
+    const url = `/updateTaskState?id=${id}&state=${droppableArea}&position=${position}&userEmail=${user?user.email:""}`;
     xios
       .patch(url)
       .then((data) => {

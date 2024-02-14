@@ -5,13 +5,7 @@ import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { Dropdown } from "flowbite-react";
-import {
-  HiCog,
-  HiCurrencyDollar,
-  HiLogout,
-  HiViewGrid,
-  
-} from "react-icons/hi";
+import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -26,7 +20,7 @@ import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import { IoIosArrowDown } from "react-icons/io";
 
-const DashboardNavbar = () => {
+const AdminDashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
     const {
         handleActiveWorkspace,
@@ -321,4 +315,4 @@ const DashboardNavbar = () => {
     );
 };
 
-export default DashboardNavbar;
+export default AdminDashboardNavbar;

@@ -13,7 +13,7 @@ const page = () => {
   console.log(alltasks);
   const [filter, setFilter] = useState("to-do");
   const tasks = useFilterTasks(alltasks, filter);
-  console.log("members tasks", tasks);
+
 
   return (
     <div className="flex gap-x-5 p-5">

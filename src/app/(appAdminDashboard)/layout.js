@@ -1,14 +1,13 @@
 "use client";
 
-import PrivateRoute from "@/components/Common/PrivateRoute";
-import DashboardNavbar from "./dashboard/Components/DashboardNavbar";
-import DashboardSidebar from "./dashboard/Components/DashboardSidebar";
 import "@/styles/globals.css";
+import PrivateRoute from "@/components/Common/PrivateRoute";
 import TanstackProvider from "@/Providers/TanstackProvider";
 import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
-import Drawer from "./dashboard/Components/Drawer";
 import { usePathname } from "next/navigation";
+import AdminDashboardSidebar from "./admin-dashboard/Components/Sidebar/AdminDashboardSidebar";
+import AdminDashboardNavbar from "./admin-dashboard/Components/Navbar/AdminDashboardNavbar";
 
 export default function DashboardLayout({ children }) {
     const [openSidebar, setOpenSidebar] = useState(false);
@@ -35,7 +34,7 @@ export default function DashboardLayout({ children }) {
                         </div>
                     )}
                     <div className="xl:col-span-2 col-span-0 xl:block hidden">
-                        <DashboardSidebar />
+                        <AdminDashboardSidebar />
                     </div>
 
                     <div className="xl:col-span-10 col-span-12 xl:ms-0 ms-5">
@@ -54,7 +53,7 @@ export default function DashboardLayout({ children }) {
                             </div>
                             <div className="">
                                 <div className="">
-                                    <DashboardNavbar />
+                                    <AdminDashboardNavbar />
                                 </div>
                                 <TanstackProvider>
                                     <div className="p-4">{children}</div>

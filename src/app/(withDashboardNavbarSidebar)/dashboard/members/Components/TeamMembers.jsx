@@ -16,15 +16,19 @@ import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 
+
 const TeamMembers = () => {
     const { workspaceBasedMembers } = useGlobalContext();
 
-    console.log()
     return (
         <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border">
             <h1 className=" text-2xl font-bold p-4">Team Member</h1>
             {teamMemberData?.map((member, index) => (
                 <TeamMember
+            {workspaceBasedMembers?.map((member, index) => (
+                <div className="flex items-center">
+               
+                    <TeamMember
                     key={index}
                     name={member.name}
                     userEmail={member.email}

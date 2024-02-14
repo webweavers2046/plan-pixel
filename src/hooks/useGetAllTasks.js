@@ -24,7 +24,7 @@ import { useContext, useEffect, useState } from "react";
 import useAxios from "./useAxios";
 import Task from "@/app/(withDashboardNavbarSidebar)/dashboard/tasks/Task";
 import { taskContext } from "@/Providers/TaskDndProvider";
-import useGlobalTaskData from "./useGlobalTaskData";
+import useDNDcontext from "./useGlobalTaskData";
 
 const useGetSocketData = () => {
     const xios = useAxios();
@@ -35,8 +35,7 @@ const useGetSocketData = () => {
     }, []);
 
     // console.log("all data by http initially", alltasks)
-    return alltasks;
+    return alltasks
 };
 
 export default useGetSocketData;
-

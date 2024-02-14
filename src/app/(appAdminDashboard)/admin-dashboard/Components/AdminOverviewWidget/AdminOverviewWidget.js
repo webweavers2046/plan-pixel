@@ -1,9 +1,14 @@
+"use client";
+
 import OverviewWidgetBg from "@/assets/pattern/admin-info-pattern.png";
 import OverviewWidgetBg02 from "@/assets/pattern/admin-info-pattern02.png";
 import OverviewWidgetBg03 from "@/assets/pattern/admin-info-pattern03.png";
+import useIncrementingNumber from "../Hooks/useIncrementingNumber";
 
 const AdminOverviewWidget = () => {
-    console.log(OverviewWidgetBg);
+    const totalUsers = useIncrementingNumber(264);
+    const totalPremiumUsers = useIncrementingNumber(64);
+    const totalWorkspace = useIncrementingNumber(154);
     return (
         <div className="">
             <div className="grid grid-cols-7 gap-6">
@@ -20,7 +25,7 @@ const AdminOverviewWidget = () => {
                 >
                     <div className="flex justify-between items-center">
                         <h5 className="text-lg font-semibold">Total users</h5>
-                        <h2 className="text-7xl">264</h2>
+                        <h2 className="text-7xl">{totalUsers}</h2>
                     </div>
                 </div>
                 <div
@@ -36,7 +41,7 @@ const AdminOverviewWidget = () => {
                 >
                     <div className="flex justify-between items-center">
                         <h5 className="text-lg font-semibold">Total users</h5>
-                        <h2 className="text-7xl">64</h2>
+                        <h2 className="text-7xl">{totalPremiumUsers}</h2>
                     </div>
                 </div>
                 <div
@@ -54,7 +59,7 @@ const AdminOverviewWidget = () => {
                         <h5 className="text-lg font-semibold">
                             Total created workspace
                         </h5>
-                        <h2 className="text-7xl">264</h2>
+                        <h2 className="text-7xl">{totalWorkspace}</h2>
                     </div>
                 </div>
             </div>
