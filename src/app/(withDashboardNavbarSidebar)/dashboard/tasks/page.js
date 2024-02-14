@@ -10,40 +10,46 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import UpdateTask from "../Components/UpdateTask";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
+import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
+import useAllTasks from "@/hooks/useAllTasks";
 
 
 const Tasks = () => {
-  // manage all your state here..
-  const [openModal, setOpenModal] = useState(false);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging,draggingTaskId } =
-    useDNDcontext();
+    // manage all your state here..
+    const [openModal, setOpenModal] = useState(false);
+    const [openUpdateModal, setOpenUpdateModal] = useState(false);
+    const [openCardDetails, setOpenCardDetails] = useState(false);
+    const [cardId, setCardId] = useState("");
+    const {alltasks, dropOn, draggingOver, dragOverElementName, isDragging, draggingTaskId } =
+        useDNDcontext();
+    // const { data: alltasks } = useAllTasks();
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
- console.log(allWorkspaceTasks)
   
   const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
-
-  // Tasks in different status
-  const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do",draggingTaskId,dragOverElementName);
-  const upcomingTasks = useFilterTasks(workspaceAllTasks, "upcoming",draggingTaskId,dragOverElementName);
-  const doingTasks = useFilterTasks(workspaceAllTasks, "doing",draggingTaskId,dragOverElementName);
-  const doneTasks = useFilterTasks(workspaceAllTasks, "done",draggingTaskId,dragOverElementName);
+  console.log("it is coming from page filter", workspaceAllTasks)
+  
+    // Tasks in different status
+    const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do", draggingTaskId, dragOverElementName);
+    const upcomingTasks = useFilterTasks(workspaceAllTasks, "upcoming", draggingTaskId, dragOverElementName);
+    const doingTasks = useFilterTasks(workspaceAllTasks, "doing", draggingTaskId, dragOverElementName);
+    const doneTasks = useFilterTasks(workspaceAllTasks, "done", draggingTaskId, dragOverElementName);
 
 
   const {defaultActiveWorkspace} = useGlobalContext()
   const {activeWorspace} = useContext(ablyContext)
-  const { title,description } = activeWorspace || defaultActiveWorkspace || { title: "Demo title" };
+  const {_id , title,description } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
+//   console.log(defaultActiveWorkspace);
 
-  
+
   
   return (
     <>
       {typeof window !== "undefined" && (
         <section>
           {/* header section  */}
-          <div className="md:flex ml-3 justify-between items-start border-b pb-2 pt-6 border-white/50">
+          <div className="  ml-3 flex justify-between  border-b pb-2 pt-6 border-white/50">
             <div className="">
               <h6 className="font-medium text-[22px] flex gap-1 items-center mb-1"><span className="h-4 w-4 rounded-full bg-gradient-to-br from-[#93C648] to-[#50B577] text-white"></span>{title?title:"your board"}</h6>
               {
@@ -55,10 +61,10 @@ const Tasks = () => {
               )
               }
             </div>
-            <div className="flex lg:w-52">
+            <div className="flex lg:w-52 ">
               <button
                 onClick={() => setOpenModal(!openModal)}
-                className="bg-white text-black flex text-sm px-5 py-3 rounded-md font-bold"
+                className="bg-white text-black flex justify-between text-sm px-5 py-3 rounded-md font-bold"
               >
                 <FiPlusSquare className="inline mb-1 me-2 text-xl" /> Add Task
               </button>
@@ -91,6 +97,10 @@ const Tasks = () => {
                                         task={task}
                                         openUpdateModal={openUpdateModal}
                                         setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
                                     />
                                     <UpdateTask
                                         task={task}
@@ -106,20 +116,17 @@ const Tasks = () => {
                             onDragOver={(e) => draggingOver(e)}
                             onDrop={(e) => dropOn(e)}
                             id="to-do"
-                            className={`min-h-screen px-2 ${
-                                dragOverElementName && "realative z-50"
-                            } rounded-lg transition-all duration-1000 ${
-                                dragOverElementName === "to-do"
+                            className={`min-h-screen px-2 ${dragOverElementName && "realative z-50"
+                                } rounded-lg transition-all duration-1000 ${dragOverElementName === "to-do"
                                     ? "bg-[#E3E4E6]"
                                     : ""
-                            }`}
+                                }`}
                         >
                             <div
-                                className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${
-                                    dragOverElementName == "to-do"
+                                className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${dragOverElementName == "to-do"
                                         ? "bg-[white]"
                                         : ""
-                                }`}
+                                    }`}
                             >
                                 <LuListTodo className="text-2xl" />{" "}
                                 <h2>To-do</h2>
@@ -133,6 +140,10 @@ const Tasks = () => {
                                         task={task}
                                         openUpdateModal={openUpdateModal}
                                         setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
                                     />
                                     <UpdateTask
                                         task={task}
@@ -148,18 +159,16 @@ const Tasks = () => {
                             onDragOver={(e) => draggingOver(e)}
                             onDrop={(e) => dropOn(e)}
                             id="doing"
-                            className={`min-h-screen px-2 rounded-lg transition-all duration-1000 ${
-                                dragOverElementName === "doing"
+                            className={`min-h-screen px-2 rounded-lg transition-all duration-1000 ${dragOverElementName === "doing"
                                     ? "bg-[#E3E4E6]"
                                     : ""
-                            }`}
+                                }`}
                         >
                             <div
-                                className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${
-                                    dragOverElementName == "doing"
+                                className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${dragOverElementName == "doing"
                                         ? "bg-[white]"
                                         : ""
-                                }`}
+                                    }`}
                             >
                                 <LuListTodo className="text-2xl" />{" "}
                                 <h2 className="">Doing</h2>
@@ -173,6 +182,10 @@ const Tasks = () => {
                                         task={task}
                                         openUpdateModal={openUpdateModal}
                                         setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
                                     />
                                     <UpdateTask
                                         task={task}
@@ -188,18 +201,16 @@ const Tasks = () => {
                             onDragOver={(e) => draggingOver(e)}
                             onDrop={(e) => dropOn(e)}
                             id="done"
-                            className={`px-2 min-h-screen rounded-lg transition-all duration-1000 ${
-                                dragOverElementName === "done"
+                            className={`px-2 min-h-screen rounded-lg transition-all duration-1000 ${dragOverElementName === "done"
                                     ? "bg-[#E3E4E6]"
                                     : ""
-                            }`}
+                                }`}
                         >
                             <div
-                                className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${
-                                    dragOverElementName == "done"
+                                className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${dragOverElementName == "done"
                                         ? "bg-[white]"
                                         : ""
-                                }`}
+                                    }`}
                             >
                                 <LuListTodo className="text-2xl" />{" "}
                                 <h2 className="">Done</h2>
@@ -213,6 +224,10 @@ const Tasks = () => {
                                         task={task}
                                         openUpdateModal={openUpdateModal}
                                         setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
                                     />
                                     <UpdateTask
                                         task={task}
@@ -226,7 +241,15 @@ const Tasks = () => {
                     <TaskModal
                         openModal={openModal}
                         setOpenModal={setOpenModal}
-                    ></TaskModal>
+                    ></TaskModal> 
+                    
+                    <CardDetailsModal
+                        cardId={cardId}
+                        setCardId={setCardId}
+                        openCardDetails={openCardDetails}
+                        setOpenCardDetails={setOpenCardDetails}
+                    ></CardDetailsModal>
+
                 </section>
             )}
         </>
