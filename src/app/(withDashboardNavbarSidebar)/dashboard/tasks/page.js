@@ -21,16 +21,14 @@ const Tasks = () => {
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
+  const workspaceAllTasks = allWorkspaceTasks?.length > 0 ? allWorkspaceTasks: alltasks 
   
-  const workspaceAllTasks = allWorkspaceTasks?.length > 0 ? allWorkspaceTasks: alltasks
-  console.log("it is coming from page filter", workspaceAllTasks)
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do",draggingTaskId,dragOverElementName);
   const upcomingTasks = useFilterTasks(workspaceAllTasks, "upcoming",draggingTaskId,dragOverElementName);
   const doingTasks = useFilterTasks(workspaceAllTasks, "doing",draggingTaskId,dragOverElementName);
   const doneTasks = useFilterTasks(workspaceAllTasks, "done",draggingTaskId,dragOverElementName);
-
 
   const {defaultActiveWorkspace} = useGlobalContext()
   const {activeWorkspace} = useContext(ablyContext)
