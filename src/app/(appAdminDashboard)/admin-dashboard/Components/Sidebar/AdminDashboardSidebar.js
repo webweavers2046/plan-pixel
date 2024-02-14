@@ -121,7 +121,7 @@ const AdminDashboardSidebar = () => {
                                             ? "active"
                                             : "inactive"
                                     }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                    href="/dashboard/users-feedback"
+                                    href="/admin-dashboard/users-feedback"
                                 >
                                     <div className="flex items-center">
                                         <TbHelpSquareRoundedFilled className="text-4xl me-3" />
