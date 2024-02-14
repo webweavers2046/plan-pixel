@@ -3,28 +3,44 @@ import CardMembers from "./CardMembers";
 import IndividualCardTasks from "./IndividualCardTasks";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import useCardTasks from "@/hooks/useCardTasks";
+import useGlobalContext from "@/hooks/useGlobalContext";
+import { useContext } from "react";
+import { ablyContext } from "@/components/ably/AblyProvider";
+import { AuthContext } from "@/Providers/AuthProviders";
+import useUser from "@/hooks/useUser";
+import useSingleTask from "@/hooks/useSingleTask";
 
-const CardDetailsModal = ({ openCardDetails, setOpenCardDetails,  cardId }) => {
+const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
+    const { data: cardTasks, refetch } = useCardTasks(cardId);
+    const {data : card} = useSingleTask(cardId);
+    console.log(card);
+    // console.log(cardTasks);
+    const {user} = useContext(AuthContext);
+    const {data : userData} = useUser(user?.email)
 
-    const {data : cardTasks} = useCardTasks(cardId);
-    console.log(cardTasks);
+    const {defaultActiveWorkspace} = useGlobalContext()
+    const {activeWorspace} = useContext(ablyContext)
+    const {_id , title,description, members } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
+    // console.log(defaultActiveWorkspace);
 
-    
-    const task = {
-        name: 'Task name',
-        description: 'A user flow is a visualization of a path that a user takes  through a website'
-    }
+     
 
-    const members = [
-        {
-            name: "Rahim",
-            email: "alamin102410@gmail.com",
-        },
-        {
-            name : "Sami",
-            email: "sami@gmail.com",
-        },
-    ]
+
+    // const task = {
+    //     name: 'Task name',
+    //     description: 'A user flow is a visualization of a path that a user takes  through a website'
+    // }
+
+    // const members = [
+    //     {
+    //         name: "Rahim",
+    //         email: "alamin102410@gmail.com",
+    //     },
+    //     {
+    //         name: "Sami",
+    //         email: "sami@gmail.com",
+    //     },
+    // ]
 
 
 
@@ -52,10 +68,10 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails,  cardId }) => {
                     </button>
                 </div>
                 <div className="flex justify-between  h-full py-4 pl-12 pr-8">
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                         {/* card name, description and other info */}
-                        <p className="text-2xl font-semibold">{task?.name}</p>
-                        <p>{task?.description}</p>
+                        <p className="text-2xl font-semibold">{card?.title}</p>
+                        <p>{card?.description}</p>
                         <div className="flex gap-1">
                             <p className="bg-[#50B57733] text-[10px] font-semibold px-3 py-2  rounded-md">Denographics</p>
                             <p className="bg-[#FBBC0540] text-[10px] font-semibold px-3 py-2  rounded-md">user story</p>
@@ -65,15 +81,20 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails,  cardId }) => {
                         {/* members */}
                         <div className="pt-1">
                             <p className="text-xs font-semibold">Members</p>
-                            <CardMembers></CardMembers>
+                            <CardMembers members={members}></CardMembers>
                         </div>
 
                         {/* Individual Tasks */}
-                        <div className="pt-8 flex flex-col gap-5">
+                        <div className="pt-8 flex flex-col gap-10">
                             {
                                 members?.map(member =>
-                                    <IndividualCardTasks key={member?.email} member={member} 
-                                    cardTasks={cardTasks}></IndividualCardTasks>)
+                                    <IndividualCardTasks
+                                        key={member?.email}
+                                        member={member}
+                                        cardTasks={cardTasks}
+                                        cardId={cardId}
+                                        refetch={refetch}
+                                    ></IndividualCardTasks>)
                             }
                         </div>
 
@@ -83,11 +104,11 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails,  cardId }) => {
                                 width={30}
                                 height={30}
                                 className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                                src={member03Img}
+                                src={userData?.image}
                                 alt=""
                             />
                             <textarea placeholder="Write down your comment here" name="" id="" cols="30" rows="10"
-                            className="bg-[#D9D9D980] w-full h-24 p-3 border-none rounded-lg "></textarea>
+                                className="bg-[#D9D9D980] w-full h-24 p-3 border-none rounded-lg "></textarea>
                         </div>
                     </div>
 

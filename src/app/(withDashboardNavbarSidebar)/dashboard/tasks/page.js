@@ -20,9 +20,9 @@ const Tasks = () => {
     const [openUpdateModal, setOpenUpdateModal] = useState(false);
     const [openCardDetails, setOpenCardDetails] = useState(false);
     const [cardId, setCardId] = useState("");
-    const { dropOn, draggingOver, dragOverElementName, isDragging, draggingTaskId } =
+    const {alltasks, dropOn, draggingOver, dragOverElementName, isDragging, draggingTaskId } =
         useDNDcontext();
-    const { data: alltasks } = useAllTasks();
+    // const { data: alltasks } = useAllTasks();
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
@@ -39,7 +39,8 @@ const Tasks = () => {
 
   const {defaultActiveWorkspace} = useGlobalContext()
   const {activeWorspace} = useContext(ablyContext)
-  const { title,description } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
+  const {_id , title,description } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
+//   console.log(defaultActiveWorkspace);
 
 
   

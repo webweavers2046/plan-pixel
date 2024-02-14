@@ -31,22 +31,17 @@ const DashboardNavbar = () => {
   const { allWorkspaces } = useContext(ablyContext);
   const displayWorkspaces =
     allWorkspaces.length > 0 ? allWorkspaces : workspaces || [];
-    const { activeWorkspace } = useContext(ablyContext);
+  const { activeWorkspace } = useContext(ablyContext);
 
+  let currentSpace = {};
 
+  if (activeWorkspace) {
+    currentSpace = activeWorkspace;
+  } else {
+    currentSpace = defaultActiveWorkspace;
+  }
 
-    let currentSpace = {};
-    
-    if (activeWorkspace) {
-      currentSpace = activeWorkspace;
-    } else {
-      currentSpace = defaultActiveWorkspace;
-    }
-    
-  
-
-
-  const {data : userData} = useUser(user?.email);
+  const { data: userData } = useUser(user?.email);
   const router = useRouter();
   const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -80,13 +75,16 @@ const DashboardNavbar = () => {
       title: title,
       description: description,
       creator: user?.email,
-      members: ["userID2", "userID3"],
+      members: [{
+        memberName: user?.displayName,
+        userEmail: user?.email
+      }],
       tasks: [],
       isActive: false,
     };
 
     const response = await xios.post(
-      `/create-workspace/${user &&  user.email }`,
+      `/create-workspace/${user && user.email}`,
       workspace
     );
     if (response.data.insertedId) {
@@ -98,6 +96,7 @@ const DashboardNavbar = () => {
     const workspaceAndUserEmail = {
       workspaceId,
       userEmail: memberEmail,
+      memberName: memberName
     };
 
     const isAddedMember = await xios.post(
@@ -117,10 +116,6 @@ const DashboardNavbar = () => {
     setIsCreateWorkSpace(false);
   };
 
-
-  
-
-
   return (
     <div className="flex relative justify-between items-center p-4 gap-6">
       <div
@@ -132,19 +127,19 @@ const DashboardNavbar = () => {
           className="text-start flex gap-2 items-center w-32"
         >
           <p className=" cursor-pointer opacity-55 text-[15px] ">
-            { currentSpace?.title || "Workspace"}
+            {currentSpace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
-            className={` cursor-pointer ${
-              isDropdownOpen ? "rotate-180" : "rotate-0"
-            } transition-all duration-300`}
+            className={` cursor-pointer ${isDropdownOpen ? "rotate-180" : "rotate-0"
+              } transition-all duration-300`}
           />
         </div>
 
         <div
-          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${
-            isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
-          } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
+          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${isDropdownOpen
+              ? "visible opacity-100"
+              : "invisible opacity-0"
+            } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
           {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
 
@@ -154,30 +149,31 @@ const DashboardNavbar = () => {
                 key={workspace?._id}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
-                onClick={(e) => handleActiveWorkspace(e, workspace._id)}
+                onClick={(e) =>
+                  handleActiveWorkspace(e, workspace._id)
+                }
                 className="flex hover:bg-[#8091670c] px-4 transition-all cursor-pointer duration-300 items-center gap-2 py-4 relative"
               >
                 {workspace.title}
 
                 <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
-                                    <span
-                                        onClick={() =>
-                                            setWillAddMember(!WillAddMember)
-                                        }
-                                        className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
-                                            isHovered === index
-                                                ? "opacity-100"
-                                                : ""
-                                        }`}
-                                    >
-                                        +
-                                    </span>
+                <span
+                  onClick={() =>
+                    setWillAddMember(!WillAddMember)
+                  }
+                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${isHovered === index ? "opacity-100" : ""
+                    }`}
+                >
+                  +
+                </span>
               </li>
             );
           })}
           <li>
             <div
-              onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
+              onClick={() =>
+                setIsCreateWorkSpace(!isCreateWokspace)
+              }
               className="w-full  shadow-s mt-auto px-2  grid justify-self-end hover:bg-transparent  text-center rounded-lg"
             >
               <p className="w-full  text-white text-center py-[6px] cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm  rounded-l  ">
@@ -189,7 +185,9 @@ const DashboardNavbar = () => {
             <div className="absolute -z-20 bottom-[70px] left-24">
               <Image
                 className=" opacity-50 mx-auto w-11 h-11 left-1/2"
-                src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
+                src={
+                  "https://i.ibb.co/mtGpTfj/icons8-search-250.png"
+                }
                 height={100}
                 width={100}
               />
