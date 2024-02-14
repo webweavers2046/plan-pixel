@@ -46,7 +46,7 @@ const DashboardNavbar = () => {
   
 
 
-  const userData = useUser(user?.email);
+  const {data : userData} = useUser(user?.email);
   const router = useRouter();
   const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);

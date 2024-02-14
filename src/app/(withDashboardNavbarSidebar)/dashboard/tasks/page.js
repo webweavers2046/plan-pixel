@@ -139,6 +139,10 @@ const Tasks = () => {
                                         task={task}
                                         openUpdateModal={openUpdateModal}
                                         setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
                                     />
                                     <UpdateTask
                                         task={task}
@@ -177,6 +181,10 @@ const Tasks = () => {
                                         task={task}
                                         openUpdateModal={openUpdateModal}
                                         setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
                                     />
                                     <UpdateTask
                                         task={task}
@@ -215,6 +223,10 @@ const Tasks = () => {
                                         task={task}
                                         openUpdateModal={openUpdateModal}
                                         setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
                                     />
                                     <UpdateTask
                                         task={task}
