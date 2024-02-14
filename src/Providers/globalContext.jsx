@@ -35,16 +35,10 @@ const GlobalContext = ({ children }) => {
     ])
       .then(([activeWorkspaceRes, userWorkspacesRes, allWorkspaceTasksRes,defaultActiveWokspace]) => {
         // Sorting tasks by position and updatedAt for consistent display
-        const sortedTasks = activeWorkspaceRes.data?.sort((a, b) => {
-          if (a.position !== b.position) {
-            return a.position - b.position;
-          }
-          return new Date(b.updatedAt) - new Date(a.updatedAt);
-        });
-  
+  console.log('inside', userWorkspacesRes.data)
         // Set state for active workspace, user workspaces, and all workspace tasks
-        setActiveWorkspace(sortedTasks);
-        setWorkspaces(userWorkspacesRes.data);
+        setActiveWorkspace(userWorkspacesRes.data);
+        setWorkspaceMembers(userWorkspacesRes.data);
         setWorkspaceTasks(allWorkspaceTasksRes.data);
         setDefaultWorkspace(defaultActiveWokspace.data);
       })
@@ -54,12 +48,11 @@ const GlobalContext = ({ children }) => {
       });
   }, [user]);
   
+  console.log("outside", workspaces)
 
   // This funciton will create a new task in the task collection
   const handleCreateTask = (newTask, setOpenModal,activeWorkspaceId) => {
     // Calling it above for faster overview
-
-    console.log("id id id--------------------------------", activeWorkspaceId)
     xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask).then((res) => {
       if (res?.data?.insertedId) {
         setNewTask(newTask);
@@ -69,6 +62,8 @@ const GlobalContext = ({ children }) => {
     });
   };
 
+
+  console.log(workspaceBasedMembers)
 
   // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
@@ -91,6 +86,7 @@ const GlobalContext = ({ children }) => {
       `/userWokspaces/${user.email ? user.email : "shakilahmmed8882@gmail.com"}`
     );
     setSwitchWorkspace(!isWorkspaceSwitched);  
+    setWorkspaces(userWorkspaces.data)
   };
 
 const TriggerWhenNewWorkspaceCreated = () => {
