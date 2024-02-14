@@ -26,7 +26,9 @@ const Tasks = () => {
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
+  const workspaceAllTasks = allWorkspaceTasks?.length > 0 ? allWorkspaceTasks: alltasks 
   
+
   const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
   console.log("it is coming from page filter", workspaceAllTasks)
   
@@ -40,7 +42,7 @@ const Tasks = () => {
   const {defaultActiveWorkspace} = useGlobalContext()
   const {activeWorspace} = useContext(ablyContext)
   const {_id , title,description } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
-//   console.log(defaultActiveWorkspace);
+
 
 
   

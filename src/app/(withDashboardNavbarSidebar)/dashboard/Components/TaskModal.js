@@ -44,6 +44,8 @@ const TaskModal = ({ openModal, setOpenModal }) => {
       updatedAt:""
     };
 
+    console.log(id)
+
     handleCreateTask(newTask, setOpenModal,id);
     // reset();
   };
