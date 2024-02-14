@@ -102,11 +102,12 @@ const AdminDashboardSidebar = () => {
                             <li>
                                 <Link
                                     className={`flex items-center gap-x-4  ${
-                                        pathname == "/admin-dashboard/profile"
+                                        pathname ==
+                                        "/admin-dashboard/profile-setting"
                                             ? "active"
                                             : "inactive"
                                     } px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                    href="/admin-dashboard/profile"
+                                    href="/admin-dashboard/profile-setting"
                                 >
                                     <IoSettingsSharp className="w-7 h-7" />
                                     Profile
@@ -115,15 +116,16 @@ const AdminDashboardSidebar = () => {
                             <li>
                                 <Link
                                     className={`flex items-center  gap-x-4 ${
-                                        pathname == "/admin-dashboard/support"
+                                        pathname ==
+                                        "/admin-dashboard/users-feedback"
                                             ? "active"
                                             : "inactive"
                                     }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                    href="/dashboard/meeting"
+                                    href="/dashboard/users-feedback"
                                 >
                                     <div className="flex items-center">
                                         <TbHelpSquareRoundedFilled className="text-4xl me-3" />
-                                        <p>Support Users</p>
+                                        <p>Users Feedback</p>
                                     </div>
                                 </Link>
                             </li>
