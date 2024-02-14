@@ -78,7 +78,7 @@ function MemberList({ handleAddMember, setWillAddMember }) {
 
       <ul className="divide-y ">
         {suggestions?.map((user) => {
-          const isMemberAlreadyExist = ClickBasedActiveWorkspace?.members?.includes(user?.email)
+          const isMemberAlreadyExist = ClickBasedActiveWorkspace?.members?.find(member => member?.userEmail === user?.email)
           return <li key={user._id} className="py-3 sm:py-4">
           <div className="flex items-center space-x-4">
             <AssignColorAndStyle user={user} />

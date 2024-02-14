@@ -39,9 +39,7 @@ export default function DashboardLayout({ children }) {
                     </div>
 
                     <div className="xl:col-span-10 col-span-12 xl:ms-0 ms-5">
-                        <div
-                            className={`${pathname === "dashboard" && "flex"}`}
-                        >
+                        <div className={`flex`}>
                             <div className="sticky top-0">
                                 <div className="w-4 h-screen border-r-2 xl:hidden block relative">
                                     <button
@@ -52,7 +50,7 @@ export default function DashboardLayout({ children }) {
                                     </button>
                                 </div>
                             </div>
-                            <div className="">
+                            <div className="grow">
                                 <div className="">
                                     <DashboardNavbar />
                                 </div>
