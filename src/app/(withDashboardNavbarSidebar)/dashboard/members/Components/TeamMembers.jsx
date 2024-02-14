@@ -16,14 +16,15 @@ import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 
+
 const TeamMembers = () => {
     const {workspaceBasedMembers} = useGlobalContext()
 
-    console.log()
     return (
         <div className="shadow-md rounded-xl p-6 max-h-dvh overscroll-auto border">
             <h1 className=" text-2xl font-bold p-4">Team Member</h1>
             {workspaceBasedMembers?.map((member, index) => (
+                <div className="flex items-center">
                 <button>
                     <TeamMember
                     key={index}
@@ -32,6 +33,9 @@ const TeamMembers = () => {
                     avatar={member.avatar}
                 />
                 </button>
+                <button className="bg-red-700 justify-end p-2 rounded-lg text-white">Delete</button>
+                {/* <DeleteConfirmModal data={member?.name}/> */}
+                </div>
             ))}
         </div>
     );
