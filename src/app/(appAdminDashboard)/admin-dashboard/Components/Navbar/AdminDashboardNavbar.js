@@ -20,7 +20,7 @@ import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import { IoIosArrowDown } from "react-icons/io";
 
-const DashboardNavbar = () => {
+const AdminDashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
     const {
         handleActiveWorkspace,
@@ -315,4 +315,4 @@ const DashboardNavbar = () => {
     );
 };
 
-export default DashboardNavbar;
+export default AdminDashboardNavbar;
