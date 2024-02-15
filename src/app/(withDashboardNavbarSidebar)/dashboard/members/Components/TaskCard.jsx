@@ -11,7 +11,7 @@ import member04Img from "@/assets/team-members/shakil.jpg";
 const TaskCard = ({task}) => {
     return (
         <div
-            className="mt-4 bg-[#F9F9F9] shadow-md rounded-md p-8 text-black w-1/3 h-fit"
+            className="mt-4 flex-1 bg-[#F9F9F9] shadow-md rounded-md py-8 px-4 text-black h-"
         >
             <div className=" flex items-center gap-2 justify-between">
                 <h2 className="font-semibold text-lg">{task.title}</h2>

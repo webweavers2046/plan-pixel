@@ -60,9 +60,6 @@ const GlobalContext = ({ children }) => {
       }
   };
 
-
-
-
   // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
     setClickedWorkspaceId(_id)
@@ -78,7 +75,7 @@ const GlobalContext = ({ children }) => {
   // workspace list from the database
   const handleDropdownClick = async (e) => {
     e.preventDefault();
-  //  fetchLatestData()
+  
   };
 
 
@@ -98,6 +95,8 @@ const handleDeleteWorkspace = async (e, _id,isDelete) => {
   
   }
 };
+  
+
   
 
   const data = {

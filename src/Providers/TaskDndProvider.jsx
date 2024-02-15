@@ -14,6 +14,10 @@ import { AuthContext } from "./AuthProviders";
 import useAllTasks from "@/hooks/useAllTasks";
 import { ablyContext } from "@/components/ably/AblyProvider";
 
+import { AuthContext } from "./AuthProviders";
+import useAllTasks from "@/hooks/useAllTasks";
+import { ablyContext } from "@/components/ably/AblyProvider";
+
 // Global context provider for managing shared state
 export const taskContext = createContext(null);
 
@@ -36,7 +40,7 @@ export const TaskDndProvider = ({ children }) => {
   const xios = useAxios();
 
   // Fetching all tasks from the server
-  // const {data : initialTask} = useAllTasks();
+  const {data : initialTask} = useAllTasks();
   const { tasks } = useContext(ablyContext);
 
   // Global context for managing shared data

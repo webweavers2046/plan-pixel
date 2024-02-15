@@ -4,6 +4,7 @@ import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
+import member05Img from "@/assets/team-members/sajid.jpg";
 import { FaEquals, FaStopwatch } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Image from "next/image";
@@ -13,8 +14,6 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
-
 
 const Task = ({ setUpdateId,
     task,
