@@ -25,8 +25,6 @@ const AblyProvider = ({ children }) => {
   const [activeWorkspace,setSetActiveWorkspace] = useState({})
 
 
-  
-
   useEffect(() => {
     // Function to connect to Ably
     const connectAbly = async () => {
@@ -37,6 +35,7 @@ const AblyProvider = ({ children }) => {
         console.error("Error connecting to Ably:", error);
       }
     };
+
 
     // Calling the connectAbly function
     connectAbly();
@@ -84,6 +83,8 @@ const AblyProvider = ({ children }) => {
       }
     };
   }, [tasks]);
+  
+
   
 
   // Distribute all data by 

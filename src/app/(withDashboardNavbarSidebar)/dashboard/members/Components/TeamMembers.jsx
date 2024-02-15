@@ -19,10 +19,12 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 import DeleteConfirmModal from "@/components/Common/CommonModal/DeleteConfirmModal";
 
 const TeamMembers = () => {
-  const { activeWorkspaceMembers, handleDeleteMembers } = useGlobalContext();
+  const { activeWorkspaceMembers } = useGlobalContext();
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [selectedMember, setSeletedMember] = useState("");
 
 
+  console.log(selectedMember)
   return (
     <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border">
       <h1 className=" text-2xl font-bold p-4">Team Member</h1>
@@ -36,22 +38,28 @@ const TeamMembers = () => {
               avatar={member.avatar}
             />
           </button>
-          <button onClick={()=> setIsOpenDeleteModal(true)} className="bg-red-700 justify-end p-2 rounded-lg text-white">
+          <button
+            onClick={() => {
+                setSeletedMember(member?.email); // Set the selected workspace
+                setIsOpenDeleteModal(true);
+              }}
+            className="bg-red-700 justify-end p-2 rounded-lg text-white"
+          >
             Delete
           </button>
-
           <div className={`${isOpenDeleteModal ? "block" : "hidden"}`}>
             {isOpenDeleteModal && (
-              <DeleteConfirmModal
-                handleDeleteWorkspace={handleDeleteMembers}
-                setIsOpenDeleteModal={setIsOpenDeleteModal}
-                isOpenDeleteModal={isOpenDeleteModal}
-                workspace={member}
-                data={"Member"}
-              />
+              <div>
+                <DeleteConfirmModal
+                  type={"member"}
+                  setIsOpenDeleteModal={setIsOpenDeleteModal}
+                  isOpenDeleteModal={isOpenDeleteModal}
+                  filter={selectedMember}
+                  data={"Member"}
+                />
+              </div>
             )}
           </div>
-
         </div>
       ))}
     </div>

@@ -14,6 +14,7 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
 import useAllTasks from "@/hooks/useAllTasks";
+import { globalContext } from "@/Providers/globalContext";
 
 const Tasks = () => {
     // manage all your state here..
@@ -27,11 +28,14 @@ const Tasks = () => {
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
+  const {activeWorkspaceTasks} = useContext(globalContext)
   
   
+  if(!activeWorkspaceTasks) return  
 
-  const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
-  console.log("it is coming from page filter", workspaceAllTasks)
+  const workspaceAllTasks = activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks: allWorkspaceTasks
+  console.log("test global",activeWorkspaceTasks )
+  console.log("test ably",allWorkspaceTasks )
   
     // Tasks in different status
     const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do", draggingTaskId, dragOverElementName);
@@ -44,14 +48,12 @@ const Tasks = () => {
   const { title,description } = activeWorkspace || { title:"Your board",description:"hello there it is your demoboard " }
 
 
-
-  
   return (
     <>
       {typeof window !== "undefined" && (
         <section>
           {/* header section  */}
-          <div className="  ml-3 flex justify-between  border-b pb-2 pt-6 border-white/50">
+          <div className="  ml-3 flex -z-20 justify-between  border-b pb-2 pt-6 border-white/50">
             <div className="">
               <h6 className="font-medium text-[22px] flex gap-1 items-center mb-1"><span className="h-4 w-4 rounded-full bg-gradient-to-br from-[#93C648] to-[#50B577] text-white"></span>{title?title:"your board"}</h6>
               {

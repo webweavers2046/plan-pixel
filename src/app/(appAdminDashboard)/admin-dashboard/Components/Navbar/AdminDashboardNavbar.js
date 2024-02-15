@@ -75,7 +75,7 @@ const AdminDashboardNavbar = () => {
 
         if (isAddedMember.data.message) {
             await fetchLatestData()
-            return toast.success(`${memberName} is added to this workspace`);
+            return toast.success(`${memberName} is added to this workspace`,{position:"top-right"});
         }
 
         toast.error(isAddedMember.data.error);
