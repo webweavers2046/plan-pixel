@@ -21,7 +21,7 @@ const AdminDashboardSidebar = () => {
                     className={`  mr-2 h-screen xl:block hidden border-r-2 relative `}
                 >
                     <div className="py-4 px-3">
-                        <div className="ms-3 mt-1">
+                        <div className="ms-7 mt-1">
                             <Link href={"/"}>
                                 <Image
                                     className="w-auto max-h-9 lg:mb-0.5  mb-2.5"
@@ -102,11 +102,12 @@ const AdminDashboardSidebar = () => {
                             <li>
                                 <Link
                                     className={`flex items-center gap-x-4  ${
-                                        pathname == "/admin-dashboard/profile"
+                                        pathname ==
+                                        "/admin-dashboard/profile-setting"
                                             ? "active"
                                             : "inactive"
                                     } px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                    href="/admin-dashboard/profile"
+                                    href="/admin-dashboard/profile-setting"
                                 >
                                     <IoSettingsSharp className="w-7 h-7" />
                                     Profile
@@ -115,15 +116,16 @@ const AdminDashboardSidebar = () => {
                             <li>
                                 <Link
                                     className={`flex items-center  gap-x-4 ${
-                                        pathname == "/admin-dashboard/support"
+                                        pathname ==
+                                        "/admin-dashboard/users-feedback"
                                             ? "active"
                                             : "inactive"
                                     }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                    href="/dashboard/meeting"
+                                    href="/admin-dashboard/users-feedback"
                                 >
                                     <div className="flex items-center">
                                         <TbHelpSquareRoundedFilled className="text-4xl me-3" />
-                                        <p>Support Users</p>
+                                        <p>Users Feedback</p>
                                     </div>
                                 </Link>
                             </li>

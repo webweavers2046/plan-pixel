@@ -20,7 +20,7 @@ const Dashboard = () => {
     console.log(userData);
 
     return (
-        <div className="p-6">
+        <div className="py-6">
             <div
                 className="border-2 border-secondary bg-secondary/10 py-10 px-16 rounded-xl mb-6 flex justify-between items-center"
                 style={{

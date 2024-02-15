@@ -10,50 +10,37 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import UpdateTask from "../Components/UpdateTask";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
-import useGetSocketData from "@/hooks/useGetAllTasks";
+import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
+import useAllTasks from "@/hooks/useAllTasks";
+
 
 const Tasks = () => {
-  // manage all your state here..
-  const [openModal, setOpenModal] = useState(false);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const { alltasks, dropOn, draggingOver, dragOverElementName, isDragging,draggingTaskId } =
-    useDNDcontext();
+    // manage all your state here..
+    const [openModal, setOpenModal] = useState(false);
+    const [openUpdateModal, setOpenUpdateModal] = useState(false);
+    const [openCardDetails, setOpenCardDetails] = useState(false);
+    const [cardId, setCardId] = useState("");
+    const {alltasks, dropOn, draggingOver, dragOverElementName, isDragging, draggingTaskId } =
+        useDNDcontext();
+    // const { data: alltasks } = useAllTasks();
 
     
   const {allWorkspaceTasks} = useContext(ablyContext)
   
-  const workspaceAllTasks = allWorkspaceTasks?.length > 0 ? allWorkspaceTasks: alltasks
+  const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
   console.log("it is coming from page filter", workspaceAllTasks)
+  
+    // Tasks in different status
+    const toDoTasks = useFilterTasks(workspaceAllTasks, "to-do", draggingTaskId, dragOverElementName);
+    const upcomingTasks = useFilterTasks(workspaceAllTasks, "upcoming", draggingTaskId, dragOverElementName);
+    const doingTasks = useFilterTasks(workspaceAllTasks, "doing", draggingTaskId, dragOverElementName);
+    const doneTasks = useFilterTasks(workspaceAllTasks, "done", draggingTaskId, dragOverElementName);
 
-  // Tasks in different status
-  const toDoTasks = useFilterTasks(
-    workspaceAllTasks,
-    "to-do",
-    draggingTaskId,
-    dragOverElementName
-  );
-  const upcomingTasks = useFilterTasks(
-    workspaceAllTasks,
-    "upcoming",
-    draggingTaskId,
-    dragOverElementName
-  );
-  const doingTasks = useFilterTasks(
-    workspaceAllTasks,
-    "doing",
-    draggingTaskId,
-    dragOverElementName
-  );
-  const doneTasks = useFilterTasks(
-    workspaceAllTasks,
-    "done",
-    draggingTaskId,
-    dragOverElementName
-  );
 
   const {defaultActiveWorkspace} = useGlobalContext()
-  const {activeWorkspace} = useContext(ablyContext)
-  const { title,description } = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+  const {activeWorspace} = useContext(ablyContext)
+  const {_id , title,description } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
+  console.log(defaultActiveWorkspace);
 
 
   
@@ -110,139 +97,171 @@ const Tasks = () => {
                 <h2 className="font-bold">Upcoming</h2>
               </div>
 
-              {upcomingTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
-                </div>
-              ))}
-            </div>
-            {/* to do task */}
-            <div
-              droppable="true"
-              onDragOver={(e) => draggingOver(e)}
-              onDrop={(e) => dropOn(e)}
-              id="to-do"
-              className={`min-h-screen px-2 ${
-                dragOverElementName && "realative z-50"
-              } rounded-lg transition-all duration-1000 ${
-                dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""
-              }`}
-            >
-              <div
-                className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${
-                  dragOverElementName == "to-do" ? "bg-[white]" : ""
-                }`}
-              >
-                <LuListTodo className="text-2xl" /> <h2>To-do</h2>
-              </div>
+                            {upcomingTasks?.map((task, idx) => (
+                                <div>
+                                    <Task
+                                        idx={idx}
+                                        key={task._id}
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
+                                    />
+                                    <UpdateTask
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                    ></UpdateTask>
+                                </div>
+                            ))}
+                        </div>
+                        {/* to do task */}
+                        <div
+                            droppable="true"
+                            onDragOver={(e) => draggingOver(e)}
+                            onDrop={(e) => dropOn(e)}
+                            id="to-do"
+                            className={`min-h-screen px-2 ${dragOverElementName && "realative z-50"
+                                } rounded-lg transition-all duration-1000 ${dragOverElementName === "to-do"
+                                    ? "bg-[#E3E4E6]"
+                                    : ""
+                                }`}
+                        >
+                            <div
+                                className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${dragOverElementName == "to-do"
+                                        ? "bg-[white]"
+                                        : ""
+                                    }`}
+                            >
+                                <LuListTodo className="text-2xl" />{" "}
+                                <h2>To-do</h2>
+                            </div>
 
-              {toDoTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
-                </div>
-              ))}
-            </div>
-            {/* ongoing/doing tasks */}
-            <div
-              droppable="true"
-              onDragOver={(e) => draggingOver(e)}
-              onDrop={(e) => dropOn(e)}
-              id="doing"
-              className={`min-h-screen px-2 rounded-lg transition-all duration-1000 ${
-                dragOverElementName === "doing" ? "bg-[#E3E4E6]" : ""
-              }`}
-            >
-              <div
-                className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${
-                  dragOverElementName == "doing" ? "bg-[white]" : ""
-                }`}
-              >
-                <LuListTodo className="text-2xl" /> <h2 className="">Doing</h2>
-              </div>
+                            {toDoTasks?.map((task, idx) => (
+                                <div>
+                                    <Task
+                                        idx={idx}
+                                        key={task._id}
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
+                                    />
+                                    <UpdateTask
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                    ></UpdateTask>
+                                </div>
+                            ))}
+                        </div>
+                        {/* ongoing/doing tasks */}
+                        <div
+                            droppable="true"
+                            onDragOver={(e) => draggingOver(e)}
+                            onDrop={(e) => dropOn(e)}
+                            id="doing"
+                            className={`min-h-screen px-2 rounded-lg transition-all duration-1000 ${dragOverElementName === "doing"
+                                    ? "bg-[#E3E4E6]"
+                                    : ""
+                                }`}
+                        >
+                            <div
+                                className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${dragOverElementName == "doing"
+                                        ? "bg-[white]"
+                                        : ""
+                                    }`}
+                            >
+                                <LuListTodo className="text-2xl" />{" "}
+                                <h2 className="">Doing</h2>
+                            </div>
 
-              {doingTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
-                </div>
-              ))}
-            </div>
-            {/* done/completed tasks */}
-            <div
-              droppable="true"
-              onDragOver={(e) => draggingOver(e)}
-              onDrop={(e) => dropOn(e)}
-              id="done"
-              className={`px-2 min-h-screen rounded-lg transition-all duration-1000 ${
-                dragOverElementName === "done" ? "bg-[#E3E4E6]" : ""
-              }`}
-            >
-              <div
-                className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${
-                  dragOverElementName == "done" ? "bg-[white]" : ""
-                }`}
-              >
-                <LuListTodo className="text-2xl" /> <h2 className="">Done</h2>
-              </div>
+                            {doingTasks?.map((task, idx) => (
+                                <div>
+                                    <Task
+                                        idx={idx}
+                                        key={task._id}
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
+                                    />
+                                    <UpdateTask
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                    ></UpdateTask>
+                                </div>
+                            ))}
+                        </div>
+                        {/* done/completed tasks */}
+                        <div
+                            droppable="true"
+                            onDragOver={(e) => draggingOver(e)}
+                            onDrop={(e) => dropOn(e)}
+                            id="done"
+                            className={`px-2 min-h-screen rounded-lg transition-all duration-1000 ${dragOverElementName === "done"
+                                    ? "bg-[#E3E4E6]"
+                                    : ""
+                                }`}
+                        >
+                            <div
+                                className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${dragOverElementName == "done"
+                                        ? "bg-[white]"
+                                        : ""
+                                    }`}
+                            >
+                                <LuListTodo className="text-2xl" />{" "}
+                                <h2 className="">Done</h2>
+                            </div>
 
-              {doneTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
-                </div>
-              ))}
-            </div>
-          </div>
-          <TaskModal
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          ></TaskModal>
-        </section>
-      )}
-    </>
-  );
+                            {doneTasks?.map((task, idx) => (
+                                <div>
+                                    <Task
+                                        idx={idx}
+                                        key={task._id}
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                        openCardDetails={openCardDetails}
+                                        setOpenCardDetails={setOpenCardDetails}
+                                        cardId={cardId}
+                                        setCardId={setCardId}
+                                    />
+                                    <UpdateTask
+                                        task={task}
+                                        openUpdateModal={openUpdateModal}
+                                        setOpenUpdateModal={setOpenUpdateModal}
+                                    ></UpdateTask>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <TaskModal
+                        openModal={openModal}
+                        setOpenModal={setOpenModal}
+                    ></TaskModal> 
+                    
+                    <CardDetailsModal
+                        cardId={cardId}
+                        setCardId={setCardId}
+                        openCardDetails={openCardDetails}
+                        setOpenCardDetails={setOpenCardDetails}
+                    ></CardDetailsModal>
+
+                </section>
+            )}
+        </>
+    );
 };
 
 export default Tasks;

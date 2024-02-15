@@ -18,10 +18,20 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import UpdateTask from "../Components/UpdateTask";
 
 
-const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
+const Task = ({ setUpdateId,
+    task,
+    openUpdateModal,
+    setOpenUpdateModal,
+    openCardDetails,
+    setOpenCardDetails,
+    setCardId }) => {
+        
     // manage all you state here
-    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useDNDcontext();
-        const xios = useAxios()
+    const { draggingStarted, isDragging, draggingOver, isDropped, draggingTaskId } = useDNDcontext();
+    const xios = useAxios()
+    console.log(task);
+
+
 
     const handleDeleteTask = (id) => {
 
@@ -52,8 +62,15 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
     };
 
     const handleUpdate = (id) => {
+        setWorkspaceId()
         setUpdateId(id)
         setOpenUpdateModal(!openUpdateModal)
+    }
+
+    const handleCard = () => {
+        setCardId(task?._id)
+        setOpenCardDetails(!openCardDetails)
+
     }
 
     return (
@@ -144,7 +161,9 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                         alt=""
                     />
                 </div>
-                <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+                <button onClick={handleCard}>
+                    <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+                </button>
 
             </div>
         </div>

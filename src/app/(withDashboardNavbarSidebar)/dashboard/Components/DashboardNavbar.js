@@ -75,7 +75,10 @@ const DashboardNavbar = () => {
       title: title,
       description: description,
       creator: user?.email,
-      members: ["userID2", "userID3"],
+      members: [{
+        memberName: user?.displayName,
+        userEmail: user?.email
+      }],
       tasks: [],
       isActive: false,
     };
@@ -93,6 +96,7 @@ const DashboardNavbar = () => {
     const workspaceAndUserEmail = {
       workspaceId,
       userEmail: memberEmail,
+      memberName: memberName
     };
 
     const isAddedMember = await xios.post(
@@ -126,16 +130,16 @@ const DashboardNavbar = () => {
             {currentSpace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
-            className={` cursor-pointer ${
-              isDropdownOpen ? "rotate-180" : "rotate-0"
-            } transition-all duration-300`}
+            className={` cursor-pointer ${isDropdownOpen ? "rotate-180" : "rotate-0"
+              } transition-all duration-300`}
           />
         </div>
 
         <div
-          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${
-            isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
-          } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
+          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${isDropdownOpen
+              ? "visible opacity-100"
+              : "invisible opacity-0"
+            } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
           {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
 
@@ -145,17 +149,20 @@ const DashboardNavbar = () => {
                 key={workspace?._id}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
-                onClick={(e) => handleActiveWorkspace(e, workspace._id)}
+                onClick={(e) =>
+                  handleActiveWorkspace(e, workspace._id)
+                }
                 className="flex hover:bg-[#8091670c] px-4 transition-all cursor-pointer duration-300 items-center gap-2 py-4 relative"
               >
                 {workspace.title}
 
                 <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
                 <span
-                  onClick={() => setWillAddMember(!WillAddMember)}
-                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
-                    isHovered === index ? "opacity-100" : ""
-                  }`}
+                  onClick={() =>
+                    setWillAddMember(!WillAddMember)
+                  }
+                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${isHovered === index ? "opacity-100" : ""
+                    }`}
                 >
                   +
                 </span>
@@ -164,7 +171,9 @@ const DashboardNavbar = () => {
           })}
           <li>
             <div
-              onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
+              onClick={() =>
+                setIsCreateWorkSpace(!isCreateWokspace)
+              }
               className="w-full  shadow-s mt-auto px-2  grid justify-self-end hover:bg-transparent  text-center rounded-lg"
             >
               <p className="w-full  text-white text-center py-[6px] cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm  rounded-l  ">
@@ -176,7 +185,9 @@ const DashboardNavbar = () => {
             <div className="absolute -z-20 bottom-[70px] left-24">
               <Image
                 className=" opacity-50 mx-auto w-11 h-11 left-1/2"
-                src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
+                src={
+                  "https://i.ibb.co/mtGpTfj/icons8-search-250.png"
+                }
                 height={100}
                 width={100}
               />
@@ -239,10 +250,10 @@ const DashboardNavbar = () => {
       </div>
       <div className="border py-2 px-3 rounded-lg bg-[white]">
         <Dropdown
-          className="bg-white rounded-lg mt-1 lg:w-[15vw] lg:-ml-[10px]"
+          className="bg-white rounded-lg"
           inline
           label={
-            <div className="flex items-center ">
+            <div className="flex items-center">
               {userData?.image ? (
                 <Image
                   src={userData?.image}
@@ -271,23 +282,21 @@ const DashboardNavbar = () => {
             </div>
           }
         >
-         
-            <Dropdown.Item className="mt-2" icon={HiViewGrid}>
-              Dashboard
-            </Dropdown.Item>
-            <Dropdown.Item icon={HiCog}>
-              <Link href={"/dashboard/setting"}>Settings</Link>
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>
-              <button
-                onClick={() => handleLogOut()}
-                className="bg-red-600 text-white lg:text-[14px] w-full py-2 font-bold rounded-lg"
-              >
-                Log Out
-              </button>
-            </Dropdown.Item>
-    
+          <Dropdown.Item className="mt-2" icon={HiViewGrid}>
+            Dashboard
+          </Dropdown.Item>
+          <Dropdown.Item icon={HiCog}>
+            <Link href={"/dashboard/setting"}>Settings</Link>
+          </Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item>
+            <button
+              onClick={() => handleLogOut()}
+              className="bg-red-600 text-white lg:text-[14px] w-full py-2 font-bold rounded-lg"
+            >
+              Log Out
+            </button>
+          </Dropdown.Item>
         </Dropdown>
       </div>
       <div className="translate-x-0 duration-200 absolute z-50 left-0">
