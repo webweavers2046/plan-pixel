@@ -24,6 +24,7 @@ module.exports = {
                 footer: "#E9F5E3",
 
                 darkParaColor: "",
+                inputBg: "#ECECEC"
             },
         },
     },
