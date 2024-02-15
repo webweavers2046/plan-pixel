@@ -1,9 +1,10 @@
 import threeDotIcon from "@/assets/dashboard/threeDot.svg";
 import timeIcon from "@/assets/dashboard/time.svg";
 import Image from "next/image";
+
 const TimeTruck = () => {
     return (
-        <div className="shadow-md rounded-xl p-6 overflow-auto bg-[#FBBC05]/20">
+        <div className="rounded-xl p-6 overflow-auto border-2 border-tertiary bg-tertiary/5">
             <h1 className=" text-2xl font-bold p-4">Time Truck</h1>
             {tasks.map((task) => (
                 <Task key={task.name} name={task.name} time={task.time} />
