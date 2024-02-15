@@ -35,6 +35,8 @@ const Tasks = () => {
 
     const workspaceAllTasks =
         allWorkspaceTasks.length > 0 ? allWorkspaceTasks : alltasks;
+
+    console.log("it is coming from page filter", workspaceAllTasks);
     console.log("it is coming from page filter", workspaceAllTasks);
 
     // Tasks in different status
