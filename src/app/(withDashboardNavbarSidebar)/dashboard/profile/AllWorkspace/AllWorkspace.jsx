@@ -9,15 +9,12 @@ import toast from "react-hot-toast";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 const AllWorkspace = () => {
-  const { userWokspaceList,handleDeleteWorkspace } = useGlobalContext();
+  const { activeWorkspaceMembers,userWokspaceList,handleDeleteWorkspace } = useGlobalContext();
 
-
-  const [isDeleteConfirm, setDeleteConfirm] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
   const xios = useAxios();
   const { user } = useContext(AuthContext);
-
   
 
   return (
@@ -31,7 +28,15 @@ const AllWorkspace = () => {
           >
             <h1 className="text-lg ">{workspace?.title}</h1>
             <div className="flex gap-x-4">
-              <Image width={10} height={10} alt="member pic"></Image>
+            {/* <img class="" src="" alt=""> */}
+
+              
+            <div className="flex -space-x-4 rtl:space-x-reverse">
+              {
+              activeWorkspaceMembers?.map(member => <Image width={10} height={10} className="w-10 h-10  border-2 border-white rounded-full dark:border-gray-800" alt="member pic"></Image>)
+              } 
+              </div>
+              
               <BsThreeDotsVertical
                 onClick={() => setIsOpenDeleteModal(true)}
                 className="cursor-pointer"
@@ -45,7 +50,7 @@ const AllWorkspace = () => {
                       handleDeleteWorkspace={handleDeleteWorkspace}
                       setIsOpenDeleteModal={setIsOpenDeleteModal}
                       isOpenDeleteModal={isOpenDeleteModal}
-                      workspace={workspace}
+                      workspace={workspace?._id}
                       setDeleteConfirm={setDeleteConfirm}
                       data={"Workspace"}
                     />

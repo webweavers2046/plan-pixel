@@ -16,10 +16,9 @@ const GlobalContext = ({ children }) => {
   const [workspaceBasedTasks, setWorkspaceTasks] = useState([]);
   const [workspaceBasedMembers, setWorkspaceMembers] = useState([]);
   // const [activeWrokspace, setActiveWorkspace] = useState([]);
-  const [workspaces, setWorkspaces] = useState([]);
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
-  const [defaultActiveWorkspace, setDefaultWorkspace] = useState({})
+  
 
 //activeWorkspace,userWokspaceList, activeWorkspaceTasks, activeWorkspaceMembers
   const [activeWorkspace,setActiveWorkspace] = useState({})
@@ -49,9 +48,8 @@ const GlobalContext = ({ children }) => {
 
   // This funciton will create a new task in the task collection
   const handleCreateTask = async (newTask, setOpenModal,activeWorkspaceId) => {
-    // Calling it above for faster overview
     const response = await xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask)
-    
+    console.log(activeWorkspaceId)
     if (response?.data?.insertedId) {
         setNewTask(newTask);
         setOpenModal(false);
@@ -75,12 +73,9 @@ const GlobalContext = ({ children }) => {
   // workspace list from the database
   const handleDropdownClick = async (e) => {
     e.preventDefault();
-  
   };
 
-
-
-// Delete 
+// Delete workspace
 const handleDeleteWorkspace = async (e, _id,isDelete) => {
   e.preventDefault();
   // delete workspace from the database
@@ -95,9 +90,12 @@ const handleDeleteWorkspace = async (e, _id,isDelete) => {
   
   }
 };
-  
 
-  
+const handleDeleteMembers = async() => {
+
+}
+
+
 
   const data = {
     activeWorkspace, 
@@ -105,6 +103,7 @@ const handleDeleteWorkspace = async (e, _id,isDelete) => {
     activeWorkspaceTasks,
     activeWorkspaceMembers,
     fetchLatestData,
+    handleDeleteMembers,
 
     handleCreateTask,
     newTask,
@@ -113,12 +112,10 @@ const handleDeleteWorkspace = async (e, _id,isDelete) => {
     handleActiveWorkspace,
     setNewTask,
     handleDropdownClick,
-    workspaces,
-    defaultActiveWorkspace,
+   
     clickedWorkspaceId,
     setSwitchWorkspace,
     isWorkspaceSwitched,
-
     handleDeleteWorkspace
   };
 
