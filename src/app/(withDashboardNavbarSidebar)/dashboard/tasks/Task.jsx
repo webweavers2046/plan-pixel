@@ -1,11 +1,9 @@
 "use client";
 
-import FlowBiteModal from "../Components/FlowBiteModal";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
-import member05Img from "@/assets/team-members/sajid.jpg";
 import { FaEquals, FaStopwatch } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Image from "next/image";
@@ -15,13 +13,23 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import UpdateTask from "../Components/UpdateTask";
 
 
-const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
+
+const Task = ({ setUpdateId,
+    task,
+    openUpdateModal,
+    setOpenUpdateModal,
+    openCardDetails,
+    setOpenCardDetails,
+    setCardId }) => {
+        
     // manage all you state here
-    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useDNDcontext();
-        const xios = useAxios()
+    const { draggingStarted, draggingOver, isDropped } = useDNDcontext();
+    const xios = useAxios()
+    console.log(task);
+
+
 
     const handleDeleteTask = (id) => {
 
@@ -52,8 +60,15 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
     };
 
     const handleUpdate = (id) => {
+        setWorkspaceId()
         setUpdateId(id)
         setOpenUpdateModal(!openUpdateModal)
+    }
+
+    const handleCard = () => {
+        setCardId(task?._id)
+        setOpenCardDetails(!openCardDetails)
+
     }
 
     return (
@@ -144,7 +159,9 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                         alt=""
                     />
                 </div>
-                <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+                <button onClick={handleCard}>
+                    <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+                </button>
 
             </div>
         </div>

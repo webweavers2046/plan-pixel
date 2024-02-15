@@ -18,16 +18,12 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
 
 const TeamMembers = () => {
-    const {workspaceBasedMembers} = useGlobalContext()
-    const {allWorkspaceMembers,activeWorspace} = useContext(ablyContext)
-
-    const membersInWorkspace = allWorkspaceMembers.length > 0? allWorkspaceMembers : workspaceBasedMembers 
-    
+    const {activeWorkspaceMembers,activeWorkspace} = useGlobalContext()
     
     return (
         <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
-            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">Team Member <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">{activeWorspace?.title}</span></h1>
-            {membersInWorkspace?.map((member, index) => (
+            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">Team Member <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">{activeWorkspace?.title}</span></h1>
+            {activeWorkspaceMembers?.map((member, index) => (
                 <TeamMember
                     key={index}
                     name={member.name}
@@ -185,7 +181,7 @@ const teamMemberData = [
         avatar: member03Img,
     },
     {
-        name: "Shakil Ahmed",
+        name: "Shakil Ahmmed",
         email: "shakilahmmed8882@gmail.com",
         avatar: member04Img,
     },
@@ -197,7 +193,7 @@ const teamMemberData = [
     },
 
     {
-        name: "Forhad hossine",
+        name: "Forhad hossain",
         email: "forhadairdrop@gmail.com",
         avatar: member06Img,
     },

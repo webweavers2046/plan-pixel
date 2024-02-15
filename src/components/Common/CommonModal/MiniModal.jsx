@@ -8,7 +8,6 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 const MiniModal = ({isCreateWokspace, handleClose,setIsCreateWorkSpace, handleCreateWorkspace,setDropdownOpen }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const {TriggerWhenNewWorkspaceCreated} = useGlobalContext()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,17 +20,16 @@ const MiniModal = ({isCreateWokspace, handleClose,setIsCreateWorkSpace, handleCr
     handleCreateWorkspace(name, description);
     setIsCreateWorkSpace(false)
     setDropdownOpen(false)
-    TriggerWhenNewWorkspaceCreated()
     // Reset the form values
     setName("");
     setDescription("");
   };
 
   return (
-    <div className={`${isCreateWokspace?"visible opacity-100":"invisible opacity-0"} transition-all duration-300`}>
+    <div className={` ${isCreateWokspace?"visible opacity-100":"invisible opacity-0"} transition-all duration-300`}>
       <>
         <div className="flex items-center ">
-          <div className="bg-white shadow-lg h-[200px] rounded-lg p-4 z-40 absolute left-[270px] w-[260px] overflow-hidden top-32 mx-auto">
+          <div className="bg-white shadow-lg h-[200px] rounded-sm p-4 z-40 absolute left-[270px] w-[255px] overflow-hidden top-28 mx-auto">
             <div className="flex w-full items-center mb-2">
               <input
                 name="name"

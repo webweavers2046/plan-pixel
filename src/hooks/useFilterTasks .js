@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import useGlobalContext from "./useGlobalContext";
 import { taskContext } from "@/Providers/TaskDndProvider";
 
-const useFilterTasks = (tasksArray, filter, draggingTaskId, droppableArea) => {
+const useFilterTasks = (tasksArray = [1,2] , filter, draggingTaskId, droppableArea) => {
   const { dragoverTask } = useContext(taskContext);
   const { position } = dragoverTask || {};
   const filteredTasks = tasksArray?.filter((task) => task?.status === filter);
-  const draggingTask = tasksArray.find((task) => task._id === draggingTaskId);
+
+  const draggingTask = tasksArray?.find((task) => task._id === draggingTaskId);
   
   if (droppableArea) {
     const columnSequencedTasks = tasksArray?.filter(
@@ -17,9 +17,6 @@ const useFilterTasks = (tasksArray, filter, draggingTaskId, droppableArea) => {
       (task) => task.position === position
     );
 
-    // console.log("Task Index in Column: ", dropIndex);
-
-    // Adjust positions for tasks below the drop position
     for (let i = dropIndex + 1; i < columnSequencedTasks.length; i++) {
       columnSequencedTasks[i].position += 1;
     }

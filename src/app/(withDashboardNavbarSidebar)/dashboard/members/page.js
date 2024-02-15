@@ -11,7 +11,7 @@ const page = () => {
   const { alltasks } = useDNDcontext();
   const [filter, setFilter] = useState("to-do")
   const tasks = useFilterTasks(alltasks, filter);
-  console.log('members tasks', tasks);
+
 
   return (
     <div className="grid grid-cols-3 p-5">
