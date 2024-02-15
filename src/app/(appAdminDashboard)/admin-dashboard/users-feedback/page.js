@@ -1,3 +1,7 @@
+import Image from "next/image";
+import userAvatar from "@/assets/person/p1.jpg";
+import { RiSendPlaneFill } from "react-icons/ri";
+
 const UserFeedback = () => {
     const totalNumberOfFeedback = 18;
     const feedbackData = [
@@ -46,7 +50,7 @@ const UserFeedback = () => {
             userEmail: "alice@example.com",
             date: "2024-02-14",
             feedback:
-                "I've been using the task management site for a while now, and I must say, it's been an absolute game-changer for me! It's incredibly intuitive and user-friendly. I've tried several task management tools in the past, but this one stands out due to its simplicity and effectiveness. The interface is clean, the features are robust, and it helps me stay organized like never before. I particularly appreciate the ability to set deadlines, prioritize tasks, and collaborate with my team seamlessly. Overall, I'm extremely satisfied with the site, and I highly recommend it to anyone looking to boost their productivity.",
+                "I particularly appreciate the ability to set deadlines, prioritize tasks, and collaborate with my team seamlessly. Overall, I'm extremely satisfied with the site, and I highly recommend it to anyone looking to boost their productivity.",
             userImage: "https://example.com/alice-johnson.jpg",
         },
         {
@@ -193,52 +197,236 @@ const UserFeedback = () => {
                     <div className="grid gap-6">
                         {feedbackData.slice(0, row1).map((feedback, idx) => (
                             <div
-                                className="bg-dashboardPrimaryColor h-full bg-gradient-to-r hover:from-[#94f3b0] hover:to-[#7abf88] hover:text-black p-10 rounded-lg
-                            "
+                                className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
+                         "
                             >
-                                <p className="text-">{feedback.feedback}</p>
-                                <h2 className="text-4xl pb-3">
-                                    {feedback.userName}
-                                </h2>
+                                <p className="leading-6 opacity-90">
+                                    {feedback.feedback}
+                                </p>
+                                <div className="flex items-end justify-between mt-2 grow">
+                                    <div className="flex gap-4 items-center mt-4">
+                                        <div className="">
+                                            <Image
+                                                className="rounded-full"
+                                                width={35}
+                                                height={35}
+                                                src={userAvatar}
+                                                alt={feedback.name}
+                                            />
+                                        </div>
+                                        <div className="">
+                                            <h4 className="font-semibold">
+                                                {feedback.userName}
+                                            </h4>
+                                            <p className="text-xs">
+                                                {feedback.userEmail}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="">
+                                        <p className="text-xs opacity-70">
+                                            Date:{" "}
+                                        </p>
+                                        <h6 className="text-sm font-semibold">
+                                            {feedback.date}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div className="pt-4">
+                                    <form className="flex gap-2 items-center justify-between">
+                                        <textarea
+                                            name=""
+                                            id=""
+                                            cols="30"
+                                            rows="1"
+                                            placeholder="Reply..."
+                                            className="placeholder:opacity-50 border-0 rounded-xl placeholder:text-xs w-full bg-gray-300"
+                                        ></textarea>
+                                        <button
+                                            type="submit"
+                                            className="p-3 rounded-t-xl rounded-br-xl bg-gradient-to-r from-primary/70 to-secondary/70 "
+                                        >
+                                            <RiSendPlaneFill />
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         ))}
                     </div>
                     <div className="grid gap-6">
                         {feedbackData.slice(row1, row2).map((feedback, idx) => (
                             <div
-                                className="bg-dashboardPrimaryColor h-full bg-gradient-to-r hover:from-[#94f3b0] hover:to-[#7abf88] hover:text-black p-10 rounded-lg
-                            "
+                                className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
+                         "
                             >
-                                <p className="text-">{feedback.feedback}</p>
-                                <h2 className="text-4xl pb-3">
-                                    {feedback.userName}
-                                </h2>
+                                <p className="leading-6 opacity-90">
+                                    {feedback.feedback}
+                                </p>
+                                <div className="flex items-end justify-between  mt-2 grow">
+                                    <div className="flex gap-4 items-center mt-4">
+                                        <div className="">
+                                            <Image
+                                                className="rounded-full"
+                                                width={35}
+                                                height={35}
+                                                src={userAvatar}
+                                                alt={feedback.name}
+                                            />
+                                        </div>
+                                        <div className="">
+                                            <h4 className="font-semibold">
+                                                {feedback.userName}
+                                            </h4>
+                                            <p className="text-xs">
+                                                {feedback.userEmail}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="">
+                                        <p className="text-xs opacity-70">
+                                            Date:{" "}
+                                        </p>
+                                        <h6 className="text-sm font-semibold">
+                                            {feedback.date}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div className="pt-4">
+                                    <form className="flex gap-2 items-center justify-between">
+                                        <textarea
+                                            name=""
+                                            id=""
+                                            cols="30"
+                                            rows="1"
+                                            placeholder="Reply..."
+                                            className="placeholder:opacity-50 border-0 rounded-xl placeholder:text-xs w-full bg-gray-300"
+                                        ></textarea>
+                                        <button
+                                            type="submit"
+                                            className="p-3 rounded-t-xl rounded-br-xl bg-gradient-to-r from-primary/70 to-secondary/70 "
+                                        >
+                                            <RiSendPlaneFill />
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         ))}
                     </div>
                     <div className="grid gap-6">
                         {feedbackData.slice(row2, row3).map((feedback, idx) => (
                             <div
-                                className="bg-dashboardPrimaryColor h-full bg-gradient-to-r hover:from-[#94f3b0] hover:to-[#7abf88] hover:text-black p-10 rounded-lg
+                                className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
                             "
                             >
-                                <p className="text-">{feedback.feedback}</p>
-                                <h2 className="text-4xl pb-3">
-                                    {feedback.userName}
-                                </h2>
+                                <p className="leading-6 opacity-90">
+                                    {feedback.feedback}
+                                </p>
+                                <div className="flex items-end justify-between  mt-2 grow">
+                                    <div className="flex gap-4 items-center mt-4">
+                                        <div className="">
+                                            <Image
+                                                className="rounded-full"
+                                                width={35}
+                                                height={35}
+                                                src={userAvatar}
+                                                alt={feedback.name}
+                                            />
+                                        </div>
+                                        <div className="">
+                                            <h4 className="font-semibold">
+                                                {feedback.userName}
+                                            </h4>
+                                            <p className="text-xs">
+                                                {feedback.userEmail}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="">
+                                        <p className="text-xs opacity-70">
+                                            Date:{" "}
+                                        </p>
+                                        <h6 className="text-sm font-semibold">
+                                            {feedback.date}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div className="pt-4">
+                                    <form className="flex gap-2 items-center justify-between">
+                                        <textarea
+                                            name=""
+                                            id=""
+                                            cols="30"
+                                            rows="1"
+                                            placeholder="Reply..."
+                                            className="placeholder:opacity-50 border-0 rounded-xl placeholder:text-xs w-full bg-gray-300"
+                                        ></textarea>
+                                        <button
+                                            type="submit"
+                                            className="p-3 rounded-t-xl rounded-br-xl bg-gradient-to-r from-primary/70 to-secondary/70 "
+                                        >
+                                            <RiSendPlaneFill />
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         ))}
                     </div>
                     <div className="grid gap-6">
                         {feedbackData.slice(row3, row4).map((feedback, idx) => (
                             <div
-                                className="bg-dashboardPrimaryColor h-full bg-gradient-to-r hover:from-[#94f3b0] hover:to-[#7abf88] hover:text-black p-10 rounded-lg
-                            "
+                                className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
+                         "
                             >
-                                <p className="text-">{feedback.feedback}</p>
-                                <h2 className="text-4xl pb-3">
-                                    {feedback.userName}
-                                </h2>
+                                <p className="leading-6 opacity-90">
+                                    {feedback.feedback}
+                                </p>
+                                <div className="flex items-end justify-between  mt-2 grow">
+                                    <div className="flex gap-4 items-center mt-4">
+                                        <div className="">
+                                            <Image
+                                                className="rounded-full"
+                                                width={35}
+                                                height={35}
+                                                src={userAvatar}
+                                                alt={feedback.name}
+                                            />
+                                        </div>
+                                        <div className="">
+                                            <h4 className="font-semibold">
+                                                {feedback.userName}
+                                            </h4>
+                                            <p className="text-xs">
+                                                {feedback.userEmail}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="">
+                                        <p className="text-xs opacity-70">
+                                            Date:{" "}
+                                        </p>
+                                        <h6 className="text-sm font-semibold">
+                                            {feedback.date}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div className="pt-4">
+                                    <form className="flex gap-2 items-center justify-between">
+                                        <textarea
+                                            name=""
+                                            id=""
+                                            cols="30"
+                                            rows="1"
+                                            placeholder="Reply..."
+                                            className="placeholder:opacity-50 border-0 rounded-xl placeholder:text-xs w-full bg-gray-300"
+                                        ></textarea>
+                                        <button
+                                            type="submit"
+                                            className="p-3 rounded-t-xl rounded-br-xl bg-gradient-to-r from-primary/70 to-secondary/70 "
+                                        >
+                                            <RiSendPlaneFill />
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         ))}
                     </div>
