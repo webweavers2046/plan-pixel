@@ -37,9 +37,8 @@ import AssignColorAndStyle from "./AsignAlphabelColor";
 import { ablyContext } from "@/components/ably/AblyProvider";
 
 function MemberList({ handleAddMember, setWillAddMember }) {
-  const { clickedWorkspaceId,defaultActiveWorkspace } = useGlobalContext();
-  const { activeWorkspace } = useContext(ablyContext);
-  const ClickBasedActiveWorkspace = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
+
+  const { clickedWorkspaceId,activeWorkspace} = useGlobalContext();
 
   const xios = useAxios();
   const [suggestions, setSuggestions] = useState([]);
@@ -51,8 +50,6 @@ function MemberList({ handleAddMember, setWillAddMember }) {
       setSuggestions([]);
     }
   };
-
-
 
 
   return (
@@ -78,7 +75,7 @@ function MemberList({ handleAddMember, setWillAddMember }) {
 
       <ul className="divide-y ">
         {suggestions?.map((user) => {
-          const isMemberAlreadyExist = ClickBasedActiveWorkspace?.members?.find(member => member?.userEmail === user?.email)
+          const isMemberAlreadyExist = activeWorkspace?.members?.find(member => member === user?.email)
           return <li key={user._id} className="py-3 sm:py-4">
           <div className="flex items-center space-x-4">
             <AssignColorAndStyle user={user} />
