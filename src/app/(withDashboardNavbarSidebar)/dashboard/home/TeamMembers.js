@@ -17,18 +17,34 @@ import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 
 const TeamMembers = () => {
-    // const { workspaceBasedMembers } = useGlobalContext();
+    const { workspaceBasedMembers, defaultActiveWorkspace } =
+        useGlobalContext();
+    const { allWorkspaceMembers, activeWorkspace } = useContext(ablyContext);
 
-    // console.log()
+    const Wspace = activeWorkspace?.propertyToCheck || defaultActiveWorkspace;
+
+    let membersInWorkspace =
+        allWorkspaceMembers.length > 0
+            ? allWorkspaceMembers
+            : workspaceBasedMembers;
+
     return (
-        <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border">
-            <h1 className=" text-2xl font-bold p-4">Team Member</h1>
-            {teamMemberData?.map((member, index) => (
+        <div className=" w-full rounded-xl p-6 max-h-dvh overscroll-auto border-2">
+            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">
+                Team Member{" "}
+                {Wspace?.title && (
+                    <span className="text-[12px] font-normal bg-secondary h-6 px-2 flex items-center rounded-lg text-white">
+                        {Wspace?.title}
+                    </span>
+                )}
+            </h1>
+            {membersInWorkspace?.map((member, index) => (
                 <TeamMember
                     key={index}
                     name={member.name}
                     userEmail={member.email}
-                    avatar={member.avatar}
+                    // avatar={member.avatar}
+                    avatar={member02Img}
                 />
             ))}
         </div>

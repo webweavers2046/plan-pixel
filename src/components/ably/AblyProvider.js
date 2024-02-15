@@ -84,9 +84,7 @@ const AblyProvider = ({ children }) => {
       }
     };
   }, [tasks]);
-
-
-console.log(activeWorkspace)
+  
 
   // Distribute all data by 
   const distributingData = {

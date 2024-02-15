@@ -17,7 +17,10 @@ import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 
 const TeamMembers = () => {
-    const { workspaceBasedMembers } = useGlobalContext();
+    const {workspaceBasedMembers} = useGlobalContext()
+
+    
+
 
     console.log(workspaceBasedMembers)
     return (
