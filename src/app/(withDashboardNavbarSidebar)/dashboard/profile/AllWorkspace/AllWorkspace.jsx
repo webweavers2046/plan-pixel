@@ -9,10 +9,8 @@ import toast from "react-hot-toast";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 const AllWorkspace = () => {
-  const { workspaces,handleDeleteWorkspace } = useGlobalContext();
-  const { allWorkspaces } = useContext(ablyContext);
-  const displayWorkspaces =
-    allWorkspaces?.length > 0 ? allWorkspaces : workspaces;
+  const { userWokspaceList,handleDeleteWorkspace } = useGlobalContext();
+
 
   const [isDeleteConfirm, setDeleteConfirm] = useState(false);
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
@@ -25,7 +23,7 @@ const AllWorkspace = () => {
   return (
     <div className="w-full px-10 mt-10">
       <h3 className="text-xl font-semibold mb-5">All workspace</h3>
-      {displayWorkspaces?.map((workspace) => {
+      {userWokspaceList?.map((workspace) => {
         return (
           <div
             key={workspace._id}

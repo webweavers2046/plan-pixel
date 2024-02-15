@@ -9,32 +9,35 @@ const EditWorkspace = ({setEdit,isEdit}) => {
   const [creator, setCreator] = useState("");
   const [description, setDescription] = useState("");
   const xios = useAxios()
-  const { defaultActiveWorkspace } = useGlobalContext();
-  const { activeWorkspace} = useContext(ablyContext);
-  const activeWorkspaceId = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
-
-
-  const handleSave = async() => {
-   
+  const { activeWorkspace,fetchLatestData } = useGlobalContext();
+  
+  const handleSave = async() => { 
+    // Validate the workspace input value 
     if(workspaceName === "") return toast.error("Please fill the name filed")
     if(creator === "") return toast.error("Please fill the creator filed")
     if(description === "") return toast.error("Please fill the description filed")
     
+    // is user editing or not
     setEdit(false)
 
+    // new workspace data 
     const updatedWorkspace = {
         title:workspaceName,
         description,
         creator
     }
 
-    const response = await xios.put(`/updateWorkspace/${activeWorkspaceId}`,updatedWorkspace)
-    if(response.data.modifiedCount > 0) {
-        return toast.success(`${activeWorkspace.title} is updated`)
+    // api request to change in database
+    const response = await xios.put(`/updateWorkspace/${activeWorkspace?._id}`,updatedWorkspace)
+    
+    // update ui with latest value 
+    fetchLatestData()
+    console.log(response)
+    if(response.data.message) {
+        return toast.success(`${activeWorkspace?.title} is updated into ${workspaceName}`)
     }
 
-
-
+    // clear the input 
     setWorkspaceName("");
     setCreator("");
     setDescription("");

@@ -8,7 +8,6 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 const MiniModal = ({isCreateWokspace, handleClose,setIsCreateWorkSpace, handleCreateWorkspace,setDropdownOpen }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const {TriggerWhenNewWorkspaceCreated} = useGlobalContext()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +20,6 @@ const MiniModal = ({isCreateWokspace, handleClose,setIsCreateWorkSpace, handleCr
     handleCreateWorkspace(name, description);
     setIsCreateWorkSpace(false)
     setDropdownOpen(false)
-    TriggerWhenNewWorkspaceCreated()
     // Reset the form values
     setName("");
     setDescription("");
