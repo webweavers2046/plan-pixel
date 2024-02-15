@@ -1,8 +1,10 @@
 "use client";
+import "@/styles/globals.css";
 import { LuListTodo } from "react-icons/lu";
 import { FiPlusSquare } from "react-icons/fi";
+import { BsCheck2Square, BsFastForwardFill } from "react-icons/bs";
+import { FaChartGantt } from "react-icons/fa6";
 import Task from "./Task";
-import "@/styles/globals.css";
 import { useContext, useState } from "react";
 import TaskModal from "../Components/TaskModal";
 import useFilterTasks from "@/hooks/useFilterTasks ";
@@ -12,7 +14,6 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
 import useAllTasks from "@/hooks/useAllTasks";
-
 
 const Tasks = () => {
     // manage all your state here..
@@ -27,6 +28,8 @@ const Tasks = () => {
     
   const {allWorkspaceTasks} = useContext(ablyContext)
   
+  
+
   const workspaceAllTasks = allWorkspaceTasks.length > 0 ? allWorkspaceTasks: alltasks
   console.log("it is coming from page filter", workspaceAllTasks)
   
@@ -37,10 +40,9 @@ const Tasks = () => {
     const doneTasks = useFilterTasks(workspaceAllTasks, "done", draggingTaskId, dragOverElementName);
 
 
-  const {defaultActiveWorkspace} = useGlobalContext()
-  const {activeWorspace} = useContext(ablyContext)
-  const {_id , title,description } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
-//   console.log(defaultActiveWorkspace);
+  const {activeWorkspace} = useGlobalContext()
+  const { title,description } = activeWorkspace || { title:"Your board",description:"hello there it is your demoboard " }
+
 
 
   
@@ -129,7 +131,7 @@ const Tasks = () => {
                                     }`}
                             >
                                 <LuListTodo className="text-2xl" />{" "}
-                                <h2>To-do</h2>
+                                <h2 className="font-semibold">To-do</h2>
                             </div>
 
                             {toDoTasks?.map((task, idx) => (
@@ -170,8 +172,8 @@ const Tasks = () => {
                                         : ""
                                     }`}
                             >
-                                <LuListTodo className="text-2xl" />{" "}
-                                <h2 className="">Doing</h2>
+                                <FaChartGantt className="text-2xl" />{" "}
+                                <h2 className="font-semibold">Doing</h2>
                             </div>
 
                             {doingTasks?.map((task, idx) => (
@@ -212,8 +214,8 @@ const Tasks = () => {
                                         : ""
                                     }`}
                             >
-                                <LuListTodo className="text-2xl" />{" "}
-                                <h2 className="">Done</h2>
+                                <BsCheck2Square className="text-2xl" />{" "}
+                                <h2 className="font-semibold">Done</h2>
                             </div>
 
                             {doneTasks?.map((task, idx) => (
@@ -241,15 +243,14 @@ const Tasks = () => {
                     <TaskModal
                         openModal={openModal}
                         setOpenModal={setOpenModal}
-                    ></TaskModal> 
-                    
+                    ></TaskModal>
+
                     <CardDetailsModal
                         cardId={cardId}
                         setCardId={setCardId}
                         openCardDetails={openCardDetails}
                         setOpenCardDetails={setOpenCardDetails}
                     ></CardDetailsModal>
-
                 </section>
             )}
         </>

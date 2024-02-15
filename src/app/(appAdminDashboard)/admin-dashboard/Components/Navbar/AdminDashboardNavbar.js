@@ -25,22 +25,13 @@ const AdminDashboardNavbar = () => {
     const {
         handleActiveWorkspace,
         handleDropdownClick,
-        workspaces,
-        defaultActiveWorkspace,
+        userWorkspaceList,
+        activeWorkspace,
+        handleCreateWorkspace,
+        fetchLatestData
     } = useGlobalContext();
-    const { allWorkspaces } = useContext(ablyContext);
-    const displayWorkspaces =
-        allWorkspaces.length > 0 ? allWorkspaces : workspaces || [];
-    const { activeWorkspace } = useContext(ablyContext);
-
-    let currentSpace = {};
-
-    if (activeWorkspace) {
-        currentSpace = activeWorkspace;
-    } else {
-        currentSpace = defaultActiveWorkspace;
-    }
-
+    
+    
     const userData = useUser(user?.email);
     const router = useRouter();
     const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
@@ -70,25 +61,7 @@ const AdminDashboardNavbar = () => {
         });
     };
 
-    const handleCreateWorkspace = async (title, description) => {
-        const workspace = {
-            title: title,
-            description: description,
-            creator: user?.email,
-            members: ["userID2", "userID3"],
-            tasks: [],
-            isActive: false,
-        };
-
-        const response = await xios.post(
-            `/create-workspace/${user && user.email}`,
-            workspace
-        );
-        if (response.data.insertedId) {
-            toast.success("Successfully created a workspace. 🏢");
-        }
-    };
-
+   
     const handleAddMember = async (workspaceId, memberEmail, memberName) => {
         const workspaceAndUserEmail = {
             workspaceId,
@@ -101,6 +74,7 @@ const AdminDashboardNavbar = () => {
         );
 
         if (isAddedMember.data.message) {
+            await fetchLatestData()
             return toast.success(`${memberName} is added to this workspace`);
         }
 
@@ -123,7 +97,7 @@ const AdminDashboardNavbar = () => {
                     className="text-start flex gap-2 items-center w-32"
                 >
                     <p className=" cursor-pointer opacity-55 text-[15px] ">
-                        {currentSpace?.title || "Workspace"}
+                        {activeWorkspace?.title || "Workspace"}
                     </p>
                     <IoIosArrowDown
                         className={` cursor-pointer ${
@@ -141,7 +115,7 @@ const AdminDashboardNavbar = () => {
                 >
                     {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
 
-                    {displayWorkspaces?.map((workspace, index) => {
+                    {userWorkspaceList?.map((workspace, index) => {
                         return (
                             <li
                                 key={workspace?._id}
@@ -180,7 +154,7 @@ const AdminDashboardNavbar = () => {
                             </p>
                         </div>
                     </li>
-                    {displayWorkspaces?.length <= 0 && (
+                    {userWorkspaceList?.length <= 0 && (
                         <div className="absolute -z-20 bottom-[70px] left-24">
                             <Image
                                 className=" opacity-50 mx-auto w-11 h-11 left-1/2"

@@ -8,6 +8,7 @@ import {
 import { AuthContext } from "@/Providers/AuthProviders";
 import useAxios from "@/hooks/useAxios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 
 
@@ -18,6 +19,7 @@ export default function CheckoutForm({planName}) {
   const [isLoading, setIsLoading] = React.useState(false);
   const {user} = useContext(AuthContext)
   const xios = useAxios()
+  const router = useRouter()
   console.log(user?.email);
 
   React.useEffect(() => {
@@ -64,7 +66,7 @@ export default function CheckoutForm({planName}) {
 
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      redirect: "if_required",
+      redirect: "if_required", 
       // return_url: `http://localhost:3000/payment-success/`,
     });
 
@@ -92,6 +94,7 @@ export default function CheckoutForm({planName}) {
         const res = await xios.put(`/users/${user?.email}`,{userInfo})
 
         toast.success('Payment successful')
+        router.push('/')
       }
       putData()
     }
@@ -104,17 +107,26 @@ export default function CheckoutForm({planName}) {
   };
 
   return (
-    <form id="payment-form" className="w-full md:max-w-sm" onSubmit={handleSubmit}>
+    <form
+      id="payment-form"
+      className="w-full md:max-w-sm"
+      onSubmit={handleSubmit}
+    >
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button
         disabled={isLoading || !stripe || !elements}
         id="submit"
         className="px-4 py-2 bg-green-500 text-white hover:bg-green-700 w-full"
       >
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+        <span id="button-text" className="flex items-center justify-center">
+          {isLoading ? (
+            <div className="w-8 h-8 animate-[spin_2s_linear_infinite] rounded-full border-8 border-dotted "></div>
+          ) : (
+            "Pay now"
+          )}
         </span>
       </button>
+      
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>

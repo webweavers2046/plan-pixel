@@ -11,38 +11,24 @@ import member05Img from "@/assets/team-members/sajid.jpg";
 import member06Img from "@/assets/team-members/forhad.jpg";
 
 import MassageIcon from "@/assets/dashboard/Message.svg";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import { ablyContext } from "@/components/ably/AblyProvider";
 
 const TeamMembers = () => {
-    const {workspaceBasedMembers,defaultActiveWorkspace} = useGlobalContext()
-    const {allWorkspaceMembers,activeWorkspace} = useContext(ablyContext)
-
-    const Wspace = activeWorkspace?.propertyToCheck || defaultActiveWorkspace
-
-  
-    let membersInWorkspace = []
-    if(allWorkspaceMembers.length < 0) return
-     membersInWorkspace = allWorkspaceMembers.length > 0? allWorkspaceMembers : workspaceBasedMembers 
-
-
-    
-    
+    const {activeWorkspaceMembers,activeWorkspace} = useGlobalContext()
     
     return (
         <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
-            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">Team Member <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">{Wspace?.title}</span></h1>
-            {membersInWorkspace?.map((member, index) => (
+            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">Team Member <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">{activeWorkspace?.title}</span></h1>
+            {activeWorkspaceMembers?.map((member, index) => (
                 <TeamMember
                     key={index}
                     name={member.name}
                     userEmail={member.email}
                     // avatar={member.avatar}
                     avatar={member02Img}
-                    
                 />
             ))}
         </div>
@@ -79,10 +65,10 @@ function TeamMember({ name, userEmail, avatar }) {
 
                 toast.success("Message Sended", {
                     duration: 2000,
-                    className: "mt-32",
+                    // className: "mt-32",
                 });
                 setButtonLoading(false);
-                setOpenModal(true);
+                setOpenModal(false);
             })
             .catch((error) => {
                 console.error("Error sending email:", error);
@@ -90,7 +76,7 @@ function TeamMember({ name, userEmail, avatar }) {
     };
 
     return (
-        <div className="flex items-center justify-between p-4 rounded-lg bg-[#F9F9F9] mb-3">
+        <div className="flex items-center justify-between w-[350px] p-4 rounded-lg bg-[#F9F9F9] mb-3">
             {/* modal  */}
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Send Message</Modal.Header>
@@ -152,29 +138,31 @@ function TeamMember({ name, userEmail, avatar }) {
                     </form>
                 </Modal.Body>
             </Modal>
-            <div className="flex items-center gap-4">
-                <Image
-                    width={44}
-                    height={44}
-                    className="rounded-full object-cover w-10 h-10"
-                    src={avatar}
-                    alt="timeIcon"
-                />
+            <div className="flex items-center justify-between w-full gap-x-4">
+                <div className="flex items-center gap-x-4">
+                    <Image
+                        width={44}
+                        height={44}
+                        className="rounded-full object-cover w-10 h-10"
+                        src={avatar}
+                        alt="timeIcon"
+                    />
 
-                <div className="">
-                    <p className="text- font-semibold">{name}</p>
-                    <p className="text-xs font-medium text-black/50">
-                        {userEmail}
-                    </p>
+                    <div className="text-left">
+                        <p className=" font-semibold">{name}</p>
+                        <p className="text-xs font-medium text-black/50">
+                            {userEmail}
+                        </p>
+                    </div>
                 </div>
+                <button onClick={() => setOpenModal(true)} className="flex justify-end">
+                    <Image className="" src={MassageIcon} alt="team member" />
+                </button>
             </div>
-            <button onClick={() => setOpenModal(true)} className="">
-                <Image className="" src={MassageIcon} alt="team member" />
-            </button>
+
         </div>
     );
 }
-
 
 const teamMemberData = [
     {
