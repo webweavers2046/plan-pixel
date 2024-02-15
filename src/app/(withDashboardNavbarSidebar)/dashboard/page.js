@@ -17,7 +17,6 @@ const Dashboard = () => {
     const { user } = useContext(AuthContext);
     const { data: userData } = useUser(user?.email);
     const [date, setDate] = useState(new Date());
-    console.log(userData);
 
     return (
         <div className="py-6">
