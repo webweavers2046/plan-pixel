@@ -14,10 +14,6 @@ import { AuthContext } from "./AuthProviders";
 import useAllTasks from "@/hooks/useAllTasks";
 import { ablyContext } from "@/components/ably/AblyProvider";
 
-import { AuthContext } from "./AuthProviders";
-import useAllTasks from "@/hooks/useAllTasks";
-import { ablyContext } from "@/components/ably/AblyProvider";
-
 // Global context provider for managing shared state
 export const taskContext = createContext(null);
 
