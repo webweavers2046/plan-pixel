@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }) {
                             </div>
                         </div>
                     )}
-                    <div className="xl:col-span-2 col-span-0 xl:block hidden">
+                    <div className="xl:col-span-2 col-span-0 xl:block hidden ">
                         <DashboardSidebar />
                     </div>
 

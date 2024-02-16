@@ -41,12 +41,12 @@ const TaskBarGraph = () => {
     ]
 
     return (
-        <div className="w-full h-fit border-2 border-[#E6E8EC] rounded-lg p-5">
-            <div className="flex justify-between items-center">
+        <div className="w-full border-2 border-[#E6E8EC] rounded-lg p-5">
+            <div className="flexjustify-between items-center">
                 <h3 className="text-lg font-bold">Teams Strength</h3>
                 <div className="text-[#00000099] flex gap-2 items-center">
                     <p>22 Apr 2024</p>
-                    <IoIosArrowDown className="text-2xl"></IoIosArrowDown>
+                    <IoIosArrowDown className="text"></IoIosArrowDown>
                 </div>
             </div>
             {/* Bar Chart */}
@@ -54,7 +54,7 @@ const TaskBarGraph = () => {
                 {
                     taskInfo?.map((task, index) => <div key={index} className="flex flex-col space-y-[2px] items-center justify-center w-full">
                         <p className="text-[#828282]">{task?.tasks}</p>
-                        <div className={`w-full rounded-t-lg bg-[${task?.color}]`}
+                        <div className={`w-full rounded-t-lg bg-[${task?.color}] max-h-[190px]`}
                             style={{ height: `${task?.tasks * 20}px`, borderBottom: `2px solid ${task?.color}` }}></div>
                         <p className="text-[#828282]">{task?.alpha}</p>
                     </div>)

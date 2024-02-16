@@ -2,7 +2,6 @@
 
 import { AuthContext } from "@/Providers/AuthProviders";
 import { ablyContext } from "@/components/ably/AblyProvider";
-import useAxios from "@/hooks/useAxios";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -17,11 +16,9 @@ const TaskModal = ({ openModal, setOpenModal }) => {
     const { user } = useContext(AuthContext);
 
     // Get active wokspace when live change or the default one
-    const { handleCreateTask, defaultActiveWorkspace } = useGlobalContext();
-    const { activeWorkspace } = useContext(ablyContext);
-    const activeWorkspaceId =
-        activeWorkspace?.propertyToCheck || defaultActiveWorkspace;
-    const id = activeWorkspaceId._id;
+    const { handleCreateTask, activeWorkspace } = useGlobalContext();
+    
+    const id = activeWorkspace?._id
 
     const onSubmit = async (data) => {
         const newTask = {
@@ -43,7 +40,6 @@ const TaskModal = ({ openModal, setOpenModal }) => {
             doingTimeStamp: "",
             updatedAt: "",
         };
-        console.log(newTask);
 
         handleCreateTask(newTask, setOpenModal, id);
         reset();

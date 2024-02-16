@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import StyledArrow from "./StyledArrow";
 import useAxios from "@/hooks/useAxios";
+import { globalContext } from "@/Providers/globalContext";
 
 const SingleTask = ({ task, refetch }) => {
     const [isChecked, setIsChecked] = useState(task?.checked);
     const axiosPublic = useAxios();
-
+    const {fetchLatestData} = useContext(globalContext)
     const handleCheckboxChange = (e) => {
         const checked = e?.target?.checked;
         console.log('value of checkbox :', e.target.checked);
@@ -24,6 +25,7 @@ const SingleTask = ({ task, refetch }) => {
                 // console.log(res.data);
                 if (res?.data?.deletedCount) {
                     refetch()
+                    fetchLatestData()
                 }
             })
     }

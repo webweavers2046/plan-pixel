@@ -1,4 +1,10 @@
-const DeleteConfirmModal = ({setDeleteConfirm,data,setIsOpenDeleteModal,workspace,handleDeleteWorkspace}) => {
+import { globalContext } from "@/Providers/globalContext";
+import { useContext } from "react";
+
+const DeleteConfirmModal = ({data,setIsOpenDeleteModal,filter,type}) => {
+
+  const {handleDeleteWorkspace,handleDeleteMember} = useContext(globalContext)
+
     return (
       <div>
         <>
@@ -23,16 +29,24 @@ const DeleteConfirmModal = ({setDeleteConfirm,data,setIsOpenDeleteModal,workspac
                     id="confirm-delete-btn"
                     className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-red-200 text-red-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2"
                     onClick={(e)=> {
-                        handleDeleteWorkspace(e, workspace._id,true)
-                        setIsOpenDeleteModal(false)
+                        {if(type == "workspace"){
+                          handleDeleteWorkspace(e, filter?._id,true)
+                        } else{
+                          handleDeleteMember(e,filter,true)
+                        }
+                        
+                      }
+                      
+                      setIsOpenDeleteModal(false)
                     }}
-                  >
+                    >
                     Delete
                   </button>
                   <button
                     onClick={(e)=> {
-                        handleDeleteWorkspace(e,"",false)
-                        setIsOpenDeleteModal(false)
+                      handleDeleteWorkspace(e,"",false)
+                      setIsOpenDeleteModal(false)
+                      handleDeleteMember(e,"",false)
                     }}
                     id="confirm-cancel-btn"
                     className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1"
@@ -49,4 +63,18 @@ const DeleteConfirmModal = ({setDeleteConfirm,data,setIsOpenDeleteModal,workspac
   };
   
   export default DeleteConfirmModal;
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
   
