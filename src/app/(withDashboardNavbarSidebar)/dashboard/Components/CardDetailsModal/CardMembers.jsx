@@ -14,9 +14,9 @@ const CardMembers = ({ members }) => {
                         <SingleMember key={member} member={member}></SingleMember>
                     )}
 
-                <button className="w-8 h-8 border-2 flex justify-center items-center border-white rounded-full bg-[#D9D9D9]">
+                {/* <button className="w-8 h-8 border-2 flex justify-center items-center border-white rounded-full bg-[#D9D9D9]">
                     <GoPlus></GoPlus>
-                </button>
+                </button> */}
             </div>
 
         </div>
