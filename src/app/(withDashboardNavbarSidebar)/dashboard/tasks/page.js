@@ -97,7 +97,7 @@ const Tasks = () => {
                 </p>
               )}
             </div>
-            <div className="flex lg:w-52 ">
+            <div style={{zIndex:1000}} className="flex lg:w-52">
               <div
                 onClick={() => setOpenFilter(!openFilter)}
                 className="flex items-center gap-2"
@@ -124,7 +124,7 @@ const Tasks = () => {
               onDrop={(e) => dropOn(e)}
               id="upcoming"
               className={`min-h-screen ${
-                isDragging ? "z-20 relative" : ""
+                isDragging ? " relative" : ""
               } px-2 rounded-lg transition-all duration-1000 ${
                 dragOverElementName === "upcoming" ? "bg-[#E3E4E6]" : ""
               }`}
@@ -166,7 +166,7 @@ const Tasks = () => {
               onDrop={(e) => dropOn(e)}
               id="to-do"
               className={`min-h-screen px-2 ${
-                dragOverElementName && "realative z-50"
+                dragOverElementName && "realative "
               } rounded-lg transition-all duration-1000 ${
                 dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""
               }`}

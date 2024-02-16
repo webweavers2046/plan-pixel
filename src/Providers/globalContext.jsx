@@ -28,8 +28,6 @@ const [loading, setLoading] = useState(true);
 let isMounted = true;
 
 
-
-
 const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
@@ -126,7 +124,6 @@ const handleDeleteMember = async(e,member,isDelete) => {
     activeWorkspaceMembers,
     fetchLatestData,
     handleDeleteMember,
-
 
     handleCreateTask,
     newTask,
