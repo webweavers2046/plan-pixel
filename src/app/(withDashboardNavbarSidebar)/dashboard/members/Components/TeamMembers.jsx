@@ -17,6 +17,7 @@ import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import DeleteConfirmModal from "@/components/Common/CommonModal/DeleteConfirmModal";
+import useUser from "@/hooks/useUser";
 
 const TeamMembers = () => {
   const { activeWorkspaceMembers } = useGlobalContext();
@@ -24,7 +25,7 @@ const TeamMembers = () => {
   const [selectedMember, setSeletedMember] = useState("");
 
 
-  console.log(selectedMember)
+  // console.log(selectedMember)
   return (
     <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border">
       <h1 className=" text-2xl font-bold p-4">Team Member</h1>
@@ -71,6 +72,7 @@ export default TeamMembers;
 function TeamMember({ name, userEmail, avatar }) {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const {data : userData} = useUser(userEmail);
   const messageRef = useRef(null);
 
   const serviceId = "service_2whe5f8";
@@ -172,7 +174,7 @@ function TeamMember({ name, userEmail, avatar }) {
             width={44}
             height={44}
             className="rounded-full object-cover w-10 h-10"
-            src={avatar}
+            src={userData?.image}
             alt="timeIcon"
           />
 
