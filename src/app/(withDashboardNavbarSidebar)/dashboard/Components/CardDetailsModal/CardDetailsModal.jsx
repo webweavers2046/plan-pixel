@@ -20,26 +20,6 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
 
     const {activeWorkspace} = useGlobalContext()
     const { title,description, members } = activeWorkspace || {title:"",description:"",members:[]}
-    // console.log(defaultActiveWorkspace);
-
-     
-
-
-    // const task = {
-    //     name: 'Task name',
-    //     description: 'A user flow is a visualization of a path that a user takes  through a website'
-    // }
-
-    // const members = [
-    //     {
-    //         name: "Rahim",
-    //         email: "alamin102410@gmail.com",
-    //     },
-    //     {
-    //         name: "Sami",
-    //         email: "sami@gmail.com",
-    //     },
-    // ]
 
 
 
