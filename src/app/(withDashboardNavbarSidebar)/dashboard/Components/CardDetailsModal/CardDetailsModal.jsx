@@ -23,28 +23,6 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
     const {_id , title,description, members } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
     // console.log(defaultActiveWorkspace);
 
-     
-
-
-    // const task = {
-    //     name: 'Task name',
-    //     description: 'A user flow is a visualization of a path that a user takes  through a website'
-    // }
-
-    // const members = [
-    //     {
-    //         name: "Rahim",
-    //         email: "alamin102410@gmail.com",
-    //     },
-    //     {
-    //         name: "Sami",
-    //         email: "sami@gmail.com",
-    //     },
-    // ]
-
-
-
-
     return (
         <div
             className={`${openCardDetails ? "block" : "hidden"} 
@@ -67,8 +45,8 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
                         </svg>
                     </button>
                 </div>
-                <div className="flex justify-between  h-full py-4 pl-12 pr-8">
-                    <div className="space-y-3">
+                <div className="flex justify-between w-full h-full py-4 pl-12 pr-8 gap-8">
+                    <div className="space-y-3 w-[90%]">
                         {/* card name, description and other info */}
                         <p className="text-2xl font-semibold">{card?.title}</p>
                         <p>{card?.description}</p>
