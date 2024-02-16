@@ -68,7 +68,7 @@ function Task({ name, tasksId, refetch, index }) {
             );
             console.log(res);
             if (res.data.updated.modifiedCount > 0) {
-                toast.success("Complete task");
+                toast.success("Complete task",{position:"top-right"});
                 refetch();
             }
         }

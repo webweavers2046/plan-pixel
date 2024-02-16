@@ -14,8 +14,8 @@ const EditWorkspace = ({setEdit,isEdit}) => {
   const handleSave = async() => { 
     // Validate the workspace input value 
     if(workspaceName === "") return toast.error("Please fill the name filed")
-    if(creator === "") return toast.error("Please fill the creator filed")
-    if(description === "") return toast.error("Please fill the description filed")
+    if(creator === "") return toast.error("Please fill the creator filed",{position:"top-right"})
+    if(description === "") return toast.error("Please fill the description filed",{position:"top-right"})
     
     // is user editing or not
     setEdit(false)
@@ -34,7 +34,7 @@ const EditWorkspace = ({setEdit,isEdit}) => {
     fetchLatestData()
     console.log(response)
     if(response.data.message) {
-        return toast.success(`${activeWorkspace?.title} is updated into ${workspaceName}`)
+        return toast.success(`${activeWorkspace?.title} is updated into ${workspaceName}`,{position:"top-right"})
     }
 
     // clear the input 
