@@ -1,18 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TeamMembers from "./Components/TeamMembers";
 import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { Dropdown } from "flowbite-react";
 import TaskCard from "./Components/TaskCard";
 import useFilterTasks from "@/hooks/useFilterTasks";
-import useAllTasks from "@/hooks/useAllTasks";
+import { ablyContext } from "@/components/ably/AblyProvider";
+import { globalContext } from "@/Providers/globalContext";
 
 const page = () => {
-  // const { alltasks } = useDNDcontext();
-  const {data:alltasks} = useAllTasks();
-  console.log(alltasks);
+  
+  const { allWorkspaceTasks } = useContext(ablyContext);
+  const { activeWorkspaceTasks } = useContext(globalContext);
+
+  if (!activeWorkspaceTasks) return;
+
+  const workspaceAllTasks =
+    activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
+    
+
   const [filter, setFilter] = useState("to-do");
-  const tasks = useFilterTasks(alltasks, filter);
+  const tasks = useFilterTasks(workspaceAllTasks, filter);
 
 
   return (
