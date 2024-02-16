@@ -5,40 +5,18 @@ import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { Dropdown } from "flowbite-react";
-import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
+import { HiCog, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import useUser from "@/hooks/useUser";
-import useAxios from "@/hooks/useAxios";
-import CommonModal from "@/components/Common/CommonModal/CommonModal";
-import MiniModal from "@/components/Common/CommonModal/MiniModal";
-import toast from "react-hot-toast";
-import useGlobalContext from "@/hooks/useGlobalContext";
-import PaperPieces from "@/components/Common/CommonModal/paperCutPiece";
-import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
-import { ablyContext } from "@/components/ably/AblyProvider";
-import { IoIosArrowDown } from "react-icons/io";
+import DateTimeDisplay from "../DisplayTimeAndDate/DateTimeDisplay";
 
 const AdminDashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
-    const {
-        handleActiveWorkspace,
-        handleDropdownClick,
-        userWorkspaceList,
-        activeWorkspace,
-        handleCreateWorkspace,
-        fetchLatestData
-    } = useGlobalContext();
-    
-    
+
     const userData = useUser(user?.email);
     const router = useRouter();
-    const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const [WillAddMember, setWillAddMember] = useState(false);
-    const xios = useAxios();
 
     const handleLogOut = () => {
         Swal.fire({
@@ -61,119 +39,9 @@ const AdminDashboardNavbar = () => {
         });
     };
 
-   
-    const handleAddMember = async (workspaceId, memberEmail, memberName) => {
-        const workspaceAndUserEmail = {
-            workspaceId,
-            userEmail: memberEmail,
-        };
-
-        const isAddedMember = await xios.post(
-            "/add-member-to-workspace",
-            workspaceAndUserEmail
-        );
-
-        if (isAddedMember.data.message) {
-            await fetchLatestData()
-            return toast.success(`${memberName} is added to this workspace`);
-        }
-
-        toast.error(isAddedMember.data.error);
-    };
-
-    const handleClose = () => {
-        // Close the modal
-        setIsCreateWorkSpace(false);
-    };
-
     return (
         <div className="flex relative justify-between items-center p-4 gap-6">
-            <div
-                onClick={handleDropdownClick}
-                className="py-2 px-3 relative rounded-lg"
-            >
-                <div
-                    onClick={() => setDropdownOpen(!isDropdownOpen)}
-                    className="text-start flex gap-2 items-center w-32"
-                >
-                    <p className=" cursor-pointer opacity-55 text-[15px] ">
-                        {activeWorkspace?.title || "Workspace"}
-                    </p>
-                    <IoIosArrowDown
-                        className={` cursor-pointer ${
-                            isDropdownOpen ? "rotate-180" : "rotate-0"
-                        } transition-all duration-300`}
-                    />
-                </div>
-
-                <div
-                    className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${
-                        isDropdownOpen
-                            ? "visible opacity-100"
-                            : "invisible opacity-0"
-                    } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
-                >
-                    {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
-
-                    {userWorkspaceList?.map((workspace, index) => {
-                        return (
-                            <li
-                                key={workspace?._id}
-                                onMouseEnter={() => setIsHovered(index)}
-                                onMouseLeave={() => setIsHovered(null)}
-                                onClick={(e) =>
-                                    handleActiveWorkspace(e, workspace._id)
-                                }
-                                className="flex hover:bg-[#8091670c] px-4 transition-all cursor-pointer duration-300 items-center gap-2 py-4 relative"
-                            >
-                                {workspace.title}
-
-                                <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
-                                <span
-                                    onClick={() =>
-                                        setWillAddMember(!WillAddMember)
-                                    }
-                                    className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
-                                        isHovered === index ? "opacity-100" : ""
-                                    }`}
-                                >
-                                    +
-                                </span>
-                            </li>
-                        );
-                    })}
-                    <li>
-                        <div
-                            onClick={() =>
-                                setIsCreateWorkSpace(!isCreateWokspace)
-                            }
-                            className="w-full  shadow-s mt-auto px-2  grid justify-self-end hover:bg-transparent  text-center rounded-lg"
-                        >
-                            <p className="w-full  text-white text-center py-[6px] cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm  rounded-l  ">
-                                Add New Workspace +
-                            </p>
-                        </div>
-                    </li>
-                    {userWorkspaceList?.length <= 0 && (
-                        <div className="absolute -z-20 bottom-[70px] left-24">
-                            <Image
-                                className=" opacity-50 mx-auto w-11 h-11 left-1/2"
-                                src={
-                                    "https://i.ibb.co/mtGpTfj/icons8-search-250.png"
-                                }
-                                height={100}
-                                width={100}
-                            />
-                        </div>
-                    )}
-                </div>
-                {/* Add member modal */}
-                <AddMemberModal
-                    handleAddMember={handleAddMember}
-                    WillAddMember={WillAddMember}
-                    setWillAddMember={setWillAddMember}
-                />
-            </div>
+            <DateTimeDisplay />
             <div className="grow">
                 <div className="absolute ml-[20px] mt-[17px]">
                     <svg
@@ -271,19 +139,6 @@ const AdminDashboardNavbar = () => {
                         </button>
                     </Dropdown.Item>
                 </Dropdown>
-            </div>
-            <div className="translate-x-0 duration-200 absolute z-50 left-0">
-                {isCreateWokspace ? (
-                    <MiniModal
-                        handleClose={handleClose}
-                        setDropdownOpen={setDropdownOpen}
-                        handleCreateWorkspace={handleCreateWorkspace}
-                        setIsCreateWorkSpace={setIsCreateWorkSpace}
-                        isCreateWokspace={isCreateWokspace}
-                    />
-                ) : (
-                    ""
-                )}
             </div>
         </div>
     );
