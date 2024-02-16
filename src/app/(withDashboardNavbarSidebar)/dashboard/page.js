@@ -17,12 +17,11 @@ const Dashboard = () => {
     const { user } = useContext(AuthContext);
     const { data: userData } = useUser(user?.email);
     const [date, setDate] = useState(new Date());
-    console.log(userData);
 
     return (
         <div className="py-6">
             <div
-                className="border-2 border-secondary bg-secondary/10 py-10 px-16 rounded-xl mb-6 flex justify-between items-center"
+                className="border-2 border-secondary     py-10 px-16 rounded-xl mb-6 flex justify-between items-center"
                 style={{
                     backgroundImage: `url(${OverviewWidgetBg03.src})`,
                     backgroundSize: "cover",

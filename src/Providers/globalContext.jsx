@@ -4,8 +4,10 @@ import useAxios from "@/hooks/useAxios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthProviders";
+import Spinner from "@/components/Common/CommonModal/Spinner";
 
 export const globalContext = createContext(null);
+
 
 const GlobalContext = ({ children }) => {
 
@@ -13,131 +15,128 @@ const GlobalContext = ({ children }) => {
   const [newTask, setNewTask] = useState("");
   const xios = useAxios();
   const { user } = useContext(AuthContext);
-  const [workspaceBasedTasks, setWorkspaceTasks] = useState([]);
-  const [workspaceBasedMembers, setWorkspaceMembers] = useState([]);
-  const [activeWrokspace, setActiveWorkspace] = useState([]);
-  const [workspaces, setWorkspaces] = useState([]);
+  
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
-  const [defaultActiveWorkspace, setDefaultWorkspace] = useState({})
-
-  const [toggleValue,setToggleValue] = useState(false)
-
   
-  useEffect(() => {
-    // Fetch active workspace, user workspaces, and workspace tasks in one go
 
-    Promise.all([
-      xios.get('/active-workspace'),
-      xios.get(`/userWokspaces/${user ? user.email:""}`),
-      xios.get(`/active-workspace?userEmail=${user?user.email:""}`),
-      xios.get(`/api/workspaces/active/${user?user.email:""}`),
-    ])
-      .then(([activeWorkspaceRes, userWorkspacesRes, allWorkspaceTasksRes,defaultActiveWokspace]) => {
-        // Sorting tasks by position and updatedAt for consistent display
-  console.log('inside', userWorkspacesRes.data)
-        // Set state for active workspace, user workspaces, and all workspace tasks
-        setActiveWorkspace(userWorkspacesRes.data);
-        setWorkspaceMembers(userWorkspacesRes.data);
-        setWorkspaceTasks(allWorkspaceTasksRes.data);
-        setDefaultWorkspace(defaultActiveWokspace.data);
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error(error);
-      });
-  }, [user]);
-  
-  console.log("outside", workspaces)
+const [activeWorkspace, setActiveWorkspace] = useState({});
+const [userWokspaceList, setUserWokspaceList] = useState([]);
+const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
+const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
+const [loading, setLoading] = useState(true);
+let isMounted = true;
+
+
+
+
+const fetchLatestData = async () => {
+  try {
+    const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
+    console.log("Server Response:", userWorkspaces.data);
+
+    if (isMounted) {
+      setActiveWorkspace(userWorkspaces.data.activeWorkspace);
+      setUserWokspaceList(userWorkspaces.data.userWokspaceList);
+      setActiveWorkspaceMembers(userWorkspaces.data.activeWorkspaceMembers);
+      setActiveWorkspaceTasks(userWorkspaces.data.activeWorkspaceTasks);
+      setLoading(false);
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  fetchLatestData();
+  return () => {
+    isMounted = false;
+  };
+}, [user]);
+
+if (loading) return <Spinner/>
+
 
   // This funciton will create a new task in the task collection
-  const handleCreateTask = (newTask, setOpenModal,activeWorkspaceId) => {
-    // Calling it above for faster overview
-    xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask).then((res) => {
-      if (res?.data?.insertedId) {
+  const handleCreateTask = async (newTask, setOpenModal,activeWorkspaceId) => {
+    const response = await xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask)
+    console.log(activeWorkspaceId)
+    if (response?.data?.insertedId) {
         setNewTask(newTask);
         setOpenModal(false);
         toast.success("Created a new task", { position: "top-right" });
+        fetchLatestData()
       }
-    });
   };
-
-
-  console.log(workspaceBasedMembers)
 
   // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
     setClickedWorkspaceId(_id)
-    const alltasksAndMembersInIt = await xios.get(
-      `/active-workspace?workspaceId=${_id}`
+    console.log(user?.email)
+    await xios.get(`/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${user?.email}`
     );
-    if (alltasksAndMembersInIt.data) {
-      setWorkspaceTasks(alltasksAndMembersInIt.data.tasks);
-      setWorkspaceMembers(alltasksAndMembersInIt.data.members);
-      setActiveWorkspace(alltasksAndMembersInIt.data.updatedWorkspace);
-    }
+
+    // fetch the latest active workspace after switching
+    fetchLatestData()
+    console.log("form global", activeWorkspaceTasks)
   };
+
 
   // when user click on the dropdown for workspace list fetch
   // workspace list from the database
   const handleDropdownClick = async (e) => {
     e.preventDefault();
-    const userWorkspaces = await xios.get(
-      `/userWokspaces/${user.email ? user.email : "shakilahmmed8882@gmail.com"}`
-    );
-    setSwitchWorkspace(!isWorkspaceSwitched);  
-    setWorkspaces(userWorkspaces.data)
   };
 
-const TriggerWhenNewWorkspaceCreated = () => {
-  setToggleValue(!toggleValue)
-}
-
-useEffect(()=> {
-  xios.get(`/api/workspaces/active/${user && user.email}`)
-  .then(res => {
-    if(!res.data) return "coming"
-    setDefaultWorkspace(res?.data)
-  })
-},[isWorkspaceSwitched,toggleValue,user])
-
-
-// Delete 
+// Delete workspace
 const handleDeleteWorkspace = async (e, _id,isDelete) => {
   e.preventDefault();
-  
+
   // delete workspace from the database
   if (isDelete) {
+    
     const response = await xios.delete(
       `deleteWorkspace/${_id}/${user && user.email}`
     );
-    if (response.data) {
-      toast.success(response.data.message,{position:"top-right"});
-   
-    }
-  
+    if(response?.data?.error){
+      toast.error(response.data.error,{position:"top-right"})
+    } else{
+      toast.success(response.data.message,{position:"top-right"})
+      fetchLatestData()
+     }
   }
 };
 
+const handleDeleteMember = async(e,member,isDelete) => {
 
-  
+ const response = await xios.delete(`deleteMember/${activeWorkspace?._id}/${user&&user.email}/${member}`)
+ if(response?.data?.error){
+  toast.error(response.data.error,{position:"top-right"})
+} else{
+  toast.success(response.data.message,{position:"top-right"})
+  fetchLatestData()
+ }
+}
 
   const data = {
+    activeWorkspace, 
+    userWokspaceList, 
+    activeWorkspaceTasks,
+    activeWorkspaceMembers,
+    fetchLatestData,
+    handleDeleteMember,
+
+
     handleCreateTask,
     newTask,
-    workspaceBasedTasks,
-    workspaceBasedMembers,
     handleActiveWorkspace,
     setNewTask,
-    activeWrokspace,
     handleDropdownClick,
-    workspaces,
-    defaultActiveWorkspace,
+   
     clickedWorkspaceId,
     setSwitchWorkspace,
     isWorkspaceSwitched,
-    TriggerWhenNewWorkspaceCreated,
-
     handleDeleteWorkspace
   };
 

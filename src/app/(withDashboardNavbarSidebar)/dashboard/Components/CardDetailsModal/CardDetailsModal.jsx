@@ -18,9 +18,8 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
     const {user} = useContext(AuthContext);
     const {data : userData} = useUser(user?.email)
 
-    const {defaultActiveWorkspace} = useGlobalContext()
-    const {activeWorspace} = useContext(ablyContext)
-    const {_id , title,description, members } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
+    const {activeWorkspace} = useGlobalContext()
+    const { title,description, members } = activeWorkspace || {title:"",description:"",members:[]}
     // console.log(defaultActiveWorkspace);
 
      

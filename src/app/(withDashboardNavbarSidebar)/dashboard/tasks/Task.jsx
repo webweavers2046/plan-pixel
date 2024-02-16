@@ -1,6 +1,5 @@
 "use client";
 
-import FlowBiteModal from "../Components/FlowBiteModal";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
@@ -15,8 +14,6 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import UpdateTask from "../Components/UpdateTask";
-
 
 const Task = ({ setUpdateId,
     task,
@@ -27,7 +24,7 @@ const Task = ({ setUpdateId,
     setCardId }) => {
         
     // manage all you state here
-    const { draggingStarted, isDragging, draggingOver, isDropped, draggingTaskId } = useDNDcontext();
+    const { draggingStarted, draggingOver, isDropped } = useDNDcontext();
     const xios = useAxios()
     console.log(task);
 
