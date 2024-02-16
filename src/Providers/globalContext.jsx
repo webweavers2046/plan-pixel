@@ -27,9 +27,6 @@ const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
 const [loading, setLoading] = useState(true);
 let isMounted = true;
 
-
-
-
 const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
@@ -55,7 +52,7 @@ useEffect(() => {
   };
 }, [user]);
 
-if (loading) return <Spinner/>
+// if (loading) return <Spinner/>
 
 
   // This funciton will create a new task in the task collection
@@ -118,7 +115,7 @@ const handleDeleteMember = async(e,member,isDelete) => {
   fetchLatestData()
  }
 }
-
+console.log("activeWorkspace",activeWorkspaceTasks);
   const data = {
     activeWorkspace, 
     userWokspaceList, 

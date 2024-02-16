@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import Calendar from "react-calendar";
-import "./customCalender.css";
+import "./customCalender.css"
+
 const Calender = ({ setDate, date }) => {
   // const [date, setDate] = useState(new Date());
   return (
