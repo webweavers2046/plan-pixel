@@ -48,6 +48,7 @@ const DashboardNavbar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [WillAddMember, setWillAddMember] = useState(false);
   const xios = useAxios();
+  const [notification, setNotification] = useState(true);
 
   const handleLogOut = () => {
     Swal.fire({
@@ -75,10 +76,12 @@ const DashboardNavbar = () => {
       title: title,
       description: description,
       creator: user?.email,
-      members: [{
-        memberName: user?.displayName,
-        userEmail: user?.email
-      }],
+      members: [
+        {
+          memberName: user?.displayName,
+          userEmail: user?.email,
+        },
+      ],
       tasks: [],
       isActive: false,
     };
@@ -96,7 +99,7 @@ const DashboardNavbar = () => {
     const workspaceAndUserEmail = {
       workspaceId,
       userEmail: memberEmail,
-      memberName: memberName
+      memberName: memberName,
     };
 
     const isAddedMember = await xios.post(
@@ -130,16 +133,16 @@ const DashboardNavbar = () => {
             {currentSpace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
-            className={` cursor-pointer ${isDropdownOpen ? "rotate-180" : "rotate-0"
-              } transition-all duration-300`}
+            className={` cursor-pointer ${
+              isDropdownOpen ? "rotate-180" : "rotate-0"
+            } transition-all duration-300`}
           />
         </div>
 
         <div
-          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${isDropdownOpen
-              ? "visible opacity-100"
-              : "invisible opacity-0"
-            } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
+          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${
+            isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
+          } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
           {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
 
@@ -149,20 +152,17 @@ const DashboardNavbar = () => {
                 key={workspace?._id}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
-                onClick={(e) =>
-                  handleActiveWorkspace(e, workspace._id)
-                }
+                onClick={(e) => handleActiveWorkspace(e, workspace._id)}
                 className="flex hover:bg-[#8091670c] px-4 transition-all cursor-pointer duration-300 items-center gap-2 py-4 relative"
               >
                 {workspace.title}
 
                 <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
                 <span
-                  onClick={() =>
-                    setWillAddMember(!WillAddMember)
-                  }
-                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${isHovered === index ? "opacity-100" : ""
-                    }`}
+                  onClick={() => setWillAddMember(!WillAddMember)}
+                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
+                    isHovered === index ? "opacity-100" : ""
+                  }`}
                 >
                   +
                 </span>
@@ -171,9 +171,7 @@ const DashboardNavbar = () => {
           })}
           <li>
             <div
-              onClick={() =>
-                setIsCreateWorkSpace(!isCreateWokspace)
-              }
+              onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
               className="w-full  shadow-s mt-auto px-2  grid justify-self-end hover:bg-transparent  text-center rounded-lg"
             >
               <p className="w-full  text-white text-center py-[6px] cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm  rounded-l  ">
@@ -185,9 +183,7 @@ const DashboardNavbar = () => {
             <div className="absolute -z-20 bottom-[70px] left-24">
               <Image
                 className=" opacity-50 mx-auto w-11 h-11 left-1/2"
-                src={
-                  "https://i.ibb.co/mtGpTfj/icons8-search-250.png"
-                }
+                src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
                 height={100}
                 width={100}
               />
@@ -224,29 +220,59 @@ const DashboardNavbar = () => {
           type="text"
         ></input>
       </div>
-      <div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="52"
-          height="52"
-          viewBox="0 0 52 52"
-          fill="none"
-        >
-          <rect width="52" height="52" rx="10" fill="#ECECEC" />
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606ZM23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875"
-            fill="#ECECEC"
-          />
-          <path
-            d="M23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606Z"
-            stroke="#200E32"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+      <div className="relative cursor-pointer">
+        {notification ? (
+          <>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="52"
+              height="52"
+              viewBox="0 0 52 52"
+              fill="none"
+            >
+              <rect width="52" height="52" rx="10" fill="#ECECEC" />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606ZM23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875"
+                fill="#ECECEC"
+              />
+              <path
+                d="M23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606Z"
+                stroke="#200E32"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <div className="absolute right-[5px] top-1 flex justify-center items-center rounded-full bg-red-600 w-5 h-5 text-white">
+              <span>2</span>
+            </div>
+          </>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="52"
+            height="52"
+            viewBox="0 0 52 52"
+            fill="none"
+          >
+            <rect width="52" height="52" rx="10" fill="#ECECEC" />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606ZM23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875"
+              fill="#ECECEC"
+            />
+            <path
+              d="M23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606Z"
+              stroke="#200E32"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
       </div>
       <div className="border py-2 px-3 rounded-lg bg-[white]">
         <Dropdown
