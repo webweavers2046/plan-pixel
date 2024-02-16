@@ -2,64 +2,63 @@ import threeDotIcon from "@/assets/dashboard/threeDot.svg";
 import timeIcon from "@/assets/dashboard/time.svg";
 import Image from "next/image";
 import style from "./Scrollbar.module.css";
-import { useQuery } from "@tanstack/react-query";
 import useTranstackData from "@/hooks/useTanstack/useTranstackData";
 import { useContext, useEffect, useMemo, useState } from "react";
 import apiConnector from "@/hooks/useAxios";
 import toast from "react-hot-toast";
 import { AuthContext } from "@/Providers/AuthProviders";
 import Loading from "@/components/Common/Loading/Loading";
+import { globalContext } from "@/Providers/globalContext";
+
 
 const MyTask = ({ date }) => {
-    const { user } = useContext(AuthContext);
-    const modifyDate = useMemo(
-        () => date.toISOString().substring(0, 10),
-        [date]
-    );
-    const apiEndpoint = `/tasksFiltered?targetDate=${modifyDate}&tasksOwner=${user?.email}`;
-    const { data, refetch, isLoading } = useTranstackData(apiEndpoint, "tasks");
-    const [tasks, setTasks] = useState(data);
-    console.log(data);
+  const { user } = useContext(AuthContext);
+  //   const modifyDate = date
+    const modifyDate = useMemo(() => date, [date]);
+  const apiEndpoint = `/tasksFiltered?targetDate=${modifyDate}&tasksOwner=${user?.email}`;
+  const { data, refetch, isLoading } = useTranstackData(apiEndpoint, "tasks");
+  const [tasks, setTasks] = useState(data);
 
-    useEffect(() => {
-        if (data) {
-            setTasks(data);
-        }
-    }, [data]);
-
-    useEffect(() => {
-        refetch();
-    }, [modifyDate, refetch]);
-
-    if (isLoading) {
-        return (
-            <div className="py-8">
-                <Loading isHeight={false} />
-            </div>
-        );
+  useEffect(() => {
+    if (data) {
+      setTasks(data);
     }
+  }, [data]);
 
+  useEffect(() => {
+    refetch();
+  }, [modifyDate, refetch]);
+
+  if (isLoading) {
     return (
-        <div
-            className={`w-full mt-4  min-h-80 rounded-xl p-6 overflow-auto border-2 `}
-        >
-            <h1 className=" text-2xl font-bold p-4">My Tasks</h1>
-            {tasks?.map((task, index) => (
-                <Task
-                    key={task?._id}
-                    index={index}
-                    name={task?.title}
-                    tasksId={task._id}
-                    refetch={refetch}
-                    date={date}
-                />
-            ))}
-        </div>
+      <div className="py-8">
+        <Loading isHeight={false} />
+      </div>
     );
+  }
+
+  return (
+    <div
+      className={`w-full mt-4  min-h-80 rounded-xl p-6 overflow-auto border-2 `}
+    >
+      <h1 className=" text-2xl font-bold p-4">My Tasks</h1>
+      {tasks?.map((task, index) => (
+        <Task
+          key={task?._id}
+          index={index}
+          name={task?.title}
+          tasksId={task._id}
+          refetch={refetch}
+          date={date}
+        />
+      ))}
+    </div>
+  );
 };
 export default MyTask;
 
 function Task({ name, tasksId, refetch, index }) {
+    const {fetchLatestData} = useContext(globalContext)
     const xios = apiConnector();
     const handleIsDone = async (e) => {
         const isChecked = e.target.checked;
@@ -67,10 +66,11 @@ function Task({ name, tasksId, refetch, index }) {
             const res = await xios.patch(
                 `/updateTaskState/?id=${tasksId}&&state=${"done"}`
             );
-            console.log(res);
             if (res.data.updated.modifiedCount > 0) {
                 toast.success("Complete task",{position:"top-right"});
                 refetch();
+                fetchLatestData()
+
             }
         }
     };

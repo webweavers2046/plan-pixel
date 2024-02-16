@@ -27,9 +27,6 @@ const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
 const [loading, setLoading] = useState(true);
 let isMounted = true;
 
-
-      console.log(activeWorkspaceTasks);
-
 const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);

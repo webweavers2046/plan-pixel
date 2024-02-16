@@ -17,6 +17,7 @@ const Dashboard = () => {
     const { data: userData } = useUser(user?.email);
     const [date, setDate] = useState(new Date());
 
+
     return (
       <div className="py-6">
         <div
@@ -67,7 +68,7 @@ const Dashboard = () => {
           </div>
           <div className="w-1/3">
             <Calender date={date} setDate={setDate}></Calender>
-            <MyTask date={date} />
+            <MyTask date={date.toISOString().substring(0, 10)} />
           </div>
         </div>
       </div>
