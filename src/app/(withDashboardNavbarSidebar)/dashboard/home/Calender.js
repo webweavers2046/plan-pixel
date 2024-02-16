@@ -7,7 +7,6 @@ const Calender = ({ setDate, date }) => {
   return (
     <div className="calendar-container mb-10">
       <Calendar onChange={setDate} value={date} />
-
     </div>
   );
 };
