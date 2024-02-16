@@ -1,14 +1,22 @@
+import { globalContext } from "@/Providers/globalContext";
+import { ablyContext } from "@/components/ably/AblyProvider";
 import useAllTasks from "@/hooks/useAllTasks";
 import useFilterTasks from "@/hooks/useFilterTasks";
+import { useContext } from "react";
 
 const TaskStats = () => {
 
-    const { data: allTasks } = useAllTasks();
-    // console.log(allTasks);
+    const { allWorkspaceTasks } = useContext(ablyContext);
+    const { activeWorkspaceTasks } = useContext(globalContext);
+  
+    if (!activeWorkspaceTasks) return;
+  
+    const workspaceAllTasks =
+      activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
 
-    const todo = allTasks?.filter(task => task?.status === "to-do");
-    const done = allTasks?.filter(task => task?.status === "done");
-    const doing = allTasks?.filter(task => task?.status === "doing");
+    const todo = workspaceAllTasks?.filter(task => task?.status === "to-do");
+    const done = workspaceAllTasks?.filter(task => task?.status === "done");
+    const doing = workspaceAllTasks?.filter(task => task?.status === "doing");
 
     return (
         <div className="grid grid-cols-2 px-10  gap-5">
