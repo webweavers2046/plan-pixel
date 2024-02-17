@@ -19,7 +19,7 @@ const PremiumMembers = () => {
             image: member01Img,
             email: "john@example.com",
             planType: "Basic",
-            subscriptionEndDate: "2024-03-17T23:59:59",
+            subscriptionEndDate: "2024-03-17T23:59:55",
         },
         {
             id: 2,
@@ -27,7 +27,7 @@ const PremiumMembers = () => {
             image: member02Img,
             email: "jane@example.com",
             planType: "Enterprise",
-            subscriptionEndDate: "2024-04-20T23:59:59",
+            subscriptionEndDate: "2024-04-20T23:59:48",
         },
         {
             id: 3,
@@ -35,7 +35,7 @@ const PremiumMembers = () => {
             image: member03Img,
             email: "alex@example.com",
             planType: "Premium",
-            subscriptionEndDate: "2024-05-15T23:59:59",
+            subscriptionEndDate: "2024-05-15T23:59:19",
         },
         {
             id: 4,
@@ -51,7 +51,7 @@ const PremiumMembers = () => {
             image: member06Img,
             email: "michael@example.com",
             planType: "Pro",
-            subscriptionEndDate: "2024-07-25T23:59:59",
+            subscriptionEndDate: "2024-07-25T23:59:30",
         },
         {
             id: 6,
@@ -59,7 +59,7 @@ const PremiumMembers = () => {
             image: member01Img,
             email: "sophia@example.com",
             planType: "Enterprise",
-            subscriptionEndDate: "2024-08-30T23:59:59",
+            subscriptionEndDate: "2024-08-30T23:59:25",
         },
         {
             id: 7,
@@ -75,7 +75,7 @@ const PremiumMembers = () => {
             image: member01Img,
             email: "olivia@example.com",
             planType: "Premium",
-            subscriptionEndDate: "2024-10-05T23:59:59",
+            subscriptionEndDate: "2024-10-05T23:59:09",
         },
     ]);
     useEffect(() => {
