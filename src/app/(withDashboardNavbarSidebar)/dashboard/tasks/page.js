@@ -13,7 +13,6 @@ import UpdateTask from "../Components/UpdateTask";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
-import useAllTasks from "@/hooks/useAllTasks";
 import { globalContext } from "@/Providers/globalContext";
 import { IoFilterOutline } from "react-icons/io5";
 import FilterModal from "@/components/Common/Filter/FilterModal";
@@ -97,16 +96,19 @@ const Tasks = () => {
                 </p>
               )}
             </div>
-            <div style={{zIndex:1000}} className="flex lg:w-52">
+            <div className="flex lg:w-52">
               <div
                 onClick={() => setOpenFilter(!openFilter)}
-                className="flex items-center gap-2"
+                className={`${openFilter?"bg-gray-100 px-2  rounded-lg ":""} flex items-center gap-2 cursor-pointer`}
               >
                 <IoFilterOutline />
                 <span>Filteer</span>
                 {/* Filtering modal */}
               </div>
-                {openFilter && <FilterModal />} 
+              <div className={`${openFilter?"visible opacity-100":"invisible opacity-0"} transition-all duration-300 `}>
+                {
+                  <FilterModal openFilter={openFilter} setOpenFilter={setOpenFilter} />}
+                  </div> 
 
               <button
                 onClick={() => setOpenModal(!openModal)}

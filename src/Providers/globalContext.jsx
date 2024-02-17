@@ -7,8 +7,6 @@ import { AuthContext } from "./AuthProviders";
 import Spinner from "@/components/Common/CommonModal/Spinner";
 
 export const globalContext = createContext(null);
-
-
 const GlobalContext = ({ children }) => {
 
   // manage all of your state here ..
@@ -24,6 +22,7 @@ const [activeWorkspace, setActiveWorkspace] = useState({});
 const [userWokspaceList, setUserWokspaceList] = useState([]);
 const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
 const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
+const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
 const [loading, setLoading] = useState(true);
 let isMounted = true;
 
@@ -53,6 +52,11 @@ useEffect(() => {
   };
 }, [user]);
 
+// this useEffect for rerendering when filter get cleared to set clickbasedFilterTaskId to ""
+useEffect(()=> {
+  // just rerender 
+},[clickBaseFilterTaskId])
+
 if (loading) return <Spinner/>
 
 
@@ -79,6 +83,9 @@ if (loading) return <Spinner/>
     fetchLatestData()
     console.log("form global", activeWorkspaceTasks)
   };
+
+
+  console.log(clickBaseFilterTaskId)
 
 
   // when user click on the dropdown for workspace list fetch
@@ -117,6 +124,15 @@ const handleDeleteMember = async(e,member,isDelete) => {
  }
 }
 
+// used in components > common > filter > filterModal.jsx
+const handleTaskClick = async(taskId,workspaceId) => {
+  const response = await xios.post(`/api/set-active-workspace-from-filter`,{userEmail:user?.email,workspaceId})
+  setClickBaseFilterTaskId(taskId)
+  if(response?.data.modifiedCount > 0) {
+    fetchLatestData()
+  }
+}
+
   const data = {
     activeWorkspace, 
     userWokspaceList, 
@@ -124,6 +140,10 @@ const handleDeleteMember = async(e,member,isDelete) => {
     activeWorkspaceMembers,
     fetchLatestData,
     handleDeleteMember,
+    handleTaskClick,
+    clickBaseFilterTaskId,
+    // used in filterModal.jsx
+    setClickBaseFilterTaskId,
 
     handleCreateTask,
     newTask,

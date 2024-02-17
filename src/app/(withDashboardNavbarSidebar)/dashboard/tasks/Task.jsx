@@ -14,6 +14,8 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useContext } from "react";
+import { globalContext } from "@/Providers/globalContext";
 
 const Task = ({ setUpdateId,
     task,
@@ -26,7 +28,7 @@ const Task = ({ setUpdateId,
     // manage all you state here
     const { draggingStarted, draggingOver, isDropped } = useDNDcontext();
     const xios = useAxios()
-    console.log(task);
+    const {clickBaseFilterTaskId} = useContext(globalContext)
 
 
 
@@ -79,13 +81,13 @@ const Task = ({ setUpdateId,
             className={` 
             task-container
             mt-4 cursor-grabbing transform transition-all 0.5s 
-            ease-in-out  bg-[#F9F9F9] rounded-md p-8 text-black 
+            ease-in-out ${clickBaseFilterTaskId === task?._id ?"bg-[#E8F0FE]  shadow-lg ":"bg-[#F9F9F9]"}  rounded-md p-8 text-black 
             ${isDropped ? "transition-all linear 1s" : ""} 
             `}
         >
             {" "}
             <div className=" flex items-center gap-2 justify-between">
-                <h2 className="font-semibold text-lg">{task.title}</h2>
+                <h2 className={`font-semibold text-lg ${clickBaseFilterTaskId === task?._id ?"text-[#1558D6]":""}`}>{task.title}</h2>
                 <Dropdown
                     className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16 cursor-pointer"
                     label=""
