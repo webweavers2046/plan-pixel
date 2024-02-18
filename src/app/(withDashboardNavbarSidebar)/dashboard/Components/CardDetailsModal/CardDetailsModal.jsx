@@ -10,12 +10,13 @@ import { AuthContext } from "@/Providers/AuthProviders";
 import useUser from "@/hooks/useUser";
 import useSingleTask from "@/hooks/useSingleTask";
 
-const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
+const CardDetailsModal = () => {
+
+    const {user,openCardDetails,setOpenCardDetails, cardId} = useContext(AuthContext);
     const { data: cardTasks, refetch } = useCardTasks(cardId);
     const {data : card} = useSingleTask(cardId);
     // console.log(card);
     // console.log(cardTasks);
-    const {user} = useContext(AuthContext);
     const {data : userData} = useUser(user?.email)
 
     const {activeWorkspace} = useGlobalContext()
@@ -28,7 +29,7 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
     return (
         <div
             className={`${openCardDetails ? "block" : "hidden"} 
-        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-30 fixed lg:px-40 px-24  py-16`}
+        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed lg:px-40 px-24  py-16`}
         >
             <div className=" bg-[#FFFFFF] w-[900px] mx-auto h-full rounded-2xl overflow-auto ">
                 <div className="flex justify-end mt-2 mr-4">

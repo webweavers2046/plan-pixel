@@ -20,6 +20,10 @@ const AuthProviders = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    // card details modal related 
+    const [openCardDetails, setOpenCardDetails] = useState(false);
+    const [cardId, setCardId] = useState("");
+
 
     const provider = new GoogleAuthProvider();
 
@@ -61,6 +65,10 @@ const AuthProviders = ({ children }) => {
         signIn,
         logOut,
         googleSignIn,
+        openCardDetails,
+        setOpenCardDetails,
+        cardId,
+        setCardId
     };
     return (
         <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

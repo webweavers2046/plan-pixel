@@ -21,8 +21,7 @@ const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const [openCardDetails, setOpenCardDetails] = useState(false);
-  const [cardId, setCardId] = useState("");
+
   const {
     alltasks,
     dropOn,
@@ -70,7 +69,7 @@ const Tasks = () => {
   const { activeWorkspace } = useGlobalContext();
   const { title, description } = activeWorkspace || {
     title: "Your board",
-    description: "hello there it is your demoboard ",
+    description: "hello there it is your demo board ",
   };
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -148,10 +147,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -190,10 +185,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -230,10 +221,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -270,10 +257,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -290,10 +273,6 @@ const Tasks = () => {
           ></TaskModal>
 
           <CardDetailsModal
-            cardId={cardId}
-            setCardId={setCardId}
-            openCardDetails={openCardDetails}
-            setOpenCardDetails={setOpenCardDetails}
           ></CardDetailsModal>
         </section>
       )}

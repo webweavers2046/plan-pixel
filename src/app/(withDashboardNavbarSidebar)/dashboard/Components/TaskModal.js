@@ -50,7 +50,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
     return (
         <div
             className={`${openModal ? "block" : "hidden"} 
-        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-30 fixed lg:px-40 px-24 lg:py-24 py-16`}
+        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed lg:px-40 px-24 lg:py-24 py-16`}
         >
             <div className=" bg-[#FFFFFF] w-8/12 mx-auto h-full rounded-2xl overflow-auto p-6">
                 <div className="flex justify-between items-center border-b pb-4">

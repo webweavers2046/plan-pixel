@@ -20,7 +20,8 @@ const AllWorkspace = () => {
   
   const {activeWorkspace} = useGlobalContext()
   const { title,description, members } = activeWorkspace || {title:"",description:"",members:[]}
-  console.log(members);
+  // console.log(members);
+  // console.log(userWokspaceList);
 
   
 
