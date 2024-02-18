@@ -39,6 +39,8 @@ const TaskModal = ({ openModal, setOpenModal }) => {
             position: 0,
             doingTimeStamp: "",
             updatedAt: "",
+            lastModifiedBy: "",
+            tags:[],
         };
 
         handleCreateTask(newTask, setOpenModal, id);

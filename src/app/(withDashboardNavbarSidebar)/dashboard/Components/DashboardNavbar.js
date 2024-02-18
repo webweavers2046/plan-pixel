@@ -66,7 +66,9 @@ const DashboardNavbar = () => {
       members: [user?.email],
       tasks: [],
       isActive: true,
-      lastModifiedBy:""
+      lastModifiedBy:"",
+      tags: []
+
     };
 
     const response = await xios.post(
