@@ -9,6 +9,7 @@ import "@/styles/globals.css";
 import { IoSettingsSharp } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { FaUsers } from "react-icons/fa6";
+import { BsEnvelopeAtFill } from "react-icons/bs";
 
 const AdminDashboardSidebar = () => {
     // get current route
@@ -126,6 +127,22 @@ const AdminDashboardSidebar = () => {
                                     <div className="flex items-center">
                                         <TbHelpSquareRoundedFilled className="text-4xl me-3" />
                                         <p>Users Feedback</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className={`flex items-center  gap-x-4 ${
+                                        pathname ==
+                                        "/admin-dashboard/newsletters"
+                                            ? "active"
+                                            : "inactive"
+                                    }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                    href="/admin-dashboard/newsletters"
+                                >
+                                    <div className="flex items-center">
+                                        <BsEnvelopeAtFill className="text-3xl me-3 ms-1" />
+                                        <p>Newsletters</p>
                                     </div>
                                 </Link>
                             </li>
