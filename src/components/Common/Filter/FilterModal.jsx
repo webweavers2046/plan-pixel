@@ -18,6 +18,8 @@ const FilterModal = ({setOpenFilter,openFilter}) => {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpenFilterHistory,setIsOpenFilterHistory] = useState(false);
+  const modalRef = useRef();
+
   // const [isFilterClear, setIsLoading] = useState(false);
 
   const [selectedValues, setSelectedValues] = useState({
@@ -51,8 +53,6 @@ const FilterModal = ({setOpenFilter,openFilter}) => {
   };
 
 
-  const modalRef = useRef();
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -71,7 +71,6 @@ const FilterModal = ({setOpenFilter,openFilter}) => {
     };
   }, [setOpenFilter,setClickBaseFilterTaskId]);
 
-
   const [suggestions, setSuggestions] = useState([]);
 
   const handleInputChange = async (searchQuery) => {
@@ -79,6 +78,7 @@ const FilterModal = ({setOpenFilter,openFilter}) => {
     setSuggestions(response.data);
     if (searchQuery === "") {
       setSuggestions([]);
+      setFilteredTasks([])
     } else{
       setFilteredTasks(suggestions)
     }
@@ -94,9 +94,15 @@ const FilterModal = ({setOpenFilter,openFilter}) => {
     >
       <div className="flex justify-between items-center px-2">
         <h1 className="text-2xl font-bold">Filter</h1>
-        <MdManageHistory onClick={()=>setIsOpenFilterHistory(true)} className="text-2xl cursor-pointer"/>  
         
-          
+                  
+<button data-tooltip-target="tooltip-animation" type="button" class="text-black active:scale-90 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center dark:bg-blue-600  "><MdManageHistory onClick={()=>setIsOpenFilterHistory(true)} className="text-2xl cursor-pointer"/>  </button>
+
+<div id="tooltip-animation" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+    Tooltip content
+    <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
         <div className={`transition-all ${
         isOpenFilterHistory ? "w-60" : "w-0"
       } bg-white shadow-lg z-50 fixed top-0 right-0 duration-500 h-screen overflow-hidden`}>

@@ -13,33 +13,14 @@ import useSingleTask from "@/hooks/useSingleTask";
 const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
     const { data: cardTasks, refetch } = useCardTasks(cardId);
     const {data : card} = useSingleTask(cardId);
-    console.log(card);
+    // console.log(card);
     // console.log(cardTasks);
     const {user} = useContext(AuthContext);
     const {data : userData} = useUser(user?.email)
 
     const {activeWorkspace} = useGlobalContext()
     const { title,description, members } = activeWorkspace || {title:"",description:"",members:[]}
-    // console.log(defaultActiveWorkspace);
-
-     
-
-
-    // const task = {
-    //     name: 'Task name',
-    //     description: 'A user flow is a visualization of a path that a user takes  through a website'
-    // }
-
-    // const members = [
-    //     {
-    //         name: "Rahim",
-    //         email: "alamin102410@gmail.com",
-    //     },
-    //     {
-    //         name: "Sami",
-    //         email: "sami@gmail.com",
-    //     },
-    // ]
+    // console.log(activeWorkspace);
 
 
 
@@ -66,8 +47,8 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
                         </svg>
                     </button>
                 </div>
-                <div className="flex justify-between  h-full py-4 pl-12 pr-8">
-                    <div className="space-y-3">
+                <div className="flex justify-between gap-6 h-full py-4 pl-12 pr-8">
+                    <div className="space-y-3 w-[90%]">
                         {/* card name, description and other info */}
                         <p className="text-2xl font-semibold">{card?.title}</p>
                         <p>{card?.description}</p>
@@ -121,11 +102,11 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
                             {/* dates */}
                             <div className=" mt-4">
                                 <p className="">Assign Date:</p>
-                                <h4 className="text-2xl mt-2">02 Apr 2022</h4>
+                                <h4 className="text-2xl mt-2">{card?.dates?.startDate}</h4>
                             </div>
                             <div className=" mt-4">
                                 <p className="">Deadline:</p>
-                                <h4 className="text-2xl mt-2">02 Apr 2022</h4>
+                                <h4 className="text-2xl mt-2">{card?.dates?.dueDate}</h4>
                             </div>
 
                             <h4 className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-5">Add checklist</h4>

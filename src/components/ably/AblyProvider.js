@@ -44,17 +44,8 @@ const AblyProvider = ({ children }) => {
     ablyChannel.publish("isTaskDropped", { userEmail: "abc@gmail.com" });
     // Ably listener function to handle incoming messages
     const ablyListener = (message) => {
-      // Sorting tasks by position and updatedAt for consistent display
-      // const sortedTasks = message?.data?.sort((a, b) => {
-      //   if (a.position !== b.position) {
-      //     return a.position - b.position;
-      //   }
-      //   return new Date(b.updatedAt) - new Date(a.updatedAt);
-      // });
-
       
-      // Updating state with the sorted tasks
-      // setTasks(sortedTasks);
+      // console.log("listener_____", message?.data)
     };
 
     // here recieve user workspaces,tasks and member and active workspace. 
@@ -64,6 +55,9 @@ const AblyProvider = ({ children }) => {
       setAllworkspaceMembers(response.allMembersInWorkspace)
       setAllWorkspaceTasks(response.allTasksInWorkspace)
       setSetActiveWorkspace(response.activeWorkspace)
+
+
+      console.log("subscribe", response)
       })
 
     // Subscribing to the Ably channel with the ablyListener
@@ -83,8 +77,6 @@ const AblyProvider = ({ children }) => {
       }
     };
   }, [tasks]);
-  
-
   
 
   // Distribute all data by 

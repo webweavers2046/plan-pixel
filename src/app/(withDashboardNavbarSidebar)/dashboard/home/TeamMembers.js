@@ -15,6 +15,7 @@ import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
+import useUser from "@/hooks/useUser";
 
 const TeamMembers = () => {
     const {activeWorkspaceMembers,activeWorkspace} = useGlobalContext()
@@ -41,6 +42,9 @@ function TeamMember({ name, userEmail, avatar }) {
     const [buttonLoading, setButtonLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const messageRef = useRef(null);
+    const {data : userData} = useUser(userEmail);
+    // console.log(userData);
+
 
     const serviceId = "service_2whe5f8";
     const publicKey = "0vMK8CqEQPg9bKP9B";
@@ -144,7 +148,7 @@ function TeamMember({ name, userEmail, avatar }) {
                         width={44}
                         height={44}
                         className="rounded-full object-cover w-10 h-10"
-                        src={avatar}
+                        src={userData?.image}
                         alt="timeIcon"
                     />
 
@@ -164,37 +168,37 @@ function TeamMember({ name, userEmail, avatar }) {
     );
 }
 
-const teamMemberData = [
-    {
-        name: "Sabbir Mohammad Sami",
-        email: "smd71430@gmail.com",
-        avatar: member01Img,
-    },
-    {
-        name: "Mazharul Shishir",
-        email: "mdmazharulislam2046@gmail.com",
-        avatar: member02Img,
-    },
-    {
-        name: "MD Rahim",
-        email: "alamin102410@gmail.com",
-        avatar: member03Img,
-    },
-    {
-        name: "Shakil Ahmmed",
-        email: "shakilahmmed8882@gmail.com",
-        avatar: member04Img,
-    },
+// const teamMemberData = [
+//     {
+//         name: "Sabbir Mohammad Sami",
+//         email: "smd71430@gmail.com",
+//         avatar: member01Img,
+//     },
+//     {
+//         name: "Mazharul Shishir",
+//         email: "mdmazharulislam2046@gmail.com",
+//         avatar: member02Img,
+//     },
+//     {
+//         name: "MD Rahim",
+//         email: "alamin102410@gmail.com",
+//         avatar: member03Img,
+//     },
+//     {
+//         name: "Shakil Ahmmed",
+//         email: "shakilahmmed8882@gmail.com",
+//         avatar: member04Img,
+//     },
 
-    {
-        name: "Ahetesham Sajid",
-        email: "ahteshamsajid8@gmail.com",
-        avatar: member05Img,
-    },
+//     {
+//         name: "Ahetesham Sajid",
+//         email: "ahteshamsajid8@gmail.com",
+//         avatar: member05Img,
+//     },
 
-    {
-        name: "Forhad hossain",
-        email: "forhadairdrop@gmail.com",
-        avatar: member06Img,
-    },
-];
+//     {
+//         name: "Forhad hossain",
+//         email: "forhadairdrop@gmail.com",
+//         avatar: member06Img,
+//     },
+// ];

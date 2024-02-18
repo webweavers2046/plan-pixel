@@ -17,14 +17,14 @@ const GlobalContext = ({ children }) => {
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
   
-
-const [activeWorkspace, setActiveWorkspace] = useState({});
-const [userWokspaceList, setUserWokspaceList] = useState([]);
-const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
-const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
-const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
-const [loading, setLoading] = useState(true);
-let isMounted = true;
+  // Workspace related states
+  const [activeWorkspace, setActiveWorkspace] = useState({});
+  const [userWokspaceList, setUserWokspaceList] = useState([]);
+  const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
+  const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
+  const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
+  const [loading, setLoading] = useState(true);
+  let isMounted = true;
 
 
 const fetchLatestData = async () => {
@@ -32,6 +32,7 @@ const fetchLatestData = async () => {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
     console.log("Server Response:", userWorkspaces.data);
 
+    // Only when component mounted trigger to set the latest data
     if (isMounted) {
       setActiveWorkspace(userWorkspaces.data.activeWorkspace);
       setUserWokspaceList(userWorkspaces.data.userWokspaceList);
@@ -84,10 +85,6 @@ if (loading) return <Spinner/>
     console.log("form global", activeWorkspaceTasks)
   };
 
-
-  console.log(clickBaseFilterTaskId)
-
-
   // when user click on the dropdown for workspace list fetch
   // workspace list from the database
   const handleDropdownClick = async (e) => {
@@ -113,6 +110,7 @@ const handleDeleteWorkspace = async (e, _id,isDelete) => {
   }
 };
 
+// delete a member from a workspace 
 const handleDeleteMember = async(e,member,isDelete) => {
 
  const response = await xios.delete(`deleteMember/${activeWorkspace?._id}/${user&&user.email}/${member}`)
@@ -133,6 +131,12 @@ const handleTaskClick = async(taskId,workspaceId) => {
   }
 }
 
+// handle user history
+const handleUserHistory = data => {
+  console.log("this history dat is from the global", data)
+}
+
+
   const data = {
     activeWorkspace, 
     userWokspaceList, 
@@ -144,6 +148,7 @@ const handleTaskClick = async(taskId,workspaceId) => {
     clickBaseFilterTaskId,
     // used in filterModal.jsx
     setClickBaseFilterTaskId,
+    handleUserHistory,
 
     handleCreateTask,
     newTask,
