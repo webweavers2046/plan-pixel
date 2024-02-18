@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { FaUsers } from "react-icons/fa6";
 import { TbHelpSquareRoundedFilled } from "react-icons/tb";
 import { BsEnvelopeAtFill } from "react-icons/bs";
+import { MdOutlineAdd } from "react-icons/md";
 
 const AdminDrawer = () => {
     const pathname = usePathname();
@@ -138,6 +139,36 @@ const AdminDrawer = () => {
                                 <div className="flex items-center">
                                     <BsEnvelopeAtFill className="text-3xl me-3 ms-1" />
                                     <p>Newsletters</p>
+                                </div>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                className={`flex items-center  gap-x-4 ${
+                                    pathname == "/admin-dashboard/add-article"
+                                        ? "active"
+                                        : "inactive"
+                                }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                href="/admin-dashboard/add-article"
+                            >
+                                <div className="flex items-center">
+                                    <MdOutlineAdd className="text-3xl me-3 ms-1" />
+                                    <p>Add Article</p>
+                                </div>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                className={`flex items-center  gap-x-4 ${
+                                    pathname == "/admin-dashboard/all-article"
+                                        ? "active"
+                                        : "inactive"
+                                }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                href="/admin-dashboard/all-article"
+                            >
+                                <div className="flex items-center">
+                                    <PiArticleNyTimesBold className="text-3xl me-3 ms-1" />
+                                    <p>All Article</p>
                                 </div>
                             </Link>
                         </li>

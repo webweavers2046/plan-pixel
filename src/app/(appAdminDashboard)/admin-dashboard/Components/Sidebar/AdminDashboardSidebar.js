@@ -7,9 +7,12 @@ import Link from "next/link";
 import "@/styles/globals.css";
 
 import { IoSettingsSharp } from "react-icons/io5";
+import { PiArticleNyTimesBold } from "react-icons/pi";
 import { usePathname } from "next/navigation";
 import { FaUsers } from "react-icons/fa6";
 import { BsEnvelopeAtFill } from "react-icons/bs";
+import { MdOutlineAdd } from "react-icons/md";
+import { RiAddCircleFill } from "react-icons/ri";
 
 const AdminDashboardSidebar = () => {
     // get current route
@@ -143,6 +146,38 @@ const AdminDashboardSidebar = () => {
                                     <div className="flex items-center">
                                         <BsEnvelopeAtFill className="text-3xl me-3 ms-1" />
                                         <p>Newsletters</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className={`flex items-center  gap-x-4 ${
+                                        pathname ==
+                                        "/admin-dashboard/add-article"
+                                            ? "active"
+                                            : "inactive"
+                                    }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                    href="/admin-dashboard/add-article"
+                                >
+                                    <div className="flex items-center">
+                                        <RiAddCircleFill className="text-4xl me-3 ms-1" />
+                                        <p>Add Article</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className={`flex items-center  gap-x-4 ${
+                                        pathname ==
+                                        "/admin-dashboard/all-article"
+                                            ? "active"
+                                            : "inactive"
+                                    }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                    href="/admin-dashboard/all-article"
+                                >
+                                    <div className="flex items-center">
+                                        <PiArticleNyTimesBold className="text-4xl me-3 ms-1" />
+                                        <p>All Article</p>
                                     </div>
                                 </Link>
                             </li>
