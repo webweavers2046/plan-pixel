@@ -1,12 +1,25 @@
 'use client'
 
+import { globalContext } from "@/Providers/globalContext";
+import { ablyContext } from "@/components/ably/AblyProvider";
 import useAllTasks from "@/hooks/useAllTasks";
 import useFilterTasks from "@/hooks/useFilterTasks";
+import { useContext } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 const TaskBarGraph = () => {
 
-    const { data: allTasks } = useAllTasks();
+    const { allWorkspaceTasks } = useContext(ablyContext);
+    const { activeWorkspaceTasks } = useContext(globalContext);
+
+    if (!activeWorkspaceTasks) return;
+
+    const workspaceAllTasks =
+        activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
+
+        const allTasks = workspaceAllTasks;
+
+    // const { data: allTasks } = useAllTasks();
     // console.log(allTasks);
 
     const todo = allTasks?.filter(task => task?.status === "to-do");

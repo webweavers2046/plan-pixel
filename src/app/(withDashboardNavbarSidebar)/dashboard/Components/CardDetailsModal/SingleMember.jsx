@@ -4,7 +4,7 @@ import useUser from '@/hooks/useUser';
 
 const SingleMember = ({member}) => {
 
-    const {data : memberData} = useUser(member?.userEmail);
+    const {data : memberData} = useUser(member);
     // console.log(memberData);
     return (
         <Image

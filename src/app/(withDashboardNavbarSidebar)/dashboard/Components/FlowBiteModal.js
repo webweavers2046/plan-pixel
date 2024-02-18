@@ -7,10 +7,10 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const FlowBiteModal = ({task}) => {
+const FlowBiteModal = ({ task }) => {
   const [openModal, setOpenModal] = useState(false);
-    // console.log(task);
-    const { title, priority, description, dates } = task;
+  // console.log(task);
+  const { title, priority, description, dates } = task;
   const xios = useAxios();
   const {
     register,
@@ -28,8 +28,25 @@ const FlowBiteModal = ({task}) => {
         dueDate: data?.dueDate,
       },
       priority: data?.priority,
-
-      userEmail: user?.email,
+      email: user?.email,
+      image: "",
+      paymentStatus: null,
+      subscriptionStartDate: null,
+      subscriptionEndDate: null,
+      address: "Mohammadpur, Dhaka-1207",
+      facebook: "",
+      instagram: "",
+      linkedin: "",
+      number: "",
+      profession: "",
+      twitter: "",
+      activeWorkspace: "",
+      workspaces: ["65cef36a58c4df3cfaf4b77b", "65cf00207b0d98720f924ef2"],
+      tasks: [],
+      skills: "",
+      location: "",
+      lastModifiedBy: "",
+      tags: [],
     };
 
     await xios.put(`/updateTask/${id}`, updateTask).then((res) => {
@@ -53,7 +70,7 @@ const FlowBiteModal = ({task}) => {
       <p className="text-center" onClick={() => setOpenModal(true)}>
         Update
       </p>
-      <Modal  show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header></Modal.Header>
         <div
           className={`${openModal ? "block" : "hidden"} 
