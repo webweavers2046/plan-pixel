@@ -4,7 +4,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import PaperPieces from "./paperCutPiece";
 import toast from "react-hot-toast";
 
-const MiniModal = ({isCreateWokspace, handleClose,setIsCreateWorkSpace, handleCreateWorkspace,setDropdownOpen }) => {
+const MiniModal = ({ isCreateWokspace, handleClose, setIsCreateWorkSpace, handleCreateWorkspace, setDropdownOpen }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -25,7 +25,7 @@ const MiniModal = ({isCreateWokspace, handleClose,setIsCreateWorkSpace, handleCr
   };
 
   return (
-    <div className={` ${isCreateWokspace?"visible opacity-100":"invisible opacity-0"} transition-all duration-300`}>
+    <div className={` ${isCreateWokspace ? "visible opacity-100" : "invisible opacity-0"} transition-all duration-300`}>
       <>
         <div className="flex items-center ">
           <div className="bg-white shadow-lg h-[210px] rounded-sm p-4 z-40 absolute left-[270px] w-[255px] overflow-hidden top-28 mx-auto">

@@ -26,7 +26,6 @@ const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
 const [loading, setLoading] = useState(true);
 let isMounted = true;
 
-
 const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
@@ -52,12 +51,14 @@ useEffect(() => {
   };
 }, [user]);
 
+
 // this useEffect for rerendering when filter get cleared to set clickbasedFilterTaskId to ""
 useEffect(()=> {
   // just rerender 
 },[clickBaseFilterTaskId])
 
 if (loading) return <Spinner/>
+
 
 
   // This funciton will create a new task in the task collection
@@ -123,6 +124,7 @@ const handleDeleteMember = async(e,member,isDelete) => {
   fetchLatestData()
  }
 }
+
 
 // used in components > common > filter > filterModal.jsx
 const handleTaskClick = async(taskId,workspaceId) => {

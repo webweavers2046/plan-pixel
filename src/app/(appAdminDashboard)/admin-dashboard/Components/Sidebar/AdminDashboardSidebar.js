@@ -99,7 +99,7 @@ const AdminDashboardSidebar = () => {
                                     </div>
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link
                                     className={`flex items-center gap-x-4  ${
                                         pathname ==
@@ -112,7 +112,7 @@ const AdminDashboardSidebar = () => {
                                     <IoSettingsSharp className="w-7 h-7" />
                                     Profile
                                 </Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link
                                     className={`flex items-center  gap-x-4 ${
