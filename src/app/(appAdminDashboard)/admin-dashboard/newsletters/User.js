@@ -1,60 +1,20 @@
 "use client";
 
-import Image from "next/image";
+import { Modal } from "flowbite-react";
+import { useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import emailjs from "@emailjs/browser";
-import member01Img from "@/assets/team-members/sami.jpg";
-import member02Img from "@/assets/team-members/mazharul.jpg";
-import member03Img from "@/assets/team-members/rahim.jpg";
-import member04Img from "@/assets/team-members/shakil.jpg";
-import member05Img from "@/assets/team-members/sajid.jpg";
-import member06Img from "@/assets/team-members/forhad.jpg";
-
-import MassageIcon from "@/assets/dashboard/Message.svg";
-import { useContext, useRef, useState } from "react";
-import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
-import useGlobalContext from "@/hooks/useGlobalContext";
-import useUser from "@/hooks/useUser";
 
-const TeamMembers = () => {
-    const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
-
-    return (
-        <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
-            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">
-                Team Member{" "}
-                <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">
-                    {activeWorkspace?.title}
-                </span>
-            </h1>
-            {activeWorkspaceMembers?.map((member, index) => (
-                <TeamMember
-                    key={index}
-                    name={member.name}
-                    userEmail={member.email}
-                    // avatar={member.avatar}
-                    avatar={member02Img}
-                />
-            ))}
-        </div>
-    );
-};
-
-export default TeamMembers;
-
-function TeamMember({ name, userEmail, avatar }) {
+const User = ({ member }) => {
+    const { userEmail } = member;
     const [buttonLoading, setButtonLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const messageRef = useRef(null);
-    const { data: userData } = useUser(userEmail);
-    // console.log(userData);
 
     const serviceId = "service_2whe5f8";
     const publicKey = "0vMK8CqEQPg9bKP9B";
     const templateId = "template_xpon2ll";
-
-    // send message
 
     const handleSendMessage = (e) => {
         e.preventDefault();
@@ -82,9 +42,8 @@ function TeamMember({ name, userEmail, avatar }) {
                 console.error("Error sending email:", error);
             });
     };
-
     return (
-        <div className="flex items-center justify-between w-[350px] p-4 rounded-lg bg-[#F9F9F9] mb-3">
+        <div>
             {/* modal  */}
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Send Message</Modal.Header>
@@ -146,65 +105,45 @@ function TeamMember({ name, userEmail, avatar }) {
                     </form>
                 </Modal.Body>
             </Modal>
-            <div className="flex items-center justify-between w-full gap-x-4">
-                <div className="flex items-center gap-x-4">
-                    <Image
-                        width={44}
-                        height={44}
-                        className="rounded-full object-cover w-10 h-10"
-                        src={userData?.image}
-                        alt="timeIcon"
-                    />
-
-                    <div className="text-left">
-                        <p className=" font-semibold">{name}</p>
-                        <p className="text-xs font-medium text-black/50">
-                            {userEmail}
-                        </p>
+            <div
+                key={member.id}
+                className="grid grid-cols-4 items-center justify-between bg-dashboardPrimaryColor/50 mb-3 px-3 py-3 rounded-lg"
+            >
+                <div className="flex gap-6 items-center">
+                    <div className="">
+                        <p className="text-xs opacity-70">Name: </p>
+                        <h2 className="text-xl font-semibold -mt-0.5">
+                            {member.name}
+                        </h2>
                     </div>
                 </div>
-                <button
-                    onClick={() => setOpenModal(true)}
-                    className="flex justify-end"
-                >
-                    <Image className="" src={MassageIcon} alt="team member" />
-                </button>
+
+                <div className="">
+                    <p className="text-xs opacity-70">Email: </p>
+                    <h6 className="font-semibold">{member.userEmail}</h6>
+                </div>
+                <div className="">
+                    <p className="text-xs opacity-70">Create At: </p>
+                    <h6 className="font-semibold">{member.createdAt}</h6>
+                </div>
+
+                <div className=" text-end space-x-3">
+                    <button
+                        className="text-sm font-semibold px-3 py-0.5 text-black bg-primary/30  rounded-full"
+                        onClick={() => setOpenModal(true)}
+                    >
+                        Send Message
+                    </button>
+                    <button
+                        className="text-sm font-semibold px-3 py-0.5 text-white bg-rose-600 rounded-full"
+                        // onClick={() => handleDelete(member.id)}
+                    >
+                        Delete Subscription
+                    </button>
+                </div>
             </div>
         </div>
     );
-}
+};
 
-// const teamMemberData = [
-//     {
-//         name: "Sabbir Mohammad Sami",
-//         email: "smd71430@gmail.com",
-//         avatar: member01Img,
-//     },
-//     {
-//         name: "Mazharul Shishir",
-//         email: "mdmazharulislam2046@gmail.com",
-//         avatar: member02Img,
-//     },
-//     {
-//         name: "MD Rahim",
-//         email: "alamin102410@gmail.com",
-//         avatar: member03Img,
-//     },
-//     {
-//         name: "Shakil Ahmmed",
-//         email: "shakilahmmed8882@gmail.com",
-//         avatar: member04Img,
-//     },
-
-//     {
-//         name: "Ahetesham Sajid",
-//         email: "ahteshamsajid8@gmail.com",
-//         avatar: member05Img,
-//     },
-
-//     {
-//         name: "Forhad hossain",
-//         email: "forhadairdrop@gmail.com",
-//         avatar: member06Img,
-//     },
-// ];
+export default User;

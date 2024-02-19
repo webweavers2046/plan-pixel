@@ -137,6 +137,7 @@ const handleTaskClick = async(taskId,workspaceId) => {
 
   const data = {
     activeWorkspace, 
+    setActiveWorkspace,
     userWokspaceList, 
     activeWorkspaceTasks,
     activeWorkspaceMembers,

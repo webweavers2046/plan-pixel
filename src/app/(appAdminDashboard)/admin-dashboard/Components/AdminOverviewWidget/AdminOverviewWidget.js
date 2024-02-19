@@ -40,7 +40,9 @@ const AdminOverviewWidget = () => {
                     }}
                 >
                     <div className="flex justify-between items-center">
-                        <h5 className="text-lg font-semibold">Total users</h5>
+                        <h5 className="text-lg font-semibold">
+                            Total premium users
+                        </h5>
                         <h2 className="text-7xl">{totalPremiumUsers}</h2>
                     </div>
                 </div>
