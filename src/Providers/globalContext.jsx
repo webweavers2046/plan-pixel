@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthProviders";
 import Spinner from "@/components/Common/CommonModal/Spinner";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 export const globalContext = createContext(null);
 const GlobalContext = ({ children }) => {
@@ -13,6 +14,8 @@ const GlobalContext = ({ children }) => {
   const [newTask, setNewTask] = useState("");
   const xios = useAxios();
   const { user } = useContext(AuthContext);
+  const {allWorkspaceTasks} = useContext(ablyContext)
+  
   
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
@@ -34,7 +37,6 @@ const GlobalContext = ({ children }) => {
 const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
-    console.log("Server Response:", userWorkspaces.data);
 
     // Only when component mounted trigger to set the latest data
     if (isMounted) {
@@ -66,11 +68,32 @@ useEffect(() => {
   return () => {
     isMounted = false;
   };
-}, [user, clickBaseFilterTaskId,isUserHistoryStored,searchQueryFromHistory]);
 
+  // dependencies 
+}, [
+  user,
+  clickBaseFilterTaskId,
+  isUserHistoryStored,
+  searchQueryFromHistory,
+]);
+
+
+useEffect(()=> {
+  const currentUserEmail = user && user?.email
+  const activeWorkspaceId = activeWorkspace?._id
+
+
+  const filteredTasks = allWorkspaceTasks?.filter(task =>
+    task.workspace === activeWorkspaceId &&
+    (task.creator === currentUserEmail || task.members.includes(currentUserEmail)) 
+  );
+
+
+  console.log(filteredTasks)
+  setActiveWorkspaceTasks(filteredTasks)
+},[allWorkspaceTasks])
 
 if (loading) return <Spinner/>
-
 
 
   // This funciton will create a new task in the task collection
@@ -88,7 +111,6 @@ if (loading) return <Spinner/>
   // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
     setClickedWorkspaceId(_id)
-    console.log(user?.email)
     await xios.get(`/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${user?.email}`
     );
 
@@ -160,6 +182,7 @@ const handleHistoryClick = (historSearchQuery) => {
   const data = {
     activeWorkspace, 
     setActiveWorkspace,
+
     userWokspaceList, 
     activeWorkspaceTasks,
     activeWorkspaceMembers,

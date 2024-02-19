@@ -104,7 +104,7 @@ const Tasks = () => {
                 <span>Filteer</span>
                 {/* Filtering modal */}
               </div>
-              <div className={`${openFilter?"visible opacity-100":"invisible opacity-0"} transition-all duration-300 `}>
+              <div className={`${openFilter?"visible opacity-100":"invisible opacity-0"} transition-all duration-300`}>
                 {
                   <FilterModal openFilter={openFilter} setOpenFilter={setOpenFilter} />}
                   </div> 
