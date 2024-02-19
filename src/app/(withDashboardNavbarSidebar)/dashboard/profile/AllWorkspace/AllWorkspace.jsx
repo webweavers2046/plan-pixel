@@ -17,13 +17,9 @@ const AllWorkspace = () => {
   const { userWokspaceList } = useGlobalContext();
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const [selectedWorkspace, setSelectedWorkspace] = useState(null); // Add state to store selected workspace
-  
+
   const {activeWorkspace} = useGlobalContext()
   const { title,description, members } = activeWorkspace || {title:"",description:"",members:[]}
-  // console.log(members);
-  // console.log(userWokspaceList);
-
-  
 
   return (
     <div className="w-full px-10 mt-10">
