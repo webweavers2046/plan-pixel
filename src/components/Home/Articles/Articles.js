@@ -22,13 +22,14 @@ export default Articles;
 
 // Articles card
 const ArticleCard = ({ post }) => {
-    const { title, description, author, date, image_url, avatar_url } = post;
+    const { title, description, author, date, articleImage_url, avatar_url } =
+        post;
 
     return (
         <div className="lg:max-w-[364px] max-w-[345px] rounded-lg overflow-hidden shadow-lg bg-white mb-6">
             <Image
                 className="w-full h-48 object-cover"
-                src={image_url}
+                src={articleImage_url}
                 alt="Illustration"
             />
             <div className="px-5 py-4">
@@ -64,7 +65,7 @@ const articlePosts = [
             "Explore effective strategies for prioritizing tasks to maximize productivity.",
         author: "John Doe",
         date: "2023-01-15",
-        image_url: articleImg1,
+        articleImage_url: articleImg1,
         avatar_url: avatarImg1,
     },
 
@@ -76,7 +77,7 @@ const articlePosts = [
             "Discover simple habits that contribute to a healthier and happier lifestyle.",
         author: "Jane Smith",
         date: "2023-02-20",
-        image_url: articleImg2,
+        articleImage_url: articleImg2,
         avatar_url: avatarImg1,
     },
 
@@ -88,7 +89,7 @@ const articlePosts = [
             "Learn about coding practices and techniques to write clean and efficient code.",
         author: "Alex Johnson",
         date: "2023-03-10",
-        image_url: articleImg3,
+        articleImage_url: articleImg3,
         avatar_url: avatarImg1,
     },
 ];

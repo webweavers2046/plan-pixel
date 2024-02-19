@@ -2,42 +2,103 @@
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
+import member04Img from "@/assets/team-members/sajid.jpg";
+import member06Img from "@/assets/team-members/shakil.jpg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import CalculateCountdown from "./CalculateCountdown";
 
 const PremiumMembers = () => {
     // Sample premium members data
+
     const [premiumMembers, setPremiumMembers] = useState([
         {
-            id: "1",
-            userImage: member01Img,
-            name: "Premium User 1",
-            email: "premiumuser1@example.com",
-            premiumPlanType: "Gold",
+            id: 1,
+            name: "John Doe",
+            image: member01Img,
+            email: "john@example.com",
+            planType: "Basic",
+            subscriptionEndDate: "2024-03-17T23:59:55",
         },
         {
-            id: "2",
-            userImage: member02Img,
-            name: "Premium User 2",
-            email: "premiumuser2@example.com",
-            premiumPlanType: "Silver",
+            id: 2,
+            name: "Jane Smith",
+            image: member02Img,
+            email: "jane@example.com",
+            planType: "Enterprise",
+            subscriptionEndDate: "2024-04-20T23:59:48",
         },
         {
-            id: "3",
-            userImage: member03Img,
-            name: "Premium User 3",
-            email: "premiumuser3@example.com",
-            premiumPlanType: "Platinum",
+            id: 3,
+            name: "Alex Johnson",
+            image: member03Img,
+            email: "alex@example.com",
+            planType: "Premium",
+            subscriptionEndDate: "2024-05-15T23:59:19",
+        },
+        {
+            id: 4,
+            name: "Emma Brown",
+            image: member04Img,
+            email: "emma@example.com",
+            planType: "Basic",
+            subscriptionEndDate: "2024-06-10T23:59:59",
+        },
+        {
+            id: 5,
+            name: "Michael Wilson",
+            image: member06Img,
+            email: "michael@example.com",
+            planType: "Pro",
+            subscriptionEndDate: "2024-07-25T23:59:30",
+        },
+        {
+            id: 6,
+            name: "Sophia Garcia",
+            image: member01Img,
+            email: "sophia@example.com",
+            planType: "Enterprise",
+            subscriptionEndDate: "2024-08-30T23:59:25",
+        },
+        {
+            id: 7,
+            name: "William Martinez",
+            image: member03Img,
+            email: "william@example.com",
+            planType: "Basic",
+            subscriptionEndDate: "2024-09-18T23:59:59",
+        },
+        {
+            id: 8,
+            name: "Olivia Lee",
+            image: member01Img,
+            email: "olivia@example.com",
+            planType: "Premium",
+            subscriptionEndDate: "2024-10-05T23:59:09",
         },
     ]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            updateCountdown();
+        }, 1000);
 
-    // Function to delete a premium member
-    const deletePremiumMember = (idToDelete) => {
-        const updatedPremiumMembers = premiumMembers.filter(
-            (member) => member.id !== idToDelete
+        return () => clearInterval(interval);
+    }, []);
+
+    const updateCountdown = () => {
+        const updatedMembers = premiumMembers.map((member) => ({
+            ...member,
+            countdown: CalculateCountdown(member.subscriptionEndDate),
+        }));
+        setPremiumMembers(updatedMembers);
+    };
+
+    const handleDelete = (id) => {
+        const updatedMembers = premiumMembers.filter(
+            (member) => member.id !== id
         );
-        setPremiumMembers(updatedPremiumMembers);
+        setPremiumMembers(updatedMembers);
     };
 
     return (
@@ -46,8 +107,8 @@ const PremiumMembers = () => {
             <div className="pt-6">
                 {premiumMembers.map((member) => (
                     <div
-                        className="grid grid-cols-7 items-center justify-between bg-dashboardPrimaryColor mb-3 px-3 py-3 rounded-lg"
                         key={member.id}
+                        className="grid grid-cols-9 items-center justify-between bg-dashboardPrimaryColor/50 mb-3 px-3 py-3 rounded-lg"
                     >
                         <div className="flex col-span-2 gap-6 items-center">
                             <div className="">
@@ -55,13 +116,13 @@ const PremiumMembers = () => {
                                     className="rounded-lg"
                                     width={50}
                                     height={50}
-                                    src={member.userImage}
+                                    src={member.image}
                                     alt={member.name}
                                 />
                             </div>
                             <div className="">
                                 <p className="text-xs opacity-70">Name: </p>
-                                <h2 className="text-lg font-semibold -mt-0.5">
+                                <h2 className="text-xl font-semibold -mt-0.5">
                                     {member.name}
                                 </h2>
                             </div>
@@ -69,16 +130,23 @@ const PremiumMembers = () => {
 
                         <div className="col-span-2">
                             <p className="text-xs opacity-70">Email: </p>
-                            <h6 className="">{member.email}</h6>
+                            <h6 className="font-semibold">{member.email}</h6>
                         </div>
                         <div className="col-span-2">
                             <p className="text-xs opacity-70">Plan Type: </p>
-                            <h6 className="">{member.premiumPlanType}</h6>
+                            <h6 className="font-semibold">{member.planType}</h6>
+                        </div>
+                        <div className="col-span-2">
+                            <p className="text-xs opacity-70">Deadline: </p>
+                            <h6 className="text-lg font-semibold">
+                                {member.countdown &&
+                                    `${member.countdown.days}: ${member.countdown.hours}: ${member.countdown.minutes}: ${member.countdown.seconds}`}
+                            </h6>
                         </div>
                         <div className="col-span-1 text-end">
                             <button
                                 className="text-sm font-semibold px-3 py-0.5 text-white bg-rose-600 rounded-full"
-                                onClick={() => deletePremiumMember(member.id)}
+                                onClick={() => handleDelete(member.id)}
                             >
                                 Delete
                             </button>

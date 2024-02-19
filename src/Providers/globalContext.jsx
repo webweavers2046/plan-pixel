@@ -72,6 +72,7 @@ useEffect(() => {
 if (loading) return <Spinner/>
 
 
+
   // This funciton will create a new task in the task collection
   const handleCreateTask = async (newTask, setOpenModal,activeWorkspaceId) => {
     const response = await xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask)
@@ -133,6 +134,7 @@ const handleDeleteMember = async(e,member,isDelete) => {
  }
 }
 
+
 // used in components > common > filter > filterModal.jsx
 const handleTaskClick = async(taskId,workspaceId) => {
   const response = await xios.post(`/api/set-active-workspace-from-filter`,{userEmail:user?.email,workspaceId})
@@ -157,6 +159,7 @@ const handleHistoryClick = (historSearchQuery) => {
 
   const data = {
     activeWorkspace, 
+    setActiveWorkspace,
     userWokspaceList, 
     activeWorkspaceTasks,
     activeWorkspaceMembers,
