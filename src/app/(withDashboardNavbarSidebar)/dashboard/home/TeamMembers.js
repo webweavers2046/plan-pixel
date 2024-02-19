@@ -11,30 +11,30 @@ import member05Img from "@/assets/team-members/sajid.jpg";
 import member06Img from "@/assets/team-members/forhad.jpg";
 
 import MassageIcon from "@/assets/dashboard/Message.svg";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import { ablyContext } from "@/components/ably/AblyProvider";
+import useUser from "@/hooks/useUser";
 
 const TeamMembers = () => {
-    const {workspaceBasedMembers} = useGlobalContext()
-    const {allWorkspaceMembers} = useContext(ablyContext)
+    const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
 
-    const membersInWorkspace = allWorkspaceMembers.length > 0? allWorkspaceMembers : workspaceBasedMembers 
-    
-    
     return (
         <div className="shadow-md w-full rounded-xl p-6 max-h-dvh overscroll-auto border">
-            <h1 className=" text-2xl font-bold p-4">Team Member</h1>
-            {membersInWorkspace?.map((member, index) => (
+            <h1 className=" flex items-center gap-2 text-2xl font-bold p-4">
+                Team Member{" "}
+                <span className="text-[12px] font-normal bg-[#f6866ad1] h-6 px-2 flex items-center rounded-lg text-white">
+                    {activeWorkspace?.title}
+                </span>
+            </h1>
+            {activeWorkspaceMembers?.map((member, index) => (
                 <TeamMember
                     key={index}
                     name={member.name}
                     userEmail={member.email}
                     // avatar={member.avatar}
                     avatar={member02Img}
-                    
                 />
             ))}
         </div>
@@ -47,6 +47,8 @@ function TeamMember({ name, userEmail, avatar }) {
     const [buttonLoading, setButtonLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const messageRef = useRef(null);
+    const { data: userData } = useUser(userEmail);
+    // console.log(userData);
 
     const serviceId = "service_2whe5f8";
     const publicKey = "0vMK8CqEQPg9bKP9B";
@@ -71,10 +73,10 @@ function TeamMember({ name, userEmail, avatar }) {
 
                 toast.success("Message Sended", {
                     duration: 2000,
-                    className: "mt-32",
+                    // className: "mt-32",
                 });
                 setButtonLoading(false);
-                setOpenModal(true);
+                setOpenModal(false);
             })
             .catch((error) => {
                 console.error("Error sending email:", error);
@@ -82,7 +84,7 @@ function TeamMember({ name, userEmail, avatar }) {
     };
 
     return (
-        <div className="flex items-center justify-between p-4 rounded-lg bg-[#F9F9F9] mb-3">
+        <div className="flex items-center justify-between w-[350px] p-4 rounded-lg bg-[#F9F9F9] mb-3">
             {/* modal  */}
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Send Message</Modal.Header>
@@ -144,61 +146,65 @@ function TeamMember({ name, userEmail, avatar }) {
                     </form>
                 </Modal.Body>
             </Modal>
-            <div className="flex items-center gap-4">
-                <Image
-                    width={44}
-                    height={44}
-                    className="rounded-full object-cover w-10 h-10"
-                    src={avatar}
-                    alt="timeIcon"
-                />
+            <div className="flex items-center justify-between w-full gap-x-4">
+                <div className="flex items-center gap-x-4">
+                    <Image
+                        width={44}
+                        height={44}
+                        className="rounded-full object-cover w-10 h-10"
+                        src={userData?.image}
+                        alt="timeIcon"
+                    />
 
-                <div className="">
-                    <p className="text- font-semibold">{name}</p>
-                    <p className="text-xs font-medium text-black/50">
-                        {userEmail}
-                    </p>
+                    <div className="text-left">
+                        <p className=" font-semibold">{name}</p>
+                        <p className="text-xs font-medium text-black/50">
+                            {userEmail}
+                        </p>
+                    </div>
                 </div>
+                <button
+                    onClick={() => setOpenModal(true)}
+                    className="flex justify-end"
+                >
+                    <Image className="" src={MassageIcon} alt="team member" />
+                </button>
             </div>
-            <button onClick={() => setOpenModal(true)} className="">
-                <Image className="" src={MassageIcon} alt="team member" />
-            </button>
         </div>
     );
 }
 
+// const teamMemberData = [
+//     {
+//         name: "Sabbir Mohammad Sami",
+//         email: "smd71430@gmail.com",
+//         avatar: member01Img,
+//     },
+//     {
+//         name: "Mazharul Shishir",
+//         email: "mdmazharulislam2046@gmail.com",
+//         avatar: member02Img,
+//     },
+//     {
+//         name: "MD Rahim",
+//         email: "alamin102410@gmail.com",
+//         avatar: member03Img,
+//     },
+//     {
+//         name: "Shakil Ahmmed",
+//         email: "shakilahmmed8882@gmail.com",
+//         avatar: member04Img,
+//     },
 
-const teamMemberData = [
-    {
-        name: "Sabbir Mohammad Sami",
-        email: "smd71430@gmail.com",
-        avatar: member01Img,
-    },
-    {
-        name: "Mazharul Shishir",
-        email: "mdmazharulislam2046@gmail.com",
-        avatar: member02Img,
-    },
-    {
-        name: "MD Rahim",
-        email: "alamin102410@gmail.com",
-        avatar: member03Img,
-    },
-    {
-        name: "Shakil Ahmed",
-        email: "shakilahmmed8882@gmail.com",
-        avatar: member04Img,
-    },
+//     {
+//         name: "Ahetesham Sajid",
+//         email: "ahteshamsajid8@gmail.com",
+//         avatar: member05Img,
+//     },
 
-    {
-        name: "Ahetesham Sajid",
-        email: "ahteshamsajid8@gmail.com",
-        avatar: member05Img,
-    },
-
-    {
-        name: "Forhad hossine",
-        email: "forhadairdrop@gmail.com",
-        avatar: member06Img,
-    },
-];
+//     {
+//         name: "Forhad hossain",
+//         email: "forhadairdrop@gmail.com",
+//         avatar: member06Img,
+//     },
+// ];

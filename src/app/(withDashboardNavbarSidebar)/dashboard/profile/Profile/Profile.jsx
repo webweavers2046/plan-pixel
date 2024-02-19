@@ -4,13 +4,13 @@ import { useContext, useState } from "react";
 import profileAvatar from '@/assets/person/profileAvatar.png'
 import Image from "next/image";
 import useUser from "@/hooks/useUser";
+import DeleteConfirmModal from "@/components/Common/CommonModal/DeleteConfirmModal";
 
 
 
 const Profile = ({ editProfile, setEditProfile }) => {
     const { user } = useContext(AuthContext)
-    const userData = useUser(user?.email);
-    // console.log(userData);
+    const {data : userData, refetch} = useUser(user?.email);
 
     const socialLinks = [
         {
@@ -28,6 +28,7 @@ const Profile = ({ editProfile, setEditProfile }) => {
     ]
 
     return (
+        <div>
         <div className="w-full p-4">
             {/* image */}
             <div className="flex justify-between">
@@ -145,6 +146,7 @@ const Profile = ({ editProfile, setEditProfile }) => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

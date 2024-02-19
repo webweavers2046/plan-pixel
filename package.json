@@ -14,6 +14,7 @@
     "@stripe/stripe-js": "^2.4.0",
     "@tanstack/react-query": "^5.17.19",
     "ably": "^1.2.48",
+    "apexcharts": "^3.45.2",
     "axios": "^1.6.7",
     "firebase": "^10.7.2",
     "flowbite": "^2.2.1",
@@ -27,7 +28,8 @@
     "react-icons": "^5.0.1",
     "socket.io-client": "^4.7.4",
     "stripe": "^14.14.0",
-    "sweetalert2": "^11.10.4"
+    "sweetalert2": "^11.10.4",
+    "tailwind-scrollbar": "^3.1.0"
   },
   "devDependencies": {
     "@types/node": "20.11.4",

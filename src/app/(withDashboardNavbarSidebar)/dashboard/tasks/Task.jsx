@@ -1,29 +1,39 @@
 "use client";
 
-import FlowBiteModal from "../Components/FlowBiteModal";
 import member01Img from "@/assets/team-members/sami.jpg";
 import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
-import {  FaEquals, FaStopwatch } from "react-icons/fa6";
+import { FaEquals, FaStopwatch } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Image from "next/image";
 import { Dropdown } from "flowbite-react";
 import useAxios from "@/hooks/useAxios";
-import useGlobalTaskData from "@/hooks/useGlobalTaskData";
+import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import UpdateTask from "../Components/UpdateTask";
+import { useContext } from "react";
+import { globalContext } from "@/Providers/globalContext";
+import { AuthContext } from "@/Providers/AuthProviders";
 
+const Task = ({ setUpdateId,
+    task,
+    openUpdateModal,
+    setOpenUpdateModal }) => {
 
-const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
+    const { openCardDetails, setOpenCardDetails, cardId, setCardId } = useContext(AuthContext);
+
     // manage all you state here
-    const { draggingStarted, isDragging, draggingOver,isDropped, draggingTaskId } =useGlobalTaskData();
-        const xios = useAxios()
+    const { draggingStarted, draggingOver, isDropped } = useDNDcontext();
+    const xios = useAxios()
+    const { clickBaseFilterTaskId } = useContext(globalContext)
+
+
 
     const handleDeleteTask = (id) => {
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -50,22 +60,34 @@ const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
         });
     };
 
+    const handleUpdate = (id) => {
+        setWorkspaceId()
+        setUpdateId(id)
+        setOpenUpdateModal(!openUpdateModal)
+    }
+
+    const handleCard = () => {
+        setCardId(task?._id)
+        setOpenCardDetails(!openCardDetails)
+
+    }
+
     return (
         <div
             draggable
             id={task._id}
-            onDragOver={(e) => draggingOver(e,task._id)}
+            onDragOver={(e) => draggingOver(e, task._id)}
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
             className={` 
             task-container
             mt-4 cursor-grabbing transform transition-all 0.5s 
-            ease-in-out  bg-[#F9F9F9] rounded-md p-8 text-black 
+            ease-in-out ${clickBaseFilterTaskId === task?._id ? "bg-[#E8F0FE]  shadow-lg " : "bg-[#F9F9F9]"}  rounded-md p-8 text-black 
             ${isDropped ? "transition-all linear 1s" : ""} 
             `}
         >
             {" "}
             <div className=" flex items-center gap-2 justify-between">
-                <h2 className="font-semibold text-lg">{task.title}</h2>
+                <h2 className={`font-semibold text-lg ${clickBaseFilterTaskId === task?._id ? "text-[#1558D6]" : ""}`}>{task.title}</h2>
                 <Dropdown
                     className="bg-gray-300 w-full py-2 px-3 rounded-lg mt-16 cursor-pointer"
                     label=""
@@ -82,7 +104,7 @@ const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
                     </Dropdown.Item>
                     <Dropdown.Item className="rounded-md">
                         {/* <button className="w-full"><FlowBiteModal task={task}></FlowBiteModal></button> */}
-                        <button onClick={() => setOpenUpdateModal(!openUpdateModal)} className="w-full">Update</button>
+                        <button onClick={() => handleUpdate(task?._id)} className="w-full">Update</button>
 
                     </Dropdown.Item>
                 </Dropdown>
@@ -138,17 +160,11 @@ const Task = ({ task,openUpdateModal,setOpenUpdateModal }) => {
                         alt=""
                     />
                 </div>
-                <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+                <button onClick={handleCard}>
+                    <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+                </button>
 
             </div>
-            {/* <UpdateTask task={task} ></UpdateTask> */}
-            {/* <TaskModal
-                    openModal={openModal}
-                    setOpenModal={setOpenModal}
-                ></TaskModal> */}
-
-                
-
         </div>
     );
 };

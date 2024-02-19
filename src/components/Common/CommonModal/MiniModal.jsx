@@ -3,12 +3,10 @@ import { TiTick } from "react-icons/ti";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import PaperPieces from "./paperCutPiece";
 import toast from "react-hot-toast";
-import useGlobalContext from "@/hooks/useGlobalContext";
 
-const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
+const MiniModal = ({ isCreateWokspace, handleClose, setIsCreateWorkSpace, handleCreateWorkspace, setDropdownOpen }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const {TriggerWhenNewWorkspaceCreated} = useGlobalContext()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,24 +18,17 @@ const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
     // Pass the values to the parent component
     handleCreateWorkspace(name, description);
     setIsCreateWorkSpace(false)
-    TriggerWhenNewWorkspaceCreated()
+    setDropdownOpen(false)
     // Reset the form values
     setName("");
     setDescription("");
   };
 
-  const handleClose = () => {
-    // Close the modal
-    setIsCreateWorkSpace(false);
-
-    console.log("close");
-  };
-
   return (
-    <div className="relative">
+    <div className={` ${isCreateWokspace ? "visible opacity-100" : "invisible opacity-0"} transition-all duration-300`}>
       <>
-        <div className="flex items-center relative">
-          <div className="bg-white shadow-lg h-[200px] rounded-lg p-4 z-40 fixed left-72 w-[260px] overflow-hidden top-3 mx-auto">
+        <div className="flex items-center ">
+          <div className="bg-white shadow-lg h-[210px] rounded-sm p-4 z-40 absolute left-[270px] w-[255px] overflow-hidden top-28 mx-auto">
             <div className="flex w-full items-center mb-2">
               <input
                 name="name"
@@ -71,7 +62,7 @@ const MiniModal = ({ setIsCreateWorkSpace, handleCreateWorkspace }) => {
               </button>
               <button
                 onClick={handleSubmit}
-                className="rounded-full flex items-center justify-center bg-white p-3 text-primary shadow-sm"
+                className="rounded-full p-3 flex z-20 items-center justify-center bg-white text-primary shadow-sm"
               >
                 <TiTick className="text-[28px]" />
               </button>

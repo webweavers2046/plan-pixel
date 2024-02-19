@@ -1,13 +1,23 @@
-import useGetSocketData from "@/hooks/useGetAllTasks";
+import { globalContext } from "@/Providers/globalContext";
+import { ablyContext } from "@/components/ably/AblyProvider";
+import useAllTasks from "@/hooks/useAllTasks";
+import useFilterTasks from "@/hooks/useFilterTasks";
+import { useContext } from "react";
 
 const TaskStats = () => {
-    const allTasks = useGetSocketData();
-    const todo = allTasks?.filter(task => task?.status === 'to-do');
-    const doing = allTasks?.filter(task => task?.status === 'doing');
-    const done = allTasks?.filter(task => task?.status === 'done');
-    // console.log('todo', todo);
-    // console.log('doing', doing);
-    // console.log('done', done);
+
+    const { allWorkspaceTasks } = useContext(ablyContext);
+    const { activeWorkspaceTasks } = useContext(globalContext);
+  
+    if (!activeWorkspaceTasks) return;
+  
+    const workspaceAllTasks =
+      activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
+
+    const todo = workspaceAllTasks?.filter(task => task?.status === "to-do");
+    const done = workspaceAllTasks?.filter(task => task?.status === "done");
+    const doing = workspaceAllTasks?.filter(task => task?.status === "doing");
+
     return (
         <div className="grid grid-cols-2 px-10  gap-5">
             <div className="bg-[#50B57759] flex flex-col justify-center items-center font-semibold p-5 rounded-lg">

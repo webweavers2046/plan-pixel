@@ -24,8 +24,9 @@ module.exports = {
                 footer: "#E9F5E3",
 
                 darkParaColor: "",
+                inputBg: "#ECECEC"
             },
         },
     },
-    plugins: [require("flowbite/plugin")],
+    plugins: [require("flowbite/plugin"), require('tailwind-scrollbar')],
 };

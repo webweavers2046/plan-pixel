@@ -1,48 +1,65 @@
 'use client'
-import useGetSocketData from "@/hooks/useGetAllTasks";
+
+import { globalContext } from "@/Providers/globalContext";
+import { ablyContext } from "@/components/ably/AblyProvider";
+import useAllTasks from "@/hooks/useAllTasks";
+import useFilterTasks from "@/hooks/useFilterTasks";
+import { useContext } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 const TaskBarGraph = () => {
-    const allTasks = useGetSocketData()
-    const upcomingTasks = allTasks?.filter(task => task.status === 'upcoming')
-    const todoTasks = allTasks?.filter(task => task.status === 'to-do')
-    const doingTasks = allTasks?.filter(task => task.status === 'doing')
-    const doneTasks = allTasks?.filter(task => task.status === 'done')
-    // console.log('stats task', upcomingTasks);
-    // console.log('stats task', todoTasks);
-    // console.log('stats task', doingTasks);
-    // console.log('stats task', doneTasks);
+
+    const { allWorkspaceTasks } = useContext(ablyContext);
+    const { activeWorkspaceTasks } = useContext(globalContext);
+
+    if (!activeWorkspaceTasks) return;
+
+    const workspaceAllTasks =
+        activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
+
+        const allTasks = workspaceAllTasks;
+
+    // const { data: allTasks } = useAllTasks();
+    // console.log(allTasks);
+
+    const todo = allTasks?.filter(task => task?.status === "to-do");
+    const upcoming = allTasks?.filter(task => task?.status === "upcoming");
+    const doing = allTasks?.filter(task => task?.status === "doing");
+    const done = allTasks?.filter(task => task?.status === "done");
+
+
 
     const taskInfo = [
         {
-            tasks: upcomingTasks?.length ,
+            tasks: upcoming?.length,
             color: '#FABE7A',
-            alpha : 'a'
+            alpha: 'a'
         },
         {
-            tasks: todoTasks?.length,
+            tasks: todo?.length,
             color: '#F6866A',
-            alpha : 'b'
+            alpha: 'b'
 
         },
         {
-            tasks: doingTasks?.length ,
+            tasks: doing?.length,
             color: '#59E6F6',
-            alpha : 'c'
+            alpha: 'c'
         },
         {
-            tasks: doneTasks?.length ,
+            tasks: done?.length,
             color: '#7661E2',
-            alpha : 'd'
+            alpha: 'd'
         },
     ]
+
     return (
-        <div className="w-full h-fit border-2 border-[#E6E8EC] rounded-lg p-5">
-            <div className="flex justify-between items-center">
+        <div className="w-full border-2 border-[#E6E8EC] rounded-lg p-5">
+            <div className="flexjustify-between items-center">
                 <h3 className="text-lg font-bold">Teams Strength</h3>
                 <div className="text-[#00000099] flex gap-2 items-center">
                     <p>22 Apr 2024</p>
-                    <IoIosArrowDown className="text-2xl"></IoIosArrowDown>
+                    <IoIosArrowDown className="text"></IoIosArrowDown>
                 </div>
             </div>
             {/* Bar Chart */}
@@ -50,8 +67,8 @@ const TaskBarGraph = () => {
                 {
                     taskInfo?.map((task, index) => <div key={index} className="flex flex-col space-y-[2px] items-center justify-center w-full">
                         <p className="text-[#828282]">{task?.tasks}</p>
-                        <div className={`w-full rounded-t-lg bg-[${task?.color}]`}
-                        style={{height: `${task?.tasks*20}px`, borderBottom: `2px solid ${task?.color}` }}></div>
+                        <div className={`w-full rounded-t-lg bg-[${task?.color}] max-h-[190px]`}
+                            style={{ height: `${task?.tasks * 20}px`, borderBottom: `2px solid ${task?.color}` }}></div>
                         <p className="text-[#828282]">{task?.alpha}</p>
                     </div>)
                 }

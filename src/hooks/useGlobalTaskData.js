@@ -5,8 +5,8 @@ import { taskContext } from "@/Providers/TaskDndProvider";
 // const { taskContext } = require("@/Providers/TaskDndProvider");
 const { useContext } = require("react");
 
-const useGlobalTaskData = () => {
+const useDNDcontext = () => {
   return useContext(taskContext);
 };
 
-export default useGlobalTaskData;
+export default useDNDcontext;
