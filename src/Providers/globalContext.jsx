@@ -23,10 +23,14 @@ const GlobalContext = ({ children }) => {
   const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
   const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
   const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
+  const [isUserHistoryStored,setIsUserHistoryStored] = useState(false)
+  const [searchQueryFromHistory,setSearchQueryFromHistory] = useState("")
+
   const [loading, setLoading] = useState(true);
   let isMounted = true;
+  const [userSearchHistory,setUserSearchHistory] = useState([])
 
-
+// this function fetch the latest data 
 const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
@@ -46,17 +50,24 @@ const fetchLatestData = async () => {
   }
 };
 
+// this funciton fetch the latest user search history
+const fetchUserSearchHistory= async () => {
+  const response = await xios.get(`/api/user/search-history/${user&&user.email}`)
+  if(isMounted){
+    setUserSearchHistory(response.data)
+    console.log("this is the response we found after the get fetch request")
+  }
+}
+
+// fetch lates workspace related content and user history based on dependencies 
 useEffect(() => {
   fetchLatestData();
+  fetchUserSearchHistory()
   return () => {
     isMounted = false;
   };
-}, [user]);
+}, [user, clickBaseFilterTaskId,isUserHistoryStored,searchQueryFromHistory]);
 
-// this useEffect for rerendering when filter get cleared to set clickbasedFilterTaskId to ""
-useEffect(()=> {
-  // just rerender 
-},[clickBaseFilterTaskId])
 
 if (loading) return <Spinner/>
 
@@ -131,9 +142,16 @@ const handleTaskClick = async(taskId,workspaceId) => {
   }
 }
 
-// handle user history
-const handleUserHistory = data => {
-  console.log("this history dat is from the global", data)
+const handleDeleteAllHistory = async() => {
+  const res =  await xios.delete("/api/delte/search-history")
+  if(res?.data.deletedCount > 0){
+    setUserSearchHistory([])
+  }
+} 
+
+// take the history to put it in the input again 
+const handleHistoryClick = (historSearchQuery) => {
+  setSearchQueryFromHistory(historSearchQuery)
 }
 
 
@@ -148,7 +166,15 @@ const handleUserHistory = data => {
     clickBaseFilterTaskId,
     // used in filterModal.jsx
     setClickBaseFilterTaskId,
-    handleUserHistory,
+
+    //user search history
+    userSearchHistory,
+    setIsUserHistoryStored,
+    isUserHistoryStored,
+    handleDeleteAllHistory,
+    handleHistoryClick,
+    setSearchQueryFromHistory,
+    searchQueryFromHistory,
 
     handleCreateTask,
     newTask,
