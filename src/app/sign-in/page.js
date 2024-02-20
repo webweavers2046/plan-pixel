@@ -180,8 +180,8 @@ const SignIn = () => {
                                         required: true,
                                         minLength: 6,
                                         maxLength: 20,
-                                        pattern:
-                                            /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                                        // pattern:
+                                        //     /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
                                     })}
                                     type="password"
                                     name="password"

@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import { AuthContext } from "@/Providers/AuthProviders";
+import React, { useContext, useEffect, useState } from "react";
 
 const ChatFooter = ({ socket }) => {
+  const {user} = useContext(AuthContext)
   const [message, setMessage] = useState("");
+  const [userName,setUserName] = useState('')
 
+
+
+  useEffect(()=>{
+    if(user){
+      setUserName(user?.email)
+    }
+  },[user])
   const handleTyping = () => {
-    socket.emit("typing", `${localStorage.getItem("userName")} is typing`);
-    console.log("typing");
+    socket.emit("typing", `${userName} is typing..`);
   };
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (message.trim() && localStorage.getItem("userName")) {
+    if (message.trim() && userName) {
       socket.emit("message", {
         text: message,
-        name: localStorage.getItem("userName"),
+        name: userName,
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
       });

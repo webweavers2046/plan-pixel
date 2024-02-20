@@ -69,7 +69,7 @@ useEffect(() => {
 }, [user, clickBaseFilterTaskId,isUserHistoryStored,searchQueryFromHistory]);
 
 
-if (loading) return <Spinner/>
+// if (loading) return <Spinner/>
 
 
 

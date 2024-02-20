@@ -1,26 +1,31 @@
-'use client'
+"use client";
 import { useContext, useEffect, useRef, useState } from "react";
 import socketIO from "socket.io-client";
 import ChatBar from "./ChatBar";
 import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
-import './chat.css'
+import "./chat.css";
 import { AuthContext } from "@/Providers/AuthProviders";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { useRouter } from "next/navigation";
 const socket = socketIO.connect("http://localhost:5000");
 const Chat = () => {
-  const router = useRouter()
+  const router = useRouter();
   const { activeWorkspaceMembers } = useGlobalContext();
-const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [typingStatus, setTypingStatus] = useState("");
   const lastMessageRef = useRef(null);
-  const [userName, setUserName] = useState(user?.displayName);
-  console.log(activeWorkspaceMembers);
-// if(!user) {
-//     router.push('/register')
-// }
+  const [userName, setUserName] = useState("");
+  // if(!user) {
+  //     router.push('/register')
+  // }
+
+  useEffect(() => {
+    if (user) {
+      setUserName(user?.email);
+    }
+  }, [user]);
   useEffect(() => {
     socket.emit("newUser", { userName, socketID: socket.id });
   }, [userName]);
