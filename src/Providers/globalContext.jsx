@@ -16,46 +16,58 @@ const GlobalContext = ({ children }) => {
 
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
-
-
+  
+  // Workspace related states
   const [activeWorkspace, setActiveWorkspace] = useState({});
   const [userWokspaceList, setUserWokspaceList] = useState([]);
   const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
   const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
-  const [clickBaseFilterTaskId, setClickBaseFilterTaskId] = useState("")
+  const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
+  const [isUserHistoryStored,setIsUserHistoryStored] = useState(false)
+  const [searchQueryFromHistory,setSearchQueryFromHistory] = useState("")
+
   const [loading, setLoading] = useState(true);
   let isMounted = true;
+  const [userSearchHistory,setUserSearchHistory] = useState([])
 
-  const fetchLatestData = async () => {
-    try {
-      const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
-      console.log("Server Response:", userWorkspaces.data);
+// this function fetch the latest data 
+const fetchLatestData = async () => {
+  try {
+    const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
+    console.log("Server Response:", userWorkspaces.data);
 
-      if (isMounted) {
-        setActiveWorkspace(userWorkspaces.data.activeWorkspace);
-        setUserWokspaceList(userWorkspaces.data.userWokspaceList);
-        setActiveWorkspaceMembers(userWorkspaces.data.activeWorkspaceMembers);
-        setActiveWorkspaceTasks(userWorkspaces.data.activeWorkspaceTasks);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    // Only when component mounted trigger to set the latest data
+    if (isMounted) {
+      setActiveWorkspace(userWorkspaces.data.activeWorkspace);
+      setUserWokspaceList(userWorkspaces.data.userWokspaceList);
+      setActiveWorkspaceMembers(userWorkspaces.data.activeWorkspaceMembers);
+      setActiveWorkspaceTasks(userWorkspaces.data.activeWorkspaceTasks);
       setLoading(false);
     }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    setLoading(false);
+  }
+};
+
+// this funciton fetch the latest user search history
+const fetchUserSearchHistory= async () => {
+  const response = await xios.get(`/api/user/search-history/${user&&user.email}`)
+  if(isMounted){
+    setUserSearchHistory(response.data)
+    console.log("this is the response we found after the get fetch request")
+  }
+}
+
+// fetch lates workspace related content and user history based on dependencies 
+useEffect(() => {
+  fetchLatestData();
+  fetchUserSearchHistory()
+  return () => {
+    isMounted = false;
   };
+}, [user, clickBaseFilterTaskId,isUserHistoryStored,searchQueryFromHistory]);
 
-  useEffect(() => {
-    fetchLatestData();
-    return () => {
-      isMounted = false;
-    };
-  }, [user]);
-
-
-  // this useEffect for rerendering when filter get cleared to set clickbasedFilterTaskId to ""
-  useEffect(() => {
-    // just rerender 
-  }, [clickBaseFilterTaskId])
 
   if (loading) return <Spinner />
 
@@ -85,10 +97,6 @@ const GlobalContext = ({ children }) => {
     console.log("form global", activeWorkspaceTasks)
   };
 
-
-  console.log(clickBaseFilterTaskId)
-
-
   // when user click on the dropdown for workspace list fetch
   // workspace list from the database
   const handleDropdownClick = async (e) => {
@@ -114,7 +122,8 @@ const GlobalContext = ({ children }) => {
     }
   };
 
-  const handleDeleteMember = async (e, member, isDelete) => {
+// delete a member from a workspace 
+const handleDeleteMember = async(e,member,isDelete) => {
 
     const response = await xios.delete(`deleteMember/${activeWorkspace?._id}/${user && user.email}/${member}`)
     if (response?.data?.error) {
@@ -136,14 +145,27 @@ const GlobalContext = ({ children }) => {
 
 
 
-  // used in components > common > filter > filterModal.jsx
-  const handleTaskClick = async (taskId, workspaceId) => {
-    const response = await xios.post(`/api/set-active-workspace-from-filter`, { userEmail: user?.email, workspaceId })
-    setClickBaseFilterTaskId(taskId)
-    if (response?.data.modifiedCount > 0) {
-      fetchLatestData()
-    }
+// used in components > common > filter > filterModal.jsx
+const handleTaskClick = async(taskId,workspaceId) => {
+  const response = await xios.post(`/api/set-active-workspace-from-filter`,{userEmail:user?.email,workspaceId})
+  setClickBaseFilterTaskId(taskId)
+  if(response?.data.modifiedCount > 0) {
+    fetchLatestData()
   }
+}
+
+const handleDeleteAllHistory = async() => {
+  const res =  await xios.delete("/api/delte/search-history")
+  if(res?.data.deletedCount > 0){
+    setUserSearchHistory([])
+  }
+} 
+
+// take the history to put it in the input again 
+const handleHistoryClick = (historSearchQuery) => {
+  setSearchQueryFromHistory(historSearchQuery)
+}
+
 
   const data = {
     activeWorkspace,
@@ -157,6 +179,15 @@ const GlobalContext = ({ children }) => {
     clickBaseFilterTaskId,
     // used in filterModal.jsx
     setClickBaseFilterTaskId,
+
+    //user search history
+    userSearchHistory,
+    setIsUserHistoryStored,
+    isUserHistoryStored,
+    handleDeleteAllHistory,
+    handleHistoryClick,
+    setSearchQueryFromHistory,
+    searchQueryFromHistory,
 
     handleCreateTask,
     newTask,
