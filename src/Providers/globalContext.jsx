@@ -7,8 +7,6 @@ import { AuthContext } from "./AuthProviders";
 import Spinner from "@/components/Common/CommonModal/Spinner";
 
 export const globalContext = createContext(null);
-
-
 const GlobalContext = ({ children }) => {
 
   // manage all of your state here ..
@@ -19,22 +17,26 @@ const GlobalContext = ({ children }) => {
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
   
+  // Workspace related states
+  const [activeWorkspace, setActiveWorkspace] = useState({});
+  const [userWokspaceList, setUserWokspaceList] = useState([]);
+  const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
+  const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
+  const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
+  const [isUserHistoryStored,setIsUserHistoryStored] = useState(false)
+  const [searchQueryFromHistory,setSearchQueryFromHistory] = useState("")
 
-const [activeWorkspace, setActiveWorkspace] = useState({});
-const [userWokspaceList, setUserWokspaceList] = useState([]);
-const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
-const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
-const [loading, setLoading] = useState(true);
-let isMounted = true;
+  const [loading, setLoading] = useState(true);
+  let isMounted = true;
+  const [userSearchHistory,setUserSearchHistory] = useState([])
 
-
-
-
+// this function fetch the latest data 
 const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
     console.log("Server Response:", userWorkspaces.data);
 
+    // Only when component mounted trigger to set the latest data
     if (isMounted) {
       setActiveWorkspace(userWorkspaces.data.activeWorkspace);
       setUserWokspaceList(userWorkspaces.data.userWokspaceList);
@@ -48,14 +50,27 @@ const fetchLatestData = async () => {
   }
 };
 
+// this funciton fetch the latest user search history
+const fetchUserSearchHistory= async () => {
+  const response = await xios.get(`/api/user/search-history/${user&&user.email}`)
+  if(isMounted){
+    setUserSearchHistory(response.data)
+    console.log("this is the response we found after the get fetch request")
+  }
+}
+
+// fetch lates workspace related content and user history based on dependencies 
 useEffect(() => {
   fetchLatestData();
+  fetchUserSearchHistory()
   return () => {
     isMounted = false;
   };
-}, [user]);
+}, [user, clickBaseFilterTaskId,isUserHistoryStored,searchQueryFromHistory]);
+
 
 if (loading) return <Spinner/>
+
 
 
   // This funciton will create a new task in the task collection
@@ -82,7 +97,6 @@ if (loading) return <Spinner/>
     console.log("form global", activeWorkspaceTasks)
   };
 
-
   // when user click on the dropdown for workspace list fetch
   // workspace list from the database
   const handleDropdownClick = async (e) => {
@@ -108,6 +122,7 @@ const handleDeleteWorkspace = async (e, _id,isDelete) => {
   }
 };
 
+// delete a member from a workspace 
 const handleDeleteMember = async(e,member,isDelete) => {
 
  const response = await xios.delete(`deleteMember/${activeWorkspace?._id}/${user&&user.email}/${member}`)
@@ -119,14 +134,50 @@ const handleDeleteMember = async(e,member,isDelete) => {
  }
 }
 
+
+// used in components > common > filter > filterModal.jsx
+const handleTaskClick = async(taskId,workspaceId) => {
+  const response = await xios.post(`/api/set-active-workspace-from-filter`,{userEmail:user?.email,workspaceId})
+  setClickBaseFilterTaskId(taskId)
+  if(response?.data.modifiedCount > 0) {
+    fetchLatestData()
+  }
+}
+
+const handleDeleteAllHistory = async() => {
+  const res =  await xios.delete("/api/delte/search-history")
+  if(res?.data.deletedCount > 0){
+    setUserSearchHistory([])
+  }
+} 
+
+// take the history to put it in the input again 
+const handleHistoryClick = (historSearchQuery) => {
+  setSearchQueryFromHistory(historSearchQuery)
+}
+
+
   const data = {
     activeWorkspace, 
+    setActiveWorkspace,
     userWokspaceList, 
     activeWorkspaceTasks,
     activeWorkspaceMembers,
     fetchLatestData,
     handleDeleteMember,
+    handleTaskClick,
+    clickBaseFilterTaskId,
+    // used in filterModal.jsx
+    setClickBaseFilterTaskId,
 
+    //user search history
+    userSearchHistory,
+    setIsUserHistoryStored,
+    isUserHistoryStored,
+    handleDeleteAllHistory,
+    handleHistoryClick,
+    setSearchQueryFromHistory,
+    searchQueryFromHistory,
 
     handleCreateTask,
     newTask,

@@ -1,54 +1,36 @@
 import useAxios from "@/hooks/useAxios";
-import { LuListTodo } from "react-icons/lu";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/Providers/AuthProviders";
+import Image from "next/image";
+import SingleSearchBox from "./SingleSearchBox";
 
 const Search = () => {
-    const axiosPublic = useAxios();
-
     const [queryResults, setQueryResults] = useState([]);
     const [openSuggestions, setOpenSuggestions] = useState(false)
 
-    const arr = [
-        {
-            cardName: "ABC",
-            workspaceName: "Dablu",
-            status: "doing",
-        },
-        {
-            cardName: "ABC",
-            workspaceName: "Dablu",
-            status: "doing",
-        },
-        {
-            cardName: "ABC",
-            workspaceName: "Dablu",
-            status: "doing",
-        },
-    ]
+    const axiosPublic = useAxios();
+    const { user } = useContext(AuthContext);
 
     const handleInputChange = async (e) => {
-        const searchQuery = e?.target?.value;
-        console.log(searchQuery);
+        let query = e?.target?.value;
 
-        const res = await axiosPublic.get(`/api/members/search?query=${searchQuery}`);
-        setQueryResults(res.data);
-
-        if (searchQuery === "") {
+        if (query === "") {
             setOpenSuggestions(false);
-            console.log(openSuggestions);
         }
-        if (searchQuery) {
+        if (query) {
             setOpenSuggestions(true);
-            console.log(openSuggestions);
         }
+
+        const res = await axiosPublic.get(`/api/cards/search?query=${query}&userEmail=${user?.email}`);
+        setQueryResults(res.data);
     };
 
 
-    console.log(queryResults);
+    // console.log(queryResults);
 
     return (
 
-        <div className="w-full">
+        <div className="w-full z-40 relative">
             {/* search bar */}
             <input
                 className="w-full rounded-lg text-sm pl-16 py-4 border-0 bg-dashboardPrimaryColor"
@@ -58,33 +40,46 @@ const Search = () => {
                 onChange={(e) => handleInputChange(e)}
             ></input>
 
-            {/**/}
+            {/*Searched cards*/}
+
             {
                 openSuggestions &&
-
-                <div className="w-[57.5%] mt-2 rounded-lg absolute bg-[#FFFFFFFF] border shadow-lg text-gray-700 min-h-60">
-                    <h4 className="my-2 ml-4 font-semibold">Cards</h4>
-                    <div className="flex flex-col gap-2">
-                        {
-                            arr?.map(box => <div
-                                key={box}
-                                className="flex items-center pl-4 gap-3 hover:bg-gray-200 py-1">
-                                <LuListTodo className="text-3xl"></LuListTodo>
-                                <div className="text-sm">
-                                    <p className="font-semibold">Card Name</p>
-                                    <div className="flex gap-[2px] text-xs font-medium">
-                                        <p>Workspace Name</p>
-                                        <p>: Status</p>
-                                    </div>
+                <div>
+                    {
+                        queryResults?.length > 0 ?
+                            < div className="w-full max-h-96 overflow-auto mt-2 rounded-lg absolute bg-[#FFFFFFFF] border shadow-lg text-gray-700 min-h-60">
+                                <h4 className="my-2 ml-4 font-semibold">Cards</h4>
+                                <div className="flex flex-col gap-2">
+                                    {
+                                        queryResults?.map(card =>
+                                            <SingleSearchBox
+                                                key={card?._id}
+                                                card={card}
+                                                setOpenSuggestions={setOpenSuggestions}
+                                            ></SingleSearchBox>
+                                        )
+                                    }
                                 </div>
-                            </div>)
-                        }
-                    </div>
+                            </div>
+                            :
+                            <div className="w-full max-h-96 overflow-auto mt-2 rounded-lg absolute bg-[#FFFFFFFF] border shadow-lg text-gray-700 min-h-48 flex flex-col justify-center items-center">
+                                <Image
+                                    className=" opacity-50 mx-auto w-32 h-32   "
+                                    src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
+                                    height={100}
+                                    width={100}
+                                />
+                                <p className="font-semibold mt-3">We couldn't find anything matching your search</p>
+                            </div>
+
+                    }
                 </div>
+
+
             }
 
 
-        </div>
+        </div >
     );
 };
 

@@ -13,7 +13,6 @@ import UpdateTask from "../Components/UpdateTask";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
-import useAllTasks from "@/hooks/useAllTasks";
 import { globalContext } from "@/Providers/globalContext";
 import { IoFilterOutline } from "react-icons/io5";
 import FilterModal from "@/components/Common/Filter/FilterModal";
@@ -22,8 +21,7 @@ const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const [openCardDetails, setOpenCardDetails] = useState(false);
-  const [cardId, setCardId] = useState("");
+
   const {
     alltasks,
     dropOn,
@@ -71,7 +69,7 @@ const Tasks = () => {
   const { activeWorkspace } = useGlobalContext();
   const { title, description } = activeWorkspace || {
     title: "Your board",
-    description: "hello there it is your demoboard ",
+    description: "hello there it is your demo board ",
   };
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -97,16 +95,19 @@ const Tasks = () => {
                 </p>
               )}
             </div>
-            <div className="flex lg:w-52 ">
+            <div className="flex lg:w-52">
               <div
                 onClick={() => setOpenFilter(!openFilter)}
-                className="flex items-center gap-2"
+                className={`${openFilter?"bg-gray-100 px-2  rounded-lg ":""} flex items-center gap-2 cursor-pointer`}
               >
                 <IoFilterOutline />
                 <span>Filteer</span>
                 {/* Filtering modal */}
               </div>
-                {openFilter && <FilterModal />} 
+              <div className={`${openFilter?"visible opacity-100":"invisible opacity-0"} transition-all duration-300 `}>
+                {
+                  <FilterModal openFilter={openFilter} setOpenFilter={setOpenFilter} />}
+                  </div> 
 
               <button
                 onClick={() => setOpenModal(!openModal)}
@@ -124,7 +125,7 @@ const Tasks = () => {
               onDrop={(e) => dropOn(e)}
               id="upcoming"
               className={`min-h-screen ${
-                isDragging ? "z-20 relative" : ""
+                isDragging ? " relative" : ""
               } px-2 rounded-lg transition-all duration-1000 ${
                 dragOverElementName === "upcoming" ? "bg-[#E3E4E6]" : ""
               }`}
@@ -146,10 +147,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -166,7 +163,7 @@ const Tasks = () => {
               onDrop={(e) => dropOn(e)}
               id="to-do"
               className={`min-h-screen px-2 ${
-                dragOverElementName && "realative z-50"
+                dragOverElementName && "realative "
               } rounded-lg transition-all duration-1000 ${
                 dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""
               }`}
@@ -188,10 +185,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -228,10 +221,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -268,10 +257,6 @@ const Tasks = () => {
                     task={task}
                     openUpdateModal={openUpdateModal}
                     setOpenUpdateModal={setOpenUpdateModal}
-                    openCardDetails={openCardDetails}
-                    setOpenCardDetails={setOpenCardDetails}
-                    cardId={cardId}
-                    setCardId={setCardId}
                   />
                   <UpdateTask
                     task={task}
@@ -288,10 +273,6 @@ const Tasks = () => {
           ></TaskModal>
 
           <CardDetailsModal
-            cardId={cardId}
-            setCardId={setCardId}
-            openCardDetails={openCardDetails}
-            setOpenCardDetails={setOpenCardDetails}
           ></CardDetailsModal>
         </section>
       )}

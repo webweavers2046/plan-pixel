@@ -17,6 +17,7 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
 import { IoIosArrowDown } from "react-icons/io";
 import { globalContext } from "@/Providers/globalContext";
+import Search from "./Search/Search";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -66,7 +67,9 @@ const DashboardNavbar = () => {
       members: [user?.email],
       tasks: [],
       isActive: true,
-      lastModifiedBy:""
+      lastModifiedBy:"",
+      tags: []
+
     };
 
     const response = await xios.post(
@@ -206,11 +209,8 @@ const DashboardNavbar = () => {
             />
           </svg>
         </div>
-        <input
-          className="w-full rounded-lg text-sm pl-16 py-4 border-0 bg-dashboardPrimaryColor"
-          placeholder="Find The task what you’re looking for..."
-          type="text"
-        ></input>
+        {/* search component */}
+        <Search></Search>
       </div>
       <div>
         <svg
