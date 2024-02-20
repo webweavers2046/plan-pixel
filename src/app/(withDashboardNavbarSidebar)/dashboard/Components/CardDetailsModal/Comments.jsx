@@ -12,7 +12,7 @@ const Comments = ({ cardId }) => {
     const { data: userData } = useUser(user?.email)
     const [openSave, setOpenSave] = useState(false);
     const axiosPublic = useAxios();
-    const {data : comments, refetch} = useComments(cardId);
+    const { data: comments, refetch } = useComments(cardId);
     // console.log(comments);
 
     const inputRef = useRef(null);
@@ -55,7 +55,7 @@ const Comments = ({ cardId }) => {
 
     return (
         <>
-            <div className="flex gap-3 pt-8">
+            <div className="flex gap-3 pt-8 pb-6">
                 <Image
                     width={30}
                     height={30}
@@ -77,21 +77,24 @@ const Comments = ({ cardId }) => {
                 </div>
             </div>
 
-            <div className="w-full pt-4 pb-8">
-                <h3 className="font-semibold">Comments</h3>
-                {/* all comments */}
-                <div className="space-y-4 mt-5">
-                    {
-                        comments?.map(comment =>
-                            <SingleComment
-                                key={comment?._id}
-                                comment={comment}
-                                refetch={refetch}
-                            ></SingleComment>
-                        )
-                    }
+            {
+                comments?.length > 0 &&
+                <div className="w-full pb-8">
+                    <h3 className="font-semibold">Comments</h3>
+                    {/* all comments */}
+                    <div className="space-y-4 mt-5">
+                        {
+                            comments?.map(comment =>
+                                <SingleComment
+                                    key={comment?._id}
+                                    comment={comment}
+                                    refetch={refetch}
+                                ></SingleComment>
+                            )
+                        }
+                    </div>
                 </div>
-            </div>
+            }
         </>
     );
 };
