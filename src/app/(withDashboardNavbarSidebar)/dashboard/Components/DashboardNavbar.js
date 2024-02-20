@@ -18,6 +18,8 @@ import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
 import { IoIosArrowDown } from "react-icons/io";
 import { globalContext } from "@/Providers/globalContext";
 import Search from "./Search/Search";
+import { BiSolidMessage } from "react-icons/bi";
+import Message from "./Message/Message";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -37,7 +39,7 @@ const DashboardNavbar = () => {
   const [WillAddMember, setWillAddMember] = useState(false);
   const xios = useAxios();
   const {fetchLatestData} = useContext(globalContext)
-
+    const [openModal, setOpenModal] = useState(false)
     const handleLogOut = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -235,6 +237,11 @@ const DashboardNavbar = () => {
             strokeLinejoin="round"
           />
         </svg>
+      </div>
+      {/* message icon */}
+      <div>
+     <BiSolidMessage onClick={()=>setOpenModal(!openModal)} className="h-10 w-10 cursor-pointer"/>
+     <Message openModal ={openModal} setOpenModal={setOpenModal}/>
       </div>
       <div className="border py-2 px-3 rounded-lg bg-[white]">
         <Dropdown
