@@ -6,7 +6,7 @@ import WhyPlanPixel from "./Sections/WhyPlanPixel/WhyPlanPixel";
 
 const index = () => {
     return (
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-32">
             <Hero />
             <OurTeamMembers />
             <OurVision />

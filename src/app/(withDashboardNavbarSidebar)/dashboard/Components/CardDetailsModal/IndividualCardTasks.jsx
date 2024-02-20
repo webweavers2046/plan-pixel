@@ -3,34 +3,23 @@ import { useState } from "react";
 import StyledArrow from "./StyledArrow";
 import useAxios from "@/hooks/useAxios";
 import SingleTask from "./SingleTask";
+import useUser from "@/hooks/useUser";
 
 const IndividualCardTasks = ({ member, cardTasks, cardId, refetch }) => {
     const [openTaskInput, setOpenTaskInput] = useState(false)
     const axiosPublic = useAxios();
-    const name = member?.memberName;
-    const email = member?.userEmail;
-    // console.log(cardTasks);
-    // console.log(email);
+    const {data : memberData} = useUser(member);
+   
+   
 
-    const myTasks = cardTasks?.filter(task => task?.email === email)
+    const myTasks = cardTasks?.filter(task => task?.email === memberData?.email)
     const completedTasks = myTasks?.filter(task => task?.checked === true);
 
     const totalTasks = myTasks?.length;
     const totalCompletedTasks = completedTasks?.length;
-    // console.log(totalTasks);
-    // console.log(totalCompletedTasks);
+   
     const progress = totalTasks > 0 && totalCompletedTasks > 0 ? totalCompletedTasks / totalTasks * 100 : 0;
-    // console.log(progress);
-
-
-
-    // {
-    //     cardId: "65c713fbecd9dca9f4aa817e",
-    //     taskMember: "Al-amin Rahim",
-    //     email: "alamin102410@gmail.com",
-    //     task: "Calender Feature Implement",
-    //     checked: true,
-    // },
+    
 
     const handleAddNewTask = () => {
         // setOpenTaskInput(!openTaskInput);
@@ -38,13 +27,13 @@ const IndividualCardTasks = ({ member, cardTasks, cardId, refetch }) => {
 
         const newTask = {
             cardId: cardId,
-            assignedMember: name,
-            email: email,
+            assignedMember: memberData?.name,
+            email: memberData?.email,
             task: task,
             checked: false,
         }
 
-        console.log("add new task", newTask);
+        // console.log("add new task", newTask);
 
         axiosPublic.post("/createCardTask", newTask)
             .then(res => {
@@ -58,7 +47,7 @@ const IndividualCardTasks = ({ member, cardTasks, cardId, refetch }) => {
 
     return (
         <div className="w-full ">
-            <h3 className="font-semibold text-lg">{name}</h3>
+            <h3 className="font-semibold text-lg">{memberData?.name}</h3>
 
             <div class="w-full my-4 bg-gray-200 rounded-full dark:bg-gray-700">
                 <div class={`bg-[#50B577]  text-xs font-medium text-blue-100 text-center py-[1px] leading-none rounded-full `}

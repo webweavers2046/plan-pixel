@@ -11,14 +11,12 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import useUser from "@/hooks/useUser";
 import useAxios from "@/hooks/useAxios";
-import CommonModal from "@/components/Common/CommonModal/CommonModal";
 import MiniModal from "@/components/Common/CommonModal/MiniModal";
 import toast from "react-hot-toast";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import PaperPieces from "@/components/Common/CommonModal/paperCutPiece";
 import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
-import { ablyContext } from "@/components/ably/AblyProvider";
 import { IoIosArrowDown } from "react-icons/io";
+import { globalContext } from "@/Providers/globalContext";
 import Search from "./Search/Search";
 
 const DashboardNavbar = () => {
@@ -26,21 +24,10 @@ const DashboardNavbar = () => {
   const {
     handleActiveWorkspace,
     handleDropdownClick,
-    workspaces,
-    defaultActiveWorkspace,
+    userWokspaceList,
+    activeWorkspace
   } = useGlobalContext();
-  const { allWorkspaces } = useContext(ablyContext);
-  const displayWorkspaces =
-    allWorkspaces.length > 0 ? allWorkspaces : workspaces || [];
-  const { activeWorkspace } = useContext(ablyContext);
 
-  let currentSpace = {};
-
-  if (activeWorkspace) {
-    currentSpace = activeWorkspace;
-  } else {
-    currentSpace = defaultActiveWorkspace;
-  }
 
   const { data: userData } = useUser(user?.email);
   const router = useRouter();
@@ -49,39 +36,40 @@ const DashboardNavbar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [WillAddMember, setWillAddMember] = useState(false);
   const xios = useAxios();
+  const {fetchLatestData} = useContext(globalContext)
 
-  const handleLogOut = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, log out!",
-    }).then((result) => {
-      if (result?.isConfirmed) {
-        logOut();
-        router.push("/dashboard");
+    const handleLogOut = () => {
         Swal.fire({
-          title: "Logged Out",
-          icon: "success",
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, log out!",
+        }).then((result) => {
+            if (result?.isConfirmed) {
+                logOut();
+                router.push("/dashboard");
+                Swal.fire({
+                    title: "Logged Out",
+                    icon: "success",
+                });
+            }
         });
-      }
-    });
-  };
+    };
 
   const handleCreateWorkspace = async (title, description) => {
     const workspace = {
       title: title,
       description: description,
       creator: user?.email,
-      members: [{
-        memberName: user?.displayName,
-        userEmail: user?.email
-      }],
+      members: [user?.email],
       tasks: [],
-      isActive: false,
+      isActive: true,
+      lastModifiedBy:"",
+      tags: []
+
     };
 
     const response = await xios.post(
@@ -89,6 +77,7 @@ const DashboardNavbar = () => {
       workspace
     );
     if (response.data.insertedId) {
+      fetchLatestData()
       toast.success("Successfully created a workspace. 🏢");
     }
   };
@@ -106,6 +95,7 @@ const DashboardNavbar = () => {
     );
 
     if (isAddedMember.data.message) {
+      fetchLatestData()
       return toast.success(`${memberName} is added to this workspace`);
     }
 
@@ -128,7 +118,7 @@ const DashboardNavbar = () => {
           className="text-start flex gap-2 items-center w-32"
         >
           <p className=" cursor-pointer opacity-55 text-[15px] ">
-            {currentSpace?.title || "Workspace"}
+            {activeWorkspace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
             className={` cursor-pointer ${isDropdownOpen ? "rotate-180" : "rotate-0"
@@ -144,14 +134,14 @@ const DashboardNavbar = () => {
         >
           {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
 
-          {displayWorkspaces?.map((workspace, index) => {
+          {userWokspaceList?.map((workspace, index) => {
             return (
               <li
                 key={workspace?._id}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(null)}
                 onClick={(e) =>
-                  handleActiveWorkspace(e, workspace._id)
+                  handleActiveWorkspace(e, workspace?._id)
                 }
                 className="flex hover:bg-[#8091670c] px-4 transition-all cursor-pointer duration-300 items-center gap-2 py-4 relative"
               >
@@ -182,7 +172,7 @@ const DashboardNavbar = () => {
               </p>
             </div>
           </li>
-          {displayWorkspaces?.length <= 0 && (
+          {userWokspaceList?.length <= 0 && (
             <div className="absolute -z-20 bottom-[70px] left-24">
               <Image
                 className=" opacity-50 mx-auto w-11 h-11 left-1/2"
@@ -221,7 +211,6 @@ const DashboardNavbar = () => {
         </div>
         {/* search component */}
         <Search></Search>
-
       </div>
       <div>
         <svg

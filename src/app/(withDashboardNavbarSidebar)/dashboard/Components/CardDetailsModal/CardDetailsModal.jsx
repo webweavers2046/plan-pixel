@@ -9,24 +9,28 @@ import { ablyContext } from "@/components/ably/AblyProvider";
 import { AuthContext } from "@/Providers/AuthProviders";
 import useUser from "@/hooks/useUser";
 import useSingleTask from "@/hooks/useSingleTask";
+import Comments from "./Comments";
 
-const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
+const CardDetailsModal = () => {
+
+    const { user, openCardDetails, setOpenCardDetails, cardId } = useContext(AuthContext);
     const { data: cardTasks, refetch } = useCardTasks(cardId);
-    const {data : card} = useSingleTask(cardId);
-    console.log(card);
+    const { data: card } = useSingleTask(cardId);
+    // console.log(card);
     // console.log(cardTasks);
-    const {user} = useContext(AuthContext);
-    const {data : userData} = useUser(user?.email)
+    
 
-    const {defaultActiveWorkspace} = useGlobalContext()
-    const {activeWorspace} = useContext(ablyContext)
-    const {_id , title,description, members } = activeWorspace?.propertyToCheck || defaultActiveWorkspace
-    // console.log(defaultActiveWorkspace);
+    const { activeWorkspace } = useGlobalContext()
+    const { title, description, members } = activeWorkspace || { title: "", description: "", members: [] }
+    // console.log(activeWorkspace);
+
+
+
 
     return (
         <div
             className={`${openCardDetails ? "block" : "hidden"} 
-        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-30 fixed lg:px-40 px-24  py-16`}
+        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed lg:px-40 px-24  py-16`}
         >
             <div className=" bg-[#FFFFFF] w-[900px] mx-auto h-full rounded-2xl overflow-auto ">
                 <div className="flex justify-end mt-2 mr-4">
@@ -45,8 +49,8 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
                         </svg>
                     </button>
                 </div>
-                <div className="flex justify-between w-full h-full py-4 pl-12 pr-8 gap-8">
-                    <div className="space-y-3 w-[90%]">
+                <div className="flex justify-between  h-full py-4 pl-12 pr-8 gap-6">
+                    <div className="space-y-3">
                         {/* card name, description and other info */}
                         <p className="text-2xl font-semibold">{card?.title}</p>
                         <p>{card?.description}</p>
@@ -77,17 +81,7 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
                         </div>
 
                         {/* comment section */}
-                        <div className="flex gap-3 py-8">
-                            <Image
-                                width={30}
-                                height={30}
-                                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                                src={userData?.image}
-                                alt=""
-                            />
-                            <textarea placeholder="Write down your comment here" name="" id="" cols="30" rows="10"
-                                className="bg-[#D9D9D980] w-full h-24 p-3 border-none rounded-lg "></textarea>
-                        </div>
+                        <Comments cardId={cardId}></Comments>
                     </div>
 
 
@@ -100,11 +94,11 @@ const CardDetailsModal = ({ openCardDetails, setOpenCardDetails, cardId }) => {
                             {/* dates */}
                             <div className=" mt-4">
                                 <p className="">Assign Date:</p>
-                                <h4 className="text-2xl mt-2">02 Apr 2022</h4>
+                                <h4 className="text-2xl mt-2">{card?.dates?.startDate}</h4>
                             </div>
                             <div className=" mt-4">
                                 <p className="">Deadline:</p>
-                                <h4 className="text-2xl mt-2">02 Apr 2022</h4>
+                                <h4 className="text-2xl mt-2">{card?.dates?.dueDate}</h4>
                             </div>
 
                             <h4 className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-5">Add checklist</h4>

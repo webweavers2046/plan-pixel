@@ -7,8 +7,12 @@ import Link from "next/link";
 import "@/styles/globals.css";
 
 import { IoSettingsSharp } from "react-icons/io5";
+import { PiArticleNyTimesBold } from "react-icons/pi";
 import { usePathname } from "next/navigation";
 import { FaUsers } from "react-icons/fa6";
+import { BsEnvelopeAtFill } from "react-icons/bs";
+import { MdOutlineAdd } from "react-icons/md";
+import { RiAddCircleFill } from "react-icons/ri";
 
 const AdminDashboardSidebar = () => {
     // get current route
@@ -21,7 +25,7 @@ const AdminDashboardSidebar = () => {
                     className={`  mr-2 h-screen xl:block hidden border-r-2 relative `}
                 >
                     <div className="py-4 px-3">
-                        <div className="ms-3 mt-1">
+                        <div className="ms-7 mt-1">
                             <Link href={"/"}>
                                 <Image
                                     className="w-auto max-h-9 lg:mb-0.5  mb-2.5"
@@ -99,31 +103,81 @@ const AdminDashboardSidebar = () => {
                                     </div>
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link
                                     className={`flex items-center gap-x-4  ${
-                                        pathname == "/admin-dashboard/profile"
+                                        pathname ==
+                                        "/admin-dashboard/profile-setting"
                                             ? "active"
                                             : "inactive"
                                     } px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                    href="/admin-dashboard/profile"
+                                    href="/admin-dashboard/profile-setting"
                                 >
                                     <IoSettingsSharp className="w-7 h-7" />
                                     Profile
+                                </Link>
+                            </li> */}
+                            <li>
+                                <Link
+                                    className={`flex items-center  gap-x-4 ${
+                                        pathname ==
+                                        "/admin-dashboard/users-feedback"
+                                            ? "active"
+                                            : "inactive"
+                                    }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                    href="/admin-dashboard/users-feedback"
+                                >
+                                    <div className="flex items-center">
+                                        <TbHelpSquareRoundedFilled className="text-4xl me-3" />
+                                        <p>Users Feedback</p>
+                                    </div>
                                 </Link>
                             </li>
                             <li>
                                 <Link
                                     className={`flex items-center  gap-x-4 ${
-                                        pathname == "/admin-dashboard/support"
+                                        pathname ==
+                                        "/admin-dashboard/newsletters"
                                             ? "active"
                                             : "inactive"
                                     }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
-                                    href="/dashboard/meeting"
+                                    href="/admin-dashboard/newsletters"
                                 >
                                     <div className="flex items-center">
-                                        <TbHelpSquareRoundedFilled className="text-4xl me-3" />
-                                        <p>Support Users</p>
+                                        <BsEnvelopeAtFill className="text-3xl me-3 ms-1" />
+                                        <p>Newsletters</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className={`flex items-center  gap-x-4 ${
+                                        pathname ==
+                                        "/admin-dashboard/add-article"
+                                            ? "active"
+                                            : "inactive"
+                                    }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                    href="/admin-dashboard/add-article"
+                                >
+                                    <div className="flex items-center">
+                                        <RiAddCircleFill className="text-4xl me-3 ms-1" />
+                                        <p>Add Article</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    className={`flex items-center  gap-x-4 ${
+                                        pathname ==
+                                        "/admin-dashboard/all-article"
+                                            ? "active"
+                                            : "inactive"
+                                    }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                    href="/admin-dashboard/all-article"
+                                >
+                                    <div className="flex items-center">
+                                        <PiArticleNyTimesBold className="text-4xl me-3 ms-1" />
+                                        <p>All Article</p>
                                     </div>
                                 </Link>
                             </li>
