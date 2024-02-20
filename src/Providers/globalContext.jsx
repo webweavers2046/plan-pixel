@@ -13,64 +13,64 @@ const GlobalContext = ({ children }) => {
   const [newTask, setNewTask] = useState("");
   const xios = useAxios();
   const { user } = useContext(AuthContext);
-  
+
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
   const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
-  
 
-const [activeWorkspace, setActiveWorkspace] = useState({});
-const [userWokspaceList, setUserWokspaceList] = useState([]);
-const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
-const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
-const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
-const [loading, setLoading] = useState(true);
-let isMounted = true;
 
-const fetchLatestData = async () => {
-  try {
-    const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
-    console.log("Server Response:", userWorkspaces.data);
+  const [activeWorkspace, setActiveWorkspace] = useState({});
+  const [userWokspaceList, setUserWokspaceList] = useState([]);
+  const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
+  const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
+  const [clickBaseFilterTaskId, setClickBaseFilterTaskId] = useState("")
+  const [loading, setLoading] = useState(true);
+  let isMounted = true;
 
-    if (isMounted) {
-      setActiveWorkspace(userWorkspaces.data.activeWorkspace);
-      setUserWokspaceList(userWorkspaces.data.userWokspaceList);
-      setActiveWorkspaceMembers(userWorkspaces.data.activeWorkspaceMembers);
-      setActiveWorkspaceTasks(userWorkspaces.data.activeWorkspaceTasks);
+  const fetchLatestData = async () => {
+    try {
+      const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
+      console.log("Server Response:", userWorkspaces.data);
+
+      if (isMounted) {
+        setActiveWorkspace(userWorkspaces.data.activeWorkspace);
+        setUserWokspaceList(userWorkspaces.data.userWokspaceList);
+        setActiveWorkspaceMembers(userWorkspaces.data.activeWorkspaceMembers);
+        setActiveWorkspaceTasks(userWorkspaces.data.activeWorkspaceTasks);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
       setLoading(false);
     }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    setLoading(false);
-  }
-};
-
-useEffect(() => {
-  fetchLatestData();
-  return () => {
-    isMounted = false;
   };
-}, [user]);
+
+  useEffect(() => {
+    fetchLatestData();
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
 
 
-// this useEffect for rerendering when filter get cleared to set clickbasedFilterTaskId to ""
-useEffect(()=> {
-  // just rerender 
-},[clickBaseFilterTaskId])
+  // this useEffect for rerendering when filter get cleared to set clickbasedFilterTaskId to ""
+  useEffect(() => {
+    // just rerender 
+  }, [clickBaseFilterTaskId])
 
-if (loading) return <Spinner/>
+  if (loading) return <Spinner />
 
 
 
   // This funciton will create a new task in the task collection
-  const handleCreateTask = async (newTask, setOpenModal,activeWorkspaceId) => {
-    const response = await xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask)
+  const handleCreateTask = async (newTask, setOpenModal, activeWorkspaceId) => {
+    const response = await xios.post(`/createTask/${activeWorkspaceId}/${user && user.email}`, newTask)
     console.log(activeWorkspaceId)
     if (response?.data?.insertedId) {
-        setNewTask(newTask);
-        setOpenModal(false);
-        toast.success("Created a new task", { position: "top-right" });
-        fetchLatestData()
-      }
+      setNewTask(newTask);
+      setOpenModal(false);
+      toast.success("Created a new task", { position: "top-right" });
+      fetchLatestData()
+    }
   };
 
   // Workspace data hanler
@@ -95,50 +95,60 @@ if (loading) return <Spinner/>
     e.preventDefault();
   };
 
-// Delete workspace
-const handleDeleteWorkspace = async (e, _id,isDelete) => {
-  e.preventDefault();
+  // Delete workspace
+  const handleDeleteWorkspace = async (e, _id, isDelete) => {
+    e.preventDefault();
 
-  // delete workspace from the database
-  if (isDelete) {
-    
-    const response = await xios.delete(
-      `deleteWorkspace/${_id}/${user && user.email}`
-    );
-    if(response?.data?.error){
-      toast.error(response.data.error,{position:"top-right"})
-    } else{
-      toast.success(response.data.message,{position:"top-right"})
+    // delete workspace from the database
+    if (isDelete) {
+
+      const response = await xios.delete(
+        `deleteWorkspace/${_id}/${user && user.email}`
+      );
+      if (response?.data?.error) {
+        toast.error(response.data.error, { position: "top-right" })
+      } else {
+        toast.success(response.data.message, { position: "top-right" })
+        fetchLatestData()
+      }
+    }
+  };
+
+  const handleDeleteMember = async (e, member, isDelete) => {
+
+    const response = await xios.delete(`deleteMember/${activeWorkspace?._id}/${user && user.email}/${member}`)
+    if (response?.data?.error) {
+      toast.error(response.data.error, { position: "top-right" })
+    } else {
+      toast.success(response.data.message, { position: "top-right" })
       fetchLatestData()
-     }
+    }
   }
-};
 
-const handleDeleteMember = async(e,member,isDelete) => {
+  // For meeting page
+  const handleCreateMeeting = async (newMeeting) => {
+    const response = await xios.post(`/api/meetings`, newMeeting)
+    if (response.data.insertedId) {
+      toast.success("Meeting Created", { position: "top-center" });
 
- const response = await xios.delete(`deleteMember/${activeWorkspace?._id}/${user&&user.email}/${member}`)
- if(response?.data?.error){
-  toast.error(response.data.error,{position:"top-right"})
-} else{
-  toast.success(response.data.message,{position:"top-right"})
-  fetchLatestData()
- }
-}
-
-
-// used in components > common > filter > filterModal.jsx
-const handleTaskClick = async(taskId,workspaceId) => {
-  const response = await xios.post(`/api/set-active-workspace-from-filter`,{userEmail:user?.email,workspaceId})
-  setClickBaseFilterTaskId(taskId)
-  if(response?.data.modifiedCount > 0) {
-    fetchLatestData()
+    }
   }
-}
+
+
+
+  // used in components > common > filter > filterModal.jsx
+  const handleTaskClick = async (taskId, workspaceId) => {
+    const response = await xios.post(`/api/set-active-workspace-from-filter`, { userEmail: user?.email, workspaceId })
+    setClickBaseFilterTaskId(taskId)
+    if (response?.data.modifiedCount > 0) {
+      fetchLatestData()
+    }
+  }
 
   const data = {
-    activeWorkspace, 
+    activeWorkspace,
     setActiveWorkspace,
-    userWokspaceList, 
+    userWokspaceList,
     activeWorkspaceTasks,
     activeWorkspaceMembers,
     fetchLatestData,
@@ -153,11 +163,14 @@ const handleTaskClick = async(taskId,workspaceId) => {
     handleActiveWorkspace,
     setNewTask,
     handleDropdownClick,
-   
+
     clickedWorkspaceId,
     setSwitchWorkspace,
     isWorkspaceSwitched,
-    handleDeleteWorkspace
+    handleDeleteWorkspace,
+
+    handleCreateMeeting,
+
   };
 
 

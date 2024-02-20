@@ -11,10 +11,14 @@ import modalImage from "@/assets/meeting.png";
 import Image from "next/image";
 import { useState } from "react";
 import MeetingsForm from "./MeetingsForm";
+import useAllMeetings from "@/hooks/useAllMeetings";
 
 const Meetings = () => {
   const [openModal, setOpenModal] = useState(false);
+  const isActive = true;
+  const {data: allMeetings} = useAllMeetings();
 
+  console.log(allMeetings);
   const meetings = [
     {
       meetingName: "Monthly Team Meeting",
@@ -74,11 +78,18 @@ const Meetings = () => {
           <GoPlus />
         </button>
       </div>
-      <div className=" mt-6">
+      <div>
+        {
+          allMeetings?.map(meeting => <>
+            <h1>{meeting._id}</h1>
+          </>)
+        }
+      </div>
+      {/* <div className=" mt-6">
         {meetings.map((meeting, idx) => (
           <div
-            className={`p-4 rounded-md ${
-              idx === 0 && "bg-[#FBBC05]/25 border-[#FBBC05] border-2"
+            className={`p-4 rounded-md cursor-pointer ${
+              idx === 1 && "bg-[#FBBC05]/25 border-[#FBBC05] border-2"
             } my-2 flex items-center justify-between`}
             key={idx}
           >
@@ -89,7 +100,7 @@ const Meetings = () => {
                 <p className="">{meeting.time}</p>
               </div>
             </div>
-            <div className="flex -space-x-4 rtl:space-x-reverse">
+            <div className="flex -space-x-5 rtl:space-x-reverse">
               <Image
                 width={30}
                 height={30}
@@ -121,7 +132,7 @@ const Meetings = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

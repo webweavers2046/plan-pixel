@@ -1,8 +1,17 @@
 "use client";
 
+import useGlobalContext from "@/hooks/useGlobalContext";
+import Image from "next/image";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Table } from "flowbite-react";
+import useAxios from "@/hooks/useAxios";
+import toast from "react-hot-toast";
 
 const MeetingsForm = () => {
+  const { activeWorkspaceMembers, activeWorkspace, handleCreateMeeting } = useGlobalContext();
+  // console.log(activeWorkspaceMembers);
+
   const {
     register,
     handleSubmit,
@@ -11,37 +20,34 @@ const MeetingsForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const newTask = {
-      title: data?.title ? data?.title : "New Task",
-      description: data?.description
-        ? data?.description
-        : "Thanks for creating new task. We are happy that you are enjoying our features . ",
-      dates: {
-        startDate: data?.startDate,
-        dueDate: data?.dueDate,
-      },
-      priority: data?.priority,
-      status: "upcoming",
-      creator: user?.email,
-      members: [],
-      comments: [],
-      workspace: id,
-      position: 0,
-      doingTimeStamp: "",
-      updatedAt: "",
-      lastModifiedBy: "",
-      tags: [],
-    };
+    console.log(data);
 
-    handleCreateTask(newTask, setOpenModal, id);
-    reset();
+    const newMeeting = {
+      title: data?.title,
+      date: data?.date,
+      time: data?.time,
+      link: data?.meetLink,
+      member: activeWorkspaceMembers,
+    };
+    console.log(newMeeting);
+    handleCreateMeeting(newMeeting);
+    // const xios = useAxios();
+    // xios.post(`/api/meetings`, newMeeting).then((res) => {
+    //   console.log(res.data);
+    //   if (res.data.insertedId) {
+    //     toast.success("Meeting Created", { position: "top-center" });
+    //   }
+    //   // reset();
+    // });
+
+    // reset();
   };
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className=" mt-8 px-4">
         {/* form info */}
         <div className=" grid grid-cols-1 gap-5">
-          {/* task name */}
+          {/* agenda name */}
           <div className="">
             <h4 className="text-sm font-semibold">
               Agenda{" "}
@@ -60,7 +66,7 @@ const MeetingsForm = () => {
               id=""
             />
           </div>
-          {/* Priority */}
+          {/* Date */}
           <div className="flex gap-x-2 justify-between ">
             <div className="w-full">
               <h4 className="text-sm font-semibold">
@@ -72,7 +78,6 @@ const MeetingsForm = () => {
                 )}
               </h4>
               <input
-                defaultValue={"01/32/2023"}
                 type="date"
                 {...register("date", {
                   required: true,
@@ -92,7 +97,6 @@ const MeetingsForm = () => {
                 )}
               </h4>
               <input
-                defaultValue={"01/32/2023"}
                 type="time"
                 {...register("time", {
                   required: true,
@@ -104,28 +108,61 @@ const MeetingsForm = () => {
             </div>
 
             <div className="w-full">
-              <h4 className="text-sm font-semibold">
-                Platform{" "}
-                {errors.priority && (
-                  <span className="text-red-500">Priority is required</span>
-                )}
-              </h4>
+              <h4 className="text-sm font-semibold">Platform </h4>
               <select
                 placeholder="Select"
-                name="platfom"
+                name="platform"
                 defaultValue={"Google Meet"}
                 className="py-3 pl-4 w-full placeholder:text-sx placeholder:opacity-45 bg-dashboardPrimaryColor/50 border-0 mt-3 rounded-md"
-                {...register("platfom", { required: true })}
+                {...register("platform", { required: true })}
               >
-                <option value="Low">Google Meet</option>
-                <option value="Medium">Zoom</option>
-                <option value="High">Ghum</option>
+                <option value="Google Meet">Google Meet</option>
+                <option value="Zoom">Zoom</option>
+                <option value="Ghum">Ghum</option>
               </select>
             </div>
           </div>
+          <div className="">
+            <h4 className="text-sm font-semibold">
+              Meet Link{" "}
+              {errors.title && (
+                <span className="text-red-500 text-xs ms-2">
+                  (Meeting link is required)
+                </span>
+              )}
+            </h4>
+            <input
+              type="text"
+              placeholder="Please provide your meeting link"
+              {...register("meetLink", { required: true })}
+              name="meetLink"
+              className="py-3 pl-4 w-full placeholder:text-sx placeholder:opacity-45 bg-dashboardPrimaryColor/50 border-0 mt-3 rounded-md"
+              id=""
+            />
+          </div>
         </div>
         <div>
-            
+          <h1 className="font-semibold mt-6 mb-3">Workspace Members</h1>
+        </div>
+        <div>
+          {activeWorkspaceMembers.map((member) => (
+            <>
+              <div className="flex justify-between items-center py-2">
+                <div className="flex gap-x-5">
+                  <Image
+                    width={30}
+                    height={30}
+                    className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
+                    src={member.image}
+                    alt=""
+                  />
+                  <h1>{member.name}</h1>
+                </div>
+                <h4 className="opacity-70">{member.email}</h4>
+              </div>
+              <hr />
+            </>
+          ))}
         </div>
         {/* submit button */}
         <div className="flex justify-end items-end mt-4">
