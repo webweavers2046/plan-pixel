@@ -9,18 +9,19 @@ import { ablyContext } from "@/components/ably/AblyProvider";
 import { AuthContext } from "@/Providers/AuthProviders";
 import useUser from "@/hooks/useUser";
 import useSingleTask from "@/hooks/useSingleTask";
+import Comments from "./Comments";
 
 const CardDetailsModal = () => {
 
-    const {user,openCardDetails,setOpenCardDetails, cardId} = useContext(AuthContext);
+    const { user, openCardDetails, setOpenCardDetails, cardId } = useContext(AuthContext);
     const { data: cardTasks, refetch } = useCardTasks(cardId);
-    const {data : card} = useSingleTask(cardId);
+    const { data: card } = useSingleTask(cardId);
     // console.log(card);
     // console.log(cardTasks);
-    const {data : userData} = useUser(user?.email)
+    
 
-    const {activeWorkspace} = useGlobalContext()
-    const { title,description, members } = activeWorkspace || {title:"",description:"",members:[]}
+    const { activeWorkspace } = useGlobalContext()
+    const { title, description, members } = activeWorkspace || { title: "", description: "", members: [] }
     // console.log(activeWorkspace);
 
 
@@ -80,17 +81,7 @@ const CardDetailsModal = () => {
                         </div>
 
                         {/* comment section */}
-                        <div className="flex gap-3 py-8">
-                            <Image
-                                width={30}
-                                height={30}
-                                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                                src={userData?.image}
-                                alt=""
-                            />
-                            <textarea placeholder="Write down your comment here" name="" id="" cols="30" rows="10"
-                                className="bg-[#D9D9D980] w-full h-24 p-3 border-none rounded-lg "></textarea>
-                        </div>
+                        <Comments cardId={cardId}></Comments>
                     </div>
 
 
