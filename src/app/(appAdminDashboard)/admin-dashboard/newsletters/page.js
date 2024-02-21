@@ -1,46 +1,33 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import User from "./User";
+import axios from "axios";
+import Spinner from "@/components/Common/CommonModal/Spinner";
 
 const page = () => {
-    const newsletterSubscribers = [
-        {
-            id: 1,
-            name: "Alice Smith",
-            userEmail: "smd71430@gmail.com",
-            createdAt: "2024-02-18T12:00:00Z",
-        },
-        {
-            id: 2,
-            name: "Bob Johnson",
-            userEmail: "mdmazharulislam2046@gmail.com",
-            createdAt: "2024-02-18T12:00:00Z",
-        },
-        {
-            id: 3,
-            name: "Emily Brown",
-            userEmail: "alamin102410@gmail.com",
-            createdAt: "2024-02-18T12:00:00Z",
-        },
-        {
-            id: 4,
-            name: "Michael Lee",
-            userEmail: "shakilahmmed8882@gmail.com",
-            createdAt: "2024-02-18T12:00:00Z",
-        },
-        {
-            id: 5,
-            name: "Sarah Wilson",
-            userEmail: "forhadairdrop@gmail.com",
-            createdAt: "2024-02-18T12:00:00Z",
-        },
-        {
-            id: 6,
-            name: "David Jones",
-            userEmail: "ahteshamsajid8@gmail.com",
-            createdAt: "2024-02-18T12:00:00Z",
-        },
-    ];
+    const [loading, setLoading] = useState(false);
+    const [newsletterSubscribers, setNewsletterSubscribers] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:5000/api/newsletters"
+                );
+                setNewsletterSubscribers(response.data);
+            } catch (error) {
+                console.log("error to get newsletters", error);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     return (
         <div>

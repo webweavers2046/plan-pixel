@@ -14,7 +14,7 @@ const GlobalContext = ({ children }) => {
   const [newTask, setNewTask] = useState("");
   const xios = useAxios();
   const { user } = useContext(AuthContext);
-  const {allWorkspaceTasks} = useContext(ablyContext)
+  // const {allWorkspaceTasks} = useContext(ablyContext)
   
   
   const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
@@ -29,6 +29,9 @@ const GlobalContext = ({ children }) => {
   const [isUserHistoryStored,setIsUserHistoryStored] = useState(false)
   const [searchQueryFromHistory,setSearchQueryFromHistory] = useState("")
 
+  // Archived tasks state
+  const [archivedTasks,setArchivedTasks] =  useState([])
+
   // Tab view 
   const [isActive,setIsActive] = useState("all-tasks")
 
@@ -41,19 +44,23 @@ const fetchLatestData = async () => {
   try {
     const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
 
-    // Only when component mounted trigger to set the latest data
-    if (isMounted) {
-      setActiveWorkspace(userWorkspaces.data.activeWorkspace);
-      setUserWokspaceList(userWorkspaces.data.userWokspaceList);
-      setActiveWorkspaceMembers(userWorkspaces.data.activeWorkspaceMembers);
-      setActiveWorkspaceTasks(userWorkspaces.data.activeWorkspaceTasks);
-      setLoading(false);
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    setLoading(false);
-  }
-};
+            // Only when component mounted trigger to set the latest data
+            if (isMounted) {
+                setActiveWorkspace(userWorkspaces.data.activeWorkspace);
+                setUserWokspaceList(userWorkspaces.data.userWokspaceList);
+                setActiveWorkspaceMembers(
+                    userWorkspaces.data.activeWorkspaceMembers
+                );
+                setActiveWorkspaceTasks(
+                    userWorkspaces.data.activeWorkspaceTasks
+                );
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+        }
+    };
 
 // this funciton fetch the latest user search history
 const fetchUserSearchHistory= async () => {
@@ -64,14 +71,22 @@ const fetchUserSearchHistory= async () => {
   }
 }
 
+
+// get all the arvhived data
+const fetchArchivedData = async()=>  {
+  const response = await xios.get("/api/read/archive-tasks")
+  setArchivedTasks(response.data)
+}
+
 // fetch lates workspace related content and user history based on dependencies 
 useEffect(() => {
   fetchLatestData();
   fetchUserSearchHistory()
+  fetchArchivedData(  )
   return () => {
     isMounted = false;
   };
-
+  
   // dependencies 
 }, [
   user,
@@ -81,35 +96,45 @@ useEffect(() => {
 ]);
 
 
-useEffect(()=> {
-  const currentUserEmail = user && user?.email
-  const activeWorkspaceId = activeWorkspace?._id
+// useEffect(()=> {
+//   const currentUserEmail = user && user?.email
+//   const activeWorkspaceId = activeWorkspace?._id
 
 
-  const filteredTasks = allWorkspaceTasks?.filter(task =>
-    task.workspace === activeWorkspaceId &&
-    (task.creator === currentUserEmail || task.members.includes(currentUserEmail)) 
-  );
+//   const filteredTasks = allWorkspaceTasks?.filter(task =>
+//     task.workspace === activeWorkspaceId && task?.archived === false && 
+//     (task.creator === currentUserEmail || task.members.includes(currentUserEmail)) 
+//   );
 
 
-  console.log(filteredTasks)
-  setActiveWorkspaceTasks(filteredTasks)
-},[allWorkspaceTasks])
+//   // console.log(filteredTasks)
+//   // setActiveWorkspaceTasks(filteredTasks)
+// },
+// // [allWorkspaceTasks])
+// [])
 
-if (loading) return <Spinner/>
+// if (loading) return <Spinner/>
 
 
-  // This funciton will create a new task in the task collection
-  const handleCreateTask = async (newTask, setOpenModal,activeWorkspaceId) => {
-    const response = await xios.post(`/createTask/${activeWorkspaceId}/${user&&user.email}`, newTask)
-    console.log(activeWorkspaceId)
-    if (response?.data?.insertedId) {
-        setNewTask(newTask);
-        setOpenModal(false);
-        toast.success("Created a new task", { position: "top-right" });
-        fetchLatestData()
-      }
-  };
+    // This funciton will create a new task in the task collection
+  
+    const handleCreateTask = async (
+        newTask,
+        setOpenModal,
+        activeWorkspaceId
+    ) => {
+        const response = await xios.post(
+            `/createTask/${activeWorkspaceId}/${user && user.email}`,
+            newTask
+        );
+        console.log(activeWorkspaceId);
+        if (response?.data?.insertedId) {
+            setNewTask(newTask);
+            setOpenModal(false);
+            toast.success("Created a new task", { position: "top-right" });
+            fetchLatestData();
+        }
+    };
 
   // Workspace data hanler
   const handleActiveWorkspace = async (e, _id) => {
@@ -159,7 +184,6 @@ const handleDeleteMember = async(e,member,isDelete) => {
  }
 }
 
-
 // used in components > common > filter > filterModal.jsx
 const handleTaskClick = async(taskId,workspaceId) => {
   const response = await xios.post(`/api/set-active-workspace-from-filter`,{userEmail:user?.email,workspaceId})
@@ -182,6 +206,9 @@ const handleHistoryClick = (historSearchQuery) => {
 }
 
 
+console.log("..................", archivedTasks)
+
+
   const data = {
     activeWorkspace, 
     setActiveWorkspace,
@@ -193,12 +220,14 @@ const handleHistoryClick = (historSearchQuery) => {
     handleDeleteMember,
     handleTaskClick,
     clickBaseFilterTaskId,
+
     // used in filterModal.jsx
     setClickBaseFilterTaskId,
 
     // tab view 
     setIsActive,
     isActive, 
+    archivedTasks,
 
     //user search history
     userSearchHistory,

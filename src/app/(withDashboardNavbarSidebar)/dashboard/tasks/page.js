@@ -18,6 +18,7 @@ import { globalContext } from "@/Providers/globalContext";
 import { IoFilterOutline } from "react-icons/io5";
 import FilterModal from "@/components/Common/Filter/FilterModal";
 import { FaRegFileArchive } from "react-icons/fa";
+import { HiOutlineArchiveBox } from "react-icons/hi2";
 import { GoTasklist } from "react-icons/go";
 import ArchivedTasks from "../Components/ArchivedTasks/ArchivedTasks";
 
@@ -90,7 +91,7 @@ const Tasks = () => {
               {title ? title : "your board"}
             </h6>
           </div>
-          <div className="relative items-center  flex bg-[#F3F4F8] justify-between px-2  border-b pb-2 pt-1   border-white/50">
+          <div className="relative items-center  flex bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50">
             <div className="flex gap-3 text-[16px]">
               <div
                 onClick={() => setIsActive("all-tasks")}
@@ -107,7 +108,7 @@ const Tasks = () => {
                   isActive === "archived-tasks" ? "bg-white" : ""
                 } p-2 px-3 rounded-lg flex items-center gap-1 cursor-pointer transition-all duration-300 `}
               >
-                <FaRegFileArchive />
+                <HiOutlineArchiveBox/>
                 Archived tasks
               </div>
             </div>
@@ -147,8 +148,8 @@ const Tasks = () => {
           <div
             className={` ${
               isActive === "all-tasks"
-                ? "translate-x-0 scale-100"
-                : "translate-x-[300px] scale-105"
+                ? "translate-x-0 opacity-100 visible"
+                : "translate-x-[300px] opacity-0 invisible"
             } transition-all duration-700 ease-liner`}
           >
             {isActive === "all-tasks" && (
@@ -309,8 +310,8 @@ const Tasks = () => {
           <div
             className={` ${
               isActive === "archived-tasks"
-                ? "translate-x-0"
-                : "translate-x-[300px]"
+                ? "translate-x-0 opacity-100 visible"
+                : "translate-x-[300px] opacity-0 invisible"
             } transition-all duration-700 ease-liner`}
           >
             {isActive === "archived-tasks" && <ArchivedTasks />}
