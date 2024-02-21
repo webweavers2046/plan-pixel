@@ -9,8 +9,7 @@ const IndividualCardTasks = ({ member, cardTasks, cardId, refetch }) => {
     const [openTaskInput, setOpenTaskInput] = useState(false)
     const axiosPublic = useAxios();
     const {data : memberData} = useUser(member);
-    // console.log(memberData);
-    // console.log(cardTasks);
+   
    
 
     const myTasks = cardTasks?.filter(task => task?.email === memberData?.email)
@@ -18,10 +17,9 @@ const IndividualCardTasks = ({ member, cardTasks, cardId, refetch }) => {
 
     const totalTasks = myTasks?.length;
     const totalCompletedTasks = completedTasks?.length;
-    // console.log(totalTasks);
-    // console.log(totalCompletedTasks);
+   
     const progress = totalTasks > 0 && totalCompletedTasks > 0 ? totalCompletedTasks / totalTasks * 100 : 0;
-    // console.log(progress);
+    
 
     const handleAddNewTask = () => {
         // setOpenTaskInput(!openTaskInput);
@@ -35,7 +33,7 @@ const IndividualCardTasks = ({ member, cardTasks, cardId, refetch }) => {
             checked: false,
         }
 
-        console.log("add new task", newTask);
+        // console.log("add new task", newTask);
 
         axiosPublic.post("/createCardTask", newTask)
             .then(res => {

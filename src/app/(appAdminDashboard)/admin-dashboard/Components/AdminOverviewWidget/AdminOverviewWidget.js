@@ -1,14 +1,54 @@
 "use client";
 
+import axios from "axios";
 import OverviewWidgetBg from "@/assets/pattern/admin-info-pattern.png";
 import OverviewWidgetBg02 from "@/assets/pattern/admin-info-pattern02.png";
 import OverviewWidgetBg03 from "@/assets/pattern/admin-info-pattern03.png";
 import useIncrementingNumber from "../Hooks/useIncrementingNumber";
+import { useEffect, useState } from "react";
+import Spinner from "@/components/Common/CommonModal/Spinner";
 
 const AdminOverviewWidget = () => {
-    const totalUsers = useIncrementingNumber(264);
-    const totalPremiumUsers = useIncrementingNumber(64);
-    const totalWorkspace = useIncrementingNumber(154);
+    const [loading, setLoading] = useState(false);
+    const [numberOfUsers, setNumberOfUsers] = useState(0);
+    const [numberOfPremiumUsers, setNumberOfPremiumUsers] = useState(0);
+    const [numberOfWorkspace, setNumberOfWorkspace] = useState(0);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const [response01, response02, response03] = await Promise.all([
+                    axios.get("http://localhost:5000/api/number-of-users"),
+                    axios.get("http://localhost:5000/api/number-of-users"),
+                    axios.get("http://localhost:5000/api/number-of-workspace"),
+                ]);
+
+                const numberOfUsersData = response01.data.numberOfData;
+                setNumberOfUsers(numberOfUsersData);
+
+                const numberOfPremiumUsersData = response02.data.numberOfData;
+                setNumberOfPremiumUsers(numberOfPremiumUsersData);
+
+                const numberOfWorkspaceData = response03.data.numberOfData;
+                setNumberOfWorkspace(numberOfWorkspaceData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+            setLoading(false);
+        };
+
+        fetchData();
+    }, []);
+
+    const totalUsers = useIncrementingNumber(numberOfUsers + 50);
+    const totalPremiumUsers = useIncrementingNumber(numberOfPremiumUsers);
+    const totalWorkspace = useIncrementingNumber(numberOfWorkspace);
+
+    if (loading) {
+        return <Spinner />;
+    }
+
     return (
         <div className="">
             <div className="grid grid-cols-7 gap-6">

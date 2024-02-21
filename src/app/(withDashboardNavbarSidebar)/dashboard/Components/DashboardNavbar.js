@@ -238,11 +238,6 @@ const DashboardNavbar = () => {
           />
         </svg>
       </div>
-      {/* message icon */}
-      <div>
-     <BiSolidMessage onClick={()=>setOpenModal(!openModal)} className="h-10 w-10 cursor-pointer"/>
-     <Message openModal ={openModal} setOpenModal={setOpenModal}/>
-      </div>
       <div className="border py-2 px-3 rounded-lg bg-[white]">
         <Dropdown
           className="bg-white rounded-lg"
@@ -311,4 +306,41 @@ const DashboardNavbar = () => {
   );
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default DashboardNavbar;
+
+    //   {
+    //     /* message icon */
+    //   }
+    //   <div>
+    //     <BiSolidMessage
+    //       onClick={() => setOpenModal(!openModal)}
+    //       className="h-10 w-10 cursor-pointer"
+    //     />
+    //     <Message openModal={openModal} setOpenModal={setOpenModal} />
+    //   </div>;

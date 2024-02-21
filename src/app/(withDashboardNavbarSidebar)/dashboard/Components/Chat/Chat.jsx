@@ -4,12 +4,12 @@ import socketIO from "socket.io-client";
 import ChatBar from "./ChatBar";
 import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
-import "./chat.css";
 import { AuthContext } from "@/Providers/AuthProviders";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { useRouter } from "next/navigation";
 import useAxios from "@/hooks/useAxios";
 import useTranstackData from "@/hooks/useTanstack/useTranstackData";
+import "./chat.css";
 const socket = socketIO.connect("http://localhost:5000");
 const Chat = () => {
   const router = useRouter();
@@ -20,15 +20,15 @@ const Chat = () => {
   const [typingStatus, setTypingStatus] = useState("");
   const lastMessageRef = useRef(null);
   const [userName, setUserName] = useState("");
-  const {data,refetch} = useTranstackData('/message','message')
+  const { data, refetch } = useTranstackData("/message", "message");
   if (!user) {
     router.push("/register");
   }
 
   useEffect(() => {
     if (data) {
-      setMessages(data)
-      refetch()
+      setMessages(data);
+      refetch();
     }
   }, [data]);
 
@@ -43,7 +43,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("messageResponse", (data) => {
-      setMessages([...messages, data]);
+      setMessages((prevMessages) => [...prevMessages, data]);
     });
   }, [socket, messages]);
 
@@ -56,25 +56,10 @@ const Chat = () => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  async function saveMessage(data) {
-    try {
-      if (data && activeWorkspace._id) {
-        const newMessage = {
-          text: data.text,
-          name: data.name,
-          activeWorkspaceId: activeWorkspace._id,
-        };
-        const res = await xios.post(`/message`, newMessage);
-        console.log(res);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   return (
-    <div className="chat">
+    <div className="flex justify-between">
       <ChatBar socket={socket} />
-      <div className="chat__main">
+      <div className="flex-1">
         <ChatBody
           messages={messages}
           typingStatus={typingStatus}

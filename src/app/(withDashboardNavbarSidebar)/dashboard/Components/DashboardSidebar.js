@@ -9,7 +9,7 @@ import "@/styles/globals.css";
 
 import { IoSettingsSharp } from "react-icons/io5";
 import { usePathname } from "next/navigation";
-import { FaUsers } from "react-icons/fa6";
+import { FaMessage, FaUsers } from "react-icons/fa6";
 import phoneIcon from "@/assets/icons/phone.png";
 
 const DashboardSidebar = () => {
@@ -219,7 +219,7 @@ const DashboardSidebar = () => {
                         Profile
                       </Link>
                     </li>
-                    {/* <li>
+                    <li>
                       <Link
                         className={`flex items-center  gap-x-4 ${
                           pathname == "/dashboard/meeting"
@@ -237,7 +237,22 @@ const DashboardSidebar = () => {
                           <p>Meeting</p>
                         </div>
                       </Link>
-                    </li> */}
+                    </li>
+                    <li>
+                      <Link
+                        className={`flex items-center  gap-x-4 ${
+                          pathname == "/dashboard/meeting"
+                            ? "active"
+                            : "inactive"
+                        }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                        href="/dashboard/messenger"
+                      >
+                        <div className="flex items-center">
+                          <FaMessage className="w-10 h-10 me-2 text-gray-400" />
+                          <p>Messenger</p>
+                        </div>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               )}
