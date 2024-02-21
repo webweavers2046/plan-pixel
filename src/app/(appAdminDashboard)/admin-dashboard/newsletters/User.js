@@ -47,7 +47,7 @@ const User = ({ member }) => {
     };
 
     // delete function
-    const deleteNewsletterSubscription = async (id) => {
+    const deleteNewsletterSubscription = (id) => {
         setIsDeleting(true);
         try {
             Swal.fire({
