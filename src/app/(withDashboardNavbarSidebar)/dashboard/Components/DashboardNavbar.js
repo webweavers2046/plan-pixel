@@ -38,6 +38,18 @@ const DashboardNavbar = () => {
     const xios = useAxios();
     const { fetchLatestData } = useContext(globalContext);
 
+
+
+    // Notification Modal State
+    const [isOpen, setIsOpen] = useState(false);
+
+
+
+    // Notification Modal Function
+    const handleNotificationClick = () => {
+      setIsOpen(!isOpen)
+    }
+
     const handleLogOut = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -214,8 +226,13 @@ const DashboardNavbar = () => {
                 {/* search component */}
                 <Search></Search>
             </div>
-            <div>
-                <svg
+
+
+
+
+            {/* Notification */}
+            <div className="relative">
+                <svg onClick={handleNotificationClick} 
                     xmlns="http://www.w3.org/2000/svg"
                     width="52"
                     height="52"
@@ -237,6 +254,25 @@ const DashboardNavbar = () => {
                         strokeLinejoin="round"
                     />
                 </svg>
+
+
+
+                {/* Number of Notifications */}
+
+
+                {
+                  <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
+                    2
+                  </p>
+                }
+
+
+
+
+                {/* Modal Of Notification */}
+                <div className={`${!isOpen && "hidden"} h-screen w-96 bg-red-300 absolute top-16 right-0 rounded-xl`}>
+                  
+                </div>
             </div>
             <div className="border py-2 px-3 rounded-lg bg-[white]">
                 <Dropdown
