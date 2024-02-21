@@ -5,16 +5,16 @@ import { useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useAxios from "@/hooks/useAxios";
 
-const User = ({ member }) => {
+const User = ({ member, refetch }) => {
     const { userEmail } = member;
     const [buttonLoading, setButtonLoading] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const messageRef = useRef(null);
-
+    const axiosAdmin = useAxios();
     const serviceId = "service_2whe5f8";
     const publicKey = "0vMK8CqEQPg9bKP9B";
     const templateId = "template_xpon2ll";
@@ -59,8 +59,8 @@ const User = ({ member }) => {
                 confirmButtonText: "Yes, delete it!",
             }).then((result) => {
                 if (result?.isConfirmed) {
-                    axios
-                        .delete(`http://localhost:5000/api/newsletters/${id}`)
+                    axiosAdmin
+                        .delete(`/api/newsletters/${id}`)
                         .then((result) => {
                             if (result?.data.deletedCount) {
                                 Swal.fire({
@@ -69,6 +69,7 @@ const User = ({ member }) => {
                                     icon: "success",
                                 });
                                 toast.error("successfully deleted");
+                                refetch();
                                 setIsDeleting(false);
                             }
                         });

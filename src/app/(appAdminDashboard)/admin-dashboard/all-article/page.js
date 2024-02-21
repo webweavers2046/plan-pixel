@@ -4,28 +4,15 @@ import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
+import useDynamicData from "../Components/Hooks/useDynamicData";
+import useAxios from "@/hooks/useAxios";
 
 const page = () => {
-    const [articles, setArticles] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-
-    // fetch data from backend
-    useEffect(() => {
-        setIsLoading(true);
-        const fetchArticles = async () => {
-            try {
-                const response = await axios.get(
-                    "http://localhost:5000/api/articles"
-                );
-                setArticles(response.data);
-                setIsLoading(false);
-            } catch (error) {
-                console.log("Error to get Article data");
-                setIsLoading(false);
-            }
-        };
-        fetchArticles();
-    }, []);
+    const {
+        data: articles,
+        isLoading,
+        refetch,
+    } = useDynamicData("articles", "/api/articles");
 
     if (isLoading) {
         return <Spinner />;
@@ -38,7 +25,11 @@ const page = () => {
                 <p className="text-lg font-semibold">All article</p>
                 <div className="grid grid-cols-4 items-start justify-between pt-6 gap-6">
                     {articles.map((post) => (
-                        <ArticleCard key={post._id} post={post} />
+                        <ArticleCard
+                            key={post._id}
+                            post={post}
+                            refetch={refetch}
+                        />
                     ))}
                 </div>
             </div>
@@ -47,7 +38,7 @@ const page = () => {
 };
 export default page;
 
-const ArticleCard = ({ post }) => {
+const ArticleCard = ({ post, refetch }) => {
     const {
         _id,
         title,
@@ -57,6 +48,7 @@ const ArticleCard = ({ post }) => {
         articleImage_url,
         avatar_url,
     } = post;
+    const axiosAdmin = useAxios();
     const [isDeleting, setIsDeleting] = useState(false);
     const handleDeleteArticle = (id) => {
         setIsDeleting(true);
@@ -70,19 +62,18 @@ const ArticleCard = ({ post }) => {
                 confirmButtonText: "Yes, delete it!",
             }).then((result) => {
                 if (result?.isConfirmed) {
-                    axios
-                        .delete(`http://localhost:5000/api/articles/${id}`)
-                        .then((result) => {
-                            if (result?.data.deletedCount) {
-                                Swal.fire({
-                                    title: "Deleted!",
-                                    text: "Your file has been deleted.",
-                                    icon: "success",
-                                });
-                                toast.error("successfully deleted");
-                                setIsDeleting(false);
-                            }
-                        });
+                    axiosAdmin.delete(`/api/articles/${id}`).then((result) => {
+                        if (result?.data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success",
+                            });
+                            refetch();
+                            toast.error("successfully deleted");
+                            setIsDeleting(false);
+                        }
+                    });
                 }
             });
             setIsDeleting(false);

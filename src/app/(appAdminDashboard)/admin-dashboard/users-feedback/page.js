@@ -3,42 +3,29 @@
 import Image from "next/image";
 import userAvatar from "@/assets/person/p1.jpg";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Spinner from "@/components/Common/CommonModal/Spinner";
-import { useForm } from "react-hook-form";
-import axios from "axios";
+import useAxios from "@/hooks/useAxios";
+import useDynamicData from "../Components/Hooks/useDynamicData";
 
 const UserFeedback = () => {
-    const [loading, setLoading] = useState(false);
-    const [feedbackData, setData] = useState([]);
     const [reply, setReply] = useState("");
+    const axiosAdmin = useAxios();
+    const {
+        data: feedbackData,
+        isLoading,
+        refetch,
+    } = useDynamicData("feedbackData", "/api/users-feedback");
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(
-                    "http://localhost:5000/api/users-feedback"
-                );
-                const data = await response.json();
-                setData(data);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-            setLoading(false);
-        };
-
-        fetchData();
-    }, []);
+    if (isLoading) {
+        return <Spinner />;
+    }
 
     const totalCardInRow = Math.ceil(feedbackData.numberOfFeedbacks / 4);
     const row1 = 0 + totalCardInRow;
     const row2 = row1 + row1;
     const row3 = row2 + row1;
     const row4 = row3 + row1;
-
-    if (loading) {
-        return <Spinner />;
-    }
 
     const handleReplyChange = (e) => {
         setReply(e.target.value);
@@ -48,12 +35,13 @@ const UserFeedback = () => {
         e.preventDefault();
         console.log(reply, feedbackId);
         try {
-            const response = await axios.patch(
-                `http://localhost:5000/api/users-feedback/${feedbackId}`,
+            const response = await axiosAdmin.patch(
+                `/api/users-feedback/${feedbackId}`,
                 {
                     reply: reply,
                 }
             );
+            refetch();
 
             console.log("Feedback updated successfully", response.data);
         } catch (error) {

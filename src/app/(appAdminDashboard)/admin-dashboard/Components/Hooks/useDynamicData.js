@@ -1,15 +1,19 @@
-const { default: useAxios } = require("@/hooks/useAxios");
-const { useQuery } = require("@tanstack/react-query");
+import useAxios from "@/hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 const useDynamicData = (queryKey, url) => {
     const axiosAdmin = useAxios();
-    const { data, refetch } = useQuery({
+    const {
+        data = [],
+        refetch,
+        isLoading,
+    } = useQuery({
         queryKey: [queryKey],
         queryFn: async () => {
             const response = await axiosAdmin.get(url);
             return response.data;
         },
     });
-    return { data, refetch };
+    return { data, isLoading, refetch };
 };
 export default useDynamicData;
