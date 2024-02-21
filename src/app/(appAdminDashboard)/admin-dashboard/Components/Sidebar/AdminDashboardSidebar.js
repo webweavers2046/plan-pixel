@@ -5,7 +5,7 @@ import logo from "@/assets/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import "@/styles/globals.css";
-
+import { BiSolidMessageSquareAdd } from "react-icons/bi";
 import { IoSettingsSharp } from "react-icons/io5";
 import { PiArticleNyTimesBold } from "react-icons/pi";
 import { usePathname } from "next/navigation";
@@ -160,7 +160,7 @@ const AdminDashboardSidebar = () => {
                                     href="/admin-dashboard/add-article"
                                 >
                                     <div className="flex items-center">
-                                        <RiAddCircleFill className="text-4xl me-3 ms-1" />
+                                        <BiSolidMessageSquareAdd className="text-4xl me-3 ms-1" />
                                         <p>Add Article</p>
                                     </div>
                                 </Link>
