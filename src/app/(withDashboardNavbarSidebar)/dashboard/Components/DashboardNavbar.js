@@ -20,23 +20,24 @@ import { globalContext } from "@/Providers/globalContext";
 import Search from "./Search/Search";
 
 const DashboardNavbar = () => {
-    const { user, logOut } = useContext(AuthContext);
-    const {
-        handleActiveWorkspace,
-        handleDropdownClick,
-        userWokspaceList,
-        activeWorkspace,
-    } = useGlobalContext();
+  const { user, logOut } = useContext(AuthContext);
+  const {
+    handleActiveWorkspace,
+    handleDropdownClick,
+    userWokspaceList,
+    activeWorkspace
+  } = useGlobalContext();
 
-    const { data: userData } = useUser(user?.email);
-    console.log(user, userData);
-    const router = useRouter();
-    const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const [WillAddMember, setWillAddMember] = useState(false);
-    const xios = useAxios();
-    const { fetchLatestData } = useContext(globalContext);
+
+  const { data: userData } = useUser(user?.email);
+  const router = useRouter();
+  const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [WillAddMember, setWillAddMember] = useState(false);
+  const xios = useAxios();
+  const {fetchLatestData} = useContext(globalContext)
+  const [notification, setNotification] = useState(true);
 
     const handleLogOut = () => {
         Swal.fire({
