@@ -139,7 +139,16 @@ const handleDeleteMember = async(e,member,isDelete) => {
     const response = await xios.post(`/api/meetings`, newMeeting)
     if (response.data.insertedId) {
       toast.success("Meeting Created", { position: "top-center" });
+      
 
+    }
+  }
+
+  const handleDeleteMeeting = async (id) =>{
+    const response = await xios.delete(`/api/meetings/${id}`)
+    if(response.data.deletedCount>0){
+      toast.success("Meeting deleted", { position: "top-center" });
+      
     }
   }
 
@@ -201,6 +210,7 @@ const handleHistoryClick = (historSearchQuery) => {
     handleDeleteWorkspace,
 
     handleCreateMeeting,
+    handleDeleteMeeting,
 
   };
 

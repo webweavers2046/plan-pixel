@@ -12,31 +12,18 @@ import Image from "next/image";
 import { useState } from "react";
 import MeetingsForm from "./MeetingsForm";
 import useAllMeetings from "@/hooks/useAllMeetings";
+import useGlobalContext from "@/hooks/useGlobalContext";
+import MeetingDetails from "./MeetingDetails";
 
 const Meetings = () => {
   const [openModal, setOpenModal] = useState(false);
-  const isActive = true;
-  const {data: allMeetings} = useAllMeetings();
-
+  const { data: allMeetings } = useAllMeetings();
+  const { activeWorkspaceMembers } = useGlobalContext();
   console.log(allMeetings);
-  const meetings = [
-    {
-      meetingName: "Monthly Team Meeting",
-      date: "12 Apr 2024",
-      time: "12:00 PM",
-    },
-    {
-      meetingName: "Project Performance Review",
-      date: "15 May 2024",
-      time: "02:30 PM",
-    },
-    {
-      meetingName: "Annual Client Presentation",
-      date: "20 Jun 2024",
-      time: "09:15 AM",
-    },
-  ];
-
+  // console.log(activeWorkspaceMembers);
+const showDetails = id =>{
+  console.log(id);
+}
   return (
     <div className="">
       <Modal show={openModal}>
@@ -78,61 +65,45 @@ const Meetings = () => {
           <GoPlus />
         </button>
       </div>
-      <div>
-        {
-          allMeetings?.map(meeting => <>
-            <h1>{meeting._id}</h1>
-          </>)
-        }
-      </div>
-      {/* <div className=" mt-6">
-        {meetings.map((meeting, idx) => (
+
+      <div className=" mt-6">
+        
+        {allMeetings?.map((meeting, idx) => (
           <div
-            className={`p-4 rounded-md cursor-pointer ${
+            className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC05]/25 transition duration-300 ${
               idx === 1 && "bg-[#FBBC05]/25 border-[#FBBC05] border-2"
             } my-2 flex items-center justify-between`}
             key={idx}
+            onClick={() => showDetails(meeting._id)}
           >
             <div className="">
-              <h3 className="text-lg font-semibold">{meeting.meetingName}</h3>
+              <h3 className="text-lg font-semibold">
+                {meeting?.newMeeting?.title}
+              </h3>
               <div className="flex text-xs mt-0.5 gap-3 opacity-60">
-                <p className="">{meeting.date},</p>
-                <p className="">{meeting.time}</p>
+                <p className="">{meeting?.newMeeting?.date},</p>
+                <p className="">{meeting?.newMeeting?.time}</p>
+                
               </div>
             </div>
-            <div className="flex -space-x-5 rtl:space-x-reverse">
-              <Image
-                width={30}
-                height={30}
-                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src={member01Img}
-                alt=""
-              />
-              <Image
-                width={30}
-                height={30}
-                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src={member02Img}
-                alt=""
-              />
-              <Image
-                width={30}
-                height={30}
-                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src={member03Img}
-                alt=""
-              />
-              <Image
-                width={30}
-                height={30}
-                className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src={member04Img}
-                alt=""
-              />
+            <div className="flex -space-x-4 rtl:space-x-reverse">
+              {meeting?.newMeeting?.member?.map((member) => (
+                <div>
+                  <Image
+                    width={30}
+                    height={30}
+                    className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
+                    src={member.image}
+                    alt=""
+                  />
+                  
+                </div>
+              ))}
+              
             </div>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

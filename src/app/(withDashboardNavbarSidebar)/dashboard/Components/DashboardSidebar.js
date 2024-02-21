@@ -219,7 +219,7 @@ const DashboardSidebar = () => {
                         Profile
                       </Link>
                     </li>
-                    {/* <li>
+                    <li>
                       <Link
                         className={`flex items-center  gap-x-4 ${
                           pathname == "/dashboard/meeting"
@@ -237,7 +237,7 @@ const DashboardSidebar = () => {
                           <p>Meeting</p>
                         </div>
                       </Link>
-                    </li> */}
+                    </li>
                   </ul>
                 </div>
               )}
