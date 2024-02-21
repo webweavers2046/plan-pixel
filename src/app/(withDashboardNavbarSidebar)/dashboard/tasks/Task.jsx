@@ -33,7 +33,7 @@ const Task = ({ setUpdateId,
 
 
     const handleDeleteTask = (id) => {
-
+        console.log(id);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -61,8 +61,8 @@ const Task = ({ setUpdateId,
     };
 
     const handleUpdate = (id) => {
-        setWorkspaceId()
-        setUpdateId(id)
+        // setWorkspaceId()
+        // setUpdateId(id)
         setOpenUpdateModal(!openUpdateModal)
     }
 

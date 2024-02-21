@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "agenda": "Team Meeting",
+      "date": "12 Apr 2024",
+      "time": "09:00 AM",
+      "link": "google.meet",
+      "members": [
+        {},
+        {}
+      ]
+      
+    },
+    {
+      "id": 2,
+      "agenda": "Project Planning",
+      "date": "13 Apr 2024",
+      "time": "02:30 PM"
+    },
+    {
+      "id": 3,
+      "agenda": "Weekly Review",
+      "date": "14 Apr 2024",
+      "time": "10:00 AM"
+    }
+  ]
+  
