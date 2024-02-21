@@ -41,6 +41,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
             updatedAt: "",
             lastModifiedBy: "",
             tags:[],
+            archived:false
         };
 
         handleCreateTask(newTask, setOpenModal, id);

@@ -29,6 +29,9 @@ const GlobalContext = ({ children }) => {
   const [isUserHistoryStored,setIsUserHistoryStored] = useState(false)
   const [searchQueryFromHistory,setSearchQueryFromHistory] = useState("")
 
+  // Tab view 
+  const [isActive,setIsActive] = useState("all-tasks")
+
   const [loading, setLoading] = useState(true);
   let isMounted = true;
   const [userSearchHistory,setUserSearchHistory] = useState([])
@@ -192,6 +195,10 @@ const handleHistoryClick = (historSearchQuery) => {
     clickBaseFilterTaskId,
     // used in filterModal.jsx
     setClickBaseFilterTaskId,
+
+    // tab view 
+    setIsActive,
+    isActive, 
 
     //user search history
     userSearchHistory,
