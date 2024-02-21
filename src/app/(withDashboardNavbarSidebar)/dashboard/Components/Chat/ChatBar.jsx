@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
+  console.log(users);
 
   useEffect(() => {
     socket.on("newUserResponse", (data) => setUsers(data));

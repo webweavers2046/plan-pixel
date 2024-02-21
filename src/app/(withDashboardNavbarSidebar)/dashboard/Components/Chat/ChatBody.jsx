@@ -1,27 +1,27 @@
-import React from "react";
+import { AuthContext } from "@/Providers/AuthProviders";
+import useTranstackData from "@/hooks/useTanstack/useTranstackData";
+import React, { useContext, useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
-const ChatBody = ({ messages, typingStatus, lastMessageRef }) => {
+const ChatBody = ({messages, typingStatus, lastMessageRef }) => {
 //   const navigate = useNavigate();
-
-  const handleLeaveChat = () => {
-    localStorage.removeItem("userName");
-    // navigate("/");
-    window.location.reload();
-  };
+const {user} = useContext(AuthContext)
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    if (user) {
+      setUserName(user?.email);
+    }
+  }, [user]);
 
   return (
     <>
       <header className="chat__mainHeader">
         <p>Hangout with Colleagues</p>
-        {/* <button className="leaveChat__btn" onClick={handleLeaveChat}>
-          LEAVE CHAT
-        </button> */}
       </header>
 
       <div className="message__container">
-        {messages.map((message) =>
-          message.name === localStorage.getItem("userName") ? (
+        {messages?.map((message) =>
+          message.name === userName ? (
             <div className="message__chats" key={message.id}>
               <p className="sender__name">You</p>
               <div className="message__sender">
