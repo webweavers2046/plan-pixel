@@ -6,6 +6,8 @@ import { useContext, useState } from "react"; // Import useState
 import { useForm } from "react-hook-form";
 import { HiOutlineArrowUpTray } from "react-icons/hi2";
 import useDateTime from "../Components/Hooks/useDateTime";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const page = () => {
     const image_hosting_key = "7e12ab75560d62e6ad9d88e0d09f9e38";
@@ -54,6 +56,18 @@ const page = () => {
                         articleImage_url: result.data.url,
                         avatar_url: user.photoURL,
                     };
+                    axios
+                        .post("http://localhost:5000/api/articles", newArticle)
+                        .then((res) => {
+                            console.log(res.data);
+                            toast.success("Add Successfully", {
+                                duration: 2000,
+                                className: "mt-32",
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
                     console.log(newArticle);
                 })
                 .finally(() => {
