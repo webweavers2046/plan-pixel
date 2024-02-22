@@ -23,6 +23,7 @@ import { GoTasklist } from "react-icons/go";
 import ArchivedTasks from "../Components/ArchivedTasks/ArchivedTasks";
 import Toggler from "@/components/Common/CommonModal/Toggler";
 import useAxios from "@/hooks/useAxios";
+import ListBoxDropdown from "@/components/Common/ListBoxDropdown/ListBoxDropdown";
 
 const Tasks = () => {
   // manage all your state here..
@@ -120,6 +121,7 @@ const Tasks = () => {
                 <HiOutlineArchiveBox/>
                 Archived tasks
               </div>
+              <ListBoxDropdown/>
             </div>
             <div className="flex justify-end gap-2 lg:w-72 items-center">
               <div
