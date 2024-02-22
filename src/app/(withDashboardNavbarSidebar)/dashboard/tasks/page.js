@@ -21,6 +21,8 @@ import { FaRegFileArchive } from "react-icons/fa";
 import { HiOutlineArchiveBox } from "react-icons/hi2";
 import { GoTasklist } from "react-icons/go";
 import ArchivedTasks from "../Components/ArchivedTasks/ArchivedTasks";
+import Toggler from "@/components/Common/CommonModal/Toggler";
+import useAxios from "@/hooks/useAxios";
 
 const Tasks = () => {
   // manage all your state here..
@@ -35,10 +37,14 @@ const Tasks = () => {
     isDragging,
     draggingTaskId,
   } = useDNDcontext();
+
+  // Axios for data fetching
+  const xios = useAxios()
+
   // const { data: alltasks } = useAllTasks();
 
   const { allWorkspaceTasks } = useContext(ablyContext);
-  const { activeWorkspaceTasks, setIsActive, isActive } =
+  const { activeWorkspaceTasks, setIsActive, isActive,handleMultipleArchive,handleMultipleUnArchive} =
     useContext(globalContext);
 
   if (!activeWorkspaceTasks) return;
@@ -72,12 +78,15 @@ const Tasks = () => {
     dragOverElementName
   );
 
-  const { activeWorkspace } = useGlobalContext();
+  const { activeWorkspace,isTogglerEnabled,setIsTogglerEnabled } = useGlobalContext();
   const { title, description } = activeWorkspace || {
     title: "Your board",
     description: "hello there it is your demo board ",
   };
   const [openFilter, setOpenFilter] = useState(false);
+
+
+
 
 
   return (
@@ -156,6 +165,11 @@ const Tasks = () => {
               <div
                 className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2 mt-6 min-h-screen`}
               >
+
+                <div className="absolute -top-5 right-2">
+                <Toggler enabled={isTogglerEnabled} setEnabled={setIsTogglerEnabled}/>
+
+                </div>
                 {/* upcoming task */}
                 <div
                   droppable="true"
@@ -322,6 +336,12 @@ const Tasks = () => {
           ></TaskModal>
 
           <CardDetailsModal></CardDetailsModal>
+          {
+                isTogglerEnabled &&
+                <button onClick={ isActive === "all-tasks"? handleMultipleArchive:handleMultipleUnArchive} className="bg-rose-600 fixed bottom-8 right-2 z-50 text-white p-2 rounded-lg">{
+                  isActive === "all-tasks"?"Archive multiple":"Unarchive multiple"
+                } </button>
+          }
         </section>
       )}
     </>

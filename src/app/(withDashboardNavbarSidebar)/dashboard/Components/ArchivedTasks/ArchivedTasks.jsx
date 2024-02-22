@@ -25,9 +25,29 @@ import useAxios from "@/hooks/useAxios";
 
 
 const ArchivedTasks = () => {
-    const {archivedTasks,handleUnarchive,setArchiveTaskId} = useContext(globalContext)
+    const {archivedTasks,handleUnarchive,setArchiveTaskId,isTogglerEnabled,setIsTogglerEnabled} = useContext(globalContext)
     const [isOpen,setIsOpen] = useState(false)
-    const [enabled, setEnabled] = useState(false)
+
+  const handleSelectedIdsChanges = async (e, taskId) => {
+    const isChecked = e.target.checked;
+
+    // Retrieve the current array of unarchiveTaskIds from local storage
+    const unarchiveTaskIds = JSON.parse(localStorage.getItem("unarchiveTaskIds")) || [];
+
+    // Update the selected IDs based on the checkbox state
+    const updatedSelectedIds = isChecked
+      ? [...unarchiveTaskIds, taskId]
+      : unarchiveTaskIds.filter((id) => id !== taskId);
+
+    // Save the updated selected IDs to local storage ( now these ids are in central place )
+    // you can find it from anywhere
+    localStorage.setItem("unarchiveTaskIds", JSON.stringify(updatedSelectedIds));
+};
+
+  // When toggler of bulk archiving off, clear the storage
+  isTogglerEnabled ? "" : localStorage.removeItem("unarchiveTaskIds");
+
+
 
   return (
     <div className=" relative bg-gradient-to-br from-[white] to-[#fbfbff]  h-screen w-full">
@@ -49,12 +69,25 @@ const ArchivedTasks = () => {
         </p>
       </div>
 
-      <div className="absolute top-2 right-2"><Toggler setEnabled={setEnabled} enabled={enabled}/></div>
+      <div className="absolute top-2 right-2"><Toggler setEnabled={setIsTogglerEnabled} enabled={isTogglerEnabled}/></div>
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 mt-11 px-2">
         {archivedTasks?.map((task) => {
           return (
-            <div className="bg-white text-gray-500 p-3 shadow-md rounded-lg">
+            <div className="bg-white text-gray-500 relative overflow-hidden p-3 shadow-md rounded-lg">
+
+
+          {isTogglerEnabled && (
+        <div>
+          <input
+            onChange={(e) => handleSelectedIdsChanges(e, task?.taskId)}
+            className="absolute z-50 cursor-pointer opacity-10 -left-2 -top-2 bg-transparent w-[600px] h-[600px]"
+            type="checkbox"
+          />
+        </div>
+       )}
+
+
               <div className="flex items-center mb-2 gap-2">
                 {task.priority === "high" && <FcHighPriority />}
                 {task.priority === "medium" && <FcMediumPriority />}
@@ -93,6 +126,7 @@ const ArchivedTasks = () => {
             title={"Are you sure to unarchive?"}
               />
               </div>
+
             </div>
           );
         })}

@@ -32,6 +32,7 @@ const GlobalContext = ({ children }) => {
   // Archived tasks state
   const [archivedTasks,setArchivedTasks] =  useState([])
   const [archiveTaskId, setArchiveTaskId] = useState("")
+  const [isTogglerEnabled,setIsTogglerEnabled] = useState(false)
 
 
   // Tab view 
@@ -207,7 +208,7 @@ const handleHistoryClick = (historSearchQuery) => {
   setSearchQueryFromHistory(historSearchQuery)
 }
 
-// handle Archiving task
+// handle unArchiving single task
 const handleUnarchive = async() => {
 
   const info = {
@@ -218,6 +219,40 @@ const handleUnarchive = async() => {
   const response = await xios.post(`/api/tasks/archive`,info)
   console.log(response.data)
 }
+
+
+// handle multi-select archive (from the task.jsx)
+const handleMultipleArchive = async() => {
+  const AllSelectedTaskstoArchive= JSON.parse(localStorage.getItem('selectedTasks')) || [];
+  // sending api request to archive multiple tasks
+  const response = await xios.post(`/api/tasks/archive?isArchive=${true}`,AllSelectedTaskstoArchive)
+
+  if(response.data.insertedCount >= 1 ){
+    fetchLatestData()
+    fetchArchivedData()
+    toast.success("Archived",{position:"top-right"})
+    setIsActive("archived-tasks")
+    
+    
+  localStorage.removeItem("selectedTasks");
+  }
+}
+// handle multi-select archive (from the task.jsx)
+const handleMultipleUnArchive = async() => {
+  const AllSelectedTaskstoUnArchive = JSON.parse(localStorage.getItem('unarchiveTaskIds')) || [];
+  // sending api request to archive multiple tasks
+  const response = await xios.post(`/api/tasks/archive`,AllSelectedTaskstoUnArchive)
+
+  if(response.data.deletedCount >= 1 ){
+    fetchLatestData()
+    fetchArchivedData()
+    toast.success("unArchived",{position:"top-right"})
+    setIsActive("all-tasks")
+  localStorage.removeItem("unarchiveTaskIds");
+  }
+}
+
+
 
   const data = {
     activeWorkspace, 
@@ -241,6 +276,10 @@ const handleUnarchive = async() => {
     fetchArchivedData,
     handleUnarchive,
     setArchiveTaskId,
+    setIsTogglerEnabled,
+    isTogglerEnabled,
+    handleMultipleArchive,
+    handleMultipleUnArchive,
 
     //user search history
     userSearchHistory,
@@ -269,5 +308,6 @@ const handleUnarchive = async() => {
     <globalContext.Provider value={data}>{children}</globalContext.Provider>
   );
 };
+
 
 export default GlobalContext;
