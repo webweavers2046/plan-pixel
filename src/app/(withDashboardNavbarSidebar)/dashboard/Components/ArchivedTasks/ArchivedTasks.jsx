@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { HiOutlineArchiveBox } from "react-icons/hi2";
-import Task from "./task";
 import Avater from "./Avater";
 import { FcHighPriority } from "react-icons/fc";
 import { FcLowPriority } from "react-icons/fc";
