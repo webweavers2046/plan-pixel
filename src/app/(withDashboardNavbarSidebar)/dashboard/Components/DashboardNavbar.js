@@ -37,6 +37,7 @@ const DashboardNavbar = () => {
   const [WillAddMember, setWillAddMember] = useState(false);
   const xios = useAxios();
   const {fetchLatestData} = useContext(globalContext)
+  const [notification, setNotification] = useState(true);
 
     const handleLogOut = () => {
         Swal.fire({
