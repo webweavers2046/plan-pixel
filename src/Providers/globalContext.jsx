@@ -181,6 +181,23 @@ const GlobalContext = ({ children }) => {
         setSearchQueryFromHistory(historSearchQuery);
     };
 
+    // Meeting page
+    const handleCreateMeeting = async(meeting) =>{
+        console.log(meeting);
+        const response = await xios.post("/api/meetings", meeting)
+        if(response.data.insertedId){
+            toast.success("Meeting created", { position: "top-center" });
+        }
+    }
+
+    const handleDeleteMeeting = async(id) =>{
+        const response = await xios.delete(`/api/meetings/${id}`)
+        
+        if(response.data.deletedCount>0){
+            toast.success("Meeting deleted", { position: "top-center" });
+        }
+    }
+
     const data = {
         activeWorkspace,
         setActiveWorkspace,
@@ -213,6 +230,9 @@ const GlobalContext = ({ children }) => {
         setSwitchWorkspace,
         isWorkspaceSwitched,
         handleDeleteWorkspace,
+
+        handleCreateMeeting,
+        handleDeleteMeeting,
     };
 
     return (
