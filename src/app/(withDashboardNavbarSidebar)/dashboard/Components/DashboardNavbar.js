@@ -20,7 +20,6 @@ import { globalContext } from "@/Providers/globalContext";
 import Search from "./Search/Search";
 
 const DashboardNavbar = () => {
-<<<<<<< HEAD
     const { user, logOut } = useContext(AuthContext);
     const {
         handleActiveWorkspace,
@@ -29,15 +28,6 @@ const DashboardNavbar = () => {
         activeWorkspace,
         notifications
     } = useGlobalContext();
-=======
-  const { user, logOut } = useContext(AuthContext);
-  const {
-    handleActiveWorkspace,
-    handleDropdownClick,
-    userWokspaceList,
-    activeWorkspace
-  } = useGlobalContext();
->>>>>>> 5416af73b5ad979049107dba6265ea0d49665d8e
 
 
   const { data: userData } = useUser(user?.email);
