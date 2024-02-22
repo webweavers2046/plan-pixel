@@ -3,7 +3,7 @@
 import { AuthContext } from "@/Providers/AuthProviders";
 import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
@@ -26,6 +26,7 @@ const DashboardNavbar = () => {
         handleDropdownClick,
         userWokspaceList,
         activeWorkspace,
+        notifications
     } = useGlobalContext();
 
     const { data: userData } = useUser(user?.email);
@@ -49,6 +50,17 @@ const DashboardNavbar = () => {
     const handleNotificationClick = () => {
       setIsOpen(!isOpen)
     }
+
+    // notification Sorting
+    const [yourNotifications, setYourNotifications] = useState([])
+    useEffect(()=> {
+        notifications.data.map((notification) => (
+            notification.user === "all" ? setYourNotifications(yourNotifications.push(notification)) : notification.user === "user?.email" ? setYourNotifications(yourNotifications.push(notification)) : console.log(yourNotifications)
+        ))
+    }, [])
+
+
+    
 
     const handleLogOut = () => {
         Swal.fire({
@@ -112,6 +124,7 @@ const DashboardNavbar = () => {
 
         toast.error(isAddedMember.data.error);
     };
+    console.log(activeWorkspace);
 
     const handleClose = () => {
         // Close the modal
@@ -262,7 +275,7 @@ const DashboardNavbar = () => {
 
                 {
                   <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
-                    2
+                    {yourNotifications?.data.length}
                   </p>
                 }
 
@@ -270,8 +283,16 @@ const DashboardNavbar = () => {
 
 
                 {/* Modal Of Notification */}
-                <div className={`${!isOpen && "hidden"} h-screen w-96 bg-red-300 absolute top-16 right-0 rounded-xl`}>
-                  
+                <div className={`${!isOpen && "hidden"} w-96 absolute top-16 right-0 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}>
+                  {
+                    yourNotifications?.data.map((notification)=> (
+                        <div>
+                        <p className="text-xl px-4 py-4 bg-white rounded-md">
+                        {notification?.message}
+                        </p>
+                        </div>
+                    ))
+                  }
                 </div>
             </div>
             <div className="border py-2 px-3 rounded-lg bg-[white]">
