@@ -24,7 +24,7 @@ const page = () => {
         <div className="">
             <div className="">
                 <p className="text-lg font-semibold">All article</p>
-                <div className="grid grid-cols-4 items-start justify-between pt-6 gap-6">
+                <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:grid-cols-3 items-start justify-between pt-6 2xl:gap-6 gap-3">
                     {articles.map((post) => (
                         <ArticleCard
                             key={post._id}
