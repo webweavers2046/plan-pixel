@@ -5,46 +5,37 @@ import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthProviders";
 import Spinner from "@/components/Common/CommonModal/Spinner";
-import { ablyContext } from "@/components/ably/AblyProvider";
 
 export const globalContext = createContext(null);
 const GlobalContext = ({ children }) => {
+    // manage all of your state here ..
+    const [newTask, setNewTask] = useState("");
+    const xios = useAxios();
+    const { user } = useContext(AuthContext);
 
-  // manage all of your state here ..
-  const [newTask, setNewTask] = useState("");
-  const xios = useAxios();
-  const { user } = useContext(AuthContext);
-  // const {allWorkspaceTasks} = useContext(ablyContext)
-  
-  
-  const [clickedWorkspaceId, setClickedWorkspaceId] = useState([])
-  const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false)
-  
-  // Workspace related states
-  const [activeWorkspace, setActiveWorkspace] = useState({});
-  const [userWokspaceList, setUserWokspaceList] = useState([]);
-  const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
-  const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
-  const [clickBaseFilterTaskId,setClickBaseFilterTaskId] = useState("")
-  const [isUserHistoryStored,setIsUserHistoryStored] = useState(false)
-  const [searchQueryFromHistory,setSearchQueryFromHistory] = useState("")
+    const [clickedWorkspaceId, setClickedWorkspaceId] = useState([]);
+    const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false);
 
-  // Archived tasks state
-  const [archivedTasks,setArchivedTasks] =  useState([])
-  const [archiveTaskId, setArchiveTaskId] = useState("")
+    // Workspace related states
+    const [activeWorkspace, setActiveWorkspace] = useState({});
+    const [userWokspaceList, setUserWokspaceList] = useState([]);
+    const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
+    const [activeWorkspaceMembers, setActiveWorkspaceMembers] = useState([]);
+    const [clickBaseFilterTaskId, setClickBaseFilterTaskId] = useState("");
+    const [isUserHistoryStored, setIsUserHistoryStored] = useState(false);
+    const [searchQueryFromHistory, setSearchQueryFromHistory] = useState("");
 
+    const [loading, setLoading] = useState(true);
+    let isMounted = true;
+    const [userSearchHistory, setUserSearchHistory] = useState([]);
 
-  // Tab view 
-  const [isActive,setIsActive] = useState("all-tasks")
-
-  const [loading, setLoading] = useState(true);
-  let isMounted = true;
-  const [userSearchHistory,setUserSearchHistory] = useState([])
-
-// this function fetch the latest data 
-const fetchLatestData = async () => {
-  try {
-    const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
+    // this function fetch the latest data
+    const fetchLatestData = async () => {
+        try {
+            const userWorkspaces = await xios.get(
+                `/api/active-workspace?userEmail=${user && user.email}`
+            );
+            console.log("Server Response:", userWorkspaces.data);
 
             // Only when component mounted trigger to set the latest data
             if (isMounted) {
@@ -77,53 +68,23 @@ const fetchLatestData = async () => {
         }
     };
 
+    // fetch lates workspace related content and user history based on dependencies
+    useEffect(() => {
+        fetchLatestData();
+        fetchUserSearchHistory();
+        return () => {
+            isMounted = false;
+        };
+    }, [
+        user,
+        clickBaseFilterTaskId,
+        isUserHistoryStored,
+        searchQueryFromHistory,
+    ]);
 
-// get all the arvhived data
-const fetchArchivedData = async()=>  {
-  const response = await xios.get("/api/read/archive-tasks")
-  setArchivedTasks(response.data)
-}
-
-// fetch lates workspace related content and user history based on dependencies 
-useEffect(() => {
-  fetchLatestData();
-  fetchUserSearchHistory()
-  fetchArchivedData()
-  return () => {
-    isMounted = false;
-  };
-  
-  // dependencies 
-}, [
-  user,
-  clickBaseFilterTaskId,
-  isUserHistoryStored,
-  searchQueryFromHistory,
-]);
-
-
-// useEffect(()=> {
-//   const currentUserEmail = user && user?.email
-//   const activeWorkspaceId = activeWorkspace?._id
-
-
-//   const filteredTasks = allWorkspaceTasks?.filter(task =>
-//     task.workspace === activeWorkspaceId && task?.archived === false && 
-//     (task.creator === currentUserEmail || task.members.includes(currentUserEmail)) 
-//   );
-
-
-//   // console.log(filteredTasks)
-//   // setActiveWorkspaceTasks(filteredTasks)
-// },
-// // [allWorkspaceTasks])
-// [])
-
-// if (loading) return <Spinner/>
-
+    // if (loading) return <Spinner />;
 
     // This funciton will create a new task in the task collection
-  
     const handleCreateTask = async (
         newTask,
         setOpenModal,
@@ -221,32 +182,31 @@ useEffect(() => {
     };
 
     // Meeting page
-    const handleCreateMeeting = async(meeting) =>{
+    const handleCreateMeeting = async (meeting) => {
         console.log(meeting);
-        const response = await xios.post("/api/meetings", meeting)
-        if(response.data.insertedId){
+        const response = await xios.post("/api/meetings", meeting);
+        if (response.data.insertedId) {
             toast.success("Meeting created", { position: "top-center" });
         }
-    }
+    };
 
-    const handleDeleteMeeting = async(id) =>{
-        const response = await xios.delete(`/api/meetings/${id}`)
-        
-        if(response.data.deletedCount>0){
+    const handleDeleteMeeting = async (id) => {
+        const response = await xios.delete(`/api/meetings/${id}`);
+
+        if (response.data.deletedCount > 0) {
             toast.success("Meeting deleted", { position: "top-center" });
         }
-    }
-
-
+    };
 
     // Notification Informations
 
-    const [notifications, setNotifications] = useState()
+    const [notifications, setNotifications] = useState();
 
-
-    const notificationsFetch = async() => {
+    const notificationsFetch = async () => {
         try {
-            const activeWorkspaceReal = await xios.get(`/api/workspaces/active/${user?.email}`)
+            const activeWorkspaceReal = await xios.get(
+                `/api/workspaces/active/${user?.email}`
+            );
             // console.log(activeWorkspaceReal);
             const notifications = await xios.get(
                 `/api/notifications/${activeWorkspaceReal.data._id}`
@@ -255,10 +215,9 @@ useEffect(() => {
         } catch (error) {
             console.log(error);
         }
-    }
-    notificationsFetch()
+    };
+    notificationsFetch();
     console.log(notifications);
-
 
     const data = {
         activeWorkspace,
@@ -296,138 +255,12 @@ useEffect(() => {
         handleCreateMeeting,
         handleDeleteMeeting,
 
-
-        notifications
+        notifications,
     };
 
     return (
         <globalContext.Provider value={data}>{children}</globalContext.Provider>
     );
-
-    // fetch the latest active workspace after switching
-    fetchLatestData()
-    console.log("form global", activeWorkspaceTasks)
-  };
-
-  // when user click on the dropdown for workspace list fetch
-  // workspace list from the database
-  const handleDropdownClick = async (e) => {
-    e.preventDefault();
-  };
-
-// Delete workspace
-const handleDeleteWorkspace = async (e, _id,isDelete) => {
-  e.preventDefault();
-
-  // delete workspace from the database
-  if (isDelete) {
-    
-    const response = await xios.delete(
-      `deleteWorkspace/${_id}/${user && user.email}`
-    );
-    if(response?.data?.error){
-      toast.error(response.data.error,{position:"top-right"})
-    } else{
-      toast.success(response.data.message,{position:"top-right"})
-      fetchLatestData()
-     }
-  }
-};
-
-// delete a member from a workspace 
-const handleDeleteMember = async(e,member,isDelete) => {
-
- const response = await xios.delete(`deleteMember/${activeWorkspace?._id}/${user&&user.email}/${member}`)
- if(response?.data?.error){
-  toast.error(response.data.error,{position:"top-right"})
-} else{
-  toast.success(response.data.message,{position:"top-right"})
-  fetchLatestData()
- }
-}
-
-// used in components > common > filter > filterModal.jsx
-const handleTaskClick = async(taskId,workspaceId) => {
-  const response = await xios.post(`/api/set-active-workspace-from-filter`,{userEmail:user?.email,workspaceId})
-  setClickBaseFilterTaskId(taskId)
-  if(response?.data.modifiedCount > 0) {
-    fetchLatestData()
-  }
-}
-
-const handleDeleteAllHistory = async() => {
-  const res =  await xios.delete("/api/delte/search-history")
-  if(res?.data.deletedCount > 0){
-    setUserSearchHistory([])
-  }
-} 
-
-// take the history to put it in the input again 
-const handleHistoryClick = (historSearchQuery) => {
-  setSearchQueryFromHistory(historSearchQuery)
-}
-
-// handle Archiving task
-const handleUnarchive = async() => {
-
-  const info = {
-      taskId:archiveTaskId
-  }
-  const filteredTasks = archivedTasks?.filter(task => task?.taskId !== archiveTaskId)
-  setArchivedTasks(filteredTasks)
-  const response = await xios.post(`/api/tasks/archive`,info)
-  console.log(response.data)
-}
-
-  const data = {
-    activeWorkspace, 
-    setActiveWorkspace,
-
-    userWokspaceList, 
-    activeWorkspaceTasks,
-    activeWorkspaceMembers,
-    fetchLatestData,
-    handleDeleteMember,
-    handleTaskClick,
-    clickBaseFilterTaskId,
-
-    // used in filterModal.jsx
-    setClickBaseFilterTaskId,
-
-    // tab view / archive data
-    setIsActive,
-    isActive, 
-    archivedTasks,
-    fetchArchivedData,
-    handleUnarchive,
-    setArchiveTaskId,
-
-    //user search history
-    userSearchHistory,
-    setIsUserHistoryStored,
-    isUserHistoryStored,
-    handleDeleteAllHistory,
-    handleHistoryClick,
-    setSearchQueryFromHistory,
-    searchQueryFromHistory,
-
-    handleCreateTask,
-    newTask,
-    handleActiveWorkspace,
-    setNewTask,
-    handleDropdownClick,
-   
-    clickedWorkspaceId,
-    setSwitchWorkspace,
-    isWorkspaceSwitched,
-    handleDeleteWorkspace
-  };
-
-
-
-  return (
-    <globalContext.Provider value={data}>{children}</globalContext.Provider>
-  );
 };
 
 export default GlobalContext;
