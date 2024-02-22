@@ -11,7 +11,7 @@ const Message = ({ openModal, setOpenModal }) => {
     }
   return (
     <CommonModal openModal={openModal} setOpenModal={setOpenModal} heading="message">
-{/* <Chat/> */}
+<Chat/>
     </CommonModal>
   );
 };

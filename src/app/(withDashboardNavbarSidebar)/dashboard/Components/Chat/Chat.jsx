@@ -58,7 +58,7 @@ const Chat = () => {
 
   return (
     <div className="flex justify-between">
-      <ChatBar socket={socket} />
+      {/* <ChatBar socket={socket} /> */}
       <div className="flex-1">
         <ChatBody
           messages={messages}

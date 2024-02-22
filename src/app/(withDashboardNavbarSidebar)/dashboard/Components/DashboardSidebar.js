@@ -11,11 +11,15 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { FaMessage, FaUsers } from "react-icons/fa6";
 import phoneIcon from "@/assets/icons/phone.png";
+import { useState } from "react";
+import Message from "./Message/Message";
+import ChatPopUp from "./Chat/ChatPopUp";
 
 const DashboardSidebar = () => {
   // get current route
   const pathname = usePathname();
   const isAdmin = false;
+const [isOpenPopUp, setIsOpenPopUp] = useState(false);
 
   return (
     <div className="sticky top-0">
@@ -253,6 +257,11 @@ const DashboardSidebar = () => {
                         </div>
                       </Link>
                     </li>
+                    {/* <button onClick={()=>setOpenModal(!isOpenPopUp)} className="bg-red-500">
+                      <FaMessage className="w-10 h-10 me-2 text-gray-400" />
+                    </button>
+
+                    <ChatPopUp isOpenPopUp={isOpenPopUp} setIsOpenPopUp={setIsOpenPopUp}/> */}
                   </ul>
                 </div>
               )}
