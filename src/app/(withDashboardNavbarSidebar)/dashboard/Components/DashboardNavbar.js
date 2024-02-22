@@ -37,7 +37,7 @@ const DashboardNavbar = () => {
     const [WillAddMember, setWillAddMember] = useState(false);
     const xios = useAxios();
     const { fetchLatestData } = useContext(globalContext);
-    const [notification, setNotification] = useState(true);
+    //   const [notification, setNotification] = useState(true);
 
     // Notification Modal State
     const [isOpen, setIsOpen] = useState(false);
@@ -50,14 +50,22 @@ const DashboardNavbar = () => {
     // notification Sorting
     const [yourNotifications, setYourNotifications] = useState([]);
     useEffect(() => {
-        notifications?.data.map((notification) =>
-            notification.user === "all"
-                ? setYourNotifications(yourNotifications.push(notification))
-                : notification.user === "user?.email"
-                ? setYourNotifications(yourNotifications.push(notification))
-                : console.log(yourNotifications)
-        );
-    }, []);
+        if (notifications?.data) {
+            const newNotifications = notifications.data.filter(
+                (notification) => {
+                    return (
+                        notification.user === "all" ||
+                        notification.user === user?.email
+                    );
+                }
+            );
+
+            setYourNotifications(newNotifications);
+        }
+    }, [notifications, user]);
+
+    console.log(yourNotifications);
+    console.log(notifications);
 
     const handleLogOut = () => {
         Swal.fire({
@@ -514,6 +522,29 @@ const DashboardNavbar = () => {
                         strokeLinejoin="round"
                     />
                 </svg>
+
+                {/* Number of Notifications */}
+
+                {
+                    <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
+                        {yourNotifications?.length}
+                    </p>
+                }
+
+                {/* Modal Of Notification */}
+                <div
+                    className={`${
+                        !isOpen && "hidden"
+                    } w-96 absolute top-16 right-0 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}
+                >
+                    {yourNotifications?.map((notification) => (
+                        <div>
+                            <p className="text-xl px-4 py-4 bg-white rounded-md">
+                                {notification?.message}
+                            </p>
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="border py-2 px-3 rounded-lg bg-[white]">
                 <Dropdown
