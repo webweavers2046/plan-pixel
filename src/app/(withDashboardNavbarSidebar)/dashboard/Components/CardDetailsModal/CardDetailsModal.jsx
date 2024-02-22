@@ -101,7 +101,26 @@ const CardDetailsModal = () => {
                                 <h4 className="text-2xl mt-2">{card?.dates?.dueDate}</h4>
                             </div>
 
-                            <h4 className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-5">Add checklist</h4>
+                            <button className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-5">Add Labels</button>
+
+                            <div>
+                                <h3>Labels</h3>
+                                <div>
+                                    <div className="flex justify-between">
+                                        <input type="checkbox" />
+                                        <label>Label1</label>
+                                        <button>Edit</button>
+                                    </div>
+                                </div>
+                                <input type="text" name="" id="" />
+                                <div className="grid grid-cols-4 w-full gap-4">
+                                    <div className="h-2 w-4 bg-black"></div>
+                                    <div className="h-2 w-4 bg-black"></div>
+                                    <div className="h-2 w-4 bg-black"></div>
+                                    <div className="h-2 w-4 bg-black"></div>
+                                </div>
+                                <input type="submit" value="Create" />
+                            </div>
 
 
                         </div>
