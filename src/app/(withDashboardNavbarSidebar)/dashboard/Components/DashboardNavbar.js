@@ -20,6 +20,7 @@ import { globalContext } from "@/Providers/globalContext";
 import Search from "./Search/Search";
 
 const DashboardNavbar = () => {
+<<<<<<< HEAD
     const { user, logOut } = useContext(AuthContext);
     const {
         handleActiveWorkspace,
@@ -28,16 +29,26 @@ const DashboardNavbar = () => {
         activeWorkspace,
         notifications
     } = useGlobalContext();
+=======
+  const { user, logOut } = useContext(AuthContext);
+  const {
+    handleActiveWorkspace,
+    handleDropdownClick,
+    userWokspaceList,
+    activeWorkspace
+  } = useGlobalContext();
+>>>>>>> 5416af73b5ad979049107dba6265ea0d49665d8e
 
-    const { data: userData } = useUser(user?.email);
-    console.log(user, userData);
-    const router = useRouter();
-    const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const [WillAddMember, setWillAddMember] = useState(false);
-    const xios = useAxios();
-    const { fetchLatestData } = useContext(globalContext);
+
+  const { data: userData } = useUser(user?.email);
+  const router = useRouter();
+  const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [WillAddMember, setWillAddMember] = useState(false);
+  const xios = useAxios();
+  const {fetchLatestData} = useContext(globalContext)
+  const [notification, setNotification] = useState(true);
 
 
 
