@@ -122,6 +122,8 @@ const AdminDashboardNavbar = () => {
                                             src={image}
                                             alt="member"
                                             width={32}
+                                            git
+                                            pull
                                             height={32}
                                             className="w-8 h-8 rounded-full mr-2"
                                         />

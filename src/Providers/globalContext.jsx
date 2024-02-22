@@ -64,14 +64,18 @@ const fetchLatestData = async () => {
         }
     };
 
-// this funciton fetch the latest user search history
-const fetchUserSearchHistory= async () => {
-  const response = await xios.get(`/api/user/search-history/${user&&user.email}`)
-  if(isMounted){
-    setUserSearchHistory(response.data)
-    console.log("this is the response we found after the get fetch request")
-  }
-}
+    // this funciton fetch the latest user search history
+    const fetchUserSearchHistory = async () => {
+        const response = await xios.get(
+            `/api/user/search-history/${user && user.email}`
+        );
+        if (isMounted) {
+            setUserSearchHistory(response.data);
+            // console.log(
+            //     "this is the response we found after the get fetch request"
+            // );
+        }
+    };
 
 
 // get all the arvhived data
@@ -138,10 +142,166 @@ useEffect(() => {
         }
     };
 
-  // Workspace data hanler
-  const handleActiveWorkspace = async (e, _id) => {
-    setClickedWorkspaceId(_id)
-    await xios.get(`/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${user?.email}`
+    // Workspace data hanler
+    const handleActiveWorkspace = async (e, _id) => {
+        setClickedWorkspaceId(_id);
+        console.log(user?.email);
+        await xios.get(
+            `/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${
+                user?.email
+            }`
+        );
+
+        // fetch the latest active workspace after switching
+        fetchLatestData();
+        // console.log("form global", activeWorkspaceTasks);
+    };
+
+    // when user click on the dropdown for workspace list fetch
+    // workspace list from the database
+    const handleDropdownClick = async (e) => {
+        e.preventDefault();
+    };
+
+    // Delete workspace
+    const handleDeleteWorkspace = async (e, _id, isDelete) => {
+        e.preventDefault();
+
+        // delete workspace from the database
+        if (isDelete) {
+            const response = await xios.delete(
+                `deleteWorkspace/${_id}/${user && user.email}`
+            );
+            if (response?.data?.error) {
+                toast.error(response.data.error, { position: "top-right" });
+            } else {
+                toast.success(response.data.message, { position: "top-right" });
+                fetchLatestData();
+            }
+        }
+    };
+
+    // delete a member from a workspace
+    const handleDeleteMember = async (e, member, isDelete) => {
+        const response = await xios.delete(
+            `deleteMember/${activeWorkspace?._id}/${
+                user && user.email
+            }/${member}`
+        );
+        if (response?.data?.error) {
+            toast.error(response.data.error, { position: "top-right" });
+        } else {
+            toast.success(response.data.message, { position: "top-right" });
+            fetchLatestData();
+        }
+    };
+
+    // used in components > common > filter > filterModal.jsx
+    const handleTaskClick = async (taskId, workspaceId) => {
+        const response = await xios.post(
+            `/api/set-active-workspace-from-filter`,
+            { userEmail: user?.email, workspaceId }
+        );
+        setClickBaseFilterTaskId(taskId);
+        if (response?.data.modifiedCount > 0) {
+            fetchLatestData();
+        }
+    };
+
+    const handleDeleteAllHistory = async () => {
+        const res = await xios.delete("/api/delte/search-history");
+        if (res?.data.deletedCount > 0) {
+            setUserSearchHistory([]);
+        }
+    };
+
+    // take the history to put it in the input again
+    const handleHistoryClick = (historSearchQuery) => {
+        setSearchQueryFromHistory(historSearchQuery);
+    };
+
+    // Meeting page
+    const handleCreateMeeting = async(meeting) =>{
+        console.log(meeting);
+        const response = await xios.post("/api/meetings", meeting)
+        if(response.data.insertedId){
+            toast.success("Meeting created", { position: "top-center" });
+        }
+    }
+
+    const handleDeleteMeeting = async(id) =>{
+        const response = await xios.delete(`/api/meetings/${id}`)
+        
+        if(response.data.deletedCount>0){
+            toast.success("Meeting deleted", { position: "top-center" });
+        }
+    }
+
+
+
+    // Notification Informations
+
+    const [notifications, setNotifications] = useState()
+
+
+    const notificationsFetch = async() => {
+        try {
+            const activeWorkspaceReal = await xios.get(`/api/workspaces/active/${user?.email}`)
+            // console.log(activeWorkspaceReal);
+            const notifications = await xios.get(
+                `/api/notifications/${activeWorkspaceReal.data._id}`
+            );
+            setNotifications(notifications);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    notificationsFetch()
+    console.log(notifications);
+
+
+    const data = {
+        activeWorkspace,
+        setActiveWorkspace,
+        userWokspaceList,
+        activeWorkspaceTasks,
+        activeWorkspaceMembers,
+        fetchLatestData,
+        handleDeleteMember,
+        handleTaskClick,
+        clickBaseFilterTaskId,
+        // used in filterModal.jsx
+        setClickBaseFilterTaskId,
+
+        //user search history
+        userSearchHistory,
+        setIsUserHistoryStored,
+        isUserHistoryStored,
+        handleDeleteAllHistory,
+        handleHistoryClick,
+        setSearchQueryFromHistory,
+        searchQueryFromHistory,
+
+        handleCreateTask,
+        newTask,
+        handleActiveWorkspace,
+        setNewTask,
+        handleDropdownClick,
+
+        clickedWorkspaceId,
+        setSwitchWorkspace,
+        isWorkspaceSwitched,
+        handleDeleteWorkspace,
+
+        handleCreateMeeting,
+        handleDeleteMeeting,
+
+
+        notifications
+    };
+
+    return (
+        <globalContext.Provider value={data}>{children}</globalContext.Provider>
     );
 
     // fetch the latest active workspace after switching
