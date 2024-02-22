@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-const Reason = () => {
+const Reason = ({setReason}) => {
   const [selectedReason, setSelectedReason] = useState('');
 
   const handleReasonClick = (reason) => {
     if (!selectedReason) {
       setSelectedReason(reason);
-      // Here you can send the selected reason to the database or perform any other actions
-      console.log(reason);
+      setReason(reason)
+      console.log('from the reason file',reason)
     }
   };
 

@@ -2,7 +2,7 @@ import Reason from '@/app/(withDashboardNavbarSidebar)/dashboard/Components/Arch
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-export default function AreYouSureModal({type,title,id,isOpen,setIsOpen,handler}) {
+export default function AreYouSureModal({setReason,type,title,id,isOpen,setIsOpen,handler}) {
 
 
   const onClose = () => {
@@ -54,7 +54,7 @@ export default function AreYouSureModal({type,title,id,isOpen,setIsOpen,handler}
 
                   {
                     type === "archive" &&
-                  <Reason/>
+                  <Reason setReason={setReason}/>
                   }
 
 

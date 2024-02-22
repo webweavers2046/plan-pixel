@@ -6,7 +6,7 @@ import { FcHighPriority } from "react-icons/fc";
 import { FcLowPriority } from "react-icons/fc";
 import { FcMediumPriority } from "react-icons/fc";
 import { MdOutlineUnarchive } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { globalContext } from "@/Providers/globalContext";
 import AreYouSureModal from "@/components/Common/CommonModal/AreYouSureModal";
 import Toggler from "@/components/Common/CommonModal/Toggler";
@@ -26,20 +26,9 @@ import useAxios from "@/hooks/useAxios";
 
 
 const ArchivedTasks = () => {
-    const xios = useAxios()
-    const {archivedTasks} = useContext(globalContext)
+    const {archivedTasks,handleUnarchive,setArchiveTaskId} = useContext(globalContext)
     const [isOpen,setIsOpen] = useState(false)
     const [enabled, setEnabled] = useState(false)
-    const [taskId, setTaskId] = useState("")
-    const handleUnarchive = async() => {
-        const info = {
-            taskId:taskId
-        }
-        const response = await xios.post(`/api/tasks/archive`,info)
-        console.log(response.data)
-    }
-
-
 
   return (
     <div className=" relative bg-gradient-to-br from-[white] to-[#fbfbff]  h-screen w-full">
@@ -90,7 +79,7 @@ const ArchivedTasks = () => {
               <Avater />
               
               <button onClick={()=> {
-                  setTaskId(task?._id)
+                  setArchiveTaskId(task?.taskId)
                   setIsOpen(true)
 
               }
@@ -98,12 +87,11 @@ const ArchivedTasks = () => {
               <MdOutlineUnarchive className="text-gray-400"/></button>
               </div>
               <AreYouSureModal
-            id={task?._id}
+            id={task?.taskId}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             handler={handleUnarchive}
             title={"Are you sure to unarchive?"}
-              
               />
               </div>
             </div>

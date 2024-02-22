@@ -13,11 +13,12 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { globalContext } from "@/Providers/globalContext";
 import { AuthContext } from "@/Providers/AuthProviders";
 import AreYouSureModal from "@/components/Common/CommonModal/AreYouSureModal";
 import Dropdown from "@/components/Common/CommonModal/Dropdown";
+import toast from "react-hot-toast";
 
 const Task = ({ setUpdateId,
     task,
@@ -28,10 +29,15 @@ const Task = ({ setUpdateId,
 
     // manage all you state here
     const { draggingStarted, draggingOver, isDropped } = useDNDcontext();
+    const {user} = useContext(AuthContext)
     const xios = useAxios()
+    const {activeWorkspace,fetchLatestData,fetchArchivedData} = useContext(globalContext)
     const { clickBaseFilterTaskId } = useContext(globalContext)
     const [isOpen, setIsOpen] = useState(false)
-
+    const [selectedTask, setSelectedTask] = useState({})
+    const [reason, setReason] = useState("")
+    const [isArchived,setIsArchived] = useState(false)
+    
 
 
 
@@ -78,16 +84,26 @@ const Task = ({ setUpdateId,
   const handleArchive = async(_id) => {
     const info = {
         taskId: _id,
-        taskName: "Task 4",
-        workspaceName: "Demo workspace",
-        archivedTimestamp: "2024-02-21T17:10:00",
-        archivedReason: "Client satisfaction",
-        archivist: "Shakil Ahmmed",
-        priority: "high",
+        taskName: selectedTask?.title,
+        workspaceName: activeWorkspace?.title,
+        archivedTimestamp: new Date(),
+        archivedReason: reason,
+        archivist: user && user?.displayName,
+        priority: task?.priority,
       }
       const response = await xios.post(`/api/tasks/archive?isArchive=${true}`,info)
-      console.log(response.data)
+      if(response.data){
+          toast.success("archived")
+          setIsArchived(true)
+      }
     }
+
+    useEffect(()=> {
+        fetchLatestData()
+        fetchArchivedData()
+    },[isArchived])
+
+
 
     return (
         <div
@@ -107,6 +123,8 @@ const Task = ({ setUpdateId,
        handleDeleteTask={handleDeleteTask}
        handleUpdate={handleUpdate}
        setIsOpen={setIsOpen}
+       setSelectedTask={setSelectedTask}
+       task={task}
        ></Dropdown>
             
             {" "}
@@ -118,7 +136,7 @@ const Task = ({ setUpdateId,
                 <p className="pt-3 flex items-center gap-2">
                     <FaStopwatch className="text-green-500" />{" "}
                     <span className="text-xs pt-0.5 ">
-                        20 Jan 24 - 25 Apr 24
+                        {task?.dates?.startDate} - {task?.dates?.dueDate}
                     </span>
                 </p>
                 <p className=" flex items-center absolute top-8 right-10 gap-2">
@@ -170,7 +188,7 @@ const Task = ({ setUpdateId,
                 {/* Are you sure modal ( do you wanna archive this task?) */}
                 <AreYouSureModal 
                 
-                
+                setReason={setReason}
                 handler={handleArchive}
                  id={task?._id}
                   isOpen={isOpen}

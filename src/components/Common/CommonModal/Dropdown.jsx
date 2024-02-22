@@ -3,7 +3,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 
-export default function Dropdown({handleUpdate,setIsOpen,handleDeleteTask,id}) {
+export default function Dropdown({setSelectedTask,task,handleUpdate,setIsOpen,handleDeleteTask,id}) {
 
   return (
     <div className="fixed z-50 w-56 text-right">
@@ -74,7 +74,10 @@ export default function Dropdown({handleUpdate,setIsOpen,handleDeleteTask,id}) {
               <Menu.Item>
                 {({ active }) => (
                   <button
-                  onClick={()=> setIsOpen(true)}
+                  onClick={()=> {
+                    setIsOpen(true)
+                    setSelectedTask(task)
+                  }}
                     className={`${
                       active ? 'bg-[#f7f7f7] text-black' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

@@ -31,6 +31,8 @@ const GlobalContext = ({ children }) => {
 
   // Archived tasks state
   const [archivedTasks,setArchivedTasks] =  useState([])
+  const [archiveTaskId, setArchiveTaskId] = useState("")
+
 
   // Tab view 
   const [isActive,setIsActive] = useState("all-tasks")
@@ -82,7 +84,7 @@ const fetchArchivedData = async()=>  {
 useEffect(() => {
   fetchLatestData();
   fetchUserSearchHistory()
-  fetchArchivedData(  )
+  fetchArchivedData()
   return () => {
     isMounted = false;
   };
@@ -205,9 +207,17 @@ const handleHistoryClick = (historSearchQuery) => {
   setSearchQueryFromHistory(historSearchQuery)
 }
 
+// handle Archiving task
+const handleUnarchive = async() => {
 
-console.log("..................", archivedTasks)
-
+  const info = {
+      taskId:archiveTaskId
+  }
+  const filteredTasks = archivedTasks?.filter(task => task?.taskId !== archiveTaskId)
+  setArchivedTasks(filteredTasks)
+  const response = await xios.post(`/api/tasks/archive`,info)
+  console.log(response.data)
+}
 
   const data = {
     activeWorkspace, 
@@ -224,10 +234,13 @@ console.log("..................", archivedTasks)
     // used in filterModal.jsx
     setClickBaseFilterTaskId,
 
-    // tab view 
+    // tab view / archive data
     setIsActive,
     isActive, 
     archivedTasks,
+    fetchArchivedData,
+    handleUnarchive,
+    setArchiveTaskId,
 
     //user search history
     userSearchHistory,
