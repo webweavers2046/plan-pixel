@@ -20,7 +20,9 @@ const AdminOverviewWidget = () => {
             try {
                 const [response01, response02, response03] = await Promise.all([
                     axios.get("http://localhost:5000/api/number-of-users"),
-                    axios.get("http://localhost:5000/api/number-of-users"),
+                    axios.get(
+                        "http://localhost:5000/api/number-of-premium-user"
+                    ),
                     axios.get("http://localhost:5000/api/number-of-workspace"),
                 ]);
 
