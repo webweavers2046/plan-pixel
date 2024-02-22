@@ -29,10 +29,10 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
       platform: data?.platform,
       member: activeWorkspaceMembers,
     };
-    if (handleCreateMeeting(newMeeting)) {
-      
-      refetch();
-    }
+    
+    handleCreateMeeting(newMeeting);
+    refetch();
+
     // setOpenModal(false);
 
     // reset();
