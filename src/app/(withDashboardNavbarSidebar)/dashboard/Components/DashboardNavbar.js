@@ -55,7 +55,7 @@ const DashboardNavbar = () => {
     // notification Sorting
     const [yourNotifications, setYourNotifications] = useState([])
     useEffect(()=> {
-        notifications.data.map((notification) => (
+        notifications?.data.map((notification) => (
             notification.user === "all" ? setYourNotifications(yourNotifications.push(notification)) : notification.user === "user?.email" ? setYourNotifications(yourNotifications.push(notification)) : console.log(yourNotifications)
         ))
     }, [])
