@@ -276,7 +276,7 @@ const DashboardNavbar = () => {
 
                 {
                   <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
-                    {yourNotifications?.data.length}
+                    {yourNotifications?.data?.length}
                   </p>
                 }
 
@@ -286,7 +286,7 @@ const DashboardNavbar = () => {
                 {/* Modal Of Notification */}
                 <div className={`${!isOpen && "hidden"} w-96 absolute top-16 right-0 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}>
                   {
-                    yourNotifications?.data.map((notification)=> (
+                    yourNotifications?.data?.map((notification)=> (
                         <div>
                         <p className="text-xl px-4 py-4 bg-white rounded-md">
                         {notification?.message}
