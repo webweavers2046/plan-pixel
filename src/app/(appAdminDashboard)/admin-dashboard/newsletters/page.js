@@ -1,31 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import User from "./User";
-import axios from "axios";
 import Spinner from "@/components/Common/CommonModal/Spinner";
+import useDynamicData from "../Components/Hooks/useDynamicData";
 
 const page = () => {
-    const [loading, setLoading] = useState(false);
-    const [newsletterSubscribers, setNewsletterSubscribers] = useState([]);
+    const {
+        data: newsletterSubscribers,
+        isLoading,
+        refetch,
+    } = useDynamicData("newsletters", "/api/newsletters");
 
-    useEffect(() => {
-        setLoading(true);
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    "http://localhost:5000/api/newsletters"
-                );
-                setNewsletterSubscribers(response.data);
-            } catch (error) {
-                console.log("error to get newsletters", error);
-            }
-            setLoading(false);
-        };
-        fetchData();
-    }, []);
-
-    if (loading) {
+    if (isLoading) {
         return <Spinner />;
     }
 
@@ -34,7 +20,7 @@ const page = () => {
             <h1 className="text-lg font-semibold">Newsletter Subscribers</h1>
             <div className="pt-6">
                 {newsletterSubscribers.map((member) => (
-                    <User member={member} />
+                    <User member={member} refetch={refetch} />
                 ))}
             </div>
         </div>

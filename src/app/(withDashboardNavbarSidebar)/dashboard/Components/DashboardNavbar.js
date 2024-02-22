@@ -3,7 +3,7 @@
 import { AuthContext } from "@/Providers/AuthProviders";
 import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
@@ -20,13 +20,14 @@ import { globalContext } from "@/Providers/globalContext";
 import Search from "./Search/Search";
 
 const DashboardNavbar = () => {
-  const { user, logOut } = useContext(AuthContext);
-  const {
-    handleActiveWorkspace,
-    handleDropdownClick,
-    userWokspaceList,
-    activeWorkspace
-  } = useGlobalContext();
+    const { user, logOut } = useContext(AuthContext);
+    const {
+        handleActiveWorkspace,
+        handleDropdownClick,
+        userWokspaceList,
+        activeWorkspace,
+        notifications
+    } = useGlobalContext();
 
 
   const { data: userData } = useUser(user?.email);
@@ -38,6 +39,29 @@ const DashboardNavbar = () => {
   const xios = useAxios();
   const {fetchLatestData} = useContext(globalContext)
   const [notification, setNotification] = useState(true);
+
+
+
+    // Notification Modal State
+    const [isOpen, setIsOpen] = useState(false);
+
+
+
+    // Notification Modal Function
+    const handleNotificationClick = () => {
+      setIsOpen(!isOpen)
+    }
+
+    // notification Sorting
+    const [yourNotifications, setYourNotifications] = useState([])
+    useEffect(()=> {
+        notifications.data.map((notification) => (
+            notification.user === "all" ? setYourNotifications(yourNotifications.push(notification)) : notification.user === "user?.email" ? setYourNotifications(yourNotifications.push(notification)) : console.log(yourNotifications)
+        ))
+    }, [])
+
+
+    
 
     const handleLogOut = () => {
         Swal.fire({
@@ -101,6 +125,7 @@ const DashboardNavbar = () => {
 
         toast.error(isAddedMember.data.error);
     };
+    console.log(activeWorkspace);
 
     const handleClose = () => {
         // Close the modal
@@ -215,8 +240,13 @@ const DashboardNavbar = () => {
                 {/* search component */}
                 <Search></Search>
             </div>
-            <div>
-                <svg
+
+
+
+
+            {/* Notification */}
+            <div className="relative">
+                <svg onClick={handleNotificationClick} 
                     xmlns="http://www.w3.org/2000/svg"
                     width="52"
                     height="52"
@@ -238,6 +268,33 @@ const DashboardNavbar = () => {
                         strokeLinejoin="round"
                     />
                 </svg>
+
+
+
+                {/* Number of Notifications */}
+
+
+                {
+                  <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
+                    {yourNotifications?.data.length}
+                  </p>
+                }
+
+
+
+
+                {/* Modal Of Notification */}
+                <div className={`${!isOpen && "hidden"} w-96 absolute top-16 right-0 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}>
+                  {
+                    yourNotifications?.data.map((notification)=> (
+                        <div>
+                        <p className="text-xl px-4 py-4 bg-white rounded-md">
+                        {notification?.message}
+                        </p>
+                        </div>
+                    ))
+                  }
+                </div>
             </div>
             <div className="border py-2 px-3 rounded-lg bg-[white]">
                 <Dropdown

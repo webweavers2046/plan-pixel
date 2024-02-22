@@ -62,9 +62,9 @@ const GlobalContext = ({ children }) => {
         );
         if (isMounted) {
             setUserSearchHistory(response.data);
-            console.log(
-                "this is the response we found after the get fetch request"
-            );
+            // console.log(
+            //     "this is the response we found after the get fetch request"
+            // );
         }
     };
 
@@ -115,7 +115,7 @@ const GlobalContext = ({ children }) => {
 
         // fetch the latest active workspace after switching
         fetchLatestData();
-        console.log("form global", activeWorkspaceTasks);
+        // console.log("form global", activeWorkspaceTasks);
     };
 
     // when user click on the dropdown for workspace list fetch
@@ -181,6 +181,46 @@ const GlobalContext = ({ children }) => {
         setSearchQueryFromHistory(historSearchQuery);
     };
 
+    // Meeting page
+    const handleCreateMeeting = async(meeting) =>{
+        console.log(meeting);
+        const response = await xios.post("/api/meetings", meeting)
+        if(response.data.insertedId){
+            toast.success("Meeting created", { position: "top-center" });
+        }
+    }
+
+    const handleDeleteMeeting = async(id) =>{
+        const response = await xios.delete(`/api/meetings/${id}`)
+        
+        if(response.data.deletedCount>0){
+            toast.success("Meeting deleted", { position: "top-center" });
+        }
+    }
+
+
+
+    // Notification Informations
+
+    const [notifications, setNotifications] = useState()
+
+
+    const notificationsFetch = async() => {
+        try {
+            const activeWorkspaceReal = await xios.get(`/api/workspaces/active/${user?.email}`)
+            // console.log(activeWorkspaceReal);
+            const notifications = await xios.get(
+                `/api/notifications/${activeWorkspaceReal.data._id}`
+            );
+            setNotifications(notifications);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    notificationsFetch()
+    console.log(notifications);
+
+
     const data = {
         activeWorkspace,
         setActiveWorkspace,
@@ -213,6 +253,12 @@ const GlobalContext = ({ children }) => {
         setSwitchWorkspace,
         isWorkspaceSwitched,
         handleDeleteWorkspace,
+
+        handleCreateMeeting,
+        handleDeleteMeeting,
+
+
+        notifications
     };
 
     return (

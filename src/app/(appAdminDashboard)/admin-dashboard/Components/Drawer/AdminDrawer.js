@@ -10,6 +10,7 @@ import { FaUsers } from "react-icons/fa6";
 import { TbHelpSquareRoundedFilled } from "react-icons/tb";
 import { BsEnvelopeAtFill } from "react-icons/bs";
 import { MdOutlineAdd } from "react-icons/md";
+import { BiSolidMessageSquareAdd } from "react-icons/bi";
 
 const AdminDrawer = () => {
     const pathname = usePathname();
@@ -152,7 +153,7 @@ const AdminDrawer = () => {
                                 href="/admin-dashboard/add-article"
                             >
                                 <div className="flex items-center">
-                                    <MdOutlineAdd className="text-3xl me-3 ms-1" />
+                                    <BiSolidMessageSquareAdd className="text-3xl me-3" />
                                     <p>Add Article</p>
                                 </div>
                             </Link>
