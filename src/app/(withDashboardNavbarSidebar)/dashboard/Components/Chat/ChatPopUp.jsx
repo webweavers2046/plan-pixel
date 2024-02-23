@@ -10,6 +10,10 @@ import { useRouter } from "next/navigation";
 import useAxios from "@/hooks/useAxios";
 import useTranstackData from "@/hooks/useTanstack/useTranstackData";
 const socket = socketIO.connect("http://localhost:5000");
+import './chat.css'
+
+
+
 
 const ChatPopUp = ({ isOpenPopUp, setIsOpenPopUp }) => {
   const router = useRouter();
@@ -55,38 +59,55 @@ const ChatPopUp = ({ isOpenPopUp, setIsOpenPopUp }) => {
     // 👇️ scroll to bottom every time messages change
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+
+
   return (
-    <div className="h-[70vh] bg-green-200 absolute  right-0 top-20 w-[500px] flex flex-col">
+    <div
+      className={`h-[90vh] rounded-xl z-50 shadow-2xl bg-green-100 absolute top-20 ${
+        isOpenPopUp ? " ml-5 right-1 " : "-right-full"
+      }   w-[400px] flex flex-col`}
+    >
       <div className=" flex-1 overflow-y-scroll">
         {messages?.map((message) => (
           <div className="px-4 py-2">
-            <div className="flex items-center mb-2">
-              <img
-                className="w-8 h-8 rounded-full mr-2"
-                src="https://picsum.photos/50/50"
-                alt="User Avatar"
-              />
-              <div className="font-medium">John Doe</div>
-            </div>
-            <div className="bg-white rounded-lg p-2 shadow mb-2 max-w-sm">
-              {/* Hi, how can I help you? */}
-              {message?.name !== user?.email && message?.text}
-            </div>
-            <div className="flex items-center justify-end">
-              <div className="bg-blue-500 text-white rounded-lg p-2 shadow mr-2 max-w-sm">
-                {/* Sure, I can help with that. */}
-                {message?.name === user?.email && message?.text}
+            {message?.name !== user?.email && (
+              <>
+                <p className="font-medium italic text-xs mb-1">{message.name}</p>
+                <div className="flex items-center mb-2">
+                  <img
+                    className="w-8 h-8 rounded-full mr-2"
+                    src="https://picsum.photos/50/50"
+                    alt="User Avatar"
+                  />
+                  <div className="bg-red-200 rounded-lg p-2 shadow mb-2  px-4 py-2 max-w-[80%]">
+                    {/* Hi, how can I help you? */}
+
+                    {message?.name !== user?.email && message?.text}
+                  </div>
+                </div>
+              </>
+            )}
+
+            <>
+              <p className="font-medium italic text-xs mb-1  text-right">
+                You
+              </p>
+              <div className="flex items-center justify-end">
+                <div className="bg-[#50B577] text-white rounded-lg p-2 shadow mr-2  px-4 py-2 max-w-[80%]">
+                  {message?.name === user?.email && message?.text}
+                </div>
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src="https://picsum.photos/50/50"
+                  alt="User Avatar"
+                />
               </div>
-              <img
-                className="w-8 h-8 rounded-full"
-                src="https://picsum.photos/50/50"
-                alt="User Avatar"
-              />
-            </div>
+            </>
           </div>
         ))}
       </div>
-      <ChatPopFooter/>
+      <ChatPopFooter />
     </div>
   );
 };
@@ -137,9 +158,8 @@ const ChatPopFooter = () => {
     }
   }
 
-
   return (
-    <div className="bg-green-100 px-4 py-2">
+    <div className=" px-4 py-4">
       <form onSubmit={handleSendMessage} className="flex items-center">
         <input
           className="w-full border rounded-full py-2 px-4 mr-2"
@@ -152,7 +172,7 @@ const ChatPopFooter = () => {
         />
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full"
+          className="bg-gradient-to-br from-[#93C648] to-[#50B577] hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full"
         >
           Send
         </button>

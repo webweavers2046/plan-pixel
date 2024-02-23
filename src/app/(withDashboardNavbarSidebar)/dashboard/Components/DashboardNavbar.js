@@ -209,7 +209,7 @@ const DashboardNavbar = () => {
         {/* search component */}
         <Search></Search>
       </div>
-      <button onClick={() => setOpenModal(!isOpenPopUp)} className="">
+      <button onClick={()=>setIsOpenPopUp(!isOpenPopUp)} className="">
         <FaMessage className="w-10 h-10 me-2 text-green-400" />
       </button>
       {/* <Message openModal={openModal} setOpenModal={setOpenModal}/> */}
