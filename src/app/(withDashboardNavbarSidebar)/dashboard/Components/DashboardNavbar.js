@@ -188,7 +188,7 @@ const DashboardNavbar = () => {
           <li>
             <div className="w-full text-center flex justify-center  shadow-s mt-auto px-2  hover:bg-transparen rounded-lg">
 
-              <div className="bg-gray-300 p-2 mt-3 w-11 h-11 rounded-full flex items-center justify-center">
+              <div className="bg-gray-100 p-2 mt-3 w-11 h-11 rounded-full flex items-center justify-center">
               <p
                 onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
                 className=" w-full h-full rounded-full items-center text-white text-center  cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm   "
