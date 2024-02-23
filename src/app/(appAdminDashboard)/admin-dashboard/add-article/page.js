@@ -80,9 +80,9 @@ const page = () => {
     return (
         <section>
             <h1 className="text-lg font-semibold">Add Article</h1>
-            <div className="border-2 rounded-md p-8 mt-6">
-                <div className="grid grid-cols-10 gap-10">
-                    <div className="col-span-3">
+            <div className="md:border-2 rounded-md md:p-8 mt-6">
+                <div className="grid md:grid-cols-10 gap-10">
+                    <div className="xl:col-span-3 md:col-span-4">
                         <div className="border-2 border-dashed rounded-md w-full h-80 flex items-center justify-center text-center bg-dashboardPrimaryColor/60 relative">
                             {uploadFile ? (
                                 <img
@@ -121,7 +121,7 @@ const page = () => {
                             />
                         </div>
                     </div>
-                    <div className="col-span-7">
+                    <div className="xl:col-span-7 md:col-span-6">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             {/* task name */}
                             <div className="">

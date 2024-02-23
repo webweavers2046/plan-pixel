@@ -185,32 +185,31 @@ const GlobalContext = ({ children }) => {
     };
 
     // Meeting page
-    const handleCreateMeeting = async(meeting) =>{
+    const handleCreateMeeting = async (meeting) => {
         console.log(meeting);
-        const response = await xios.post("/api/meetings", meeting)
-        if(response.data.insertedId){
+        const response = await xios.post("/api/meetings", meeting);
+        if (response.data.insertedId) {
             toast.success("Meeting created", { position: "top-center" });
         }
-    }
+    };
 
-    const handleDeleteMeeting = async(id) =>{
-        const response = await xios.delete(`/api/meetings/${id}`)
-        
-        if(response.data.deletedCount>0){
+    const handleDeleteMeeting = async (id) => {
+        const response = await xios.delete(`/api/meetings/${id}`);
+
+        if (response.data.deletedCount > 0) {
             toast.success("Meeting deleted", { position: "top-center" });
         }
-    }
-
-
+    };
 
     // Notification Informations
 
-    const [notifications, setNotifications] = useState()
+    const [notifications, setNotifications] = useState();
 
-
-    const notificationsFetch = async() => {
+    const notificationsFetch = async () => {
         try {
-            const activeWorkspaceReal = await xios.get(`/api/workspaces/active/${user?.email}`)
+            const activeWorkspaceReal = await xios.get(
+                `/api/workspaces/active/${user?.email}`
+            );
             // console.log(activeWorkspaceReal);
             const notifications = await xios.get(
                 `/api/notifications/${activeWorkspaceReal.data?._id}`
@@ -219,10 +218,9 @@ const GlobalContext = ({ children }) => {
         } catch (error) {
             console.log(error);
         }
-    }
-    notificationsFetch()
+    };
+    notificationsFetch();
     console.log(notifications);
-
 
     const data = {
         activeWorkspace,
@@ -260,8 +258,7 @@ const GlobalContext = ({ children }) => {
         handleCreateMeeting,
         handleDeleteMeeting,
 
-
-        notifications
+        notifications,
     };
 
     return (

@@ -24,14 +24,14 @@ export default function RootLayout({ children }) {
       <body className={`${lato.className}`}>
         <TanstackProvider>
           <AuthProviders>
-            <GlobalContext>
-              <AblyProvider>
+            <AblyProvider>
+              <GlobalContext>
                 <TaskDndProvider>
                   {children}
                   <Toaster />
                 </TaskDndProvider>
-              </AblyProvider>
-            </GlobalContext>
+              </GlobalContext>
+            </AblyProvider>
           </AuthProviders>
         </TanstackProvider>
       </body>

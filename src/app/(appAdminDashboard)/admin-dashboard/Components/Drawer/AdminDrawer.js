@@ -9,19 +9,19 @@ import { usePathname } from "next/navigation";
 import { FaUsers } from "react-icons/fa6";
 import { TbHelpSquareRoundedFilled } from "react-icons/tb";
 import { BsEnvelopeAtFill } from "react-icons/bs";
-import { MdOutlineAdd } from "react-icons/md";
 import { BiSolidMessageSquareAdd } from "react-icons/bi";
+import { PiArticleNyTimesBold } from "react-icons/pi";
 
-const AdminDrawer = () => {
+const AdminDrawer = ({ setOpenSidebar }) => {
     const pathname = usePathname();
     return (
-        <div className="w-full">
+        <div className="w-full h-screen">
             <div
                 className={`   h-screen block xl:hidden border-r-2 relative z-30`}
             >
                 <div className="py-4 px-3">
                     <div className="ms-7 mt-1">
-                        <Link href={"/"}>
+                        <Link href={"/"} onClick={() => setOpenSidebar(false)}>
                             <Image
                                 className="w-auto max-h-9 lg:mb-0.5  mb-2.5"
                                 src={logo}
@@ -38,6 +38,7 @@ const AdminDrawer = () => {
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/admin-dashboard"
+                                onClick={() => setOpenSidebar(false)}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +92,7 @@ const AdminDrawer = () => {
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/admin-dashboard/premium-members"
+                                onClick={() => setOpenSidebar(false)}
                             >
                                 <div className="flex items-center">
                                     <FaUsers className="text-3xl me-4" />
@@ -107,6 +109,7 @@ const AdminDrawer = () => {
                                         : "inactive"
                                 } px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/admin-dashboard/profile-setting"
+                                onClick={() => setOpenSidebar(false)}
                             >
                                 <IoSettingsSharp className="w-7 h-7" />
                                 Profile
@@ -121,6 +124,7 @@ const AdminDrawer = () => {
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/admin-dashboard/users-feedback"
+                                onClick={() => setOpenSidebar(false)}
                             >
                                 <div className="flex items-center">
                                     <TbHelpSquareRoundedFilled className="text-4xl me-3" />
@@ -136,6 +140,7 @@ const AdminDrawer = () => {
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/admin-dashboard/newsletters"
+                                onClick={() => setOpenSidebar(false)}
                             >
                                 <div className="flex items-center">
                                     <BsEnvelopeAtFill className="text-3xl me-3 ms-1" />
@@ -151,6 +156,7 @@ const AdminDrawer = () => {
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/admin-dashboard/add-article"
+                                onClick={() => setOpenSidebar(false)}
                             >
                                 <div className="flex items-center">
                                     <BiSolidMessageSquareAdd className="text-3xl me-3" />
@@ -166,6 +172,7 @@ const AdminDrawer = () => {
                                         : "inactive"
                                 }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
                                 href="/admin-dashboard/all-article"
+                                onClick={() => setOpenSidebar(false)}
                             >
                                 <div className="flex items-center">
                                     <PiArticleNyTimesBold className="text-3xl me-3 ms-1" />
