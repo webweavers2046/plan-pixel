@@ -26,6 +26,7 @@ import useAxios from "@/hooks/useAxios";
 import ListBoxDropdown from "@/components/Common/ListBoxDropdown/ListBoxDropdown";
 
 import { RiMenu2Line } from "react-icons/ri";
+import MobileMenu from "../Components/ArchivedTasks/MobileMenu";
 
 
 
@@ -105,15 +106,12 @@ const Tasks = () => {
             </h6>
           </div>
 
+          <RiMenu2Line onClick={()=> setIsArchiveMenu(!isArchiveMenuOpen)} className="felx cursor-pointer md:hidden absolute right-2 z-50 "/>
 
-          <RiMenu2Line onClick={()=> setIsArchiveMenu(!isArchiveMenuOpen)} className="felx cursor-pointer z-50 md:hidden absolute right-2 "/>
-          <div className={` ${isArchiveMenuOpen?"md:flex-row flex flex-col absolute md:static right-0 top-[180px] h-[400px] md:h-11 w-48 md:w-full  bg-[balck] z-50 ":"hidden md:flex-row md:flex"} md:relative  md:flex items-center  bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50`}>
-            <div className={` md:flex-row flex flex-col gap-3 text-[16px]`}>
+          <div className={`md:relative  hidden md:flex items-center  bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50`}>
+            <div className=" flex  gap-3 text-[16px]">
               <div
-                onClick={() =>{
-                   setIsActive("all-tasks")
-                   setIsArchiveMenu(false)
-                  }}
+                onClick={() => setIsActive("all-tasks")}
                 className={`flex items-center gap-1 ${
                   isActive === "all-tasks" ? "bg-white" : ""
                 } p-2 px-3 cursor-pointer rounded-lg transition-all duration-300`}
@@ -122,10 +120,7 @@ const Tasks = () => {
                 All tasks
               </div>
               <div
-                onClick={() => {
-                  setIsActive("archived-tasks")
-                  setIsArchiveMenu(false)
-                }}
+                onClick={() => setIsActive("archived-tasks")}
                 className={`${
                   isActive === "archived-tasks" ? "bg-white" : ""
                 } p-2 px-3 rounded-lg flex items-center gap-1 cursor-pointer transition-all duration-300 `}
@@ -172,6 +167,18 @@ const Tasks = () => {
               </div>
             </div>
           </div>
+
+
+        {/* Mobile Menu */}
+        {
+          <div className={`${isArchiveMenuOpen?"w-72 ":"opacity-0 w-0 invisible"} duration-300 transition-all`}>
+            <MobileMenu setOpenFilter={setOpenFilter} openFilter={openFilter} openModal={openModal} setOpenModal={setOpenModal}/>
+
+          </div>
+
+        }
+
+
 
           <div
             className={` ${
