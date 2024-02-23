@@ -60,7 +60,7 @@ const ArchivedTasks = () => {
   isTogglerEnabled ? "" : localStorage.removeItem("unarchiveTaskIds");
 
   return (
-    <div className=" relative bg-gradient-to-br from-[white] to-[#F9F9F9]  min-h-screen w-full">
+    <div className=" relative bg-gradient-to-br  min-h-screen w-full">
       <div className="flex justify-between items-center">
         <TimeBasedTasks />
       

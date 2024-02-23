@@ -34,6 +34,10 @@ const GlobalContext = ({ children }) => {
   const [archiveTaskId, setArchiveTaskId] = useState("")
   const [isTogglerEnabled,setIsTogglerEnabled] = useState(false)
 
+  //Add member openning a modal
+  const [WillAddMember, setWillAddMember] = useState(false);
+
+
 
   // Tab view 
   const [isActive,setIsActive] = useState("all-tasks")
@@ -265,6 +269,10 @@ const handleMultipleUnArchive = async() => {
     handleDeleteMember,
     handleTaskClick,
     clickBaseFilterTaskId,
+
+    // add member
+    setWillAddMember,
+    WillAddMember,
 
     // used in filterModal.jsx
     setClickBaseFilterTaskId,
