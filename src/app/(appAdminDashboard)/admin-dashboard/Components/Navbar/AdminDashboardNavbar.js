@@ -18,6 +18,7 @@ const AdminDashboardNavbar = () => {
     const [openNavbar, setOpenNavbar] = useState(false);
 
     const userData = useUser(user?.email);
+    console.log(userData);
     const router = useRouter();
 
     const handleLogOut = () => {
@@ -51,7 +52,7 @@ const AdminDashboardNavbar = () => {
             <DateTimeDisplay />
             <div className="grow">
                 <div className="md:flex hidden items-center justify-between gap-4">
-                    <div className="grow">
+                    {/* <div className="grow">
                         <div className="absolute ml-[20px] mt-[17px]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -102,6 +103,9 @@ const AdminDashboardNavbar = () => {
                                 strokeLinejoin="round"
                             />
                         </svg>
+                    </div> */}
+                    <div className="grow">
+                        <div className="h-0.5 w-full bg-dashboardPrimaryColor"></div>
                     </div>
                     <div className="border py-2 px-3 rounded-lg bg-[white]">
                         <Dropdown
@@ -159,6 +163,7 @@ const AdminDashboardNavbar = () => {
                         </Dropdown>
                     </div>
                 </div>
+
                 <div className="block md:hidden">
                     {" "}
                     <div className="flex items-center justify-end">

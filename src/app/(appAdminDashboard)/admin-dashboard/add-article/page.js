@@ -1,13 +1,14 @@
 "use client";
 
 import { AuthContext } from "@/Providers/AuthProviders";
-import Image from "next/image";
+
 import { useContext, useState } from "react"; // Import useState
 import { useForm } from "react-hook-form";
 import { HiOutlineArrowUpTray } from "react-icons/hi2";
 import useDateTime from "../Components/Hooks/useDateTime";
-import axios from "axios";
+
 import toast from "react-hot-toast";
+import useAxios from "@/hooks/useAxios";
 
 const page = () => {
     const image_hosting_key = "7e12ab75560d62e6ad9d88e0d09f9e38";
@@ -18,6 +19,8 @@ const page = () => {
         reset,
         formState: { errors },
     } = useForm();
+
+    const axiosAdmin = useAxios();
 
     const { user } = useContext(AuthContext);
     const [uploadFile, setFile] = useState(null); // Initialize state with null
@@ -56,8 +59,8 @@ const page = () => {
                         articleImage_url: result.data.url,
                         avatar_url: user.photoURL,
                     };
-                    axios
-                        .post("http://localhost:5000/api/articles", newArticle)
+                    axiosAdmin
+                        .post("/api/articles", newArticle)
                         .then((res) => {
                             console.log(res.data);
                             toast.success("Add Successfully", {

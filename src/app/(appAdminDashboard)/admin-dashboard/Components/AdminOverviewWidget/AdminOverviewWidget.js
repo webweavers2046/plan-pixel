@@ -7,6 +7,7 @@ import OverviewWidgetBg03 from "@/assets/pattern/admin-info-pattern03.png";
 import useIncrementingNumber from "../Hooks/useIncrementingNumber";
 import { useEffect, useState } from "react";
 import Spinner from "@/components/Common/CommonModal/Spinner";
+import useAxios from "@/hooks/useAxios";
 
 const AdminOverviewWidget = () => {
     const [loading, setLoading] = useState(false);
@@ -14,16 +15,16 @@ const AdminOverviewWidget = () => {
     const [numberOfPremiumUsers, setNumberOfPremiumUsers] = useState(0);
     const [numberOfWorkspace, setNumberOfWorkspace] = useState(0);
 
+    const axiosAdmin = useAxios();
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
                 const [response01, response02, response03] = await Promise.all([
-                    axios.get("http://localhost:5000/api/number-of-users"),
-                    axios.get(
-                        "http://localhost:5000/api/number-of-premium-user"
-                    ),
-                    axios.get("http://localhost:5000/api/number-of-workspace"),
+                    axiosAdmin.get("/api/number-of-users"),
+                    axiosAdmin.get("/api/number-of-premium-user"),
+                    axiosAdmin.get("/api/number-of-workspace"),
                 ]);
 
                 const numberOfUsersData = response01.data.numberOfData;
