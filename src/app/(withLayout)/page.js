@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <main className="">
       <FacebookProvider appId="1574756050007081">
-        <MessageUs messengerAppId="123456789" pageId="100862432719404" />
+        <MessageUs pageId="100862432719404" />
       </FacebookProvider>
       <Header />
       <OurCompany />
