@@ -94,6 +94,9 @@ const GlobalContext = ({ children }) => {
             `/createTask/${activeWorkspaceId}/${user && user.email}`,
             newTask
         );
+        await xios.put(
+            `/`
+        )
         console.log(activeWorkspaceId);
         if (response?.data?.insertedId) {
             setNewTask(newTask);
@@ -210,7 +213,7 @@ const GlobalContext = ({ children }) => {
             const activeWorkspaceReal = await xios.get(`/api/workspaces/active/${user?.email}`)
             // console.log(activeWorkspaceReal);
             const notifications = await xios.get(
-                `/api/notifications/${activeWorkspaceReal.data._id}`
+                `/api/notifications/${activeWorkspaceReal.data?._id}`
             );
             setNotifications(notifications);
         } catch (error) {
