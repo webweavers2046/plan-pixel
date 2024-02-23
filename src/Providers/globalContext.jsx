@@ -4,8 +4,6 @@ import useAxios from "@/hooks/useAxios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthProviders";
-import Spinner from "@/components/Common/CommonModal/Spinner";
-import { ablyContext } from "@/components/ably/AblyProvider";
 
 export const globalContext = createContext(null);
 const GlobalContext = ({ children }) => {
@@ -38,9 +36,8 @@ const GlobalContext = ({ children }) => {
   const [WillAddMember, setWillAddMember] = useState(false);
 
 
-
   // Tab view 
-  const [isActive,setIsActive] = useState("all-tasks")
+  const [isActive,setIsActive] = useState("archived-tasks")
 
   const [loading, setLoading] = useState(true);
   let isMounted = true;

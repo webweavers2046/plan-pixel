@@ -7,7 +7,6 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 
 const ArchiveGridTasks = ({handleSelectedIdsChanges,setIsOpen,isOpen}) => {
 
-
     const {archivedTasks,
         handleUnarchive,
         setArchiveTaskId,

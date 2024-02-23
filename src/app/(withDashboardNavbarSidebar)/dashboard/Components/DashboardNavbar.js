@@ -261,7 +261,7 @@ const DashboardNavbar = () => {
           />
         </svg>
       </div>
-      <div className="border py-2 px-3 rounded-lg bg-[white]">
+      <div className="border md:flex hidden py-2 px-3 rounded-lg bg-[white]">
         <Dropdown
           className="bg-white rounded-lg"
           inline

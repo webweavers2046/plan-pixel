@@ -27,7 +27,6 @@ const ArchivedTasks = () => {
   const {
     archivedTasks,
     handleUnarchive,
-    setArchiveTaskId,
     isTogglerEnabled,
     setIsTogglerEnabled,
   } = useContext(globalContext);
@@ -69,10 +68,7 @@ const ArchivedTasks = () => {
       <div className="flex justify-center "></div>
       <TittleAndDescripton />
       <GradientBg />
-      <div className="absolute top-2 right-2">
-        <Toggler setEnabled={setIsTogglerEnabled} enabled={isTogglerEnabled} />
-      </div>
-      <div className="flex mt-11">
+      <div className="flex lg:flex-row flex-col mt-11">
         <ArchiveGridTasks
           handleSelectedIdsChanges={handleSelectedIdsChanges}
           archivedTasks={archivedTasks}
@@ -81,7 +77,7 @@ const ArchivedTasks = () => {
           isOpen={isOpen}
         />
 
-        <div className="bg-[#FFFFFF] w-80 min-h-[90vh]">
+        <div className="bg-[#FFFFFF] md:block hidden w-80 min-h-[90vh]">
           <CompletedTasksChart
             completedTasks={completedTasks}
             totalTasks={totalTasks}

@@ -55,7 +55,7 @@ export default function AutoCompleteSearch() {
   }, []); // Empty dependency array ensures this effect runs only once
 
   return (
-    <div style={{zIndex:999}} className={`absolute top-[136px] right-[340px] w-96 bg-white  transition-all duration-500`}>
+    <div style={{zIndex:999}} className={`absolute top-[55px] md:top-[36px] left-1 mt-4 md:mt-2 md:left-[20%] w-[90%]  sm:w-[60%] md:w-96 bg-white  transition-all duration-500`}>
       <Combobox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <div className={` flex items-center px-2 relative cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm`}>

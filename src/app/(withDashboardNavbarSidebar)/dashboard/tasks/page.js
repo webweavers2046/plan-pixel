@@ -3,7 +3,7 @@
 import "@/styles/globals.css";
 import { LuListTodo } from "react-icons/lu";
 import { FiPlusSquare } from "react-icons/fi";
-import { BsCheck2Square, BsFastForwardFill } from "react-icons/bs";
+import { BsCheck2Square} from "react-icons/bs";
 import { FaChartGantt } from "react-icons/fa6";
 import Task from "./Task";
 import { useContext, useState } from "react";
@@ -25,10 +25,16 @@ import Toggler from "@/components/Common/CommonModal/Toggler";
 import useAxios from "@/hooks/useAxios";
 import ListBoxDropdown from "@/components/Common/ListBoxDropdown/ListBoxDropdown";
 
+import { RiMenu2Line } from "react-icons/ri";
+
+
+
+
 const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [isArchiveMenuOpen, setIsArchiveMenu] = useState(false);
 
   const {
     alltasks,
@@ -87,9 +93,6 @@ const Tasks = () => {
   const [openFilter, setOpenFilter] = useState(false);
 
 
-
-
-
   return (
     <>
       {typeof window !== "undefined" && (
@@ -101,10 +104,16 @@ const Tasks = () => {
               {title ? title : "your board"}
             </h6>
           </div>
-          <div className="relative items-center  flex bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50">
-            <div className="flex gap-3 text-[16px]">
+
+
+          <RiMenu2Line onClick={()=> setIsArchiveMenu(!isArchiveMenuOpen)} className="felx cursor-pointer z-50 md:hidden absolute right-2 "/>
+          <div className={` ${isArchiveMenuOpen?"md:flex-row flex flex-col absolute md:static right-0 top-[180px] h-[400px] md:h-11 w-48 md:w-full  bg-[balck] z-50 ":"hidden md:flex-row md:flex"} md:relative  md:flex items-center  bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50`}>
+            <div className={` md:flex-row flex flex-col gap-3 text-[16px]`}>
               <div
-                onClick={() => setIsActive("all-tasks")}
+                onClick={() =>{
+                   setIsActive("all-tasks")
+                   setIsArchiveMenu(false)
+                  }}
                 className={`flex items-center gap-1 ${
                   isActive === "all-tasks" ? "bg-white" : ""
                 } p-2 px-3 cursor-pointer rounded-lg transition-all duration-300`}
@@ -113,7 +122,10 @@ const Tasks = () => {
                 All tasks
               </div>
               <div
-                onClick={() => setIsActive("archived-tasks")}
+                onClick={() => {
+                  setIsActive("archived-tasks")
+                  setIsArchiveMenu(false)
+                }}
                 className={`${
                   isActive === "archived-tasks" ? "bg-white" : ""
                 } p-2 px-3 rounded-lg flex items-center gap-1 cursor-pointer transition-all duration-300 `}
@@ -153,6 +165,11 @@ const Tasks = () => {
               >
                 <FiPlusSquare className="inline mb-1 me-2 text-xl" /> Add Task
               </button>
+
+
+              <div>
+                <Toggler enabled={isTogglerEnabled} setEnabled={setIsTogglerEnabled}/>
+              </div>
             </div>
           </div>
 
@@ -168,10 +185,7 @@ const Tasks = () => {
                 className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2 mt-6 min-h-screen`}
               >
 
-                <div className="absolute -top-5 right-2">
-                <Toggler enabled={isTogglerEnabled} setEnabled={setIsTogglerEnabled}/>
 
-                </div>
                 {/* upcoming task */}
                 <div
                   droppable="true"
