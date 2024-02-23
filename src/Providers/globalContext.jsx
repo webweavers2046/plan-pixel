@@ -94,6 +94,9 @@ const GlobalContext = ({ children }) => {
             `/createTask/${activeWorkspaceId}/${user && user.email}`,
             newTask
         );
+        await xios.put(
+            `/`
+        )
         console.log(activeWorkspaceId);
         if (response?.data?.insertedId) {
             setNewTask(newTask);
