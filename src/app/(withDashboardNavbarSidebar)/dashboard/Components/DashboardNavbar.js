@@ -112,7 +112,7 @@ const DashboardNavbar = () => {
   };
 
   return (
-    <div className="flex relative justify-between items-center p-4 gap-6">
+    <div className="flex relative  justify-between items-center p-4 gap-6">
       <div
         onClick={handleDropdownClick}
         className="py-2 px-3 relative rounded-lg"
