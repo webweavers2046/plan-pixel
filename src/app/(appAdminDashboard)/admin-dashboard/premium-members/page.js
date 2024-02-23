@@ -108,7 +108,7 @@ const PremiumMembers = () => {
                 {premiumMembers.map((member) => (
                     <div
                         key={member.id}
-                        className="grid grid-cols-9 items-center justify-between bg-dashboardPrimaryColor/50 mb-3 px-3 py-3 rounded-lg"
+                        className="grid md:grid-cols-9 gap-2 items-center justify-between bg-dashboardPrimaryColor/50 mb-3 px-3 py-3 rounded-lg"
                     >
                         <div className="flex col-span-2 gap-6 items-center">
                             <div className="">
@@ -122,17 +122,17 @@ const PremiumMembers = () => {
                             </div>
                             <div className="">
                                 <p className="text-xs opacity-70">Name: </p>
-                                <h2 className="text-xl font-semibold -mt-0.5">
+                                <h2 className="lg:text-xl text-lg font-semibold -mt-0.5">
                                     {member.name}
                                 </h2>
                             </div>
                         </div>
 
-                        <div className="col-span-2">
+                        <div className="lg:col-span-2 col-span-3">
                             <p className="text-xs opacity-70">Email: </p>
                             <h6 className="font-semibold">{member.email}</h6>
                         </div>
-                        <div className="col-span-2">
+                        <div className="lg:col-span-2 col-span-1">
                             <p className="text-xs opacity-70">Plan Type: </p>
                             <h6 className="font-semibold">{member.planType}</h6>
                         </div>

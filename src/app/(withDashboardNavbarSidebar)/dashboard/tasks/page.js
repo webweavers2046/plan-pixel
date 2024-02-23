@@ -1,4 +1,5 @@
 "use client";
+// drag drop file
 import "@/styles/globals.css";
 import { LuListTodo } from "react-icons/lu";
 import { FiPlusSquare } from "react-icons/fi";
@@ -16,6 +17,10 @@ import CardDetailsModal from "../Components/CardDetailsModal/CardDetailsModal";
 import { globalContext } from "@/Providers/globalContext";
 import { IoFilterOutline } from "react-icons/io5";
 import FilterModal from "@/components/Common/Filter/FilterModal";
+import { FaRegFileArchive } from "react-icons/fa";
+import { HiOutlineArchiveBox } from "react-icons/hi2";
+import { GoTasklist } from "react-icons/go";
+import ArchivedTasks from "../Components/ArchivedTasks/ArchivedTasks";
 
 const Tasks = () => {
   // manage all your state here..
@@ -33,7 +38,8 @@ const Tasks = () => {
   // const { data: alltasks } = useAllTasks();
 
   const { allWorkspaceTasks } = useContext(ablyContext);
-  const { activeWorkspaceTasks } = useContext(globalContext);
+  const { activeWorkspaceTasks, setIsActive, isActive } =
+    useContext(globalContext);
 
   if (!activeWorkspaceTasks) return;
 
@@ -73,41 +79,62 @@ const Tasks = () => {
   };
   const [openFilter, setOpenFilter] = useState(false);
 
+
   return (
     <>
       {typeof window !== "undefined" && (
         <section>
           {/* header section  */}
-          <div className="relative items-center ml-3 flex  justify-between  border-b pb-2 pt-1   border-white/50">
-            <div className="">
-              <h6 className="font-medium text-[22px] flex gap-1 items-center mb-1">
-                <span className="h-4 w-4 rounded-full bg-gradient-to-br from-[#93C648] to-[#50B577] text-white"></span>
-                {title ? title : "your board"}
-              </h6>
-              {description ? (
-                <p className="md:w-full lg:w-[500px] text-gray-400">
-                  {description}
-                </p>
-              ) : (
-                <p className="opacity-80 mt-1 font-light text-sm">
-                  Create and complete
-                  <br /> and manage your tasks using TaskTo task board.
-                </p>
-              )}
+          <div className="">
+            <h6 className="text-[21px] mb-2  flex gap-1 font-semibold items-center ">
+              <span className="h-3 w-3 font-serif  rounded-full bg-gradient-to-br from-[#93C648] to-[#50B577] text-white"></span>
+              {title ? title : "your board"}
+            </h6>
+          </div>
+          <div className="relative items-center  flex bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50">
+            <div className="flex gap-3 text-[16px]">
+              <div
+                onClick={() => setIsActive("all-tasks")}
+                className={`flex items-center gap-1 ${
+                  isActive === "all-tasks" ? "bg-white" : ""
+                } p-2 px-3 cursor-pointer rounded-lg transition-all duration-300`}
+              >
+                <GoTasklist className="text-[18px]" />
+                All tasks
+              </div>
+              <div
+                onClick={() => setIsActive("archived-tasks")}
+                className={`${
+                  isActive === "archived-tasks" ? "bg-white" : ""
+                } p-2 px-3 rounded-lg flex items-center gap-1 cursor-pointer transition-all duration-300 `}
+              >
+                <HiOutlineArchiveBox/>
+                Archived tasks
+              </div>
             </div>
-            <div className="flex lg:w-52">
+            <div className="flex justify-end gap-2 lg:w-72 items-center">
               <div
                 onClick={() => setOpenFilter(!openFilter)}
-                className={`${openFilter?"bg-gray-100 px-2  rounded-lg ":""} flex items-center gap-2 cursor-pointer`}
+                className={`${
+                  openFilter ? "bg-white" : ""
+                } h-10 px-3 rounded-lg flex items-center gap-2 cursor-pointer`}
               >
                 <IoFilterOutline />
                 <span>Filteer</span>
                 {/* Filtering modal */}
               </div>
-              <div className={`${openFilter?"visible opacity-100":"invisible opacity-0"} transition-all duration-300 `}>
+              <div
+                className={`${
+                  openFilter ? "visible opacity-100" : "invisible opacity-0"
+                } transition-all duration-300`}
+              >
                 {
-                  <FilterModal openFilter={openFilter} setOpenFilter={setOpenFilter} />}
-                  </div> 
+                  <FilterModal
+                    openFilter={openFilter}
+                    setOpenFilter={setOpenFilter}
+                  />
+                }
+              </div>
 
               <button
                 onClick={() => setOpenModal(!openModal)}
@@ -117,163 +144,184 @@ const Tasks = () => {
               </button>
             </div>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2  mt-6 min-h-screen">
-            {/* upcoming task */}
-            <div
-              droppable="true"
-              onDragOver={(e) => draggingOver(e)}
-              onDrop={(e) => dropOn(e)}
-              id="upcoming"
-              className={`min-h-screen ${
-                isDragging ? " relative" : ""
-              } px-2 rounded-lg transition-all duration-1000 ${
-                dragOverElementName === "upcoming" ? "bg-[#E3E4E6]" : ""
-              }`}
-            >
-              <div
-                className={`bg-gray-300/20 text-black px-6 py-4 flex items-center mt-2 gap-4 rounded-md ${
-                  dragOverElementName == "upcoming" ? "bg-[white]" : ""
-                }`}
-              >
-                <LuListTodo className="text-2xl" />{" "}
-                <h2 className="">Upcoming</h2>
-              </div>
 
-              {upcomingTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
-                </div>
-              ))}
-            </div>
-            {/* to do task */}
-            <div
-              droppable="true"
-              onDragOver={(e) => draggingOver(e)}
-              onDrop={(e) => dropOn(e)}
-              id="to-do"
-              className={`min-h-screen px-2 ${
-                dragOverElementName && "realative "
-              } rounded-lg transition-all duration-1000 ${
-                dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""
-              }`}
-            >
+          <div
+            className={` ${
+              isActive === "all-tasks"
+                ? "translate-x-0 opacity-100 visible"
+                : "translate-x-[300px] opacity-0 invisible"
+            } transition-all duration-700 ease-liner`}
+          >
+            {isActive === "all-tasks" && (
               <div
-                className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${
-                  dragOverElementName == "to-do" ? "bg-[white]" : ""
-                }`}
+                className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2 mt-6 min-h-screen`}
               >
-                <LuListTodo className="text-2xl" />{" "}
-                <h2 className="font-semibold">To-do</h2>
-              </div>
+                {/* upcoming task */}
+                <div
+                  droppable="true"
+                  onDragOver={(e) => draggingOver(e)}
+                  onDrop={(e) => dropOn(e)}
+                  id="upcoming"
+                  className={`min-h-screen ${
+                    isDragging ? " relative" : ""
+                  } px-2 rounded-lg transition-all duration-1000 ${
+                    dragOverElementName === "upcoming" ? "bg-[#E3E4E6]" : ""
+                  }`}
+                >
+                  <div
+                    className={`bg-gray-300/20 text-black px-6 py-4 flex items-center mt-2 gap-4 rounded-md ${
+                      dragOverElementName == "upcoming" ? "bg-[white]" : ""
+                    }`}
+                  >
+                    <LuListTodo className="text-2xl" />{" "}
+                    <h2 className="">Upcoming</h2>
+                  </div>
 
-              {toDoTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
+                  {upcomingTasks?.map((task, idx) => (
+                    <div>
+                      <Task
+                        idx={idx}
+                        key={task._id}
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      />
+                      <UpdateTask
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      ></UpdateTask>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {/* ongoing/doing tasks */}
-            <div
-              droppable="true"
-              onDragOver={(e) => draggingOver(e)}
-              onDrop={(e) => dropOn(e)}
-              id="doing"
-              className={`min-h-screen px-2 rounded-lg transition-all duration-1000 ${
-                dragOverElementName === "doing" ? "bg-[#E3E4E6]" : ""
-              }`}
-            >
-              <div
-                className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${
-                  dragOverElementName == "doing" ? "bg-[white]" : ""
-                }`}
-              >
-                <FaChartGantt className="text-2xl" />{" "}
-                <h2 className="font-semibold">Doing</h2>
-              </div>
+                {/* to do task */}
+                <div
+                  droppable="true"
+                  onDragOver={(e) => draggingOver(e)}
+                  onDrop={(e) => dropOn(e)}
+                  id="to-do"
+                  className={`min-h-screen px-2 ${
+                    dragOverElementName && "realative "
+                  } rounded-lg transition-all duration-1000 ${
+                    dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""
+                  }`}
+                >
+                  <div
+                    className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${
+                      dragOverElementName == "to-do" ? "bg-[white]" : ""
+                    }`}
+                  >
+                    <LuListTodo className="text-2xl" />{" "}
+                    <h2 className="font-semibold">To-do</h2>
+                  </div>
 
-              {doingTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
+                  {toDoTasks?.map((task, idx) => (
+                    <div>
+                      <Task
+                        idx={idx}
+                        key={task._id}
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      />
+                      <UpdateTask
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      ></UpdateTask>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {/* done/completed tasks */}
-            <div
-              droppable="true"
-              onDragOver={(e) => draggingOver(e)}
-              onDrop={(e) => dropOn(e)}
-              id="done"
-              className={`px-2 min-h-screen rounded-lg transition-all duration-1000 ${
-                dragOverElementName === "done" ? "bg-[#E3E4E6]" : ""
-              }`}
-            >
-              <div
-                className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${
-                  dragOverElementName == "done" ? "bg-[white]" : ""
-                }`}
-              >
-                <BsCheck2Square className="text-2xl" />{" "}
-                <h2 className="font-semibold">Done</h2>
-              </div>
+                {/* ongoing/doing tasks */}
+                <div
+                  droppable="true"
+                  onDragOver={(e) => draggingOver(e)}
+                  onDrop={(e) => dropOn(e)}
+                  id="doing"
+                  className={`min-h-screen px-2 rounded-lg transition-all duration-1000 ${
+                    dragOverElementName === "doing" ? "bg-[#E3E4E6]" : ""
+                  }`}
+                >
+                  <div
+                    className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${
+                      dragOverElementName == "doing" ? "bg-[white]" : ""
+                    }`}
+                  >
+                    <FaChartGantt className="text-2xl" />{" "}
+                    <h2 className="font-semibold">Doing</h2>
+                  </div>
 
-              {doneTasks?.map((task, idx) => (
-                <div>
-                  <Task
-                    idx={idx}
-                    key={task._id}
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  />
-                  <UpdateTask
-                    task={task}
-                    openUpdateModal={openUpdateModal}
-                    setOpenUpdateModal={setOpenUpdateModal}
-                  ></UpdateTask>
+                  {doingTasks?.map((task, idx) => (
+                    <div>
+                      <Task
+                        idx={idx}
+                        key={task._id}
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      />
+                      <UpdateTask
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      ></UpdateTask>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+                {/* done/completed tasks */}
+                <div
+                  droppable="true"
+                  onDragOver={(e) => draggingOver(e)}
+                  onDrop={(e) => dropOn(e)}
+                  id="done"
+                  className={`px-2 min-h-screen rounded-lg transition-all duration-1000 ${
+                    dragOverElementName === "done" ? "bg-[#E3E4E6]" : ""
+                  }`}
+                >
+                  <div
+                    className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${
+                      dragOverElementName == "done" ? "bg-[white]" : ""
+                    }`}
+                  >
+                    <BsCheck2Square className="text-2xl" />{" "}
+                    <h2 className="font-semibold">Done</h2>
+                  </div>
+
+                  {doneTasks?.map((task, idx) => (
+                    <div>
+                      <Task
+                        idx={idx}
+                        key={task._id}
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      />
+                      <UpdateTask
+                        task={task}
+                        openUpdateModal={openUpdateModal}
+                        setOpenUpdateModal={setOpenUpdateModal}
+                      ></UpdateTask>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <div
+            className={` ${
+              isActive === "archived-tasks"
+                ? "translate-x-0 opacity-100 visible"
+                : "translate-x-[300px] opacity-0 invisible"
+            } transition-all duration-700 ease-liner`}
+          >
+            {isActive === "archived-tasks" && <ArchivedTasks />}
           </div>
           <TaskModal
             openModal={openModal}
             setOpenModal={setOpenModal}
           ></TaskModal>
 
-          <CardDetailsModal
-          ></CardDetailsModal>
+          <CardDetailsModal></CardDetailsModal>
         </section>
       )}
     </>

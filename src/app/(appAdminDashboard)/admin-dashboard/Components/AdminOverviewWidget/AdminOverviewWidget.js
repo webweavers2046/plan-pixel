@@ -20,7 +20,9 @@ const AdminOverviewWidget = () => {
             try {
                 const [response01, response02, response03] = await Promise.all([
                     axios.get("http://localhost:5000/api/number-of-users"),
-                    axios.get("http://localhost:5000/api/number-of-users"),
+                    axios.get(
+                        "http://localhost:5000/api/number-of-premium-user"
+                    ),
                     axios.get("http://localhost:5000/api/number-of-workspace"),
                 ]);
 
@@ -51,9 +53,9 @@ const AdminOverviewWidget = () => {
 
     return (
         <div className="">
-            <div className="grid grid-cols-7 gap-6">
+            <div className="grid grid-cols-7 md:gap-6 gap-3">
                 <div
-                    className="col-span-2 border-2 rounded-md border-primary bg-primary/5 py-6 px-10 "
+                    className="lg:col-span-2 md:col-span-3 col-span-7 border-2 rounded-md border-primary bg-primary/5 py-6 xl:px-10 px-6 "
                     style={{
                         backgroundImage: `url(${OverviewWidgetBg.src})`,
                         backgroundSize: "cover",
@@ -65,11 +67,11 @@ const AdminOverviewWidget = () => {
                 >
                     <div className="flex justify-between items-center">
                         <h5 className="text-lg font-semibold">Total users</h5>
-                        <h2 className="text-7xl">{totalUsers}</h2>
+                        <h2 className="xl:text-7xl text-6xl ">{totalUsers}</h2>
                     </div>
                 </div>
                 <div
-                    className="col-span-2 border-2 rounded-md border-secondary bg-secondary/5 py-6 px-10"
+                    className="lg:col-span-2 md:col-span-4 col-span-7 border-2 rounded-md border-secondary bg-secondary/5 py-6 xl:px-10 px-6"
                     style={{
                         backgroundImage: `url(${OverviewWidgetBg03.src})`,
                         backgroundSize: "cover",
@@ -83,11 +85,13 @@ const AdminOverviewWidget = () => {
                         <h5 className="text-lg font-semibold">
                             Total premium users
                         </h5>
-                        <h2 className="text-7xl">{totalPremiumUsers}</h2>
+                        <h2 className="xl:text-7xl text-6xl ">
+                            {totalPremiumUsers}
+                        </h2>
                     </div>
                 </div>
                 <div
-                    className="col-span-3 border-2 rounded-md border-tertiary bg-tertiary/5  py-6 px-10"
+                    className="lg:col-span-3 col-span-7 border-2 rounded-md border-tertiary bg-tertiary/5  py-6 px-10"
                     style={{
                         backgroundImage: `url(${OverviewWidgetBg02.src})`,
                         backgroundSize: "cover",
@@ -101,7 +105,9 @@ const AdminOverviewWidget = () => {
                         <h5 className="text-lg font-semibold">
                             Total created workspace
                         </h5>
-                        <h2 className="text-7xl">{totalWorkspace}</h2>
+                        <h2 className=" xl:text-7xl text-6xl ">
+                            {totalWorkspace}
+                        </h2>
                     </div>
                 </div>
             </div>

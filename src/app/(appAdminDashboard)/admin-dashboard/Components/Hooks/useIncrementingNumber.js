@@ -3,17 +3,17 @@
 import { useState, useEffect } from "react";
 
 const useIncrementingNumber = (initialValue) => {
-    const [number, setNumber] = useState(initialValue);
+    const [number, setNumber] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (number < 64) {
+            if (number < initialValue) {
                 setNumber((prevNumber) => prevNumber + 1);
             }
-        }, 100); // Change the interval as per your requirement
+        }, 100);
 
         return () => clearInterval(interval);
-    }, [number]);
+    }, [number, initialValue]);
 
     return number;
 };
