@@ -41,7 +41,7 @@ const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
 const [isDropdownOpen, setDropdownOpen] = useState(false);
 const [isHovered, setIsHovered] = useState(false);
 const xios = useAxios();
-const { fetchLatestDat } = useContext(globalContext);
+const { fetchLatestData } = useContext(globalContext);
 const [notification, setNotification] = useState(true); // Keep this for the original notification
 
 // Notification Modal State

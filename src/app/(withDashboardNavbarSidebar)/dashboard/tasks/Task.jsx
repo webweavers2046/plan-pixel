@@ -13,7 +13,7 @@ import useDNDcontext from "@/hooks/useGlobalTaskData";
 import { MdDoubleArrow } from "react-icons/md";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { globalContext } from "@/Providers/globalContext";
 import { AuthContext } from "@/Providers/AuthProviders";
 import AreYouSureModal from "@/components/Common/CommonModal/AreYouSureModal";
@@ -33,7 +33,8 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
     fetchLatestData,
     fetchArchivedData,
     isTogglerEnabled,
-    clickBaseFilterTaskId
+    clickBaseFilterTaskId,
+    shouldScrollIntoView
   } = useContext(globalContext);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -130,8 +131,22 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
   // When toggler of bulk archiving off, clear the storage
   isTogglerEnabled ? "" : localStorage.removeItem("selectedTasks");
 
+
+
+  const taskRef = useRef(null);
+
+  useEffect(() => {
+    // Check if the task needs to be scrolled into view
+    if (taskRef.current && shouldScrollIntoView) {
+      taskRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [shouldScrollIntoView]); // Add dependencies as needed
+  
+
+
   return (
     <div
+      ref={taskRef}
       draggable
       id={task._id}
       onDragOver={(e) => draggingOver(e, task._id)}

@@ -108,7 +108,7 @@ const Tasks = () => {
 
           <RiMenu2Line onClick={()=> setIsArchiveMenu(!isArchiveMenuOpen)} className="felx cursor-pointer md:hidden absolute right-2 z-50 "/>
 
-          <div className={`md:relative  hidden md:flex items-center  bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50`}>
+          <div className={`md:relative -mt-8  hidden md:flex items-center  bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1 border-white/50`}>
             <div className=" flex  gap-3 text-[16px]">
               <div
                 onClick={() => setIsActive("all-tasks")}

@@ -16,21 +16,13 @@ const GlobalContext = ({ children }) => {
     const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false);
 
 
-    // Workspace related states
-
-    // newly added 
-
-      // Archived tasks state
+// Archived tasks state
   const [archivedTasks,setArchivedTasks] =  useState([])
   const [archiveTaskId, setArchiveTaskId] = useState("")
   const [isTogglerEnabled,setIsTogglerEnabled] = useState(false)
 
   //Add member openning a modal
   const [WillAddMember, setWillAddMember] = useState(false);
-
-
-    // ===========
-
 
     const [activeWorkspace, setActiveWorkspace] = useState({});
     const [userWokspaceList, setUserWokspaceList] = useState([]);
@@ -44,7 +36,9 @@ const GlobalContext = ({ children }) => {
 
   // Tab view 
   const [isActive,setIsActive] = useState("archived-tasks")
-
+  // when click in filterd task to scrolled into view
+  const [shouldScrollIntoView,setShouldScrollIntoView] = useState(false)
+  
   //see..
   const [loading, setLoading] = useState(true);
   let isMounted = true;
@@ -75,6 +69,17 @@ const fetchLatestData = async () => {
         }
     };
 
+
+
+// get all the arvhived data
+const fetchArchivedData = async()=>  {
+    const response = await xios.get("/api/read/archive-tasks")
+    setArchivedTasks(response.data)
+  }
+  
+
+
+
     // this funciton fetch the latest user search history
     const fetchUserSearchHistory = async () => {
         const response = await xios.get(
@@ -91,6 +96,7 @@ const fetchLatestData = async () => {
     // fetch lates workspace related content and user history based on dependencies
     useEffect(() => {
         fetchLatestData();
+        fetchArchivedData()
         fetchUserSearchHistory();
         return () => {
             isMounted = false;
@@ -100,6 +106,7 @@ const fetchLatestData = async () => {
         clickBaseFilterTaskId,
         isUserHistoryStored,
         searchQueryFromHistory,
+        shouldScrollIntoView
     ]);
 
     // if (loading) return <Spinner />;
@@ -114,9 +121,6 @@ const fetchLatestData = async () => {
             `/createTask/${activeWorkspaceId}/${user && user.email}`,
             newTask
         );
-        await xios.put(
-            `/`
-        )
         console.log(activeWorkspaceId);
         if (response?.data?.insertedId) {
             setNewTask(newTask);
@@ -125,6 +129,7 @@ const fetchLatestData = async () => {
             fetchLatestData();
         }
     };
+
 
     // Workspace data hanler
     const handleActiveWorkspace = async (e, _id) => {
@@ -187,6 +192,8 @@ const fetchLatestData = async () => {
             { userEmail: user?.email, workspaceId }
         );
         setClickBaseFilterTaskId(taskId);
+        setIsActive("all-tasks")
+        setShouldScrollIntoView(true)
         if (response?.data.modifiedCount > 0) {
             fetchLatestData();
         }
@@ -276,14 +283,14 @@ const handleUnarchive = async() => {
 
     const notificationsFetch = async () => {
         try {
-            const activeWorkspaceReal = await xios.get(
-                `/api/workspaces/active/${user?.email}`
-            );
-            // console.log(activeWorkspaceReal);
-            const notifications = await xios.get(
-                `/api/notifications/${activeWorkspaceReal.data?._id}`
-            );
-            setNotifications(notifications);
+            // const activeWorkspaceReal = await xios.get(
+            //     `/api/workspaces/active/${user?.email}`
+            // );
+            // // console.log(activeWorkspaceReal);
+            // const notifications = await xios.get(
+            //     `/api/notifications/${activeWorkspaceReal.data?._id}`
+            // );
+            // setNotifications(notifications);
         } catch (error) {
             console.log(error);
         }
@@ -312,6 +319,8 @@ const handleUnarchive = async() => {
         handleHistoryClick,
         setSearchQueryFromHistory,
         searchQueryFromHistory,
+        setWillAddMember,
+        WillAddMember,
             
         // tab view / archive data
         setIsActive,
@@ -324,6 +333,8 @@ const handleUnarchive = async() => {
         isTogglerEnabled,
         handleMultipleArchive,
         handleMultipleUnArchive,
+        shouldScrollIntoView,
+        setShouldScrollIntoView,
 
 
         handleCreateTask,
