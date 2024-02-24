@@ -62,8 +62,8 @@ function Task({ name, status, tasksId, refetch, index }) {
   const { fetchLatestData } = useContext(globalContext);
   const xios = apiConnector();
   const handleIsDone = async (e) => {
-    const isChecked = e.target.checked;
-    console.log(isChecked);
+    // const isChecked = e.target.checked;
+    // console.log(isChecked);
 
       const res = await xios.patch(
         `/updateTaskState/?id=${tasksId}&&state=${status === 'done'? "doing":"done"}`

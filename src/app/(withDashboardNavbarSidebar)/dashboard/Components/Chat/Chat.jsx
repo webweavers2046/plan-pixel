@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import useAxios from "@/hooks/useAxios";
 import useTranstackData from "@/hooks/useTanstack/useTranstackData";
 import "./chat.css";
-const socket = socketIO.connect("http://localhost:5000");
+// const socket = socketIO.connect("http://localhost:5000");
 const Chat = () => {
   const router = useRouter();
   const xios = useAxios();
