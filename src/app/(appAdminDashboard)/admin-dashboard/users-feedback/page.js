@@ -53,23 +53,24 @@ const UserFeedback = () => {
         <section>
             <div className="">
                 <h2 className="text-lg font-semibold pb-6">Users feedback</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <div className="grid gap-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:gap-6 gap-4">
+                    <div className="grid 2xl:gap-6 gap-4">
                         {feedbackData?.feedbacks
                             ?.slice(0, row1)
                             .map((feedback, idx) => (
                                 <div
-                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
+                                    key={idx}
+                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto 2xl:p-8 p-6 rounded-lg
                          "
                                 >
                                     <p className="leading-6 opacity-90">
                                         {feedback.feedback}
                                     </p>
-                                    <div className="flex items-end justify-between mt-2 grow">
-                                        <div className="flex gap-4 items-center mt-4">
-                                            <div className="">
+                                    <div className="flex items-end justify-between gap-1 mt-2 grow">
+                                        <div className="flex 2xl:gap-4 gap-2 items-center mt-4">
+                                            <div className="w-9 h-9">
                                                 <Image
-                                                    className="rounded-full"
+                                                    className="rounded-full w-9 h-9"
                                                     width={35}
                                                     height={35}
                                                     src={feedback.userImage}
@@ -141,17 +142,18 @@ const UserFeedback = () => {
                             ?.slice(row1, row2)
                             .map((feedback, idx) => (
                                 <div
-                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
+                                    key={idx}
+                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto 2xl:p-8 p-6 rounded-lg
                          "
                                 >
                                     <p className="leading-6 opacity-90">
                                         {feedback.feedback}
                                     </p>
                                     <div className="flex items-end justify-between  mt-2 grow">
-                                        <div className="flex gap-4 items-center mt-4">
-                                            <div className="">
+                                        <div className="flex 2xl:gap-4 gap-2 items-center mt-4">
+                                            <div className="w-9 h-9">
                                                 <Image
-                                                    className="rounded-full"
+                                                    className="rounded-full w-9 h-9"
                                                     width={35}
                                                     height={35}
                                                     src={userAvatar}
@@ -223,17 +225,18 @@ const UserFeedback = () => {
                             ?.slice(row2, row3)
                             .map((feedback, idx) => (
                                 <div
-                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
+                                    key={idx}
+                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto 2xl:p-8 p-6 rounded-lg
                             "
                                 >
                                     <p className="leading-6 opacity-90">
                                         {feedback.feedback}
                                     </p>
                                     <div className="flex items-end justify-between  mt-2 grow">
-                                        <div className="flex gap-4 items-center mt-4">
-                                            <div className="">
+                                        <div className="flex 2xl:gap-4 gap-2 items-center mt-4">
+                                            <div className="w-9 h-9">
                                                 <Image
-                                                    className="rounded-full"
+                                                    className="rounded-full w-9 h-9"
                                                     width={35}
                                                     height={35}
                                                     src={userAvatar}
@@ -305,17 +308,18 @@ const UserFeedback = () => {
                             ?.slice(row3, row4)
                             .map((feedback, idx) => (
                                 <div
-                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto p-8 rounded-lg
+                                    key={idx}
+                                    className="flex flex-col bg-dashboardPrimaryColor/60 h-auto 2xl:p-8 p-6 rounded-lg
                          "
                                 >
                                     <p className="leading-6 opacity-90">
                                         {feedback.feedback}
                                     </p>
                                     <div className="flex items-end justify-between  mt-2 grow">
-                                        <div className="flex gap-4 items-center mt-4">
-                                            <div className="">
+                                        <div className="flex 2xl:gap-4 gap-2 items-center mt-4">
+                                            <div className="w-9 h-9">
                                                 <Image
-                                                    className="rounded-full"
+                                                    className="rounded-full w-9 h-9"
                                                     width={35}
                                                     height={35}
                                                     src={userAvatar}

@@ -1,11 +1,12 @@
 "use client";
+
 import Spinner from "@/components/Common/CommonModal/Spinner";
-import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import useDynamicData from "../Components/Hooks/useDynamicData";
 import useAxios from "@/hooks/useAxios";
+import Swal from "sweetalert2";
 
 const page = () => {
     const {
@@ -23,7 +24,7 @@ const page = () => {
         <div className="">
             <div className="">
                 <p className="text-lg font-semibold">All article</p>
-                <div className="grid grid-cols-4 items-start justify-between pt-6 gap-6">
+                <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:grid-cols-3 items-start justify-between pt-6 2xl:gap-6 gap-3">
                     {articles.map((post) => (
                         <ArticleCard
                             key={post._id}
@@ -51,6 +52,7 @@ const ArticleCard = ({ post, refetch }) => {
     const axiosAdmin = useAxios();
     const [isDeleting, setIsDeleting] = useState(false);
     const handleDeleteArticle = (id) => {
+        console.log(id);
         setIsDeleting(true);
         try {
             Swal.fire({

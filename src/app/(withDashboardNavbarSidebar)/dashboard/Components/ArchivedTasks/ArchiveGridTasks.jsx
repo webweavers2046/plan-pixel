@@ -47,7 +47,7 @@ const ArchiveGridTasks = ({handleSelectedIdsChanges,setIsOpen,isOpen}) => {
                   </p>
                 )}
               </div>
-              <div className="text-[16px] space-y-1">
+              <div className="text-[15px] md:text-[16px] space-y-1">
                 <span className="bg-[#f5fdf8] text-[#29e07c] p-1 px-2 rounded-lg">
                   {task.workspaceName}
                 </span>{" "}
