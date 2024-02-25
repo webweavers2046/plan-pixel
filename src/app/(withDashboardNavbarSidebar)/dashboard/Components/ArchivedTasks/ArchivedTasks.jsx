@@ -1,22 +1,6 @@
-import Image from "next/image";
-import { HiOutlineArchiveBox } from "react-icons/hi2";
-import Avater from "./Avater";
-import { FcHighPriority } from "react-icons/fc";
-import { FcLowPriority } from "react-icons/fc";
-import { FcMediumPriority } from "react-icons/fc";
-import { MdOutlineUnarchive } from "react-icons/md";
-import { useContext, useEffect, useState } from "react";
+
+import { useContext, useState } from "react";
 import { globalContext } from "@/Providers/globalContext";
-import AreYouSureModal from "@/components/Common/CommonModal/AreYouSureModal";
-import Toggler from "@/components/Common/CommonModal/Toggler";
-import useAxios from "@/hooks/useAxios";
-import { FcComments } from "react-icons/fc";
-import { FaCaretLeft } from "react-icons/fa6";
-import AutoCompleteSearch from "./AutoComplete";
-import { BsCalendarMonth } from "react-icons/bs";
-import { LiaCalendarWeekSolid } from "react-icons/lia";
-import { WiDayLightWind } from "react-icons/wi";
-import ProgressBarChart from "@/components/Common/Progressbar/Progressbar";
 import CompletedTasksChart from "@/components/Common/Progressbar/Progressbar";
 import TittleAndDescripton from "./TittleAndDescripton";
 import GradientBg from "@/components/Common/gradient/GradientBg";
@@ -28,12 +12,22 @@ const ArchivedTasks = () => {
     archivedTasks,
     handleUnarchive,
     isTogglerEnabled,
-    setIsTogglerEnabled,
   } = useContext(globalContext);
   const [isOpen, setIsOpen] = useState(false);
 
-  const completedTasks = 5;
-  const totalTasks = 10;
+  // completed task analytics for chart view graph
+  let completedTasks = 0;
+  let totalTasks = 10;
+
+
+  // if(archivedTasks?.length > 0){
+    
+
+  //   // completedTasks = archivedTasks?.filter()
+
+  //   totalTasks = archivedTasks?.length;
+  // }
+
 
   const handleSelectedIdsChanges = async (e, taskId) => {
     const isChecked = e.target.checked;
@@ -68,7 +62,9 @@ const ArchivedTasks = () => {
       <div className="flex justify-center "></div>
       <TittleAndDescripton />
       <GradientBg />
-      <div className="flex lg:flex-row flex-col mt-11">
+      <div className="grid grid-cols-3 mt-11">
+
+        <div className="col-span-2">
         <ArchiveGridTasks
           handleSelectedIdsChanges={handleSelectedIdsChanges}
           archivedTasks={archivedTasks}
@@ -76,6 +72,9 @@ const ArchivedTasks = () => {
           setIsOpen={setIsOpen}
           isOpen={isOpen}
         />
+
+
+        </div>
 
         <div className="bg-[#FFFFFF] md:block hidden w-80 min-h-[90vh]">
           <CompletedTasksChart

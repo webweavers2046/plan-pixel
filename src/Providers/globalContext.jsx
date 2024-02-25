@@ -4,6 +4,7 @@ import useAxios from "@/hooks/useAxios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthProviders";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 export const globalContext = createContext(null);
 const GlobalContext = ({ children }) => {
@@ -11,7 +12,7 @@ const GlobalContext = ({ children }) => {
     const [newTask, setNewTask] = useState("");
     const xios = useAxios();
     const { user } = useContext(AuthContext);
-
+    
     const [clickedWorkspaceId, setClickedWorkspaceId] = useState([]);
     const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false);
 
@@ -33,6 +34,10 @@ const GlobalContext = ({ children }) => {
     const [searchQueryFromHistory, setSearchQueryFromHistory] = useState("");
 
 
+    // Get real time tasks state using ably 
+    const {allWorkspaceTasks} = useContext(ablyContext)
+
+    
 
   // Tab view 
   const [isActive,setIsActive] = useState("archived-tasks")
@@ -76,8 +81,6 @@ const fetchArchivedData = async()=>  {
     const response = await xios.get("/api/read/archive-tasks")
     setArchivedTasks(response.data)
   }
-  
-
 
 
     // this funciton fetch the latest user search history
@@ -109,6 +112,16 @@ const fetchArchivedData = async()=>  {
         shouldScrollIntoView
     ]);
 
+    useEffect(()=> {
+        if(allWorkspaceTasks?.length > 0) {
+            setActiveWorkspaceTasks(allWorkspaceTasks)
+        } else {
+            fetchLatestData()
+        }
+
+    },[allWorkspaceTasks])
+
+
     // if (loading) return <Spinner />;
 
     // This funciton will create a new task in the task collection
@@ -134,7 +147,7 @@ const fetchArchivedData = async()=>  {
     // Workspace data hanler
     const handleActiveWorkspace = async (e, _id) => {
         setClickedWorkspaceId(_id);
-        console.log(user?.email);
+        console.log("__________________________", user?.email);
         await xios.get(
             `/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${
                 user?.email

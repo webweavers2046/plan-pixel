@@ -183,8 +183,8 @@ console.log(notifications);
         >
           <p className=" cursor-pointer opacity-55 text-[15px] ">
             {activeWorkspace?.title?.length > 12
-              ? activeWorkspace.title.slice(0, 11) + ".."
-              : activeWorkspace.title || "Workspace"}
+              ? activeWorkspace?.title.slice(0, 11) + ".."
+              : activeWorkspace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
             className={` cursor-pointer ${

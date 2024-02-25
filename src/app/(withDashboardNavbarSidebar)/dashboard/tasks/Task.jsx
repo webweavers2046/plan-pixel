@@ -85,6 +85,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
       archivedReason: reason,
       archivist: user && user?.displayName,
       priority: task?.priority,
+      status:task?.status
     };
     const response = await xios.post(
       `/api/tasks/archive?isArchive=${true}`,
