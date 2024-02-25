@@ -20,3 +20,7 @@ body {
 .inactive:hover {
     background-color: #f3f4f6;
 }
+
+.bg-effect{
+    background: black;
+}

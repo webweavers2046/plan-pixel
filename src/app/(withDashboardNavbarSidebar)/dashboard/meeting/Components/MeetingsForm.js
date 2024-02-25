@@ -1,6 +1,5 @@
 "use client";
 
-import useAllMeetings from "@/hooks/useAllMeetings";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -8,8 +7,8 @@ import { useForm } from "react-hook-form";
 const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
   const { activeWorkspaceMembers, activeWorkspace, handleCreateMeeting } =
     useGlobalContext();
-  // console.log(activeWorkspaceMembers);
-  // const {data, refetch} = useAllMeetings()
+
+  console.log(activeWorkspace, "active workspace");
 
   const {
     register,
@@ -28,6 +27,7 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
       link: data?.meetLink,
       platform: data?.platform,
       member: activeWorkspaceMembers,
+      activeWorkspace
     };
     
     handleCreateMeeting(newMeeting);

@@ -190,13 +190,6 @@ const GlobalContext = ({ children }) => {
         }
     }
 
-    const handleDeleteMeeting = async(id) =>{
-        const response = await xios.delete(`/api/meetings/${id}`)
-        
-        if(response.data.deletedCount>0){
-            toast.success("Meeting deleted", { position: "top-center" });
-        }
-    }
 
 
 
@@ -255,8 +248,6 @@ const GlobalContext = ({ children }) => {
         handleDeleteWorkspace,
 
         handleCreateMeeting,
-        handleDeleteMeeting,
-
 
         notifications
     };

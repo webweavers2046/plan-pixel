@@ -5,42 +5,50 @@ import { BiCurrentLocation } from "react-icons/bi";
 import Image from "next/image";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import useAxios from "@/hooks/useAxios";
+import useAllMeetings from "@/hooks/useAllMeetings";
 
 const MeetingDetails = ({
   singleMeeting,
   meetings,
   setSingleMeeting,
-  refetch,
+  // refetch,
 }) => {
-  const { handleDeleteMeeting } = useGlobalContext();
+  const xios = useAxios();
   console.log(singleMeeting);
+  const { data, refetch } = useAllMeetings();
 
   const handleMeetingDelete = (id) => {
     console.log("delete id", id);
-    handleDeleteMeeting(id);
-    refetch();
-    setSingleMeeting();
 
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     handleDeleteMeeting(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        xios.delete(`/api/meetings/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            toast.success("Meeting deleted", { position: "top-center" });
 
-    //     refetch();
-    //     Swal.fire({
-    //       title: "Deleted!",
-    //       text: "Meeting has been deleted.",
-    //       icon: "success",
-    //     });
-    //   }
-    // });
+            setSingleMeeting();
+          }
+        });
+        // console.log(response);
+
+        // refetch();
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Meeting has been deleted.",
+        //   icon: "success",
+        // });
+      }
+    });
   };
 
   return (
