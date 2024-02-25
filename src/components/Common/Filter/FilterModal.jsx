@@ -20,6 +20,9 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
     setClickBaseFilterTaskId,
     setSearchQueryFromHistory,
     searchQueryFromHistory,
+    // when click on filtered task
+    setShouldScrollIntoView,
+    shouldScrollIntoView
   } = useContext(globalContext);
   const { user } = useContext(AuthContext);
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -62,23 +65,36 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
     }
   };
 
+  
+
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+      // Check if the clicked element is outside the modal and not inside the modal content
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
+        !event.target.closest('.modal-content-class') // Replace 'your-modal-content-class' with the actual class of your modal content
+      ) {
         // Clicked outside of the modal, close the filter & remove the highlighted id
         setOpenFilter(false);
         setClickBaseFilterTaskId("");
+        // when click out of filter modal set false to scroll into view
+        setShouldScrollIntoView(false)
       }
     };
-
+  
     // Add event listener to the document body
     document.addEventListener("mousedown", handleClickOutside);
-
+  
     // Remove the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [setOpenFilter, setClickBaseFilterTaskId, searchQueryFromHistory]);
+  
+
+
 
   const [suggestions, setSuggestions] = useState([]);
 
@@ -95,20 +111,31 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
     }
   };
 
+
+
+  if(openFilter){
+    document.body.style.overflow = "hidden"
+  }else if(shouldScrollIntoView){
+    document.body.style.overflow = "auto"
+  }else{
+    document.body.style.overflow = "auto"
+  }
+
+
   return (
     <div
       ref={modalRef}
-      className={`z-50 overflow-y-hidden font-serif absolute right-[125px] p-3 w-[360px] ${
-        filteredTasks?.length > 0 ? "h-[100vh]  -top-24" : "h-[70vh] top-[60px]"
-      } p-2-lg bg-gradient-to-br from-[hsl(0,0%,100%)] to-[hsl(103,100%,99%)] shadow-lg border-t-2 border-gray-50 transition-all duration-500 `}
+      className={`z-50 modal-content-class overflow-y-hidden font-serif fixed right-[16%] p-3 w-[330px] ${
+        filteredTasks?.length > 0 ? "h-[100vh]  top-0" : "h-[68vh] top-[183px]"
+      } p-2-lg bg-gradient-to-br text-[15px] from-[hsl(0,0%,100%)] to-[hsl(103,100%,99%)] shadow-lg border-t-2 border-gray-50 transition-all duration-500 `}
     >
-      <div className="flex justify-between items-center px-2">
+      <div  className="flex modal-content-class justify-between items-center px-2">
         <h1 className="text-[24px] font-bold">Filter</h1>
 
         <button
           data-tooltip-target="tooltip-animation"
           type="button"
-          class="text-black active:scale-90 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center dark:bg-blue-600  "
+          class="text-black modal-content-class active:scale-90 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center dark:bg-blue-600  "
         >
           <BsClockHistory
             onClick={() => setIsOpenFilterHistory(true)}
@@ -119,7 +146,7 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
         <div
           className={`transition-all ${
             isOpenFilterHistory ? "w-64" : "w-0"
-          } bg-white shadow-lg z-50 fixed top-0 ease-in-out scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 right-0 duration-500 h-screen overflow-x-hidden overflow-y-auto`}
+          } bg-white modal-content-class shadow-lg z-50 fixed top-0 ease-in-out scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 right-0 duration-500 h-screen overflow-x-hidden overflow-y-auto`}
         >
           <FilterHistory
             isOpenFilterHistory={isOpenFilterHistory}
@@ -127,12 +154,12 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
           />
         </div>
       </div>
-      <div className="border border-b-1 mt-4 border-r-black"></div>
+      <div className="border modal-content-class border-b-1 mt-4 border-r-black"></div>
       <Search openFilter={openFilter} handleInputChange={handleInputChange} />
       <div>
-        <div className="flex relative justify-between gap-2">
+        <div className="flex modal-content-class relative justify-between gap-2">
           <select
-            className="p-2 my-3 w-1/2 border-collapse border-0 text-gray-500 bg-[#F9FAFB]"
+            className="p-2 my-3 text-[14px] w-1/2 border-collapse border-0 text-gray-500 bg-[#F9FAFB]"
             name="status"
             value={selectedValues.status}
             onChange={handleDropdownChange}
@@ -145,7 +172,7 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
           </select>
 
           <select
-            className="p-2 my-3 w-1/2 border-collapse text-gray-500 border-0 bg-[#F9FAFB]"
+            className="p-2 text-[14px] my-3 w-1/2 border-collapse text-gray-500 border-0 bg-[#F9FAFB]"
             name="priority"
             value={selectedValues.priority}
             onChange={handleDropdownChange}
@@ -156,9 +183,9 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
             <option value="low">Low</option>
           </select>
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex modal-content-class justify-between gap-2">
           <select
-            className="p-2 my-2 w-1/2 border-collapse text-gray-500 border-0 bg-[#F9FAFB] "
+            className="p-2 my-2 text-[14px] w-1/2 border-collapse text-gray-500 border-0 bg-[#F9FAFB] "
             name="workspaceId"
             value={selectedValues.workspaceId}
             onChange={handleDropdownChange}
@@ -171,7 +198,7 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
             ))}
           </select>
 
-          <div className="flex w-1/2 text-gray-500 border-none items-center">
+          <div className="flex text-[14px] modal-content-class w-1/2 text-gray-500 border-none items-center">
             <input
               type="date"
               name="dueDate"
@@ -179,7 +206,7 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
               onChange={handleDropdownChange}
               // Adding a placeholder for the date input
               placeholder="Due Date:  "
-              className=" border-none"
+              className=" border-none text-[14px]"
             />
           </div>
         </div>
@@ -191,7 +218,7 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
           }`}
         >
           {isLoading && (
-            <div className="absolute -top-6 left-48   ">
+            <div className="absolute -top-6 left-36 ">
               <Spinner />
             </div>
           )}
@@ -199,7 +226,7 @@ const FilterModal = ({ setOpenFilter, openFilter }) => {
             <li
               key={task._id}
               onClick={() => handleTaskClick(task?._id, task?.workspace)}
-              className="bg-[#fff] flex justify-between cursor-pointer shadow-md p-4 my-5"
+              className="bg-[#fff] text-[14px] flex justify-between cursor-pointer shadow-md p-4 my-5"
             >
               <div className="flex gap-2">
                 <h1>{task?.title}</h1>
