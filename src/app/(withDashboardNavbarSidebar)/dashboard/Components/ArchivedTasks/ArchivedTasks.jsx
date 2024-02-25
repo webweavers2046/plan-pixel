@@ -6,6 +6,8 @@ import TittleAndDescripton from "./TittleAndDescripton";
 import GradientBg from "@/components/Common/gradient/GradientBg";
 import TimeBasedTasks from "./TimeBasedTasks";
 import ArchiveGridTasks from "./ArchiveGridTasks";
+import { AuthContext } from "@/Providers/AuthProviders";
+import useAxios from "@/hooks/useAxios";
 
 const ArchivedTasks = () => {
   const {
@@ -14,19 +16,19 @@ const ArchivedTasks = () => {
     isTogglerEnabled,
   } = useContext(globalContext);
   const [isOpen, setIsOpen] = useState(false);
-
+  const {user} = useContext(AuthContext)
+  const xios = useAxios()
+  const [filteredTasks,setFilteredTasks] = useState(archivedTasks)
   // completed task analytics for chart view graph
-  let completedTasks = 0;
-  let totalTasks = 10;
+  let completedTasks;
+  let totalTasks;
 
 
-  // if(archivedTasks?.length > 0){
+  if(archivedTasks?.length > 0){
     
-
-  //   // completedTasks = archivedTasks?.filter()
-
-  //   totalTasks = archivedTasks?.length;
-  // }
+    completedTasks = archivedTasks?.filter(task => task.status === "done")?.length
+    totalTasks = filteredTasks?.length;
+  }
 
 
   const handleSelectedIdsChanges = async (e, taskId) => {
@@ -52,6 +54,17 @@ const ArchivedTasks = () => {
   // When toggler of bulk archiving off, clear the storage
   isTogglerEnabled ? "" : localStorage.removeItem("unarchiveTaskIds");
 
+
+
+  // archive tasks search handler 
+  const handleSearchArchiveTasks = async(query) => {
+    
+    const response = await xios.get(`/api/search/archived-tasks/${user&&user.email}/${query}`)
+    if(response?.data.length > 0){
+      setFilteredTasks(response.data)
+    }
+  }
+
   return (
     <div className=" relative bg-gradient-to-br  min-h-screen w-full">
       <div className="flex justify-between items-center">
@@ -60,14 +73,14 @@ const ArchivedTasks = () => {
       </div>
 
       <div className="flex justify-center "></div>
-      <TittleAndDescripton />
+      <TittleAndDescripton handleSearchArchiveTasks={handleSearchArchiveTasks} />
       <GradientBg />
-      <div className="grid grid-cols-3 mt-11">
+      <div className=" lg:grid grid-cols-3 mt-11">
 
-        <div className="col-span-2">
+        <div className=" lg:col-span-2">
         <ArchiveGridTasks
           handleSelectedIdsChanges={handleSelectedIdsChanges}
-          archivedTasks={archivedTasks}
+          archivedTasks={filteredTasks}
           handleUnarchive={handleUnarchive}
           setIsOpen={setIsOpen}
           isOpen={isOpen}
@@ -76,7 +89,7 @@ const ArchivedTasks = () => {
 
         </div>
 
-        <div className="bg-[#FFFFFF] md:block hidden w-80 min-h-[90vh]">
+        <div className="bg-[#FFFFFF] hidden lg:block w-80 min-h-[90vh]">
           <CompletedTasksChart
             completedTasks={completedTasks}
             totalTasks={totalTasks}

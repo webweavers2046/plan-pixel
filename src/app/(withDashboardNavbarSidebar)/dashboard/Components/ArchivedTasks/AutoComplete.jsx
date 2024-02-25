@@ -4,11 +4,18 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 import { CiSearch } from "react-icons/ci";
 
 
-export default function AutoCompleteSearch() {
+export default function AutoCompleteSearch({handleSearchArchiveTasks}) {
 
   const {archivedTasks} = useGlobalContext()
   const [selected, setSelected] = useState("");
   const [query, setQuery] = useState("");
+
+
+useEffect(()=>{
+
+  handleSearchArchiveTasks(query)
+
+},[query])
 
   const filteredTasks =
     query === ""
