@@ -86,7 +86,7 @@ const ChatPopUp = ({ isOpenPopUp, setIsOpenPopUp }) => {
         isOpenPopUp ? " ml-5 right-1 " : "-right-full"
       }   w-[400px] flex flex-col`}
     >
-      <div className="bg-[#35C179] rounded-tr-lg rounded-tl-lg text-white h-16 p-4 flex justify-between">
+      <div className="bg-[#35C179] rounded-tr-lg rounded-tl-lg text-white h-16 p-6 flex justify-between items-center">
         <div className="flex gap-4 items-center ">
           <FaAlignLeft className="h-6 w-6" />
           <h1 className="text-xl">{activeWorkspace.title}</h1>

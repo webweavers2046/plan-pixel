@@ -22,6 +22,7 @@ import { BiSolidMessage } from "react-icons/bi";
 import Message from "./Message/Message";
 import ChatPopUp from "./Chat/ChatPopUp";
 import { FaMessage } from "react-icons/fa6";
+import { RiMessage3Line } from "react-icons/ri";
 
 const DashboardNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -209,8 +210,15 @@ const DashboardNavbar = () => {
         {/* search component */}
         <Search></Search>
       </div>
-      <button onClick={()=>setIsOpenPopUp(!isOpenPopUp)} className="">
-        <FaMessage className="w-10 h-10 me-2 text-green-400" />
+      <button
+        onClick={() => setIsOpenPopUp(!isOpenPopUp)}
+        className="bg-[#ECECEC] rounded-lg p-1 shadow-md"
+      >
+        <RiMessage3Line
+          className={`w-10 h-10 text-sm  ${
+            isOpenPopUp && "text-[#35C179]"
+          } rounded-md `}
+        />
       </button>
       {/* <Message openModal={openModal} setOpenModal={setOpenModal}/> */}
       <ChatPopUp isOpenPopUp={isOpenPopUp} setIsOpenPopUp={setIsOpenPopUp} />
