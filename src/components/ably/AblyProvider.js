@@ -40,8 +40,7 @@ const AblyProvider = ({ children }) => {
     // Calling the connectAbly function
     connectAbly();
 
-    ablyChannel.publish("userEmail", { userEmail: "abc@gmail.com" });
-    ablyChannel.publish("isTaskDropped", { userEmail: "abc@gmail.com" });
+   
     // Ably listener function to handle incoming messages
     const ablyListener = (message) => {
       
@@ -55,9 +54,6 @@ const AblyProvider = ({ children }) => {
       setAllworkspaceMembers(response.allMembersInWorkspace)
       setAllWorkspaceTasks(response.allTasksInWorkspace)
       setSetActiveWorkspace(response.activeWorkspace)
-
-
-      console.log("subscribe", response)
       })
 
     // Subscribing to the Ably channel with the ablyListener
@@ -77,7 +73,7 @@ const AblyProvider = ({ children }) => {
       }
     };
   }, [tasks]);
-  
+
 
   // Distribute all data by 
   const distributingData = {
@@ -87,6 +83,7 @@ const AblyProvider = ({ children }) => {
     allWorkspaceTasks,
     tasks
   }
+
 
   // Providing the tasks data to its children through the context
   return (

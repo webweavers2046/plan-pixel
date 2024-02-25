@@ -12,7 +12,6 @@ import AdminDrawer from "./admin-dashboard/Components/Drawer/AdminDrawer";
 
 export default function DashboardLayout({ children }) {
     const [openSidebar, setOpenSidebar] = useState(false);
-    const pathname = usePathname();
 
     const toggleSidebar = () => {
         setOpenSidebar(!openSidebar);
@@ -22,9 +21,9 @@ export default function DashboardLayout({ children }) {
             <PrivateRoute>
                 <div className="grid grid-cols-12 min-h-screen relative">
                     {openSidebar && (
-                        <div className="absolute w-full left-0 top-0 h-screen  bg-slate-200/10 backdrop-blur-2xl z-50 xl:hidden block">
+                        <div className="absolute w-full left-0 top-0 h-screen  bg-indigo-950/10 backdrop-blur-sm z-50 xl:hidden block">
                             <div className="w-80 bg-white h-full relative">
-                                <AdminDrawer />
+                                <AdminDrawer setOpenSidebar={setOpenSidebar} />
                                 <button
                                     onClick={toggleSidebar}
                                     className="border-2 p-1 flex items-center justify-center absolute bg-white rounded-full top-1/4 transform -translate-y-1/2 -right-3 z-40"
@@ -41,10 +40,10 @@ export default function DashboardLayout({ children }) {
                     <div className="xl:col-span-10 col-span-12 xl:ms-0 ms-5">
                         <div className={`flex`}>
                             <div className="sticky top-0">
-                                <div className="w-4 h-screen border-r-2 xl:hidden block relative">
+                                <div className="md:w-4 w-2 h-screen border-r-2 xl:hidden block relative">
                                     <button
                                         onClick={toggleSidebar}
-                                        className="border-2 p-1 flex items-center justify-center absolute bg-white rounded-full top-1/4 transform -translate-y-1/2 -left-0 "
+                                        className="border-2 p-1 flex items-center justify-center absolute bg-white rounded-full top-1/4 transform -translate-y-1/2 md:-left-0 -left-2 "
                                     >
                                         <IoIosArrowForward className="inline text-xl" />
                                     </button>

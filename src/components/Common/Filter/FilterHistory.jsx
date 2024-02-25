@@ -34,7 +34,7 @@ const FilterHistory = ({ setIsOpenFilterHistory, isOpenFilterHistory }) => {
     <div
       ref={historyRef}
     >
-      <div className=" bg-gradient-to-br relative h-screen from-[#fcfffd] to-[rgb(253,255,250)] py-3">
+      <div className=" bg-gradient-to-br relative h-screen from-[#eafff13a] to-[rgb(251,255,244)] py-3">
         <div className="flex justify-between border-b mb-3 items-center sticky top-0 h-11 px-3">
         <h1 className="text-[20px]  w-1/2 font-bold ">History</h1>
         <p className="text-rose-600 cursor-pointer" onClick={handleDeleteAllHistory}>Remove all</p>

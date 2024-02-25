@@ -146,7 +146,7 @@ const User = ({ member, refetch }) => {
             </Modal>
             <div
                 key={member.id}
-                className="grid grid-cols-4 items-center justify-between bg-dashboardPrimaryColor/50 mb-3 px-3 py-3 rounded-lg"
+                className="grid lg:grid-cols-4 items-center justify-between bg-dashboardPrimaryColor/50 mb-3 px-3 py-3 rounded-lg"
             >
                 <div className="flex gap-6 items-center">
                     <div className="">
@@ -157,11 +157,11 @@ const User = ({ member, refetch }) => {
                     </div>
                 </div>
 
-                <div className="">
+                <div className="lg:col-span-1 col-span-2">
                     <p className="text-xs opacity-70">Email: </p>
                     <h6 className="font-semibold">{member.userEmail}</h6>
                 </div>
-                <div className="">
+                <div className="lg:col-span-1 col-span-2">
                     <p className="text-xs opacity-70">Create At: </p>
                     <h6 className="font-semibold">{member.createdAt}</h6>
                 </div>

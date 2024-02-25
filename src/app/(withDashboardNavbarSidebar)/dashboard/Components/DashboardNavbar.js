@@ -1,63 +1,79 @@
 "use client";
-
-import { AuthContext } from "@/Providers/AuthProviders";
+// workspace list
 import image from "@/assets/person/avatar.jpg";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
-import useUser from "@/hooks/useUser";
-import useAxios from "@/hooks/useAxios";
 import MiniModal from "@/components/Common/CommonModal/MiniModal";
 import toast from "react-hot-toast";
-import useGlobalContext from "@/hooks/useGlobalContext";
 import { AddMemberModal } from "@/components/Common/CommonModal/AddMemberModal";
 import { IoIosArrowDown } from "react-icons/io";
 import { globalContext } from "@/Providers/globalContext";
 import Search from "./Search/Search";
 
+//hook
+import useUser from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
+import useAxios from "@/hooks/useAxios";
+
+//context provider
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "@/Providers/AuthProviders";
+import useGlobalContext from "@/hooks/useGlobalContext";
+
 const DashboardNavbar = () => {
-  const { user, logOut } = useContext(AuthContext);
-  const {
+    const { user, logOut } = useContext(AuthContext);
+const {
     handleActiveWorkspace,
     handleDropdownClick,
     userWokspaceList,
     activeWorkspace,
-    notifications,
-  } = useGlobalContext();
+    WillAddMember,
+    setWillAddMember,
+    notifications, // Updated for notifications
 
-  const { data: userData } = useUser(user?.email);
-  const router = useRouter();
-  const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [WillAddMember, setWillAddMember] = useState(false);
-  const xios = useAxios();
-  const { fetchLatestData } = useContext(globalContext);
-  const [notification, setNotification] = useState(true);
+} = useGlobalContext();
+const { data: userData } = useUser(user?.email);
+const router = useRouter();
+const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
+const [isDropdownOpen, setDropdownOpen] = useState(false);
+const [isHovered, setIsHovered] = useState(false);
+const xios = useAxios();
+const { fetchLatestData } = useContext(globalContext);
+const [notification, setNotification] = useState(true); // Keep this for the original notification
 
-  // Notification Modal State
-  const [isOpen, setIsOpen] = useState(false);
+// Notification Modal State
+const [isOpen, setIsOpen] = useState(false);
 
-  // Notification Modal Function
-  const handleNotificationClick = () => {
+// Notification Modal Function
+const handleNotificationClick = () => {
     setIsOpen(!isOpen);
-  };
+};
 
-  // notification Sorting
-  const [yourNotifications, setYourNotifications] = useState([]);
-  useEffect(() => {
-    notifications?.data?.map((notification) =>
-      notification.user === "all"
-        ? setYourNotifications(yourNotifications.push(notification))
-        : notification.user === "user?.email"
-        ? setYourNotifications(yourNotifications.push(notification))
-        : console.log(yourNotifications)
-    );
-  }, []);
+// notification Sorting
+const [yourNotifications, setYourNotifications] = useState([]);
+useEffect(() => {
+    if (notifications?.data) {
+        const newNotifications = notifications.data.filter(
+            (notification) => {
+                return (
+                    notification.user === "all" ||
+                    notification.user === user?.email
+                );
+            }
+        );
+
+        setYourNotifications(newNotifications);
+    }
+}, [notifications, user]);
+
+console.log(yourNotifications);
+console.log(notifications);
+
+// =======================================================
+
 
   const handleLogOut = () => {
     Swal.fire({
@@ -79,6 +95,31 @@ const DashboardNavbar = () => {
       }
     });
   };
+
+  
+  // close the workspace list dropdwon in onBlur
+  const workspaceListRef = useRef();
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        workspaceListRef.current &&
+        !workspaceListRef.current.contains(event.target)
+      ) {
+        // Clicked outside of the modal, close the filter & remove the highlighted id
+        setDropdownOpen(false);
+        setIsCreateWorkSpace(false);
+      }
+    };
+
+// ======================================== seconde conflict
+    // Add event listener to the document body
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Remove the event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen, isCreateWokspace]);
 
   const handleCreateWorkspace = async (title, description) => {
     const workspace = {
@@ -102,6 +143,7 @@ const DashboardNavbar = () => {
     }
   };
 
+  
   const handleAddMember = async (workspaceId, memberEmail, memberName) => {
     const workspaceAndUserEmail = {
       workspaceId,
@@ -114,6 +156,7 @@ const DashboardNavbar = () => {
       workspaceAndUserEmail
     );
 
+    
     if (isAddedMember.data.message) {
       fetchLatestData();
       return toast.success(`${memberName} is added to this workspace`);
@@ -121,13 +164,13 @@ const DashboardNavbar = () => {
 
     toast.error(isAddedMember.data.error);
   };
-  console.log(activeWorkspace);
 
   const handleClose = () => {
     // Close the modal
     setIsCreateWorkSpace(false);
   };
 
+  
   return (
     <div className="flex relative justify-between items-center p-4 gap-6">
       <div
@@ -139,7 +182,9 @@ const DashboardNavbar = () => {
           className="text-start flex gap-2 items-center w-32"
         >
           <p className=" cursor-pointer opacity-55 text-[15px] ">
-            {activeWorkspace?.title || "Workspace"}
+            {activeWorkspace?.title?.length > 12
+              ? activeWorkspace?.title.slice(0, 11) + ".."
+              : activeWorkspace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
             className={` cursor-pointer ${
@@ -148,13 +193,13 @@ const DashboardNavbar = () => {
           />
         </div>
 
+        
         <div
+          ref={workspaceListRef}
           className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${
             isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
           } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
-          {/* <div className="bg-[#ffc0b052] filter blur-3xl  w-52 h-52 bottom-0 -right-20 -z-10 rounded-full absolute"></div> */}
-
           {userWokspaceList?.map((workspace, index) => {
             return (
               <li
@@ -166,6 +211,7 @@ const DashboardNavbar = () => {
               >
                 {workspace.title}
 
+                
                 <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
                 <span
                   onClick={() => setWillAddMember(!WillAddMember)}
@@ -179,13 +225,17 @@ const DashboardNavbar = () => {
             );
           })}
           <li>
-            <div
-              onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
-              className="w-full  shadow-s mt-auto px-2  grid justify-self-end hover:bg-transparent  text-center rounded-lg"
-            >
-              <p className="w-full  text-white text-center py-[6px] cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm  rounded-l  ">
-                Add New Workspace +
+            <div className="w-full text-center flex justify-center  shadow-s mt-auto px-2  hover:bg-transparen rounded-lg">
+
+              <div className="bg-gray-100 p-2 mt-3 w-11 h-11 rounded-full flex items-center justify-center">
+              <p
+                onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
+                className=" w-full h-full rounded-full items-center text-white text-center  cursor-pointer flex justify-center bg-gradient-to-br from-[#93C648] to-[#50B577] p-1 shadow-sm   "
+              >
+                +
               </p>
+
+              </div>
             </div>
           </li>
           {userWokspaceList?.length <= 0 && (
@@ -227,10 +277,64 @@ const DashboardNavbar = () => {
         <Search></Search>
       </div>
 
-      {/* Notification */}
-      <div className="relative">
+    {/* ==================== Notification ===================== */}
+                {/* Notification */}
+                <div className="relative">
+                    <svg
+                        onClick={handleNotificationClick}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="52"
+                        height="52"
+                        viewBox="0 0 52 52"
+                        fill="none"
+                    >
+                        <rect width="52" height="52" rx="10" fill="#ECECEC" />
+                        <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606ZM23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875"
+                            fill="#ECECEC"
+                        />
+                        <path
+                            d="M23.4796 37.2875C24.0964 38.0616 25.0021 38.5626 25.9963 38.6796C26.9905 38.7966 27.9912 38.5199 28.777 37.9108C29.0186 37.7307 29.2361 37.5212 29.4242 37.2875M16.001 28.5606V28.29C16.0407 27.4897 16.2972 26.7143 16.7441 26.0436C17.4879 25.238 17.9971 24.2508 18.2182 23.1856C18.2182 22.3623 18.2182 21.5273 18.2901 20.704C18.6617 16.7404 22.5808 14 26.4519 14H26.5478C30.4189 14 34.338 16.7404 34.7215 20.704C34.7934 21.5273 34.7215 22.3623 34.7814 23.1856C35.0055 24.2533 35.5142 25.2436 36.2556 26.0554C36.7058 26.7201 36.9627 27.4927 36.9986 28.29V28.5488C37.0254 29.6241 36.6551 30.6725 35.956 31.5009C35.0321 32.4695 33.7785 33.072 32.4324 33.1945C28.4851 33.618 24.5026 33.618 20.5553 33.1945C19.2107 33.0668 17.9589 32.4651 17.0317 31.5009C16.3434 30.6719 15.9781 29.6297 16.001 28.5606Z"
+                            stroke="#200E32"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+​
+                    {/* Number of Notifications */}
+​
+                    {
+                        <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
+                            {yourNotifications?.data?.length}
+                        </p>
+                    }
+​
+                    {/* Modal Of Notification */}
+                    <div
+                        className={`${
+                            !isOpen && "hidden"
+                        } w-96 absolute top-16 right-0 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}
+                    >
+                        {yourNotifications?.data?.map((notification) => (
+                            <div>
+                                <p className="text-xl px-4 py-4 bg-white rounded-md">
+                                    {notification?.message}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
+    {/* ==================== Notification ===================== */}
+
+
+
+      <div>
         <svg
-          onClick={handleNotificationClick}
           xmlns="http://www.w3.org/2000/svg"
           width="52"
           height="52"
@@ -252,31 +356,8 @@ const DashboardNavbar = () => {
             strokeLinejoin="round"
           />
         </svg>
-
-        {/* Number of Notifications */}
-
-        {
-          <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
-            {yourNotifications?.data?.length}
-          </p>
-        }
-
-        {/* Modal Of Notification */}
-        <div
-          className={`${
-            !isOpen && "hidden"
-          } w-96 absolute top-16 right-0 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}
-        >
-          {yourNotifications?.data?.map((notification) => (
-            <div>
-              <p className="text-xl px-4 py-4 bg-white rounded-md">
-                {notification?.message}
-              </p>
-            </div>
-          ))}
-        </div>
       </div>
-      <div className="border py-2 px-3 rounded-lg bg-[white]">
+      <div className="border md:flex hidden py-2 px-3 rounded-lg bg-[white]">
         <Dropdown
           className="bg-white rounded-lg"
           inline
@@ -330,6 +411,7 @@ const DashboardNavbar = () => {
       <div className="translate-x-0 duration-200 absolute z-50 left-0">
         {isCreateWokspace ? (
           <MiniModal
+            workspaceListRef={workspaceListRef}
             handleClose={handleClose}
             setDropdownOpen={setDropdownOpen}
             handleCreateWorkspace={handleCreateWorkspace}
