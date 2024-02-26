@@ -64,7 +64,7 @@ x.current.focus()
     <div>
       <label
         htmlFor="search-task"
-        className="text-sm mt-3 font-medium text-gray-500 block"
+        className="mt-3 mb-1 text-[17px] font-medium text-gray-500 block"
       >
         Filter your tasks
       </label>

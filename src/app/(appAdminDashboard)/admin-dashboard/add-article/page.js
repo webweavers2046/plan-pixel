@@ -1,13 +1,14 @@
 "use client";
 
 import { AuthContext } from "@/Providers/AuthProviders";
-import Image from "next/image";
+
 import { useContext, useState } from "react"; // Import useState
 import { useForm } from "react-hook-form";
 import { HiOutlineArrowUpTray } from "react-icons/hi2";
 import useDateTime from "../Components/Hooks/useDateTime";
-import axios from "axios";
+
 import toast from "react-hot-toast";
+import useAxios from "@/hooks/useAxios";
 
 const page = () => {
     const image_hosting_key = "7e12ab75560d62e6ad9d88e0d09f9e38";
@@ -18,6 +19,8 @@ const page = () => {
         reset,
         formState: { errors },
     } = useForm();
+
+    const axiosAdmin = useAxios();
 
     const { user } = useContext(AuthContext);
     const [uploadFile, setFile] = useState(null); // Initialize state with null
@@ -56,8 +59,8 @@ const page = () => {
                         articleImage_url: result.data.url,
                         avatar_url: user.photoURL,
                     };
-                    axios
-                        .post("http://localhost:5000/api/articles", newArticle)
+                    axiosAdmin
+                        .post("/api/articles", newArticle)
                         .then((res) => {
                             console.log(res.data);
                             toast.success("Add Successfully", {
@@ -80,9 +83,9 @@ const page = () => {
     return (
         <section>
             <h1 className="text-lg font-semibold">Add Article</h1>
-            <div className="border-2 rounded-md p-8 mt-6">
-                <div className="grid grid-cols-10 gap-10">
-                    <div className="col-span-3">
+            <div className="md:border-2 rounded-md md:p-8 mt-6">
+                <div className="grid md:grid-cols-10 gap-10">
+                    <div className="xl:col-span-3 md:col-span-4">
                         <div className="border-2 border-dashed rounded-md w-full h-80 flex items-center justify-center text-center bg-dashboardPrimaryColor/60 relative">
                             {uploadFile ? (
                                 <img
@@ -121,7 +124,7 @@ const page = () => {
                             />
                         </div>
                     </div>
-                    <div className="col-span-7">
+                    <div className="xl:col-span-7 md:col-span-6">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             {/* task name */}
                             <div className="">

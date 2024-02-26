@@ -8,7 +8,6 @@ import calculatePosition from "@/utils/calculate-position";
 import style from "./dnd.module.css";
 import removeAllTaskContainerClasses from "@/utils/removeAllTasksCalsses";
 import useGlobalContext from "@/hooks/useGlobalContext";
-// import useAllTasks from "@/hooks/useAllTasks";
 
 import { AuthContext } from "./AuthProviders";
 import useAllTasks from "@/hooks/useAllTasks";
@@ -27,8 +26,7 @@ export const TaskDndProvider = ({ children }) => {
     position: null,
   });
 
-
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [droppableAreaName, setDroppableAreaName] = useState("");
   const [isDropped, setIsDropped] = useState(false);
   const [draggingTaskId, setDraggingTaskId] = useState(false);
@@ -36,20 +34,19 @@ export const TaskDndProvider = ({ children }) => {
   const xios = useAxios();
 
   // Fetching all tasks from the server
-  const {data : initialTask} = useAllTasks();
+  const { data: initialTask } = useAllTasks();
   const { tasks } = useContext(ablyContext);
 
   // Global context for managing shared data
-  const { newTask,activeWorkspaceTasks } = useGlobalContext();
+  const { newTask, activeWorkspaceTasks } = useGlobalContext();
 
   // Local state for storing all tasks
-  // const [alltasks, setAllTasks] = useState(initialTask);
-  const alltasks = activeWorkspaceTasks
+  const alltasks = activeWorkspaceTasks;
 
   // Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
   useEffect(() => {
     setIsClient(true);
-    alltasks?.push(newTask)
+    alltasks?.push(newTask);
   }, [newTask]);
 
   // Event handler for when dragging starts
@@ -92,7 +89,6 @@ export const TaskDndProvider = ({ children }) => {
     setDragoverTask({ id: draggingTaskId, position });
 
     // Check if any existing task has the same position as the dragging task
-  
   };
 
   // Event handler for when the dragging element is dropped
@@ -125,8 +121,8 @@ export const TaskDndProvider = ({ children }) => {
 
     if (draggingTask) {
       draggingTask.status = droppableArea;
-      draggingTask.position = parseInt(position)
-      draggingTask.updatedAt = new Date()
+      draggingTask.position = parseInt(position);
+      draggingTask.updatedAt = new Date();
     }
 
     if (isDropped) {
@@ -134,7 +130,7 @@ export const TaskDndProvider = ({ children }) => {
     }
 
     // Patch HTTP request to change the state
-    const url = `/updateTaskState?id=${id}&state=${droppableArea}&position=${position}&userEmail=${user?user.email:""}`;
+    const url = `/updateTaskState?id=${id}&state=${droppableArea}&position=${position}&userEmail=${user ? user.email : ""}`;
     xios
       .patch(url)
       .then((data) => {
@@ -151,7 +147,6 @@ export const TaskDndProvider = ({ children }) => {
       });
   };
 
-
   // Scatter the data across components in its network
   const globalData = {
     alltasks,
@@ -166,8 +161,6 @@ export const TaskDndProvider = ({ children }) => {
     dragoverTask,
     droppedAreaName: droppableAreaName,
   };
-
-
 
   // Rendering the component with the provided children
   return (

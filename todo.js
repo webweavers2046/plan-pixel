@@ -47,124 +47,199 @@
 
 
 
+/*
 
 
+// Importing necessary dependencies and utilities
+"use client";
+import React, { createContext, useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import toast from "react-hot-toast";
+import useAxios from "@/hooks/useAxios";
+import calculatePosition from "@/utils/calculate-position";
+import style from "./dnd.module.css";
+import removeAllTaskContainerClasses from "@/utils/removeAllTasksCalsses";
+import useGlobalContext from "@/hooks/useGlobalContext";
+// import useAllTasks from "@/hooks/useAllTasks";
+
+import { AuthContext } from "./AuthProviders";
+import useAllTasks from "@/hooks/useAllTasks";
+import { ablyContext } from "@/components/ably/AblyProvider";
+
+// Global context provider for managing shared state
+export const taskContext = createContext(null);
+
+// Component for managing drag and drop functionality
+export const TaskDndProvider = ({ children }) => {
+  // State management
+  const [dragOverElementName, setDragOverElementName] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragoverTask, setDragoverTask] = useState({
+    id: null,
+    position: null,
+  });
 
 
+  const {user} = useContext(AuthContext)
+  const [droppableAreaName, setDroppableAreaName] = useState("");
+  const [isDropped, setIsDropped] = useState(false);
+  const [draggingTaskId, setDraggingTaskId] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const xios = useAxios();
 
+  // Fetching all tasks from the server
+  const {data : initialTask} = useAllTasks();
+  const { tasks } = useContext(ablyContext);
 
+  // Global context for managing shared data
+  const { newTask,activeWorkspaceTasks } = useGlobalContext();
 
+  // Local state for storing all tasks
+  // const [alltasks, setAllTasks] = useState(initialTask);
+  const alltasks = activeWorkspaceTasks
 
+  // Ensure CSR rendering and avoid running certain code during server-side rendering (SSR) in a Next.js app.
+  useEffect(() => {
+    setIsClient(true);
+    alltasks?.push(newTask)
+  }, [newTask]);
 
+  // Event handler for when dragging starts
+  const draggingStarted = (e, _id) => {
+    setIsDragging(true);
+    setDraggingTaskId(_id);
+    e.dataTransfer.setData("draggingElementId", _id);
+  };
 
+  // Event handler for dragging over an element
+  const draggingOver = (e, _id) => {
+    e.preventDefault();
 
+    setDragOverElementName(e.target.id);
 
+    // Find the closest parent element with the class "task-container"
+    const taskContainer = e.target.closest(".task-container");
+    const allTaskWithClassTaskContainer = document.querySelectorAll(".task-container");
 
+    if (taskContainer) {
+      // Check if the dragged task is over its own container
+      const isDraggedTaskContainer = taskContainer.id !== draggingTaskId;
 
+      if (isDraggedTaskContainer) {
+        allTaskWithClassTaskContainer?.forEach((task) => {
+          if (task.id === task.id) {
+            taskContainer.classList.add(style.dragOverExistingTask);
+          }
+          // Remove the class from all task containers when not dragging over any task
+          task.classList.remove(style.dragOverExistingTask);
+        });
+      }
+    }
 
+    // Calculating the position based on the mouse pointer
+    const mouseY = e.clientY;
+    const droppableRect = e.target.getBoundingClientRect();
+    const position = calculatePosition(alltasks, mouseY, droppableRect);
 
+    setDragoverTask({ id: draggingTaskId, position });
 
-// // Importing necessary dependencies
-// "use client";
-// import { createContext, useEffect, useState } from "react";
-// import Ably from "ably/promises";
-// const ablyKey = process.env.NEXT_PUBLIC_ABLY_KEY;
-
-// // Creating an instance of Ably and obtaining the tasks channel
-// const ably = new Ably.Realtime.Promise({
-//   key: ablyKey,
-// });
-// const ablyChannel = ably.channels.get("tasks");
-
-// // Creating a context for sharing Ably-related data with components
-// export const ablyContext = createContext();
-
-
-// const AblyProvider = ({ children }) => {
-
-//   // State for managing the tasks received from Ably
-//   const [tasks, setTasks] = useState([]);
-//   // state related to workspace
-//   const [allWorkspaces,setAllWrokspaces] = useState([])
-//   const [allWorkspaceMembers,setAllworkspaceMembers] = useState([])
-//   const [allWorkspaceTasks,setAllWorkspaceTasks] = useState([])
-//   const [activeWorkspace,setSetActiveWorkspace] = useState({})
-
-
-//   useEffect(() => {
-//     // Function to connect to Ably
-//     const connectAbly = async () => {
-//       try {
-//         await ably.connect();
-//         console.log("Ably connected!");
-//       } catch (error) {
-//         console.error("Error connecting to Ably:", error);
-//       }
-//     };
-
-
-//     // Calling the connectAbly function
-//     connectAbly();
-
-//     ablyChannel.publish("userEmail", { userEmail: "abc@gmail.com" });
-//     ablyChannel.publish("isTaskDropped", { userEmail: "abc@gmail.com" });
-//     // Ably listener function to handle incoming messages
-//     const ablyListener = (message) => {
-//       // Sorting tasks by position and updatedAt for consistent display
-//       // const sortedTasks = message?.data?.sort((a, b) => {
-//       //   if (a.position !== b.position) {
-//       //     return a.position - b.position;
-//       //   }
-//       //   return new Date(b.updatedAt) - new Date(a.updatedAt);
-//       // });
-
-      
-//       // Updating state with the sorted tasks
-//       // setTasks(sortedTasks);
-//     };
-
-//     // here recieve user workspaces,tasks and member and active workspace. 
-//     ablyChannel.subscribe("workspaces",(message)=> {
-//       const response = message.data
-//       setAllWrokspaces(response.allWorkspaces)
-//       setAllworkspaceMembers(response.allMembersInWorkspace)
-//       setAllWorkspaceTasks(response.allTasksInWorkspace)
-//       setSetActiveWorkspace(response.activeWorkspace)
-//       })
-
-//     // Subscribing to the Ably channel with the ablyListener
-//     ablyChannel.subscribe(ablyListener);
-
-
-
-//     // Cleanup function to unsubscribe from the channel and close the Ably connection
-//     return async () => {
-//       ablyChannel.unsubscribe(ablyListener);
-//       try {
-//         // Closing the Ably connection
-//         // await ably.close();
-//         // console.log("Ably connection closed successfully.");
-//       } catch (error) {
-//         console.error("Error closing Ably connection:", error);
-//       }
-//     };
-//   }, [tasks]);
+    // Check if any existing task has the same position as the dragging task
   
+  };
 
-//   // Distribute all data by 
-//   const distributingData = {
-//     allWorkspaces,
-//     activeWorkspace,
-//     allWorkspaceMembers,
-//     allWorkspaceTasks,
-//     tasks
-//   }
+  // Event handler for when the dragging element is dropped
+  const dropOn = async (e) => {
+    e.preventDefault();
+    const draggingTaskId = e.dataTransfer.getData("draggingElementId");
+    // This will give you the element where the item was dropped
+    const droppableArea = e.target.id;
+    setIsDragging(false);
+    setDragOverElementName(false);
 
-//   // Providing the tasks data to its children through the context
-//   return (
-//     <ablyContext.Provider value={distributingData}>{children}</ablyContext.Provider>
-//   );
-// };
+    // Getting the position from the state
+    const { id, position } = dragoverTask;
 
-// // Exporting the AblyProvider component as the default export
-// export default AblyProvider;
+    // If drop is out of the box
+    if (droppableArea === "" || !isNaN(parseInt(droppableArea))) {
+      setIsDropped(true);
+
+      if (isDropped || !isDragging) {
+        removeAllTaskContainerClasses();
+      }
+      return toast.error("Invalid area");
+    }
+
+    // Setting droppable area name to set state and local
+    // State change for the latest update without delay
+    setDroppableAreaName(droppableArea);
+    setIsDropped(true);
+    let draggingTask = alltasks.find((task) => task._id === draggingTaskId);
+
+    if (draggingTask) {
+      draggingTask.status = droppableArea;
+      draggingTask.position = parseInt(position)
+      draggingTask.updatedAt = new Date()
+    }
+
+    if (isDropped) {
+      removeAllTaskContainerClasses();
+    }
+
+    // Patch HTTP request to change the state
+    const url = `/updateTaskState?id=${id}&state=${droppableArea}&position=${position}&userEmail=${user?user.email:""}`;
+    xios
+      .patch(url)
+      .then((data) => {
+        const actualData = data.data;
+        if (actualData.updated.modifiedCount > 0) {
+          setDroppableAreaName(droppableArea);
+          return toast.success(`Changed to ${actualData.state}`, {
+            position: "top-right",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+
+  // Scatter the data across components in its network
+  const globalData = {
+    alltasks,
+    draggingStarted,
+    dropOn,
+    draggingOver,
+    isDropped,
+    isDragging,
+    draggingTaskId,
+    dragOverElementName,
+    // position and id
+    dragoverTask,
+    droppedAreaName: droppableAreaName,
+  };
+
+
+
+  // Rendering the component with the provided children
+  return (
+    <taskContext.Provider value={globalData}>
+      {isClient && children}
+    </taskContext.Provider>
+  );
+};
+
+// PropTypes for the TaskDndProvider component
+TaskDndProvider.propTypes = {
+  children: PropTypes.node,
+};
+
+// Exporting the TaskDndProvider component as the default export
+export default TaskDndProvider;
+
+
+*/
+
+
+
+

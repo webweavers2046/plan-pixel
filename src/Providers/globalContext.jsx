@@ -4,7 +4,7 @@ import useAxios from "@/hooks/useAxios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "./AuthProviders";
-import Spinner from "@/components/Common/CommonModal/Spinner";
+import { ablyContext } from "@/components/ably/AblyProvider";
 
 export const globalContext = createContext(null);
 const GlobalContext = ({ children }) => {
@@ -12,11 +12,19 @@ const GlobalContext = ({ children }) => {
     const [newTask, setNewTask] = useState("");
     const xios = useAxios();
     const { user } = useContext(AuthContext);
-
+    
     const [clickedWorkspaceId, setClickedWorkspaceId] = useState([]);
     const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false);
 
-    // Workspace related states
+
+// Archived tasks state
+  const [archivedTasks,setArchivedTasks] =  useState([])
+  const [archiveTaskId, setArchiveTaskId] = useState("")
+  const [isTogglerEnabled,setIsTogglerEnabled] = useState(false)
+
+  //Add member openning a modal
+  const [WillAddMember, setWillAddMember] = useState(false);
+
     const [activeWorkspace, setActiveWorkspace] = useState({});
     const [userWokspaceList, setUserWokspaceList] = useState([]);
     const [activeWorkspaceTasks, setActiveWorkspaceTasks] = useState([]);
@@ -25,17 +33,28 @@ const GlobalContext = ({ children }) => {
     const [isUserHistoryStored, setIsUserHistoryStored] = useState(false);
     const [searchQueryFromHistory, setSearchQueryFromHistory] = useState("");
 
-    const [loading, setLoading] = useState(true);
-    let isMounted = true;
-    const [userSearchHistory, setUserSearchHistory] = useState([]);
 
-    // this function fetch the latest data
-    const fetchLatestData = async () => {
-        try {
-            const userWorkspaces = await xios.get(
-                `/api/active-workspace?userEmail=${user && user.email}`
-            );
-            console.log("Server Response:", userWorkspaces.data);
+    // Get real time tasks state using ably 
+    const {allWorkspaceTasks} = useContext(ablyContext)
+
+    
+
+  // Tab view 
+  const [isActive,setIsActive] = useState("all-tasks")
+  // when click in filterd task to scrolled into view
+  const [shouldScrollIntoView,setShouldScrollIntoView] = useState(false)
+  
+  //see..
+  const [loading, setLoading] = useState(true);
+  let isMounted = true;
+  const [userSearchHistory,setUserSearchHistory] = useState([])
+
+// this function fetch the latest data 
+const fetchLatestData = async () => {
+  try {
+    const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
+
+   
 
             // Only when component mounted trigger to set the latest data
             if (isMounted) {
@@ -55,6 +74,15 @@ const GlobalContext = ({ children }) => {
         }
     };
 
+
+
+// get all the arvhived data
+const fetchArchivedData = async()=>  {
+    const response = await xios.get("/api/read/archive-tasks")
+    setArchivedTasks(response.data)
+  }
+
+
     // this funciton fetch the latest user search history
     const fetchUserSearchHistory = async () => {
         const response = await xios.get(
@@ -71,6 +99,7 @@ const GlobalContext = ({ children }) => {
     // fetch lates workspace related content and user history based on dependencies
     useEffect(() => {
         fetchLatestData();
+        fetchArchivedData()
         fetchUserSearchHistory();
         return () => {
             isMounted = false;
@@ -80,11 +109,24 @@ const GlobalContext = ({ children }) => {
         clickBaseFilterTaskId,
         isUserHistoryStored,
         searchQueryFromHistory,
+        shouldScrollIntoView
     ]);
+
+    useEffect(()=> {
+        if(allWorkspaceTasks?.length > 0) {
+            setActiveWorkspaceTasks(allWorkspaceTasks)
+        } else {
+            fetchLatestData()
+        }
+
+    },[
+        // allWorkspaceTasks
+    ])
+
 
     // if (loading) return <Spinner />;
 
-    // This funciton will create a new task in the task collection
+    // This function will create a new task in the task collection
     const handleCreateTask = async (
         newTask,
         setOpenModal,
@@ -103,10 +145,11 @@ const GlobalContext = ({ children }) => {
         }
     };
 
+
     // Workspace data hanler
     const handleActiveWorkspace = async (e, _id) => {
         setClickedWorkspaceId(_id);
-        console.log(user?.email);
+        // console.log("__________________________", user?.email);
         await xios.get(
             `/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${
                 user?.email
@@ -164,6 +207,8 @@ const GlobalContext = ({ children }) => {
             { userEmail: user?.email, workspaceId }
         );
         setClickBaseFilterTaskId(taskId);
+        setIsActive("all-tasks")
+        setShouldScrollIntoView(true)
         if (response?.data.modifiedCount > 0) {
             fetchLatestData();
         }
@@ -182,27 +227,93 @@ const GlobalContext = ({ children }) => {
     };
 
 
+    // Archive handler 
+// handle unArchiving single task
+const handleUnarchive = async() => {
+
+    const info = {
+        taskId:archiveTaskId
+    }
+    const filteredTasks = archivedTasks?.filter(task => task?.taskId !== archiveTaskId)
+    setArchivedTasks(filteredTasks)
+    const response = await xios.post(`/api/tasks/archive`,info)
+    console.log(response.data)
+  }
+  
+  
+  // handle multi-select archive (from the task.jsx)
+  const handleMultipleArchive = async() => {
+    const AllSelectedTaskstoArchive= JSON.parse(localStorage.getItem('selectedTasks')) || [];
+    // sending api request to archive multiple tasks
+    const response = await xios.post(`/api/tasks/archive?isArchive=${true}`,AllSelectedTaskstoArchive)
+  
+    if(response.data.insertedCount >= 1 ){
+      fetchLatestData()
+      fetchArchivedData()
+      toast.success("Archived",{position:"top-right"})
+      setIsActive("archived-tasks")
+      
+      
+    localStorage.removeItem("selectedTasks");
+    }
+  }
+  // handle multi-select archive (from the task.jsx)
+  const handleMultipleUnArchive = async() => {
+    const AllSelectedTaskstoUnArchive = JSON.parse(localStorage.getItem('unarchiveTaskIds')) || [];
+    // sending api request to archive multiple tasks
+    const response = await xios.post(`/api/tasks/archive`,AllSelectedTaskstoUnArchive)
+  
+    if(response.data.deletedCount >= 1 ){
+      fetchLatestData()
+      fetchArchivedData()
+      toast.success("unArchived",{position:"top-right"})
+      setIsActive("all-tasks")
+    localStorage.removeItem("unarchiveTaskIds");
+    }
+  }
+
+
+
+
+    // Meeting page
+    const handleCreateMeeting = async (meeting) => {
+        console.log(meeting);
+        const response = await xios.post("/api/meetings", meeting);
+        if (response.data.insertedId) {
+            toast.success("Meeting created", { position: "top-center" });
+        }
+    };
+
+    const handleDeleteMeeting = async (id) => {
+        const response = await xios.delete(`/api/meetings/${id}`);
+
+        if (response.data.deletedCount > 0) {
+            toast.success("Meeting deleted", { position: "top-center" });
+        }
+    };
 
     // Notification Informations
 
-    const [notifications, setNotifications] = useState()
+    const [notifications, setNotifications] = useState();
 
-
-    const notificationsFetch = async() => {
+    const notificationsFetch = async () => {
         try {
-            const activeWorkspaceReal = await xios.get(`/api/workspaces/active/${user?.email}`)
-            // console.log(activeWorkspaceReal);
-            const notifications = await xios.get(
-                `/api/notifications/${activeWorkspaceReal.data._id}`
-            );
-            setNotifications(notifications);
+            // const activeWorkspaceReal = await xios.get(
+            //     `/api/workspaces/active/${user?.email}`
+            // );
+            // // console.log(activeWorkspaceReal);
+            // const notifications = await xios.get(
+            //     `/api/notifications/${activeWorkspaceReal.data?._id}`
+            // );
+            // setNotifications(notifications);
         } catch (error) {
             console.log(error);
         }
-    }
-    notificationsFetch()
+    };
+    // console.log(user?.email);
+    notificationsFetch();
     console.log(notifications);
-
+    // console.log(activeWorkspaceTasks);
 
     const data = {
         activeWorkspace,
@@ -225,6 +336,23 @@ const GlobalContext = ({ children }) => {
         handleHistoryClick,
         setSearchQueryFromHistory,
         searchQueryFromHistory,
+        setWillAddMember,
+        WillAddMember,
+            
+        // tab view / archive data
+        setIsActive,
+        isActive, 
+        archivedTasks,
+        fetchArchivedData,
+        handleUnarchive,
+        setArchiveTaskId,
+        setIsTogglerEnabled,
+        isTogglerEnabled,
+        handleMultipleArchive,
+        handleMultipleUnArchive,
+        shouldScrollIntoView,
+        setShouldScrollIntoView,
+
 
         handleCreateTask,
         newTask,
@@ -237,13 +365,15 @@ const GlobalContext = ({ children }) => {
         isWorkspaceSwitched,
         handleDeleteWorkspace,
 
+        handleCreateMeeting,
+        handleDeleteMeeting,
 
-        notifications
+        notifications,
     };
 
     return (
         <globalContext.Provider value={data}>{children}</globalContext.Provider>
     );
-};
-
+    
+}
 export default GlobalContext;
