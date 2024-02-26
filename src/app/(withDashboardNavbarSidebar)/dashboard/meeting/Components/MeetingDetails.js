@@ -13,11 +13,12 @@ const MeetingDetails = ({
   singleMeeting,
   meetings,
   setSingleMeeting,
-  // refetch,
+  refetch,
+
 }) => {
   const xios = useAxios();
   console.log(singleMeeting);
-  const { data, refetch } = useAllMeetings();
+  // const { data, refetch } = useAllMeetings();
 
   const handleMeetingDelete = (id) => {
     console.log("delete id", id);
@@ -37,16 +38,10 @@ const MeetingDetails = ({
             toast.success("Meeting deleted", { position: "top-center" });
 
             setSingleMeeting();
+            refetch();
           }
         });
-        // console.log(response);
-
-        // refetch();
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Meeting has been deleted.",
-        //   icon: "success",
-        // });
+        
       }
     });
   };

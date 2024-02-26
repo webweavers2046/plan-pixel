@@ -7,7 +7,7 @@ import { GoPlus } from "react-icons/go";
 import { Modal } from "flowbite-react";
 import Image from "next/image";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import  '@/styles/globals.css'
+
 const Meeting = () => {
   const [openModal, setOpenModal] = useState(false);
   // const { data: allMeetings, refetch } = useAllMeetings();
@@ -32,7 +32,7 @@ const Meeting = () => {
     }
   };
   const changeDiv =() =>{
-document.getElementById("hello").className="bg-effect"
+    
   }
 
   return (
@@ -87,7 +87,7 @@ document.getElementById("hello").className="bg-effect"
 
             <div className=" mt-6">
               {allMeetings?.map((meeting, idx) => (
-                <div id="hello"
+                <div
                   className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC05]/25 transition duration-300 ${
                     idx === 1 && "bg-[#FBBC05]/25 border-[#FBBC05] border-2"
                   } my-2 flex items-center justify-between`}
