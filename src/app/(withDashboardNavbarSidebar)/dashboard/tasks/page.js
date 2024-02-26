@@ -3,7 +3,7 @@
 import "@/styles/globals.css";
 import { LuListTodo } from "react-icons/lu";
 import { FiPlusSquare } from "react-icons/fi";
-import { BsCheck2Square, BsFastForwardFill } from "react-icons/bs";
+import { BsCheck2Square} from "react-icons/bs";
 import { FaChartGantt } from "react-icons/fa6";
 import Task from "./Task";
 import { useContext, useState } from "react";
@@ -21,11 +21,21 @@ import { FaRegFileArchive } from "react-icons/fa";
 import { HiOutlineArchiveBox } from "react-icons/hi2";
 import { GoTasklist } from "react-icons/go";
 import ArchivedTasks from "../Components/ArchivedTasks/ArchivedTasks";
+import Toggler from "@/components/Common/CommonModal/Toggler";
+import useAxios from "@/hooks/useAxios";
+import ListBoxDropdown from "@/components/Common/ListBoxDropdown/ListBoxDropdown";
+
+import { RiMenu2Line } from "react-icons/ri";
+import MobileMenu from "../Components/ArchivedTasks/MobileMenu";
+
+
+
 
 const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [isArchiveMenuOpen, setIsArchiveMenu] = useState(false);
 
   const {
     alltasks,
@@ -35,16 +45,21 @@ const Tasks = () => {
     isDragging,
     draggingTaskId,
   } = useDNDcontext();
+
+  // Axios for data fetching
+  const xios = useAxios()
+
   // const { data: alltasks } = useAllTasks();
 
   const { allWorkspaceTasks } = useContext(ablyContext);
-  const { activeWorkspaceTasks, setIsActive, isActive } =
+  const { activeWorkspaceTasks, setIsActive, isActive,handleMultipleArchive,handleMultipleUnArchive} =
     useContext(globalContext);
 
   if (!activeWorkspaceTasks) return;
 
   const workspaceAllTasks =
     activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
+    // console.log('all tasks of workspace',workspaceAllTasks);
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(
@@ -72,13 +87,14 @@ const Tasks = () => {
     dragOverElementName
   );
 
-  const { activeWorkspace } = useGlobalContext();
+  const { activeWorkspace,isTogglerEnabled,setIsTogglerEnabled } = useGlobalContext();
   const { title, description } = activeWorkspace || {
     title: "Your board",
     description: "hello there it is your demo board ",
   };
   const [openFilter, setOpenFilter] = useState(false);
 
+  
 
   return (
     <>
@@ -91,8 +107,11 @@ const Tasks = () => {
               {title ? title : "your board"}
             </h6>
           </div>
-          <div className="relative items-center  flex bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1   border-white/50">
-            <div className="flex gap-3 text-[16px]">
+
+          <RiMenu2Line onClick={()=> setIsArchiveMenu(!isArchiveMenuOpen)} className="flex cursor-pointer md:hidden absolute right-2 z-50 "/>
+
+          <div className={`md:relative -mt-8  hidden md:flex items-center  bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1 border-white/50`}>
+            <div className=" flex  gap-3 text-[16px]">
               <div
                 onClick={() => setIsActive("all-tasks")}
                 className={`flex items-center gap-1 ${
@@ -111,6 +130,7 @@ const Tasks = () => {
                 <HiOutlineArchiveBox/>
                 Archived tasks
               </div>
+              {/* <ListBoxDropdown/> */}
             </div>
             <div className="flex justify-end gap-2 lg:w-72 items-center">
               <div
@@ -142,8 +162,25 @@ const Tasks = () => {
               >
                 <FiPlusSquare className="inline mb-1 me-2 text-xl" /> Add Task
               </button>
+
+
+              <div>
+                <Toggler enabled={isTogglerEnabled} setEnabled={setIsTogglerEnabled}/>
+              </div>
             </div>
           </div>
+
+
+        {/* Mobile Menu */}
+        {
+          <div className={`${isArchiveMenuOpen?"w-72 ":"opacity-0 w-0 invisible"} duration-300 transition-all`}>
+            <MobileMenu setOpenFilter={setOpenFilter} openFilter={openFilter} openModal={openModal} setOpenModal={setOpenModal}/>
+
+          </div>
+
+        }
+
+
 
           <div
             className={` ${
@@ -156,6 +193,8 @@ const Tasks = () => {
               <div
                 className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-2 mt-6 min-h-screen`}
               >
+
+
                 {/* upcoming task */}
                 <div
                   droppable="true"
@@ -322,6 +361,12 @@ const Tasks = () => {
           ></TaskModal>
 
           <CardDetailsModal></CardDetailsModal>
+          {
+                isTogglerEnabled &&
+                <button onClick={ isActive === "all-tasks"? handleMultipleArchive:handleMultipleUnArchive} className="bg-rose-600 fixed bottom-8 right-2 z-50 text-white p-2 rounded-lg">{
+                  isActive === "all-tasks"?"Archive multiple":"Unarchive multiple"
+                } </button>
+          }
         </section>
       )}
     </>
