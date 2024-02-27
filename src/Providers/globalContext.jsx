@@ -78,14 +78,14 @@ const fetchLatestData = async () => {
 
 // get all the arvhived data
 const fetchArchivedData = async()=>  {
-    const response = await xios.get("/api/read/archive-tasks")
-    setArchivedTasks(response.data)
+    const response = await xios?.get("/api/read/archive-tasks")
+    setArchivedTasks(response?.data)
   }
 
 
     // this funciton fetch the latest user search history
     const fetchUserSearchHistory = async () => {
-        const response = await xios.get(
+        const response = await xios?.get(
             `/api/user/search-history/${user && user.email}`
         );
         if (isMounted) {
