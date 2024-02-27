@@ -275,45 +275,46 @@ const handleUnarchive = async() => {
 
 
 
-    // Meeting page
-    const handleCreateMeeting = async (meeting) => {
-        console.log(meeting);
-        const response = await xios.post("/api/meetings", meeting);
-        if (response.data.insertedId) {
-            toast.success("Meeting created", { position: "top-center" });
-        }
-    };
+    
 
-    const handleDeleteMeeting = async (id) => {
-        const response = await xios.delete(`/api/meetings/${id}`);
 
-        if (response.data.deletedCount > 0) {
-            toast.success("Meeting deleted", { position: "top-center" });
-        }
-    };
+
 
     // Notification Informations
 
     const [notifications, setNotifications] = useState();
 
-    const notificationsFetch = async () => {
-        try {
-            const activeWorkspaceReal = await xios.get(
-                `/api/workspaces/active/${user?.email}`
-            );
-            // console.log(activeWorkspaceReal);
-            const notifications = await xios.get(
-                `/api/notifications/${activeWorkspaceReal.data?._id}`
-            );
-            setNotifications(notifications);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    
+    
     // console.log(user?.email);
-    notificationsFetch();
+
+
+
+    // active workspace for notification
+    const [activeWorkspaceReal, setActiveWorkspaceReal] = useState({})
+    useEffect(()=> {
+        fetch(
+            `https://plan-pixel-backend.vercel.app/api/workspaces/active/${user?.email}`
+        )
+        .then(res=> res.json())
+        .then((data)=> {
+            setActiveWorkspaceReal(data);
+            console.log(data);
+        })
+    },[user])
+
+    useEffect(()=> {
+            fetch(
+                `https://plan-pixel-backend.vercel.app/api/notifications/${activeWorkspaceReal?._id}`
+            )
+            .then(res=> res.json())
+            .then((data) => {
+                setNotifications(data)
+                console.log(data);
+            })
+    }, [activeWorkspaceReal])
     console.log(notifications);
-    console.log(activeWorkspaceTasks);
+    console.log(activeWorkspaceReal);
 
     const data = {
         activeWorkspace,
@@ -365,10 +366,10 @@ const handleUnarchive = async() => {
         isWorkspaceSwitched,
         handleDeleteWorkspace,
 
-        handleCreateMeeting,
-        handleDeleteMeeting,
+       
 
         notifications,
+        activeWorkspaceReal
     };
 
     return (
