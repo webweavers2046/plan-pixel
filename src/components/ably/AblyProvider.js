@@ -56,6 +56,7 @@ const AblyProvider = ({ children }) => {
       setSetActiveWorkspace(response.activeWorkspace)
       })
 
+      // console.log(activeWorkspace);
     // Subscribing to the Ably channel with the ablyListener
     ablyChannel.subscribe(ablyListener);
 

@@ -49,8 +49,8 @@ const CardDetailsModal = () => {
                         </svg>
                     </button>
                 </div>
-                <div className="flex justify-between gap-6 h-full py-4 pl-12 pr-8">
-                    <div className="space-y-3 w-[90%]">
+                <div className="flex justify-between w-full  h-full py-4 pl-12 pr-8 gap-6">
+                    <div className="space-y-3 w-full">
                         {/* card name, description and other info */}
                         <p className="text-2xl font-semibold">{card?.title}</p>
                         <p>{card?.description}</p>

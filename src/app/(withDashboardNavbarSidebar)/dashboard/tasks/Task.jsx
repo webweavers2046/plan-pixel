@@ -5,6 +5,7 @@ import member02Img from "@/assets/team-members/mazharul.jpg";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
+import { GrTasks } from "react-icons/gr";
 import { FaEquals, FaStopwatch } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Image from "next/image";
@@ -43,7 +44,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
   const [isArchived, setIsArchived] = useState(false);
 
   const handleDeleteTask = (id) => {
-    console.log(id);
+    // console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -209,8 +210,8 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
         </p>
       </div>
       <hr className="mt-5 bg-black/15 h-[2px]" />
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex -space-x-4 rtl:space-x-reverse">
+      <div className="flex items-center mt-4 justify-end">
+        {/* <div className="flex -space-x-4 rtl:space-x-reverse">
           <Image
             width={30}
             height={30}
@@ -239,9 +240,10 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
             src={member04Img}
             alt=""
           />
-        </div>
+        </div> */}
+        {/* <p></p> */}
         <button onClick={handleCard}>
-          <BiSolidMessageSquareDetail className="text-xl opacity-40" />
+          <GrTasks className="text-xl opacity-40" />
         </button>
         {/* Are you sure modal ( do you wanna archive this task?) */}
         <AreYouSureModal

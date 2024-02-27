@@ -40,7 +40,7 @@ const GlobalContext = ({ children }) => {
     
 
   // Tab view 
-  const [isActive,setIsActive] = useState("archived-tasks")
+  const [isActive,setIsActive] = useState("all-tasks")
   // when click in filterd task to scrolled into view
   const [shouldScrollIntoView,setShouldScrollIntoView] = useState(false)
   
@@ -58,13 +58,13 @@ const fetchLatestData = async () => {
 
             // Only when component mounted trigger to set the latest data
             if (isMounted) {
-                setActiveWorkspace(userWorkspaces.data.activeWorkspace);
-                setUserWokspaceList(userWorkspaces.data.userWokspaceList);
+                setActiveWorkspace(userWorkspaces?.data?.activeWorkspace);
+                setUserWokspaceList(userWorkspaces?.data?.userWokspaceList);
                 setActiveWorkspaceMembers(
-                    userWorkspaces.data.activeWorkspaceMembers
+                    userWorkspaces?.data?.activeWorkspaceMembers
                 );
                 setActiveWorkspaceTasks(
-                    userWorkspaces.data.activeWorkspaceTasks
+                    userWorkspaces?.data?.activeWorkspaceTasks
                 );
                 setLoading(false);
             }
@@ -78,14 +78,14 @@ const fetchLatestData = async () => {
 
 // get all the arvhived data
 const fetchArchivedData = async()=>  {
-    const response = await xios.get("/api/read/archive-tasks")
-    setArchivedTasks(response.data)
+    const response = await xios?.get("/api/read/archive-tasks")
+    setArchivedTasks(response?.data)
   }
 
 
     // this funciton fetch the latest user search history
     const fetchUserSearchHistory = async () => {
-        const response = await xios.get(
+        const response = await xios?.get(
             `/api/user/search-history/${user && user.email}`
         );
         if (isMounted) {
@@ -119,12 +119,14 @@ const fetchArchivedData = async()=>  {
             fetchLatestData()
         }
 
-    },[allWorkspaceTasks])
+    },[
+        // allWorkspaceTasks
+    ])
 
 
     // if (loading) return <Spinner />;
 
-    // This funciton will create a new task in the task collection
+    // This function will create a new task in the task collection
     const handleCreateTask = async (
         newTask,
         setOpenModal,
@@ -147,7 +149,7 @@ const fetchArchivedData = async()=>  {
     // Workspace data hanler
     const handleActiveWorkspace = async (e, _id) => {
         setClickedWorkspaceId(_id);
-        console.log("__________________________", user?.email);
+        // console.log("__________________________", user?.email);
         await xios.get(
             `/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${
                 user?.email
@@ -205,7 +207,7 @@ const fetchArchivedData = async()=>  {
             { userEmail: user?.email, workspaceId }
         );
         setClickBaseFilterTaskId(taskId);
-        setIsActive("all-tasks")
+        // setIsActive("all-tasks")
         setShouldScrollIntoView(true)
         if (response?.data.modifiedCount > 0) {
             fetchLatestData();
@@ -249,7 +251,7 @@ const handleUnarchive = async() => {
       fetchLatestData()
       fetchArchivedData()
       toast.success("Archived",{position:"top-right"})
-      setIsActive("archived-tasks")
+    //   setIsActive("archived-tasks")
       
       
     localStorage.removeItem("selectedTasks");
@@ -291,20 +293,22 @@ const handleUnarchive = async() => {
 
     const notificationsFetch = async () => {
         try {
-            // const activeWorkspaceReal = await xios.get(
-            //     `/api/workspaces/active/${user?.email}`
-            // );
-            // // console.log(activeWorkspaceReal);
-            // const notifications = await xios.get(
-            //     `/api/notifications/${activeWorkspaceReal.data?._id}`
-            // );
-            // setNotifications(notifications);
+            const activeWorkspaceReal = await xios.get(
+                `/api/workspaces/active/${user?.email}`
+            );
+            // console.log(activeWorkspaceReal);
+            const notifications = await xios.get(
+                `/api/notifications/${activeWorkspaceReal.data?._id}`
+            );
+            setNotifications(notifications);
         } catch (error) {
             console.log(error);
         }
     };
+    // console.log(user?.email);
     notificationsFetch();
     console.log(notifications);
+    console.log(activeWorkspaceTasks);
 
     const data = {
         activeWorkspace,
