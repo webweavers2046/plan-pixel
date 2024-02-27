@@ -42,7 +42,7 @@ const DashboardNavbar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const xios = useAxios();
   const { fetchLatestData } = useContext(globalContext);
-  const [notification, setNotification] = useState(true); // Keep this for the original notification
+  // const [notification, setNotification] = useState(true); // Keep this for the original notification
 
   // Notification Modal State
   const [isOpen, setIsOpen] = useState(false);
@@ -54,9 +54,10 @@ const DashboardNavbar = () => {
 
   // notification Sorting
   const [yourNotifications, setYourNotifications] = useState([]);
+  console.log(notifications);
   useEffect(() => {
-    if (notifications?.data) {
-      const newNotifications = notifications?.data?.filter(
+    if (notifications) {
+      const newNotifications = notifications?.filter(
         (notification) => {
           return (
             notification.user === "all" ||
@@ -66,9 +67,14 @@ const DashboardNavbar = () => {
       );
 
       setYourNotifications(newNotifications);
+      console.log(yourNotifications);
     }
-  }, [notifications, user]);
+    else{
+      setYourNotifications([])
+    }
+  }, [notifications, user, activeWorkspace]);
 
+console.log(activeWorkspace);
   // console.log(yourNotifications);
   // console.log(notifications);
 
@@ -306,7 +312,8 @@ const DashboardNavbar = () => {
 
         {
           <p className="absolute -right-1 -top-3 font-bold text-2xl text-green-400">
-            {yourNotifications?.data?.length}
+            {yourNotifications?.length}
+            
           </p>
         }
 
@@ -315,13 +322,22 @@ const DashboardNavbar = () => {
           className={`${!isOpen && "hidden"
             } w-96 absolute top-16 right-0 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}
         >
-          {yourNotifications?.data?.map((notification) => (
+        {
+          yourNotifications?.length > 0 ? 
+
+          yourNotifications?.map((notification) => (
             <div>
               <p className="text-xl px-4 py-4 bg-white rounded-md">
                 {notification?.message}
               </p>
             </div>
-          ))}
+          ))
+
+          : <div className="h-[60vh] flex justify-center items-center">
+            <h2>No Notifications Available</h2>
+          </div>
+        }
+          
         </div>
       </div>
 
