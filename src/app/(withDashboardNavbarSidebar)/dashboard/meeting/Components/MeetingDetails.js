@@ -14,12 +14,12 @@ const MeetingDetails = ({
   meetings,
   setSingleMeeting,
   refetch,
-
 }) => {
   const xios = useAxios();
   console.log(singleMeeting);
   // const { data, refetch } = useAllMeetings();
-
+  const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
+  console.log(activeWorkspace?.title);
   const handleMeetingDelete = (id) => {
     console.log("delete id", id);
 
@@ -41,7 +41,6 @@ const MeetingDetails = ({
             refetch();
           }
         });
-        
       }
     });
   };
@@ -52,7 +51,9 @@ const MeetingDetails = ({
       <div className="">
         <div className="pt-6">
           <h2 className="text-5xl font-semibold">
-            {singleMeeting?.newMeeting?.title}
+            {activeWorkspace?.title ===
+              singleMeeting?.newMeeting?.activeWorkspace?.title &&
+              singleMeeting?.newMeeting?.title}
           </h2>
         </div>
         <div className="grid grid-cols-4 gap-6 my-10">
@@ -63,7 +64,9 @@ const MeetingDetails = ({
             <div className="">
               <p className="opacity-75 mb-0">Date:</p>
               <h5 className="text-lg font-semibold -mt-1">
-                {singleMeeting?.newMeeting?.date}
+                {activeWorkspace?.title ===
+                  singleMeeting?.newMeeting?.activeWorkspace?.title &&
+                  singleMeeting?.newMeeting?.date}
               </h5>
             </div>
           </div>
@@ -74,7 +77,9 @@ const MeetingDetails = ({
             <div className="">
               <p className="opacity-75 mb-0">Time:</p>
               <h5 className="text-lg font-semibold -mt-1">
-                {singleMeeting?.newMeeting?.time}
+                {activeWorkspace?.title ===
+                  singleMeeting?.newMeeting?.activeWorkspace?.title &&
+                  singleMeeting?.newMeeting?.time}
               </h5>
             </div>
           </div>
@@ -85,7 +90,9 @@ const MeetingDetails = ({
             <div className="">
               <p className="opacity-75 mb-0">Platform:</p>
               <h5 className="text-lg font-semibold -mt-1">
-                {singleMeeting?.newMeeting?.platform}
+                {activeWorkspace?.title ===
+                  singleMeeting?.newMeeting?.activeWorkspace?.title &&
+                  singleMeeting?.newMeeting?.platform}
               </h5>
             </div>
           </div>
@@ -95,7 +102,11 @@ const MeetingDetails = ({
               <a
                 className="text-lg hover:text-green-400 transition duration-300"
                 target="_blank"
-                href={singleMeeting?.newMeeting?.link}
+                href={
+                  activeWorkspace?.title ===
+                    singleMeeting?.newMeeting?.activeWorkspace?.title &&
+                  singleMeeting?.newMeeting?.link
+                }
               >
                 Join Now
               </a>
@@ -104,28 +115,30 @@ const MeetingDetails = ({
         </div>
         <div className="border-y-2">
           <div className="">
-            {singleMeeting?.newMeeting?.member?.map((member, idx) => (
-              <div
-                className="flex items-center justify-between py-4 px-10 border-b"
-                key={idx}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="">
-                    <Image
-                      width={40}
-                      height={40}
-                      className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                      src={member.image}
-                      alt=""
-                    />
+            {activeWorkspace?.title ===
+              singleMeeting?.newMeeting?.activeWorkspace?.title &&
+              singleMeeting?.newMeeting?.member?.map((member, idx) => (
+                <div
+                  className="flex items-center justify-between py-4 px-10 border-b"
+                  key={idx}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="">
+                      <Image
+                        width={40}
+                        height={40}
+                        className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+                        src={member.image}
+                        alt=""
+                      />
+                    </div>
+                    <h2 className="text-lg font-semibold">{member.name}</h2>
                   </div>
-                  <h2 className="text-lg font-semibold">{member.name}</h2>
+                  <div className="opacity-40 font-semibold">
+                    <p className="">{member.email}</p>
+                  </div>
                 </div>
-                <div className="opacity-40 font-semibold">
-                  <p className="">{member.email}</p>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
         <div className="pt-6 text-end">

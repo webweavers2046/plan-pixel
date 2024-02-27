@@ -275,14 +275,7 @@ const handleUnarchive = async() => {
 
 
 
-    // Meeting page
-    const handleCreateMeeting = async (meeting) => {
-        console.log(meeting);
-        const response = await xios.post("/api/meetings", meeting);
-        if (response.data.insertedId) {
-            toast.success("Meeting created", { position: "top-center" });
-        }
-    };
+    
 
 
 
@@ -359,8 +352,6 @@ const handleUnarchive = async() => {
         setSwitchWorkspace,
         isWorkspaceSwitched,
         handleDeleteWorkspace,
-
-        handleCreateMeeting,
 
         notifications
     };

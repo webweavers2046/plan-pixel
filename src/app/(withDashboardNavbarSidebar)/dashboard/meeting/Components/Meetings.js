@@ -2,11 +2,6 @@
 
 import { Modal } from "flowbite-react";
 import { GoPlus } from "react-icons/go";
-import member01Img from "@/assets/team-members/sami.jpg";
-import member02Img from "@/assets/team-members/mazharul.jpg";
-import member03Img from "@/assets/team-members/rahim.jpg";
-import member04Img from "@/assets/team-members/shakil.jpg";
-import modalImage from "@/assets/meeting.png";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -71,9 +66,8 @@ const Meetings = () => {
         {activeWorkspace.title === allMeetings.newMeeting.activeWorkspace.title &&
           allMeetings?.map((meeting, idx) => (
             <div
-              className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC05]/25 transition duration-300 ${
-                idx === 1 && "bg-[#FBBC05]/25 border-[#FBBC05] border-2"
-              } my-2 flex items-center justify-between`}
+              className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC05]/25 transition duration-300
+                my-2 flex items-center justify-between`}
               key={idx}
               onClick={() => showDetails(meeting._id)}
             >

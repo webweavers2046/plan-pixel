@@ -66,11 +66,8 @@ const DashboardNavbar = () => {
       );
 
       setYourNotifications(newNotifications);
-      setYourNotifications(newNotifications);
     }
   }, [notifications, user]);
-  }, [notifications, user]);
-
   // console.log(yourNotifications);
   // console.log(notifications);
 

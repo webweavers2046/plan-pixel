@@ -20,20 +20,12 @@ const Meeting = () => {
   // console.log(singleMeeting, "single meetings");
 
   const showDetails = (id, meeting) => {
-    // console.log(id);
-    // setId(id);
-    if (
-      activeWorkspace.title === meeting.newMeeting.activeWorkspace.title
-    ) {
-      const remainingMeetings = allMeetings.find(
-        (meeting) => meeting._id === id
-      );
-      setSingleMeeting(remainingMeetings);
-    }
+  
+    const remainingMeetings = allMeetings.find((meeting) => meeting._id === id);
+    activeWorkspace.title === meeting.newMeeting.activeWorkspace.title
+      ? setSingleMeeting(remainingMeetings)
+      : setSingleMeeting([]);
   };
-  const changeDiv =() =>{
-    
-  }
 
   return (
     <section className="px-4">
@@ -87,12 +79,14 @@ const Meeting = () => {
 
             <div className=" mt-6">
               {allMeetings?.map((meeting, idx) => (
+
+                
                 <div
-                  className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC05]/25 transition duration-300 ${
-                    idx === 1 && "bg-[#FBBC05]/25 border-[#FBBC05] border-2"
-                  } my-2 flex items-center justify-between`}
+                  className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC05]/25 transition duration-300  my-2 flex items-center justify-between shadow-md`}
                   key={idx}
-                  onClick={() => {showDetails(meeting._id, meeting), changeDiv()}}
+                  onClick={() => {
+                    showDetails(meeting._id, meeting);
+                  }}
                 >
                   <div className="">
                     <h3 className="text-lg font-semibold">

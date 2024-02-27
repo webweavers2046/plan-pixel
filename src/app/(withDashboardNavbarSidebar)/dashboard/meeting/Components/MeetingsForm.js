@@ -1,14 +1,17 @@
 "use client";
 
+import useAxios from "@/hooks/useAxios";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
-  const { activeWorkspaceMembers, activeWorkspace, handleCreateMeeting } =
+  const { activeWorkspaceMembers, activeWorkspace } =
     useGlobalContext();
 
   console.log(activeWorkspace, "active workspace");
+  const xios = useAxios();
 
   const {
     register,
@@ -27,15 +30,19 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
       link: data?.meetLink,
       platform: data?.platform,
       member: activeWorkspaceMembers,
-      activeWorkspace
+      activeWorkspace,
     };
+
+    xios.post(`/api/meetings`, newMeeting).then((res) => {
+      console.log(res.data.insertedId);
+      if (res.data.insertedId) {
+        // console.log(res.data.insertedId);
+        toast.success("Meeting created", { position: "top-center" });
+        setOpenModal(false);
+        refetch();
+      }
+    });
     
-    handleCreateMeeting(newMeeting);
-    refetch();
-
-    // setOpenModal(false);
-
-    // reset();
   };
   return (
     <div>
