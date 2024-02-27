@@ -68,7 +68,6 @@ const DashboardNavbar = () => {
       setYourNotifications(newNotifications);
     }
   }, [notifications, user]);
-
   // console.log(yourNotifications);
   // console.log(notifications);
 
@@ -224,7 +223,6 @@ const DashboardNavbar = () => {
           })}
           <li>
             <div className="w-full text-center flex justify-center  shadow-s mt-auto px-2  hover:bg-transparen rounded-lg">
-
               <div className="bg-gray-100 p-2 mt-3 w-11 h-11 rounded-full flex items-center justify-center">
                 <p
                   onClick={() => setIsCreateWorkSpace(!isCreateWokspace)}
