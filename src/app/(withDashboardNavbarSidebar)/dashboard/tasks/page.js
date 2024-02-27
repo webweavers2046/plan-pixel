@@ -59,6 +59,7 @@ const Tasks = () => {
 
   const workspaceAllTasks =
     activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
+    // console.log('all tasks of workspace',workspaceAllTasks);
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(
@@ -93,6 +94,7 @@ const Tasks = () => {
   };
   const [openFilter, setOpenFilter] = useState(false);
 
+  
 
   return (
     <>
@@ -106,7 +108,7 @@ const Tasks = () => {
             </h6>
           </div>
 
-          <RiMenu2Line onClick={()=> setIsArchiveMenu(!isArchiveMenuOpen)} className="felx cursor-pointer md:hidden absolute right-2 z-50 "/>
+          <RiMenu2Line onClick={()=> setIsArchiveMenu(!isArchiveMenuOpen)} className="flex cursor-pointer md:hidden absolute right-2 z-50 "/>
 
           <div className={`md:relative -mt-8  hidden md:flex items-center  bg-[#f9f9f9] justify-between px-2  border-b pb-2 pt-1 border-white/50`}>
             <div className=" flex  gap-3 text-[16px]">
@@ -128,7 +130,7 @@ const Tasks = () => {
                 <HiOutlineArchiveBox/>
                 Archived tasks
               </div>
-              <ListBoxDropdown/>
+              {/* <ListBoxDropdown/> */}
             </div>
             <div className="flex justify-end gap-2 lg:w-72 items-center">
               <div
