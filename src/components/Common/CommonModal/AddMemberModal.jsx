@@ -18,6 +18,7 @@ export function AddMemberModal({
       <MemberList
         setWillAddMember={setWillAddMember}
         handleAddMember={handleAddMember}
+        WillAddMember={WillAddMember}
       />
 
       <div className="mt-20  relative h-1/4 "></div>
@@ -29,14 +30,14 @@ import { Card } from "flowbite-react";
 import Image from "next/image";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useContext, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import SearchMember from "../Search/SearchMember";
 import useAxios from "@/hooks/useAxios";
 import TeamMembers from "@/app/(withDashboardNavbarSidebar)/dashboard/members/Components/TeamMembers";
 import AssignColorAndStyle from "./AsignAlphabelColor";
-import { ablyContext } from "@/components/ably/AblyProvider";
 
-function MemberList({ handleAddMember, setWillAddMember }) {
+
+function MemberList({ handleAddMember, setWillAddMember,WillAddMember}) {
 
   const { clickedWorkspaceId,activeWorkspace} = useGlobalContext();
 
@@ -52,9 +53,38 @@ function MemberList({ handleAddMember, setWillAddMember }) {
   };
 
 
+
+  // close the add member side bar in onblur 
+  const addMemberRef = useRef()
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (addMemberRef.current && !addMemberRef.current.contains(event.target)) {
+      // Clicked outside of the modal, close the filter & remove the highlighted id
+      setWillAddMember(false)
+    }
+  };
+
+  // Add event listener to the document body
+  document.addEventListener("mousedown", handleClickOutside);
+
+  // Remove the event listener on component unmount
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [setWillAddMember,WillAddMember]);
+
+
   return (
-    <Card className=" mt-2 z-50 fixed w-[370px] right-0 top-0 overflow-auto ">
-      <div className="mb-4 flex gap-2  justify-between">
+    <div
+    ref={addMemberRef}
+    
+    >
+    <Card
+    className=" mt-2 z-50 fixed w-[370px] right-0 top-0 overflow-auto ">
+      <div 
+    
+      
+      className="mb-4 flex gap-2  justify-between">
         <h5 className="text-xl font-serif font-semibold leading-none text-gray-900">
           Add members{" "}
         </h5>
@@ -138,6 +168,7 @@ function MemberList({ handleAddMember, setWillAddMember }) {
         </div>
       )}
     </Card>
+    </div>
   );
 }
 
