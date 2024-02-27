@@ -207,7 +207,7 @@ const fetchArchivedData = async()=>  {
             { userEmail: user?.email, workspaceId }
         );
         setClickBaseFilterTaskId(taskId);
-        setIsActive("all-tasks")
+        // setIsActive("all-tasks")
         setShouldScrollIntoView(true)
         if (response?.data.modifiedCount > 0) {
             fetchLatestData();
@@ -251,7 +251,7 @@ const handleUnarchive = async() => {
       fetchLatestData()
       fetchArchivedData()
       toast.success("Archived",{position:"top-right"})
-      setIsActive("archived-tasks")
+    //   setIsActive("archived-tasks")
       
       
     localStorage.removeItem("selectedTasks");
@@ -313,7 +313,7 @@ const handleUnarchive = async() => {
     // console.log(user?.email);
     notificationsFetch();
     console.log(notifications);
-    // console.log(activeWorkspaceTasks);
+    console.log(activeWorkspaceTasks);
 
     const data = {
         activeWorkspace,
