@@ -58,13 +58,13 @@ const fetchLatestData = async () => {
 
             // Only when component mounted trigger to set the latest data
             if (isMounted) {
-                setActiveWorkspace(userWorkspaces.data.activeWorkspace);
-                setUserWokspaceList(userWorkspaces.data.userWokspaceList);
+                setActiveWorkspace(userWorkspaces?.data?.activeWorkspace);
+                setUserWokspaceList(userWorkspaces?.data?.userWokspaceList);
                 setActiveWorkspaceMembers(
-                    userWorkspaces.data.activeWorkspaceMembers
+                    userWorkspaces?.data?.activeWorkspaceMembers
                 );
                 setActiveWorkspaceTasks(
-                    userWorkspaces.data.activeWorkspaceTasks
+                    userWorkspaces?.data?.activeWorkspaceTasks
                 );
                 setLoading(false);
             }
@@ -298,14 +298,14 @@ const handleUnarchive = async() => {
 
     const notificationsFetch = async () => {
         try {
-            // const activeWorkspaceReal = await xios.get(
-            //     `/api/workspaces/active/${user?.email}`
-            // );
-            // // console.log(activeWorkspaceReal);
-            // const notifications = await xios.get(
-            //     `/api/notifications/${activeWorkspaceReal.data?._id}`
-            // );
-            // setNotifications(notifications);
+            const activeWorkspaceReal = await xios.get(
+                `/api/workspaces/active/${user?.email}`
+            );
+            // console.log(activeWorkspaceReal);
+            const notifications = await xios.get(
+                `/api/notifications/${activeWorkspaceReal.data?._id}`
+            );
+            setNotifications(notifications);
         } catch (error) {
             console.log(error);
         }
