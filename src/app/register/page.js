@@ -48,7 +48,7 @@ const Register = () => {
         const user = {
           name: firstName + " " + lastName,
           email,
-          image : null,
+          image : "",
           paymentStatus: null,
           subscriptionStartDate: null,
           subscriptionEndDate: null,
