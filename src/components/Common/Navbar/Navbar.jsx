@@ -42,11 +42,13 @@ const Navbar = () => {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-16">
                             <div className="">
+                                <Link href={"/"}>
                                 <Image
                                     className="h-10 w-auto lg:mb-0.5  mb-2.5"
                                     src={logo}
                                     alt="heartbeat givers' logo"
                                 ></Image>
+                                </Link>
                             </div>
                             <nav className="lg:block hidden">
                                 <ul className="flex gap-2">

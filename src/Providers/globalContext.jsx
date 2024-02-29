@@ -300,8 +300,8 @@ const handleUnarchive = async() => {
     };
     // console.log(user?.email);
     notificationsFetch();
-    console.log(notifications);
-    console.log(activeWorkspaceTasks);
+    // console.log(notifications);
+    // console.log(activeWorkspaceTasks);
 
     const data = {
         activeWorkspace,

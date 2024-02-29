@@ -11,8 +11,9 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 const Meeting = () => {
   const [openModal, setOpenModal] = useState(false);
   // const { data: allMeetings, refetch } = useAllMeetings();
-  const { data: allMeetings, refetch } = useAllMeetings();
+  const { data: allMeetings, refetch, isLoading } = useAllMeetings();
   const [singleMeeting, setSingleMeeting] = useState([]);
+  
   console.log(allMeetings);
   const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
 
@@ -26,6 +27,7 @@ const Meeting = () => {
       ? setSingleMeeting(remainingMeetings)
       : setSingleMeeting([]);
   };
+  
 
   return (
     <section className="px-4">
