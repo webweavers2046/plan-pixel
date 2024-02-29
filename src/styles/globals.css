@@ -21,3 +21,6 @@ body {
 .inactive:hover {
     background-color: #f3f4f6;
 }
+.min-h-screen-custom {
+    min-height: calc(100vh - 150px); /* Subtract 100px from the viewport height */
+  }

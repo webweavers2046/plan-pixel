@@ -7,18 +7,23 @@ import { GoPlus } from "react-icons/go";
 import { Modal } from "flowbite-react";
 import Image from "next/image";
 import useGlobalContext from "@/hooks/useGlobalContext";
-
+import "@/styles/globals.css"
 const Meeting = () => {
   const [openModal, setOpenModal] = useState(false);
   // const { data: allMeetings, refetch } = useAllMeetings();
   const { data: allMeetings, refetch, isLoading } = useAllMeetings();
   const [singleMeeting, setSingleMeeting] = useState([]);
-  
-  console.log(allMeetings);
+  const [clickedIndex, setClickedIndex] = useState(null);
+
+  // console.log(allMeetings);
   const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
 
-  console.log(activeWorkspace.title);
+  // console.log(activeWorkspace.title);
   // console.log(singleMeeting, "single meetings");
+  const handleClick = (index) => {
+    setClickedIndex(index);
+    console.log(index);
+  };
 
   const showDetails = (id, meeting) => {
   
@@ -32,8 +37,8 @@ const Meeting = () => {
   return (
     <section className="px-4">
       <div className="grid grid-cols-7 gap-x-6 ">
-        <div className="col-span-2 border-2 rounded-lg p-6 h-full ">
-          <div className="">
+        <div className="col-span-2 border-2 rounded-lg p-6  ">
+          <div className="min-h-screen-custom">
             <Modal show={openModal}>
               {/* <Modal.Header className="text-3xl ">Schedule Meeting</Modal.Header> */}
               <Modal.Body>
@@ -84,10 +89,13 @@ const Meeting = () => {
 
                 
                 <div
-                  className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC05]/25 transition duration-300  my-2 flex items-center justify-between shadow-md`}
+                  className={`p-4 rounded-md cursor-pointer hover:bg-[#FBBC0580] transition duration-300  my-2 flex items-center justify-between shadow-md`}
                   key={idx}
                   onClick={() => {
-                    showDetails(meeting._id, meeting);
+                    showDetails(meeting._id, meeting), handleClick(idx)
+                  }}
+                  style={{
+                    backgroundColor: clickedIndex === idx ? '#FBBC0580' : '',
                   }}
                 >
                   <div className="">
@@ -117,7 +125,7 @@ const Meeting = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-5 border-2 rounded-lg p-6 h-full">
+        <div className={`col-span-5 border-2 rounded-lg p-6 min-h-screen-custom`}>
           <MeetingDetails
             meetings={allMeetings}
             singleMeeting={singleMeeting}
