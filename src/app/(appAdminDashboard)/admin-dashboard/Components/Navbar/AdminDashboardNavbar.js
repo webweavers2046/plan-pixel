@@ -9,16 +9,18 @@ import { HiCog, HiViewGrid } from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import useUser from "@/hooks/useUser";
 import DateTimeDisplay from "../DisplayTimeAndDate/DateTimeDisplay";
 import { IoChevronDownOutline } from "react-icons/io5";
+import useUser from "@/hooks/useUser";
+import TanstackProvider from "@/Providers/TanstackProvider";
 
 const AdminDashboardNavbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    console.log(user);
     const [openNavbar, setOpenNavbar] = useState(false);
 
-    const userData = useUser(user?.email);
-    console.log(userData);
+    // const {data : userData} = useUser(user?.email)
+    // console.log(userData);
     const router = useRouter();
 
     const handleLogOut = () => {
@@ -33,7 +35,7 @@ const AdminDashboardNavbar = () => {
         }).then((result) => {
             if (result?.isConfirmed) {
                 logOut();
-                router.push("/dashboard");
+                router.push("/sign-in");
                 Swal.fire({
                     title: "Logged Out",
                     icon: "success",
@@ -43,16 +45,17 @@ const AdminDashboardNavbar = () => {
     };
 
     return (
-        <div className="flex relative justify-between items-center p-4 gap-6">
-            {openNavbar && (
-                <div className="absolute w-full top-0 h-2/5  bg-indigo-950/10 backdrop-blur-sm z-50 xl:hidden block">
-                    <div className="w-80 bg-white h-full relative">button</div>
-                </div>
-            )}
-            <DateTimeDisplay />
-            <div className="grow">
-                <div className="md:flex hidden items-center justify-between gap-4">
-                    {/* <div className="grow">
+        // <TanstackProvider>
+            <div className="flex relative justify-between items-center p-4 gap-6">
+                {openNavbar && (
+                    <div className="absolute w-full top-0 h-2/5  bg-indigo-950/10 backdrop-blur-sm z-50 xl:hidden block">
+                        <div className="w-80 bg-white h-full relative">button</div>
+                    </div>
+                )}
+                <DateTimeDisplay />
+                <div className="grow">
+                    <div className="md:flex hidden items-center justify-between gap-4">
+                        {/* <div className="grow">
                         <div className="absolute ml-[20px] mt-[17px]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -104,79 +107,80 @@ const AdminDashboardNavbar = () => {
                             />
                         </svg>
                     </div> */}
-                    <div className="grow">
-                        <div className="h-0.5 w-full bg-dashboardPrimaryColor"></div>
-                    </div>
-                    <div className="border py-2 px-3 rounded-lg bg-[white]">
-                        <Dropdown
-                            className="bg-white rounded-lg"
-                            inline
-                            label={
-                                <div className="flex items-center">
-                                    {user ? (
-                                        <Image
-                                            src={user?.photoURL}
-                                            alt="member"
-                                            width={32}
-                                            height={32}
-                                            className="w-8 h-8 rounded-full mr-2"
-                                        />
-                                    ) : (
-                                        <Image
-                                            src={image}
-                                            alt="member"
-                                            width={32}
-                                            git
-                                            pull
-                                            height={32}
-                                            className="w-8 h-8 rounded-full mr-2"
-                                        />
-                                    )}
-                                    <div>
-                                        <h2 className="text-sm font-semibold">
-                                            {user?.displayName?.split(" ")[0]}
-                                        </h2>
-                                        <span className="block truncate text-xs">
-                                            {user?.email}
-                                        </span>
+                        <div className="grow">
+                            <div className="h-0.5 w-full bg-dashboardPrimaryColor"></div>
+                        </div>
+                        <div className="border py-2 px-3 rounded-lg bg-[white]">
+                            <Dropdown
+                                className="bg-white rounded-lg"
+                                inline
+                                label={
+                                    <div className="flex items-center">
+                                        {user?.photoURL ? (
+                                            <Image
+                                                src={user?.photoURL}
+                                                alt="member"
+                                                width={32}
+                                                height={32}
+                                                className="w-8 h-8 rounded-full mr-2"
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={image}
+                                                alt="member"
+                                                width={32}
+                                                git
+                                                pull
+                                                height={32}
+                                                className="w-8 h-8 rounded-full mr-2"
+                                            />
+                                        )}
+                                        <div>
+                                            <h2 className="text-sm font-semibold">
+                                                {user?.displayName?.split(" ")[0]}
+                                            </h2>
+                                            <span className="block truncate text-xs">
+                                                {user?.email}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            }
-                        >
-                            <Dropdown.Item className="mt-2" icon={HiViewGrid}>
-                                Dashboard
-                            </Dropdown.Item>
-                            <Dropdown.Item icon={HiCog}>
-                                <Link href={"/dashboard/setting"}>
-                                    Settings
-                                </Link>
-                            </Dropdown.Item>
-                            <Dropdown.Divider />
-                            <Dropdown.Item>
-                                <button
-                                    onClick={() => handleLogOut()}
-                                    className="bg-red-600 text-white lg:text-[14px] w-full py-2 font-bold rounded-lg"
-                                >
-                                    Log Out
-                                </button>
-                            </Dropdown.Item>
-                        </Dropdown>
+                                }
+                            >
+                                <Dropdown.Item className="mt-2" icon={HiViewGrid}>
+                                    Dashboard
+                                </Dropdown.Item>
+                                <Dropdown.Item icon={HiCog}>
+                                    <Link href={"/dashboard/setting"}>
+                                        Settings
+                                    </Link>
+                                </Dropdown.Item>
+                                <Dropdown.Divider />
+                                <Dropdown.Item>
+                                    <button
+                                        onClick={() => handleLogOut()}
+                                        className="bg-red-600 text-white lg:text-[14px] w-full py-2 font-bold rounded-lg"
+                                    >
+                                        Log Out
+                                    </button>
+                                </Dropdown.Item>
+                            </Dropdown>
+                        </div>
                     </div>
-                </div>
 
-                <div className="block md:hidden">
-                    {" "}
-                    <div className="flex items-center justify-end">
-                        <button
-                            onClick={() => setOpenNavbar(!openNavbar)}
-                            className="p-3 bg-dashboardPrimaryColor text-2xl rounded-lg"
-                        >
-                            <IoChevronDownOutline />
-                        </button>
+                    <div className="block md:hidden">
+                        {" "}
+                        <div className="flex items-center justify-end">
+                            <button
+                                onClick={() => setOpenNavbar(!openNavbar)}
+                                className="p-3 bg-dashboardPrimaryColor text-2xl rounded-lg"
+                            >
+                                <IoChevronDownOutline />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        // </TanstackProvider>
     );
 };
 

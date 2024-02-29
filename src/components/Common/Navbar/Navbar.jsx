@@ -11,6 +11,10 @@ import { AuthContext } from "@/Providers/AuthProviders";
 const Navbar = () => {
     const [closeMenu, setCloseMenu] = useState(false);
     const { user } = useContext(AuthContext);
+
+    const isAdmin = user?.email === "admin@gmail.com";
+    // console.log(isAdmin);
+
     const navLinks = [
         {
             route: "Home",
@@ -28,11 +32,7 @@ const Navbar = () => {
         {
             route: "Contact Us",
             path: "/contact",
-        },
-        {
-            route: "Dashboard",
-            path: "/dashboard",
-        },
+        }
     ];
     // py-16 md:px-24 px-7
     return (
@@ -52,16 +52,40 @@ const Navbar = () => {
                             </div>
                             <nav className="lg:block hidden">
                                 <ul className="flex gap-2">
-                                    {navLinks.map((link, idx) => (
-                                        <Link
-                                            href={link?.path}
-                                            className="px-3 text-base font-medium"
-                                            key={idx}
-                                        >
-                                            {link?.route}
-                                        </Link>
-                                    ))}
+                                    <>
+
+                                        {navLinks.map((link, idx) => (
+                                            <Link
+                                                href={link?.path}
+                                                className="px-3 text-base font-medium"
+                                                key={idx}
+                                            >
+                                                {link?.route}
+                                            </Link>
+                                        ))}
+                                        {
+                                            isAdmin ?
+                                                <Link
+                                                    href={"/admin-dashboard"}
+                                                    className="px-3 text-base font-medium"
+
+                                                >
+                                                    Dashboard
+                                                </Link>
+                                                :
+                                                <Link
+                                                    href={"/dashboard"}
+                                                    className="px-3 text-base font-medium"
+
+                                                >
+                                                    Dashboard
+                                                </Link>
+
+                                        }
+
+                                    </>
                                 </ul>
+
                             </nav>
                         </div>
                         <div className="lg:block hidden items-center gap-3">

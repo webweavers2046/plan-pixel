@@ -284,24 +284,37 @@ const handleUnarchive = async() => {
 
     const [notifications, setNotifications] = useState();
 
-    const notificationsFetch = async () => {
-        try {
-            const activeWorkspaceReal = await xios.get(
-                `/api/workspaces/active/${user?.email}`
-            );
-            // console.log(activeWorkspaceReal);
-            const notifications = await xios.get(
-                `/api/notifications/${activeWorkspaceReal.data?._id}`
-            );
-            setNotifications(notifications);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    
+    
     // console.log(user?.email);
-    notificationsFetch();
-    // console.log(notifications);
-    // console.log(activeWorkspaceTasks);
+
+
+
+    // active workspace for notification
+    const [activeWorkspaceReal, setActiveWorkspaceReal] = useState({})
+    useEffect(()=> {
+        fetch(
+            `https://plan-pixel-backend.vercel.app/api/workspaces/active/${user?.email}`
+        )
+        .then(res=> res.json())
+        .then((data)=> {
+            setActiveWorkspaceReal(data);
+            console.log(data);
+        })
+    },[user])
+
+    useEffect(()=> {
+            fetch(
+                `https://plan-pixel-backend.vercel.app/api/notifications/${activeWorkspaceReal?._id}`
+            )
+            .then(res=> res.json())
+            .then((data) => {
+                setNotifications(data)
+                console.log(data);
+            })
+    }, [activeWorkspaceReal])
+    console.log(notifications);
+    console.log(activeWorkspaceReal);
 
     const data = {
         activeWorkspace,
@@ -353,7 +366,10 @@ const handleUnarchive = async() => {
         isWorkspaceSwitched,
         handleDeleteWorkspace,
 
-        notifications
+       
+
+        notifications,
+        activeWorkspaceReal
     };
 
     return (

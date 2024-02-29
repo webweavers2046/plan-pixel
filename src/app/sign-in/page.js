@@ -43,7 +43,12 @@ const SignIn = () => {
                     popup: "animate__animated animate__fadeOutUp",
                 },
             });
-            router.push("/dashboard");
+            if(user?.email === "admin@gmail.com"){
+                router.push("/admin-dashboard");
+            }
+            else{
+                router.push("/dashboard");
+            }
         });
     };
 
