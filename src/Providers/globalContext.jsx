@@ -282,7 +282,7 @@ const handleUnarchive = async() => {
 
     // Notification Informations
 
-    const [notifications, setNotifications] = useState();
+    const [notifications, setNotifications] = useState([]);
 
     
     
@@ -304,17 +304,19 @@ const handleUnarchive = async() => {
     },[user])
 
     useEffect(()=> {
-            fetch(
-                `https://plan-pixel-backend.vercel.app/api/notifications/${activeWorkspaceReal?._id}`
-            )
-            .then(res=> res.json())
-            .then((data) => {
-                setNotifications(data)
-                console.log(data);
-            })
+            // fetch(
+            //     `https://plan-pixel-backend.vercel.app/api/notifications/${activeWorkspaceReal?._id}`
+            // )
+            // .then(res=> res.json())
+            // .then((data) => {
+            //     setNotifications(data)
+            //     console.log(data);
+            // })
+            xios?.get(`/api/notifications/${activeWorkspaceReal?._id}`)
+            .then(res => {console.log(res?.data)})
     }, [activeWorkspaceReal])
-    console.log(notifications);
-    console.log(activeWorkspaceReal);
+    // console.log(notifications);
+    // console.log(activeWorkspaceReal);
 
     const data = {
         activeWorkspace,

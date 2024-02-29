@@ -25,6 +25,8 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
   const { openCardDetails, setOpenCardDetails, cardId, setCardId } =
     useContext(AuthContext);
 
+
+
   // manage all you state here
   const { draggingStarted, draggingOver, isDropped } = useDNDcontext();
   const { user } = useContext(AuthContext);
@@ -77,28 +79,16 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
   };
 
   // handle Archive (this funciton will archive the task)
-  const handleArchive = async (_id) => {
-    const info = {
-      taskId: _id,
-      taskName: selectedTask?.title,
-      workspaceName: activeWorkspace?.title,
-      archivedTimestamp: new Date(),
-      archivedReason: reason,
-      archivist: user && user?.displayName,
-      priority: task?.priority,
-      status:task?.status
-    };
-    const response = await xios.post(
-      `/api/tasks/archive?isArchive=${true}`,
-      info
-    );
-    if (response.data) {
+
+  const handleArchive = async () => {
+    const response = await xios.post("/api/tasks/archive", task);
+    // console.log(response?.data);
+    if (response.data?.insertedId) {
       toast.success("archived");
       setIsArchived(true);
     }
   };
-
-  // when archived a task update the ui with latest data
+  
   useEffect(() => {
     fetchLatestData();
     fetchArchivedData();
@@ -115,7 +105,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
       workspaceName: activeWorkspace?.title,
       archivedTimestamp: new Date(),
       archivedReason: "Review",
-      archivist: user&&user?.displayName,
+      archivist: user && user?.displayName,
       priority: task?.priority,
     };
 
@@ -143,7 +133,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
       taskRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }, [shouldScrollIntoView]); // Add dependencies as needed
-  
+
 
 
   return (
@@ -156,11 +146,10 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
       className={` 
             task-container
             mt-4 cursor-grabbing overflow-hidden relative transform transition-all bg-[#f6f7f8] 0.5s 
-            ease-in-out ${
-              clickBaseFilterTaskId === task?._id
-                ? "bg-[#E8F0FE]  shadow-lg "
-                : "bg-[#ffffff]"
-            }  rounded-md p-8 text-black 
+            ease-in-out ${clickBaseFilterTaskId === task?._id
+          ? "bg-[#E8F0FE]  shadow-lg "
+          : "bg-[#ffffff]"
+        }  rounded-md p-8 text-black 
             ${isDropped ? "transition-all linear 1s" : ""} 
             `}
     >
@@ -183,9 +172,8 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
       ></Dropdown>{" "}
       <div className=" flex items-center gap-2 relative justify-between">
         <h2
-          className={`font-semibold text-lg ${
-            clickBaseFilterTaskId === task?._id ? "text-[#1558D6]" : ""
-          }`}
+          className={`font-semibold text-lg ${clickBaseFilterTaskId === task?._id ? "text-[#1558D6]" : ""
+            }`}
         >
           {task.title}
         </h2>
