@@ -9,6 +9,10 @@ export default function AreYouSureModal({setReason,type,title,id,isOpen,setIsOpe
     setIsOpen(false)
   }
 
+  // const handler = () =>{
+
+  // }
+
   return (
     <>
 

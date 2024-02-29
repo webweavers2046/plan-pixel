@@ -68,8 +68,6 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
   };
 
   const handleUpdate = (id) => {
-    // setWorkspaceId()
-    // setUpdateId(id)
     setOpenUpdateModal(!openUpdateModal);
   };
 
@@ -81,18 +79,20 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
   // handle Archive (this funciton will archive the task)
 
   const handleArchive = async () => {
-    const response = await xios.post("/api/tasks/archive", task);
+    const archiveTask = {...task, archiver : user?.email};
+    // console.log(archiveTask);
+    const response = await xios.post("/api/tasks/archive", archiveTask);
     // console.log(response?.data);
     if (response.data?.insertedId) {
       toast.success("archived");
-      setIsArchived(true);
+      // setIsArchived(true);
     }
   };
-  
+
   useEffect(() => {
     fetchLatestData();
     fetchArchivedData();
-  }, [isArchived]);
+  }, [task]);
 
   // Retrieve the existing selected IDs from local storage
   const handleSelectedIdsChanges = async (e, task) => {
