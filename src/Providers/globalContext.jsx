@@ -315,7 +315,7 @@ const GlobalContext = ({ children }) => {
     }, [activeWorkspaceReal])
     // console.log(notifications);
     // console.log(activeWorkspaceReal);
-
+    console.log(activeWorkspaceTasks);
     const data = {
         activeWorkspace,
         setActiveWorkspace,

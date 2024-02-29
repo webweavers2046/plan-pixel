@@ -59,7 +59,8 @@ const Tasks = () => {
 
   const workspaceAllTasks =
     activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
-    // console.log('all tasks of workspace',workspaceAllTasks);
+    
+    console.log('all tasks of workspace',workspaceAllTasks);
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(
