@@ -59,7 +59,8 @@ const Tasks = () => {
 
   const workspaceAllTasks =
     activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
-    // console.log('all tasks of workspace',workspaceAllTasks);
+
+    console.log('all tasks of workspace',workspaceAllTasks);
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(
@@ -164,9 +165,9 @@ const Tasks = () => {
               </button>
 
 
-              <div>
+              {/* <div>
                 <Toggler enabled={isTogglerEnabled} setEnabled={setIsTogglerEnabled}/>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -361,12 +362,12 @@ const Tasks = () => {
           ></TaskModal>
 
           <CardDetailsModal></CardDetailsModal>
-          {
+          {/* {
                 isTogglerEnabled &&
                 <button onClick={ isActive === "all-tasks"? handleMultipleArchive:handleMultipleUnArchive} className="bg-rose-600 fixed bottom-8 right-2 z-50 text-white p-2 rounded-lg">{
                   isActive === "all-tasks"?"Archive multiple":"Unarchive multiple"
                 } </button>
-          }
+          } */}
         </section>
       )}
     </>
