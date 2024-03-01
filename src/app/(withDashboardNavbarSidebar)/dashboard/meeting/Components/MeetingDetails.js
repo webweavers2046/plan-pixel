@@ -142,12 +142,17 @@ const MeetingDetails = ({
           </div>
         </div>
         <div className="pt-6 text-end">
-          <button
+         
+            <button
+          
             onClick={() => handleMeetingDelete(singleMeeting?._id)}
             className="px-8 py-4 bg-rose-600 rounded-lg text-white"
           >
             Delete Meeting
-          </button>
+          </button>:
+          
+
+          
         </div>
       </div>
     </div>
