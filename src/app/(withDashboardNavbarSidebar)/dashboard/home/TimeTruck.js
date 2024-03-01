@@ -53,14 +53,24 @@ function Task({ title, onDelete, done, onDone }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const intervalRef = useRef(null); // Using useRef to hold the reference to the interval
 
-    const startTimer = () => {
-        startTimer();
+    const runTimer = () => {
+        // renamed startTimer to runTimer
+        setIsTimerRunning(true); // Start the timer
+        intervalRef.current = setInterval(() => {
+            setElapsedTime((prevElapsedTime) => prevElapsedTime + 1000); // Increment elapsed time every second
+        }, 1000);
+    };
+
+    const stopTimer = () => {
+        setIsTimerRunning(false); // Stop the timer
+        clearInterval(intervalRef.current); // Clear the interval
     };
 
     const resetTime = () => {
         setElapsedTime(0); // Reset elapsed time to zero
         setIsDropdownOpen(false);
     };
+
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -69,7 +79,7 @@ function Task({ title, onDelete, done, onDone }) {
         if (isTimerRunning) {
             stopTimer();
         } else {
-            startTimer();
+            runTimer(); // Start the timer
         }
     };
 
@@ -101,7 +111,7 @@ function Task({ title, onDelete, done, onDone }) {
                                             Reset Time
                                         </button>
                                     </li>
-                                    <li
+                                    {/* <li
                                         className="px-4 py-2 text-sm w-full hover:bg-gray-200 rounded-md"
                                         onClick={onDone}
                                     >
@@ -116,7 +126,7 @@ function Task({ title, onDelete, done, onDone }) {
                                         <button className="w-full text-start">
                                             Delete
                                         </button>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </div>

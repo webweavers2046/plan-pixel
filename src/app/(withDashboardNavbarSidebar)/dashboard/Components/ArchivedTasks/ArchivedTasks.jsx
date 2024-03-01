@@ -6,27 +6,20 @@ import TittleAndDescripton from "./TittleAndDescripton";
 import GradientBg from "@/components/Common/gradient/GradientBg";
 import TimeBasedTasks from "./TimeBasedTasks";
 import ArchiveGridTasks from "./ArchiveGridTasks";
+import useArchivedTasks from "@/hooks/useArchivedTasks";
 
 const ArchivedTasks = () => {
   const {
-    archivedTasks,
+    // archivedTasks,
     handleUnarchive,
     isTogglerEnabled,
   } = useContext(globalContext);
   const [isOpen, setIsOpen] = useState(false);
+  
+  const {data : archivedTasks} = useArchivedTasks();
+  // console.log(archivedTasks);
 
-  // completed task analytics for chart view graph
-  let completedTasks = 0;
-  let totalTasks = 10;
 
-
-  // if(archivedTasks?.length > 0){
-    
-
-  //   // completedTasks = archivedTasks?.filter()
-
-  //   totalTasks = archivedTasks?.length;
-  // }
 
 
   const handleSelectedIdsChanges = async (e, taskId) => {
@@ -77,10 +70,10 @@ const ArchivedTasks = () => {
         </div>
 
         <div className="bg-[#FFFFFF] md:block hidden w-80 min-h-[90vh]">
-          <CompletedTasksChart
+          {/* <CompletedTasksChart
             completedTasks={completedTasks}
             totalTasks={totalTasks}
-          />
+          /> */}
 
           <div className="mt-8">
             <h1 className="font-semibold text-[17px] mb-1 pl-2">

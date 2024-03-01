@@ -19,11 +19,6 @@ const AdminOverviewWidget = () => {
     const { data: numberOfWorkspaces, isLoading: workspacesLoading } =
         useDynamicData("numberOfWorkspaces", "/api/number-of-workspace");
 
-    console.log(
-        numberOfUsers.numberOfData,
-        numberOfPremiumUsers.numberOfData,
-        numberOfWorkspaces.numberOfData
-    );
     const totalUsers = useIncrementingNumber(
         numberOfUsers?.numberOfData ? numberOfUsers?.numberOfData + 50 : 0
     );
