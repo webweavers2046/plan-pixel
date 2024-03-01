@@ -3,14 +3,14 @@
 import useAxios from "@/hooks/useAxios";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import Image from "next/image";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
-  const { activeWorkspaceMembers, activeWorkspace } =
-    useGlobalContext();
+  const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
 
-  console.log(activeWorkspace, "active workspace");
+  // console.log(activeWorkspace, "active workspace");
   const xios = useAxios();
 
   const {
@@ -19,9 +19,9 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
     formState: { errors },
     reset,
   } = useForm();
-
   const onSubmit = async (data) => {
     console.log(data);
+   
 
     const newMeeting = {
       title: data?.title,
@@ -32,17 +32,17 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
       member: activeWorkspaceMembers,
       activeWorkspace,
     };
+    console.log(newMeeting);
 
     xios.post(`/api/meetings`, newMeeting).then((res) => {
       console.log(res.data.insertedId);
       if (res.data.insertedId) {
         // console.log(res.data.insertedId);
         toast.success("Meeting created", { position: "top-center" });
-        setOpenModal(false);
+        // setOpenModal(false);
         refetch();
       }
     });
-    
   };
   return (
     <div>
@@ -55,7 +55,7 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
               Agenda{" "}
               {errors.title && (
                 <span className="text-red-500 text-xs ms-2">
-                  (Task title is required)
+                  (Meeting agenda is required)
                 </span>
               )}
             </h4>
@@ -73,9 +73,9 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
             <div className="w-full">
               <h4 className="text-sm font-semibold">
                 Date{" "}
-                {errors.startDate && (
+                {errors.date && (
                   <span className="text-red-500 text-xs ms-2">
-                    Date is required
+                    (Date is required)
                   </span>
                 )}
               </h4>
@@ -92,9 +92,9 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
             <div className="w-full">
               <h4 className="text-sm font-semibold">
                 Time{" "}
-                {errors.startDate && (
+                {errors.time && (
                   <span className="text-red-500 text-xs ms-2">
-                    Time is required
+                    (Time is required)
                   </span>
                 )}
               </h4>
@@ -111,23 +111,25 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
 
             <div className="w-full">
               <h4 className="text-sm font-semibold">Platform </h4>
-              <select
-                placeholder="Select"
-                name="platform"
+
+              <input
+                
                 defaultValue={"Google Meet"}
+                // value={"Google Meet"}
+                type="text"
+                {...register("platform", {
+                  required: true,
+                })}
+                name="platform"
                 className="py-3 pl-4 w-full placeholder:text-sx placeholder:opacity-45 bg-dashboardPrimaryColor/50 border-0 mt-3 rounded-md"
-                {...register("platform", { required: true })}
-              >
-                <option value="Google Meet">Google Meet</option>
-                <option value="Zoom">Zoom</option>
-                <option value="Ghum">Ghum</option>
-              </select>
+                id=""
+              />
             </div>
           </div>
           <div className="">
             <h4 className="text-sm font-semibold">
               Meet Link{" "}
-              {errors.title && (
+              {errors.meetLink && (
                 <span className="text-red-500 text-xs ms-2">
                   (Meeting link is required)
                 </span>
