@@ -57,10 +57,16 @@ const Tasks = () => {
 
   if (!activeWorkspaceTasks) return;
 
-  const workspaceAllTasks =
-    activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
+  // const workspaceAllTasks =
+  //   activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : allWorkspaceTasks;
 
-    console.log('all tasks of workspace',workspaceAllTasks);
+  const workspaceAllTasks =
+    activeWorkspaceTasks.length > 0 ? activeWorkspaceTasks : [];
+
+    // console.log('activeWorkspaceTasks',activeWorkspaceTasks);
+    // console.log('allWorkspaceTasks',allWorkspaceTasks);
+
+    // console.log('all tasks of workspace',workspaceAllTasks);
 
   // Tasks in different status
   const toDoTasks = useFilterTasks(

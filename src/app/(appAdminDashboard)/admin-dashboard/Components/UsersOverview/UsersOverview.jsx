@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import ApexCharts from "apexcharts";
 import useDynamicData from "../Hooks/useDynamicData";
+import Spinner from "@/components/Common/CommonModal/Spinner";
 
 const UsersOverview = ({ chartData }) => {
     const {
@@ -11,10 +12,8 @@ const UsersOverview = ({ chartData }) => {
         refetch,
     } = useDynamicData("premiumMembersAmount", "/paymentInfo");
 
-    if (isLoading) {
-        return <Spinner />;
-    }
-    console.log(premiumMembersAmount);
+   
+    // console.log(premiumMembersAmount);
     useEffect(() => {
         if (chartData && chartData.categories && chartData.series) {
             let options = {
@@ -104,12 +103,21 @@ const UsersOverview = ({ chartData }) => {
         }
     }, [chartData]);
 
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    const totalAmount = premiumMembersAmount.reduce(
+        (acc, current) => acc + current.amount,
+        0
+    );
+    
     return (
         <div className=" bg-white rounded-lg border-2 border-dashboardPrimaryColor dark:bg-gray-800">
             <div className="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
                 <div>
                     <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
-                        $12,423
+                        ${totalAmount}
                     </h5>
                     <p className="text-base font-normal text-gray-500 dark:text-gray-400">
                         Users this Month

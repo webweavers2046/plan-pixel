@@ -9,7 +9,7 @@ export default function Dropdown({setSelectedTask,task,handleUpdate,setIsOpen,ha
     <div className="fixed z-50 w-56 text-right">
       <Menu as="div" className=" relative inline-block text-left">
         <div>
-          <Menu.Button className=" absolute right-0 -top-4 ">
+          <Menu.Button className=" absolute -right-6 -top-4 ">
             <BsThreeDotsVertical/>
           </Menu.Button>
         </div>
