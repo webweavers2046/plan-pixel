@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import member from "@/assets/team-members/member.png";
+import useUser from "@/hooks/useUser";
 
 const OurTeamMembers = () => {
   const members = [1, 2, 3, 4, 5, 6];

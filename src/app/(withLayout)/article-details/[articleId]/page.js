@@ -8,28 +8,26 @@ import { useEffect, useState } from "react";
 const page = ({ params }) => {
   // const router = useRouter();
   // const id = router.query.articleId;
-  console.log(params.articleId);
+  // console.log(params.articleId);
   // const {data: article} = useGetArticle();
   const [articles, setArticles] = useState([]);
   const xios = useAxios();
   useEffect(() => {
     xios.get("/api/articles").then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setArticles(res.data);
     });
   }, []);
   // console.log(id);
-  console.log(articles, "article");
+  // console.log(articles, "article");
 
   const singleArticle = articles.find(
     (article) => article._id === params.articleId
   );
-  console.log(singleArticle);
+  // console.log(singleArticle);
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-5xl font-semibold mt-4 mb-6">
-        {singleArticle?.title}
-      </h1>
+
       <div className="flex items-center gap-x-4 pl-4 mb-5">
         <Image
           className="w-8 h-8 rounded-full"
@@ -39,16 +37,19 @@ const page = ({ params }) => {
           height={50}
         />
         <div >
-        <h1 className="font-semibold">{singleArticle?.author}</h1>
-        <p className="text-[#6B6B6B]">{singleArticle?.date}</p>
+          <h1 className="font-semibold">{singleArticle?.author}</h1>
+          <p className="text-[#6B6B6B]">{singleArticle?.date}</p>
         </div>
       </div>
+      <h1 className="text-4xl font-semibold mt-4 mb-6">
+        {singleArticle?.title}
+      </h1>
       <Image
         width={500}
         height={500}
         alt="article image"
         src={singleArticle?.articleImage_url}
-        style={{ width: '100%'}}
+        style={{ width: '100%' }}
       ></Image>
       <p className="mt-5 mb-20">{singleArticle?.description}</p>
     </div>
