@@ -32,7 +32,7 @@ const TimeTruck = () => {
 
     return (
         <div className="shadow-md rounded-xl p-6 border-2 border-tertiary bg-tertiary/5 ">
-            <h1 className=" text-2xl font-bold p-4">Time Truck</h1>
+            <h1 className=" text-2xl font-bold p-4">Time Track</h1>
             {tasks?.map((task) => (
                 <Task
                     key={task?._id}
