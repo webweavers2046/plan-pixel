@@ -150,7 +150,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
             ease-in-out ${clickBaseFilterTaskId === task?._id
           ? "bg-[#E8F0FE]  shadow-lg "
           : "bg-[#ffffff]"
-        }  rounded-md px-8 py-4 text-black 
+        }  rounded-md px-4 py-4 text-black 
             ${isDropped ? "transition-all linear 1s" : ""} 
             `}
     >
@@ -183,15 +183,15 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
             )}
           </p>
         </div>
-          <Dropdown
-            className="block"
-            id={task?._id}
-            handleDeleteTask={handleDeleteTask}
-            handleUpdate={handleUpdate}
-            setIsOpen={setIsOpen}
-            setSelectedTask={setSelectedTask}
-            task={task}
-          ></Dropdown>{""}
+        <Dropdown
+          className="block"
+          id={task?._id}
+          handleDeleteTask={handleDeleteTask}
+          handleUpdate={handleUpdate}
+          setIsOpen={setIsOpen}
+          setSelectedTask={setSelectedTask}
+          task={task}
+        ></Dropdown>{""}
       </div>
       <p className="text-xs opacity-65 pt-4">{task.description}</p>
       <div className="flex justify-between items-center">

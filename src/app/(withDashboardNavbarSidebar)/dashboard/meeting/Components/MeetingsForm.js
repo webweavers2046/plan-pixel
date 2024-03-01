@@ -20,7 +20,7 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
     reset,
   } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
    
 
     const newMeeting = {
@@ -32,7 +32,7 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
       member: activeWorkspaceMembers,
       activeWorkspace,
     };
-    console.log(newMeeting);
+    // console.log(newMeeting);
 
     xios.post(`/api/meetings`, newMeeting).then((res) => {
       console.log(res.data.insertedId);
@@ -41,6 +41,8 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
         toast.success("Meeting created", { position: "top-center" });
         // setOpenModal(false);
         refetch();
+        reset();
+        setOpenModal(false);
       }
     });
   };
