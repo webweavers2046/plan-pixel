@@ -84,7 +84,7 @@ function TeamMember({ name, userEmail, avatar }) {
     };
 
     return (
-        <div className="flex items-center justify-between w-[350px] p-4 rounded-lg bg-[#F9F9F9] mb-3">
+        <div className="flex items-center justify-between w-full p-4 rounded-lg bg-[#F9F9F9] mb-3">
             {/* modal  */}
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header>Send Message</Modal.Header>

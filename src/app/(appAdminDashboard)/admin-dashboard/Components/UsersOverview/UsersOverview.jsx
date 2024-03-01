@@ -2,8 +2,19 @@
 
 import { useEffect } from "react";
 import ApexCharts from "apexcharts";
+import useDynamicData from "../Hooks/useDynamicData";
 
 const UsersOverview = ({ chartData }) => {
+    const {
+        data: premiumMembersAmount,
+        isLoading,
+        refetch,
+    } = useDynamicData("premiumMembersAmount", "/paymentInfo");
+
+    if (isLoading) {
+        return <Spinner />;
+    }
+    console.log(premiumMembersAmount);
     useEffect(() => {
         if (chartData && chartData.categories && chartData.series) {
             let options = {
