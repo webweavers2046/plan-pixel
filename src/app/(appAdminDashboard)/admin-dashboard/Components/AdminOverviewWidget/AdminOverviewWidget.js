@@ -1,55 +1,41 @@
 "use client";
 
-import axios from "axios";
 import OverviewWidgetBg from "@/assets/pattern/admin-info-pattern.png";
 import OverviewWidgetBg02 from "@/assets/pattern/admin-info-pattern02.png";
 import OverviewWidgetBg03 from "@/assets/pattern/admin-info-pattern03.png";
 import useIncrementingNumber from "../Hooks/useIncrementingNumber";
-import { useEffect, useState } from "react";
-import Spinner from "@/components/Common/CommonModal/Spinner";
-import useAxios from "@/hooks/useAxios";
+import useDynamicData from "../Hooks/useDynamicData";
+import WidgetSpinner from "../Shared/WidgetSpinner";
 
 const AdminOverviewWidget = () => {
-    const [loading, setLoading] = useState(false);
-    const [numberOfUsers, setNumberOfUsers] = useState(0);
-    const [numberOfPremiumUsers, setNumberOfPremiumUsers] = useState(0);
-    const [numberOfWorkspace, setNumberOfWorkspace] = useState(0);
+    const { data: numberOfUsers, isLoading: usersLoading } = useDynamicData(
+        "numberOfUsers",
+        "/api/number-of-users"
+    );
 
-    const axiosAdmin = useAxios();
+    const { data: numberOfPremiumUsers, isLoading: premiumUsersLoading } =
+        useDynamicData("numberOfPremiumUsers", "/api/number-of-premium-user");
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const [response01, response02, response03] = await Promise.all([
-                    axiosAdmin.get("/api/number-of-users"),
-                    axiosAdmin.get("/api/number-of-premium-user"),
-                    axiosAdmin.get("/api/number-of-workspace"),
-                ]);
+    const { data: numberOfWorkspaces, isLoading: workspacesLoading } =
+        useDynamicData("numberOfWorkspaces", "/api/number-of-workspace");
 
-                const numberOfUsersData = response01.data.numberOfData;
-                setNumberOfUsers(numberOfUsersData);
+    console.log(
+        numberOfUsers.numberOfData,
+        numberOfPremiumUsers.numberOfData,
+        numberOfWorkspaces.numberOfData
+    );
+    const totalUsers = useIncrementingNumber(
+        numberOfUsers?.numberOfData ? numberOfUsers?.numberOfData + 50 : 0
+    );
+    const totalPremiumUsers = useIncrementingNumber(
+        numberOfPremiumUsers?.numberOfData || 0
+    );
+    const totalWorkspace = useIncrementingNumber(
+        numberOfWorkspaces?.numberOfData || 0
+    );
 
-                const numberOfPremiumUsersData = response02.data.numberOfData;
-                setNumberOfPremiumUsers(numberOfPremiumUsersData);
-
-                const numberOfWorkspaceData = response03.data.numberOfData;
-                setNumberOfWorkspace(numberOfWorkspaceData);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-            setLoading(false);
-        };
-
-        fetchData();
-    }, []);
-
-    const totalUsers = useIncrementingNumber(numberOfUsers + 50);
-    const totalPremiumUsers = useIncrementingNumber(numberOfPremiumUsers);
-    const totalWorkspace = useIncrementingNumber(numberOfWorkspace);
-
-    if (loading) {
-        return <Spinner />;
+    if (usersLoading || premiumUsersLoading || workspacesLoading) {
+        return <WidgetSpinner />;
     }
 
     return (
