@@ -104,7 +104,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
       taskName: task?.title,
       workspaceName: activeWorkspace?.title,
       archivedTimestamp: new Date(),
-      archivedReason: "Review",
+      // archivedReason: "Review",
       archivist: user && user?.displayName,
       priority: task?.priority,
     };

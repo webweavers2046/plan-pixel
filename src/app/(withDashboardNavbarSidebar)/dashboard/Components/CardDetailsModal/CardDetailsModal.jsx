@@ -7,6 +7,9 @@ import useGlobalContext from "@/hooks/useGlobalContext";
 import { useContext } from "react";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import { AuthContext } from "@/Providers/AuthProviders";
+import { RiCompassDiscoverLine } from "react-icons/ri";
+import { IoIosPeople } from "react-icons/io";
+import { RxAvatar } from "react-icons/rx";
 import useUser from "@/hooks/useUser";
 import useSingleTask from "@/hooks/useSingleTask";
 import Comments from "./Comments";
@@ -86,24 +89,33 @@ const CardDetailsModal = () => {
 
 
                     {/* Date Time */}
-                    <div className="h-full w-[250px] font-semibold">
-                        <div className="bg-[#D9D9D966] h-full w-full  p-4 rounded-lg">
-                            <h4 className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6">Join</h4>
-                            <h4 className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-2">Members</h4>
+                    <div className="h-full w-[280px] font-semibold">
+                        <div className="bg-[#D9D9D966] h-full w-full  px-4 py-2 rounded-lg">
+                            <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
+                                <RxAvatar className="text-2xl"></RxAvatar>
+                                <span>Join</span>
+                            </button>
+                            <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
+                                <IoIosPeople className="text-2xl"></IoIosPeople>
+                                <span>Members</span>
+                            </button>
                             <div className="border-2 mt-6 border-[#D9D9D9]"></div>
                             {/* dates */}
                             <div className=" mt-4">
                                 <p className="">Assign Date:</p>
-                                <h4 className="text-2xl mt-2">{card?.dates?.startDate}</h4>
+                                <h4 className="text-xl mt-2">{card?.dates?.startDate}</h4>
                             </div>
                             <div className=" mt-4">
                                 <p className="">Deadline:</p>
-                                <h4 className="text-2xl mt-2">{card?.dates?.dueDate}</h4>
+                                <h4 className="text-xl mt-2">{card?.dates?.dueDate}</h4>
                             </div>
 
-                            <button className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-5">Add Labels</button>
+                            <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
+                                <RiCompassDiscoverLine className="text-2xl"></RiCompassDiscoverLine>
+                                <span>Add Labels</span>
+                            </button>
 
-                            <div>
+                            {/* <div>
                                 <h3>Labels</h3>
                                 <div>
                                     <div className="flex justify-between">
@@ -120,11 +132,11 @@ const CardDetailsModal = () => {
                                     <div className="h-2 w-4 bg-black"></div>
                                 </div>
                                 <input type="submit" value="Create" />
-                            </div>
+                            </div> */}
 
 
                         </div>
-                        <button className="w-full bg-[#50B577] rounded-lg py-3 text-white mt-6">Save Task</button>
+                        {/* <button className="w-full bg-[#50B577] rounded-lg py-3 text-white mt-6">Save Task</button> */}
                     </div>
                 </div>
 

@@ -16,7 +16,7 @@ const ArchivedTasks = () => {
   } = useContext(globalContext);
   const [isOpen, setIsOpen] = useState(false);
   
-  const {data : archivedTasks} = useArchivedTasks();
+  const {data : archivedTasks, refetch} = useArchivedTasks();
   // console.log(archivedTasks);
 
 
@@ -61,6 +61,7 @@ const ArchivedTasks = () => {
         <ArchiveGridTasks
           handleSelectedIdsChanges={handleSelectedIdsChanges}
           archivedTasks={archivedTasks}
+          refetch={refetch}
           handleUnarchive={handleUnarchive}
           setIsOpen={setIsOpen}
           isOpen={isOpen}

@@ -1,5 +1,5 @@
 import useGlobalContext from '@/hooks/useGlobalContext';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FcComments, FcHighPriority, FcLowPriority, FcMediumPriority } from "react-icons/fc";
 import Image from "next/image";
 import { FaCaretLeft } from "react-icons/fa6";
@@ -8,23 +8,31 @@ import Avater from './Avater';
 import useAxios from '@/hooks/useAxios';
 import toast from 'react-hot-toast';
 
-const SingleArchivedTask = ({ handleSelectedIdsChanges, setIsOpen, isOpen, task }) => {
+const SingleArchivedTask = ({ handleSelectedIdsChanges, setIsOpen, isOpen, task,refetch }) => {
     const {
         // handleUnarchive,
         setArchiveTaskId,
         isTogglerEnabled,
+        fetchLatestData,
+        fetchArchivedData
     } = useGlobalContext()
+
+    useEffect(() => {
+        fetchLatestData();
+        fetchArchivedData();
+    }, [task]);
 
     const axiosPublic = useAxios();
 
-    console.log(task);
+    // console.log(task);
 
     const handleUnarchive = async () => {
-       
+
         const response = await axiosPublic.post("/api/tasks/unArchive", task);
         // console.log(response?.data);
         if (response.data?.insertedId) {
             toast.success("Un-archived");
+            refetch();
             // setIsArchived(true);
         }
     }
