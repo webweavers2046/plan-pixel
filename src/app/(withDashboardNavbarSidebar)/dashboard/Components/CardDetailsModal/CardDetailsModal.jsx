@@ -4,7 +4,7 @@ import IndividualCardTasks from "./IndividualCardTasks";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import useCardTasks from "@/hooks/useCardTasks";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import { AuthContext } from "@/Providers/AuthProviders";
 import { RiCompassDiscoverLine } from "react-icons/ri";
@@ -13,15 +13,17 @@ import { RxAvatar } from "react-icons/rx";
 import useUser from "@/hooks/useUser";
 import useSingleTask from "@/hooks/useSingleTask";
 import Comments from "./Comments";
+import Labels from "./Labels";
 
 const CardDetailsModal = () => {
+    const [openLabels, setOpenLabels] = useState(false)
 
     const { user, openCardDetails, setOpenCardDetails, cardId } = useContext(AuthContext);
     const { data: cardTasks, refetch } = useCardTasks(cardId);
     const { data: card } = useSingleTask(cardId);
     // console.log(card);
     // console.log(cardTasks);
-    
+
 
     const { activeWorkspace } = useGlobalContext()
     const { title, description, members } = activeWorkspace || { title: "", description: "", members: [] }
@@ -89,8 +91,8 @@ const CardDetailsModal = () => {
 
 
                     {/* Date Time */}
-                    <div className="h-full w-[280px] font-semibold">
-                        <div className="bg-[#D9D9D966] h-full w-full  px-4 py-2 rounded-lg">
+                    <div className="h-full w-[350px] font-semibold">
+                        <div className="bg-[#D9D9D966] h-fit w-full  px-4 py-2 rounded-lg">
                             <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
                                 <RxAvatar className="text-2xl"></RxAvatar>
                                 <span>Join</span>
@@ -110,29 +112,17 @@ const CardDetailsModal = () => {
                                 <h4 className="text-xl mt-2">{card?.dates?.dueDate}</h4>
                             </div>
 
-                            <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
-                                <RiCompassDiscoverLine className="text-2xl"></RiCompassDiscoverLine>
-                                <span>Add Labels</span>
-                            </button>
+                            {/* Labels */}
 
-                            {/* <div>
-                                <h3>Labels</h3>
-                                <div>
-                                    <div className="flex justify-between">
-                                        <input type="checkbox" />
-                                        <label>Label1</label>
-                                        <button>Edit</button>
-                                    </div>
-                                </div>
-                                <input type="text" name="" id="" />
-                                <div className="grid grid-cols-4 w-full gap-4">
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                </div>
-                                <input type="submit" value="Create" />
-                            </div> */}
+                            {
+                                openLabels ?
+                                    <Labels setOpenLabels={setOpenLabels}></Labels>
+                                    :
+                                    <button onClick={() => setOpenLabels(!openLabels)} className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
+                                        <RiCompassDiscoverLine className="text-2xl"></RiCompassDiscoverLine>
+                                        <span>Add Labels</span>
+                                    </button>
+                            }
 
 
                         </div>
