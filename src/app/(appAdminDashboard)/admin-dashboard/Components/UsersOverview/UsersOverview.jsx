@@ -5,15 +5,14 @@ import ApexCharts from "apexcharts";
 import useDynamicData from "../Hooks/useDynamicData";
 import { Spinner } from "flowbite-react";
 
-const UsersOverview = ({ chartData }) => {
-    const {
-        data: premiumMembersAmount,
-        isLoading,
-        refetch,
-    } = useDynamicData("premiumMembersAmount", "/paymentInfo");
-
+const UsersOverview = ({ chartData, totalAmount }) => {
     useEffect(() => {
-        if (chartData && chartData.categories && chartData.series) {
+        if (
+            chartData &&
+            chartData.categories &&
+            chartData.series &&
+            ApexCharts
+        ) {
             let options = {
                 xaxis: {
                     categories: chartData.categories,
@@ -88,28 +87,21 @@ const UsersOverview = ({ chartData }) => {
                 },
             };
 
-            if (
-                document.getElementById("labels-chart") &&
-                typeof ApexCharts !== "undefined"
-            ) {
-                const chart = new ApexCharts(
-                    document.getElementById("labels-chart"),
-                    options
-                );
-                chart.render();
+            const chartElement = document.getElementById("labels-chart");
+
+            if (chartElement) {
+                try {
+                    const chart = new ApexCharts(chartElement, options);
+                    chart.render();
+                } catch (error) {
+                    console.error("Error rendering chart:", error);
+                }
+            } else {
+                console.error("Element with ID 'labels-chart' not found.");
             }
         }
     }, [chartData]);
 
-    if (isLoading) {
-        return <Spinner />;
-    }
-
-    const totalAmount = premiumMembersAmount.reduce(
-        (acc, current) => acc + current.amount,
-        0
-    );
-    console.log(chartData, totalAmount);
     return (
         <div className=" bg-white rounded-lg border-2 border-dashboardPrimaryColor dark:bg-gray-800">
             <div className="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
