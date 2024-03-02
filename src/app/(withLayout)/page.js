@@ -10,10 +10,9 @@ import Message from "@/components/Message/Message";
 export default function Home() {
     return (
         <main className="">
-            <Message/>
+            <Message />
             <Header />
             <OurCompany />
-            {/* <KeyFeatures /> */}
             <Features />
             <HowWorks />
             <Testimonial />

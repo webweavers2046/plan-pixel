@@ -9,6 +9,7 @@ const MessageForm = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
     const serviceId = "service_2whe5f8";
@@ -28,7 +29,7 @@ const MessageForm = () => {
             .send(serviceId, templateId, templateParams, publicKey)
             .then((response) => {
                 console.log("Email sent successfully:", response);
-
+                reset();
                 toast.success("Message Sended", {
                     duration: 2000,
                     // className: "mt-32",
