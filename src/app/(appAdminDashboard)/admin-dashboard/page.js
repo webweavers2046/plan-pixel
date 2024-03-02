@@ -1,7 +1,17 @@
+"use client";
+
+import { Spinner } from "flowbite-react";
 import AdminOverviewWidget from "./Components/AdminOverviewWidget/AdminOverviewWidget";
+import useDynamicData from "./Components/Hooks/useDynamicData";
 import UsersOverview from "./Components/UsersOverview/UsersOverview";
 
 const AdminDashboard = () => {
+    const {
+        data: premiumMembersAmount,
+        isLoading,
+        refetch,
+    } = useDynamicData("premiumMembersAmount", "/paymentInfo");
+
     const chartData = {
         categories: [
             "January",
@@ -30,12 +40,29 @@ const AdminDashboard = () => {
             },
         ],
     };
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    const totalAmount = premiumMembersAmount.reduce(
+        (acc, current) => acc + current.amount,
+        0
+    );
+    console.log(chartData, totalAmount);
     return (
         <section>
             <AdminOverviewWidget />
             <div className="mt-6 grid grid-cols-8">
                 <div className="col-span-8">
-                    <UsersOverview chartData={chartData} />
+                    {isLoading ? (
+                        Spinner
+                    ) : (
+                        <UsersOverview
+                            chartData={chartData}
+                            totalAmount={totalAmount}
+                            premiumMembersAmount={premiumMembersAmount}
+                        />
+                    )}
                 </div>
             </div>
         </section>

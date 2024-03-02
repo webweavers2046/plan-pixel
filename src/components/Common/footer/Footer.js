@@ -7,9 +7,9 @@ const Footer = () => {
     return (
         <footer className="border-t xl:px-24  bg-[#E9F5E3]">
             <div className="mx-auto container lg:px-24 px-7">
-                <div className="lg:py-32 md:py-24 py-20">
-                    <div className="grid md:grid-cols-2 md:justify-between md:items-center">
-                        <div className=" md:block w-screen md:w-full">
+                <div className="lg:py-32 md:py-24 py-20 ">
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:justify-between md:items-center ">
+                        <div className=" md:block  md:w-full">
                             <Image
                                 className="h-12 w-auto"
                                 src={logo}
