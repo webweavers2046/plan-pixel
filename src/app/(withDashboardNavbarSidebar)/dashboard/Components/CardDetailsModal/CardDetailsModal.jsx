@@ -4,7 +4,7 @@ import IndividualCardTasks from "./IndividualCardTasks";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import useCardTasks from "@/hooks/useCardTasks";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import { AuthContext } from "@/Providers/AuthProviders";
 import { RiCompassDiscoverLine } from "react-icons/ri";
@@ -13,6 +13,8 @@ import { RxAvatar } from "react-icons/rx";
 import useUser from "@/hooks/useUser";
 import useSingleTask from "@/hooks/useSingleTask";
 import Comments from "./Comments";
+import { FiDelete } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 
 const CardDetailsModal = () => {
 
@@ -26,6 +28,22 @@ const CardDetailsModal = () => {
     const { activeWorkspace } = useGlobalContext()
     const { title, description, members } = activeWorkspace || { title: "", description: "", members: [] }
     // console.log(activeWorkspace);
+
+
+
+
+    // Label Realated Works
+    const [labelColor, setLabelColor] = useState("#000000");
+    const [labelText, setLabelText] = useState("nello");
+    console.log(labelColor);
+    console.log(labelText);
+
+
+
+    // handleKeyUpFunc
+    const handleKeyUp = (event) => {
+        console.log(event.target.value)
+    }
 
 
 
@@ -115,24 +133,28 @@ const CardDetailsModal = () => {
                                 <span>Add Labels</span>
                             </button>
 
-                            {/* <div>
-                                <h3>Labels</h3>
+                            <div>
+                                <h3 className="mb-4 mt-6">Labels</h3>
                                 <div>
-                                    <div className="flex justify-between">
-                                        <input type="checkbox" />
-                                        <label>Label1</label>
-                                        <button>Edit</button>
+                                    <div className="flex justify-between items-center mb-7">
+                                        <input onKeyUp={handleKeyUp} type="checkbox" value={"label"} />
+                                        <div className="py-1 bg-orange-400 w-3/4 px-2 text-sm rounded-md">Label</div>
+                                        <button className="py-1"><MdDelete/></button>
                                     </div>
                                 </div>
-                                <input type="text" name="" id="" />
-                                <div className="grid grid-cols-4 w-full gap-4">
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
+                                <input className="h-6 rounded-md border-none mb-6" type="text" name="" id="" />
+                                <div className="grid grid-cols-4 w-full gap-4 items-center place-items-center">
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
+                                    <div onClick={() => setLabelColor("#FAA300")} className="h-2 w-4 bg-black p-3 rounded-sm"></div>
                                 </div>
-                                <input type="submit" value="Create" />
-                            </div> */}
+                                <input className="w-full text-center text-sm bg-green-400 mt-6 text-white py-2 rounded-sm" type="submit" value="Create" />
+                            </div>
 
 
                         </div>
