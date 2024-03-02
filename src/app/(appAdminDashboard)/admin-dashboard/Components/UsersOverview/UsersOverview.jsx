@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 import ApexCharts from "apexcharts";
-import useDynamicData from "../Hooks/useDynamicData";
-import { Spinner } from "flowbite-react";
 
 const UsersOverview = ({ chartData, totalAmount }) => {
     useEffect(() => {

@@ -3,6 +3,7 @@
 import { AuthContext } from "@/Providers/AuthProviders";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
+import Spinner from "./CommonModal/Spinner";
 
 const PrivateRoute = ({
     children,
@@ -35,7 +36,9 @@ const PrivateRoute = ({
 
     // Render loading indicator if user data is still loading
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>
+            <Spinner></Spinner>
+        </div>;
     }
     return <>{children}</>;
 };
