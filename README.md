@@ -1,38 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Plan Pixel - Task Management Web App
 
-## Plan Pixel
+![Plan Pixel Logo](https://plan-pixel.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.60aa7ff2.png&w=384&q=75)
 
-First, run the development server:
+[Live Demo](https://plan-pixel.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Plan Pixel is a task management web application designed to help you organize and track your tasks efficiently. This repository contains the front-end code for the project.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Table of Contents
 
-## PlanPixel
-Live link: [PlanPixel](https://plan-pixel.vercel.app/)
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Technologies Used](#technologies-used)
+- [Screenshots](#screenshots)
+- [Contributing](#contributing)
+- [Testing](#testing)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+- **Task Management:** Easily create, update, and delete tasks.
+- **Calendar Integration:** Plan your tasks with a user-friendly calendar.
+- **Real-time Updates:** Stay synchronized with real-time task updates.
+- **Stripe Integration:** Seamless payment for premium features.
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/webweavers2046/plan-pixel.git
 
-## Deploy on Vercel
+2. Install dependencies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   cd plan-pixel
+   npm install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Usage
+
+1. Start the development server:
+
+   ```bash
+   npm run dev
+
+2. **Open your browser and visit [http://localhost:3000](http://localhost:3000).**
+
+## Technologies Used
+
+- React
+- Next.js
+- Tailwind CSS
+- Firebase
+- Stripe
+- Socket.io
+- and more...
+
+## Screenshots
+
+
+![image](https://github.com/webweavers2046/plan-pixel/assets/156602277/3fdd9e88-0532-4ee2-b9e5-14f24d605ef6)
+
+![image](https://github.com/webweavers2046/plan-pixel/assets/156602277/2a136f63-e81b-437a-9136-219fb8637889)
+
+![image](https://github.com/webweavers2046/plan-pixel/assets/156602277/dec1f667-4aa3-49d6-b3a9-e4f321dd56f4)
+
+
+
