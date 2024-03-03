@@ -26,7 +26,7 @@ const CardDetailsModal = () => {
     const labels = card?.labels;
     const checkedLabels = labels?.filter(label => label?.labelCheck)
     // console.log(labels);
-    // console.log(checkedLabels);
+    console.log(checkedLabels);
 
 
     const { activeWorkspace } = useGlobalContext()

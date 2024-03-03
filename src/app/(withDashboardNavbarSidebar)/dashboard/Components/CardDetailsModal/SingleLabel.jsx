@@ -23,7 +23,7 @@ const SingleLabel = ({ label, card, index, taskRefetch}) => {
             index : index,
             labelTitle : labelValue,
             bgColor : label?.bgColor,
-            labelCheck : false
+            labelCheck : isChecked ? true : false
         }
 
         axiosPublic.put(`/create-label/${card?._id}`, newLabel)
@@ -54,12 +54,11 @@ const SingleLabel = ({ label, card, index, taskRefetch}) => {
 
         axiosPublic.put(`/check-label/${card?._id}`, {checked, index})
         .then(res => {
-            console.log(res?.data);
-            // if (res?.data?.modifiedCount) {
-            //     taskRefetch();
-            //     // inputRef.current.value = '';
-            //     setOpenEdit(false);
-            // }
+            // console.log(res?.data);
+            if (res?.data?.modifiedCount) {
+                taskRefetch();
+                // inputRef.current.value = '';
+            }
         })
     }
 
