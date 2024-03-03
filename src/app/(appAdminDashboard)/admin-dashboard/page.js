@@ -57,11 +57,12 @@ const AdminDashboard = () => {
                     {isLoading ? (
                         Spinner
                     ) : (
-                        <UsersOverview
-                            chartData={chartData}
-                            totalAmount={totalAmount}
-                            premiumMembersAmount={premiumMembersAmount}
-                        />
+                        // <UsersOverview
+                        //     chartData={chartData}
+                        //     totalAmount={totalAmount}
+                        //     premiumMembersAmount={premiumMembersAmount}
+                        // /> 
+                        ""
                     )}
                 </div>
             </div>

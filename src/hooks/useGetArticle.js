@@ -1,5 +1,5 @@
 import useAxios from "@/hooks/useAxios";
-import  useQuery  from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const useGetArticle = () => {
     const axiosAdmin = useAxios();
