@@ -37,7 +37,7 @@ const IndividualCardTasks = ({ member, cardTasks, cardId, refetch }) => {
 
         axiosPublic.post("/createCardTask", newTask)
             .then(res => {
-                console.log(res?.data);
+                // console.log(res?.data);
                 if (res?.data?.insertedId) {
                     refetch();
                     setOpenTaskInput(false);
