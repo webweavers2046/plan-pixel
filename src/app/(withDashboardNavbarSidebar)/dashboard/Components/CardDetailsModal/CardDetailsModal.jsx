@@ -20,9 +20,13 @@ const CardDetailsModal = () => {
 
     const { user, openCardDetails, setOpenCardDetails, cardId } = useContext(AuthContext);
     const { data: cardTasks, refetch } = useCardTasks(cardId);
-    const { data: card } = useSingleTask(cardId);
+    const { data: card, refetch: taskRefetch } = useSingleTask(cardId);
     // console.log(card);
     // console.log(cardTasks);
+    const labels = card?.labels;
+    const checkedLabels = labels?.filter(label => label?.labelCheck)
+    // console.log(labels);
+    // console.log(checkedLabels);
 
 
     const { activeWorkspace } = useGlobalContext()
@@ -60,10 +64,17 @@ const CardDetailsModal = () => {
                         <p className="text-2xl font-semibold">{card?.title}</p>
                         <p>{card?.description}</p>
                         <div className="flex gap-1">
-                            <p className="bg-[#50B57733] text-[10px] font-semibold px-3 py-2  rounded-md">Denographics</p>
-                            <p className="bg-[#FBBC0540] text-[10px] font-semibold px-3 py-2  rounded-md">user story</p>
+                            {
+                                checkedLabels?.map(label => <p key={label}
+                                    className={`bg-[${label?.bgColor}] text-[10px] font-semibold px-3 py-2  rounded-md`}>
+                                    {label?.labelTitle}
+                                </p>
+                                )
+                            }
+
+                            {/* <p className="bg-[#FBBC0540] text-[10px] font-semibold px-3 py-2  rounded-md">user story</p>
                             <p className="bg-[#93C64840] text-[10px] font-semibold px-3 py-2  rounded-md">Motivations</p>
-                            <p className="bg-[#50B57780] text-[10px] font-semibold px-3 py-2  rounded-md">Attitudes</p>
+                            <p className="bg-[#50B57780] text-[10px] font-semibold px-3 py-2  rounded-md">Attitudes</p> */}
                         </div>
                         {/* members */}
                         <div className="pt-1">
@@ -116,7 +127,7 @@ const CardDetailsModal = () => {
 
                             {
                                 openLabels ?
-                                    <Labels setOpenLabels={setOpenLabels}></Labels>
+                                    <Labels setOpenLabels={setOpenLabels} card={card} taskRefetch={taskRefetch}></Labels>
                                     :
                                     <button onClick={() => setOpenLabels(!openLabels)} className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
                                         <RiCompassDiscoverLine className="text-2xl"></RiCompassDiscoverLine>

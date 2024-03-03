@@ -1,7 +1,9 @@
 import SingleLabel from './SingleLabel';
 import { RxCross2 } from "react-icons/rx";
 
-const Labels = ({ setOpenLabels }) => {
+const Labels = ({ setOpenLabels, card, taskRefetch }) => {
+    // console.log(card);
+
 
     const labelColors = [
         {
@@ -30,8 +32,8 @@ const Labels = ({ setOpenLabels }) => {
             </div>
             <div className='flex flex-col gap-2 h-full mt-2'>
                 {
-                    labelColors?.map(label =>
-                        <SingleLabel key={label} label={label}></SingleLabel>
+                    labelColors?.map((label, index) =>
+                    <SingleLabel key={label} index={index} taskRefetch={taskRefetch} label={label} card={card}></SingleLabel>
                     )
                 }
             </div>
