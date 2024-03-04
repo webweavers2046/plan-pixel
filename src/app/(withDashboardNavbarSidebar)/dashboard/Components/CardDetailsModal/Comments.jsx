@@ -20,7 +20,7 @@ const Comments = ({ cardId }) => {
 
     const handleInputChange = async (e) => {
         let inputChange = e?.target?.value;
-        console.log(inputChange);
+        // console.log(inputChange);
 
         if (inputChange === "") {
             setOpenSave(false);
