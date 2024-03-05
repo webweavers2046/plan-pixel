@@ -10,6 +10,7 @@ import member03Img from "@/assets/team-members/rahim.jpg";
 import member04Img from "@/assets/team-members/shakil.jpg";
 import member05Img from "@/assets/team-members/sajid.jpg";
 import member06Img from "@/assets/team-members/forhad.jpg";
+import { MdDelete } from "react-icons/md";
 
 import MassageIcon from "@/assets/dashboard/Message.svg";
 import { useRef, useState } from "react";
@@ -27,10 +28,11 @@ const TeamMembers = () => {
 
   // console.log(selectedMember)
   return (
-    <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border">
-      <h1 className=" text-2xl font-bold p-4">Team Member</h1>
+    <div className="shadow-sm rounded-xl md:p-6 p-4 max-h-dvh overscroll-auto border">
+      <h1 className=" text-2xl font-bold mb-2">Team Members</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
       {activeWorkspaceMembers?.map((member, index) => (
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <button>
             <TeamMember
               key={index}
@@ -44,9 +46,9 @@ const TeamMembers = () => {
                 setSeletedMember(member?.email); // Set the selected workspace
                 setIsOpenDeleteModal(true);
               }}
-            className="bg-red-700 justify-end p-2 rounded-lg text-white"
+            className="bg-red-600 hover:bg-red-800 w-fit h-fit justify-end p-2 rounded-lg text-white"
           >
-            Delete
+            <MdDelete></MdDelete>
           </button>
           <div className={`${isOpenDeleteModal ? "block" : "hidden"}`}>
             {isOpenDeleteModal && (
@@ -63,6 +65,8 @@ const TeamMembers = () => {
           </div>
         </div>
       ))}
+      </div>
+      
     </div>
   );
 };
@@ -109,7 +113,7 @@ function TeamMember({ name, userEmail, avatar }) {
   };
 
   return (
-    <div className="flex items-center justify-between w-[350px] p-4 rounded-lg bg-[#F9F9F9] mb-3">
+    <div className="flex items-center justify-between w-full p-4 rounded-lg bg-[#F9F9F9] mb-3">
       {/* modal  */}
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Send Message</Modal.Header>

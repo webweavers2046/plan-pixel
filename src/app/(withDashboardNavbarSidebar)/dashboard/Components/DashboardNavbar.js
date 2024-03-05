@@ -180,7 +180,7 @@ const DashboardNavbar = () => {
                     onClick={() => setDropdownOpen(!isDropdownOpen)}
                     className="text-start flex gap-2 items-center px-4 py-3 rounded-lg border-2 "
                 >
-                    <p className="cursor-pointer opacity-55 text-[15px] md:w-20 w-12 h-5 overflow-hidden">
+                    <p className="cursor-pointer opacity-55 text-[15px] md:w-24 w-12 h-5 overflow-hidden">
                         {/* {activeWorkspace?.title?.length > 12
                             ? activeWorkspace?.title?.slice(0, 11) + ".."
                             : activeWorkspace?.title || "Workspace"} */}

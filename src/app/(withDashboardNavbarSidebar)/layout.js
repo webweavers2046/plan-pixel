@@ -28,7 +28,7 @@ export default function DashboardLayout({ children }) {
 
                                 <button
                                     onClick={toggleSidebar}
-                                    className="border-2 p-1 flex items-center justify-center absolute bg-[#50B577] text-white rounded-full transform -translate-y-1/2 top-1/2 -right-4 z-50"
+                                    className="border-2 p-1 flex items-center justify-center absolute bg-[#50B577] text-white rounded-full transform -translate-y-1/2 top-1/2 -right-3 z-50"
                                 >
                                     <IoIosArrowForward className="inline text-xl rotate-180" />
                                 </button>

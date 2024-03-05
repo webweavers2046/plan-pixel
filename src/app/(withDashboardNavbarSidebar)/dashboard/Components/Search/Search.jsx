@@ -33,7 +33,7 @@ const Search = () => {
         <div className="md:w-full z-40 relative">
             {/* search bar */}
             <input
-                className="w-full rounded-lg text-sm lg:pl-16 pl-4 py-4 border-0 bg-dashboardPrimaryColor"
+                className="w-full rounded-lg text-sm lg:pl-16 pl-4 md:py-4 py-3 border-0 bg-dashboardPrimaryColor"
                 placeholder="Find The task what you’re looking for..."
                 type="text"
                 required
