@@ -39,22 +39,6 @@ const Dashboard = () => {
           <Image src={dashboardImage} alt="Dashboard home banner"></Image>
         </div>
       </div>
-      {/* <div className=" flex w-full gap-5">
-          <div className="flex w-2/3 justify-between gap-5">
-            <div className="w-full flex flex-col gap-4">
-              <WorkSpaceDetails></WorkSpaceDetails>
-              <TimeTruck></TimeTruck>
-            </div>
-            <div className="w-full flex flex-col gap-4">
-              <TaskBarGraph></TaskBarGraph>
-              <TeamMembers></TeamMembers>
-            </div>
-          </div>
-          <div className="w-1/3">
-            <Calender date={date} setDate={setDate}></Calender>
-            <MyTask date={date.toISOString().substring(0, 10)} />
-          </div>
-        </div> */}
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 w-full">
         <div className="h-fit ">
           <WorkSpaceDetails></WorkSpaceDetails>

@@ -184,8 +184,8 @@ const DashboardNavbar = () => {
                         {/* {activeWorkspace?.title?.length > 12
                             ? activeWorkspace?.title?.slice(0, 11) + ".."
                             : activeWorkspace?.title || "Workspace"} */}
-                            {/* { activeWorkspace?.title || "Workspace"}  */}
-                            kire vai kemon
+                            { activeWorkspace?.title || "Workspace"} 
+                          
                     </p>
                     <IoIosArrowDown
                         className={` cursor-pointer ${
