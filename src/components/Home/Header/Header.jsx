@@ -52,6 +52,7 @@ const Header = () => {
             <div className="flex justify-center lg:gap-8 md:gap-4 gap-2 mt-20">
                 <div className="flex items-center justify-center mb-8">
                     <Image
+                        width={1000}
                         className="w-32 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic2}
                         alt="pic1"
@@ -59,6 +60,7 @@ const Header = () => {
                 </div>
                 <div className="flex items-end">
                     <Image
+                        width={1000}
                         className="w-80 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic3}
                         alt="pic2"
@@ -66,6 +68,7 @@ const Header = () => {
                 </div>
                 <div className="flex items-end justify-center">
                     <Image
+                        width={1000}
                         className="w-80 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic4}
                         alt="pic3"
@@ -73,6 +76,7 @@ const Header = () => {
                 </div>
                 <div className="flex items-end justify-center mb-6">
                     <Image
+                        width={1000}
                         className="w-32 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic5}
                         alt="pic4"
@@ -80,6 +84,7 @@ const Header = () => {
                 </div>
                 <div className="lg:flex hidden items-end justify-end">
                     <Image
+                        width={1000}
                         src={bannerPie}
                         alt="pic4"
                         className="w-72 xl:rounded-t-3xl md:rounded-t-xl"

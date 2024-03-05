@@ -39,7 +39,7 @@ const MyTask = ({ date }) => {
 
   return (
     <div
-      className={`w-full mt-4  min-h-80 rounded-xl p-6 overflow-auto border-2 `}
+      className={`w-full min-h-80 rounded-xl p-6 overflow-auto border-2 `}
     >
       <h1 className=" text-2xl font-bold p-4">My Tasks</h1>
       {tasks?.map((task, index) => (
