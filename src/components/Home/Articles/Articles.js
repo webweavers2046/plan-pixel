@@ -1,6 +1,7 @@
 "use client";
 import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
 import Image from "next/image";
+import { motion } from "framer-motion";
 // import articleImg1 from "@/assets/articles/article1.png";
 // import articleImg2 from "@/assets/articles/article2.png";
 // import articleImg3 from "@/assets/articles/article3.png";
@@ -12,91 +13,112 @@ import useAxios from "@/hooks/useAxios";
 import Link from "next/link";
 
 const Articles = () => {
-  // const {
-  //     data: articles,
-  //     isLoading,
-  //     refetch,
-  // } = useDynamicData("articles", "/api/articles");
-  // console.log(articles);
-  // const {data: articles} = useGetArticle();
-  const [articles, setArticles] = useState([]);
-  const xios = useAxios();
-  useEffect(() => {
-    xios.get("/api/articles").then((res) => {
-      // console.log(res.data);
-      setArticles(res.data);
-    });
-  }, []);
-  const sortedArtiles = [...articles].reverse();
+    const [seeMore, setSeeMore] = useState(4);
+    // const {
+    //     data: articles,
+    //     isLoading,
+    //     refetch,
+    // } = useDynamicData("articles", "/api/articles");
+    // console.log(articles);
+    // const {data: articles} = useGetArticle();
+    const [articles, setArticles] = useState([]);
+    const articleAxios = useAxios();
+    useEffect(() => {
+        articleAxios.get("/api/articles").then((res) => {
+            // console.log(res.data);
+            setArticles(res.data);
+        });
+    }, []);
+    const sortedArticles = [...articles].reverse();
 
-  return (
-    <div className="container mx-auto py-4 xl:px-0 lg:px-6 px-2 mb-10 md:my-24">
-      <SectionTitle title="Latest Articles" />
+    return (
+        <div className="container mx-auto mb-10  py-4 md:my-24 lg:px-24 md:px-7 px-4">
+            <SectionTitle title="Latest Articles" />
 
-      {/* className="flex flex-wrap justify-center gap-6" */}
-      <div className="flex flex-wrap justify-center gap-6 ">
-        {sortedArtiles.map((post) => (
-          <ArticleCard key={post.id} post={post} />
-        ))}
-      </div>
-    </div>
-  );
+            {/* className="flex flex-wrap justify-center gap-6" */}
+            <div className="grid grid-cols-4 justify-between gap-6 ">
+                {sortedArticles.slice(0, seeMore).map((post, idx) => (
+                    <ArticleCard key={post.id} post={post} idx={idx} />
+                ))}
+            </div>
+            <div
+                className={`text-center mt-4 ${sortedArticles.length == seeMore ? "hidden" : ""}`}
+            >
+                <button
+                    onClick={() => setSeeMore(sortedArticles.length)}
+                    className="border px-8 py-2.5 rounded-full"
+                >
+                    See More
+                </button>
+            </div>
+        </div>
+    );
 };
 export default Articles;
 
 // Articles card
-const ArticleCard = ({ post }) => {
-  const {
-    _id,
-    title,
-    description,
-    author,
-    date,
-    articleImage_url,
-    avatar_url,
-  } = post;
+const ArticleCard = ({ post, idx }) => {
+    const {
+        _id,
+        title,
+        description,
+        author,
+        date,
+        articleImage_url,
+        avatar_url,
+    } = post;
 
-  return (
-    <div className="lg:max-w-[364px] max-w-[345px] rounded-lg overflow-hidden shadow-md bg-white mb-6">
-      <Image
-        width={300}
-        height={50}
-        className="w-full h-48 object-cover"
-        src={articleImage_url}
-        alt="Illustration"
-      />
-      <div className="px-5 py-4">
-        <h3 className="text-xl font-bold ">{title}</h3>
-        <p className="text-sm ">
-          {description?.length < 80 ? description : description.slice(0, 80)}
-          <Link id={_id} href={`/article-details/${_id}`}>
-            {" "}
-            <span className="text-red-700 cursor-pointer">
-              {" "}
-              {description?.length > 80 ? "See More..." : ""}
-            </span>
-          </Link>
-        </p>
-      </div>
-      <div className="px-6 flex items-center gap-3 pb-8">
-        <div className="w-10 h-10 border rounded-full flex items-center justify-center">
-          <Image
-            className="w-8 h-8 rounded-full"
-            src={avatar_url}
-            alt="Author"
-            width={32}
-            height={32}
-          />
-        </div>
-        <h5 className="ml-2 text-sm font-bold">
-          {author} <br /> <span className="font-normal text-sm">{date}</span>
-        </h5>
-      </div>
-    </div>
-  );
+    const speed = idx * 0.4;
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: 90 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 + speed }}
+            className="mb-6 overflow-hidden rounded-lg bg-white shadow-md flex flex-col"
+        >
+            <Image
+                width={300}
+                height={50}
+                className="h-48 w-full object-cover"
+                src={articleImage_url}
+                alt="Illustration"
+            />
+            <div className="px-5 py-4">
+                <h3 className="text-xl font-bold ">{title}</h3>
+                <p className="text-sm ">
+                    {description?.length < 80
+                        ? description
+                        : description.slice(0, 80)}
+                    <Link id={_id} href={`/article-details/${_id}`}>
+                        {" "}
+                        <span className="cursor-pointer text-red-700">
+                            {" "}
+                            {description?.length > 80 ? "See More..." : ""}
+                        </span>
+                    </Link>
+                </p>
+            </div>
+            <div className="flex items-end gap-3 px-6 pb-8 grow">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border">
+                    <Image
+                        className="h-8 w-8 rounded-full"
+                        src={avatar_url}
+                        alt="Author"
+                        width={32}
+                        height={32}
+                    />
+                </div>
+                <h5 className="ml-2 text-sm font-bold">
+                    {author} <br />{" "}
+                    <span className="text-sm font-normal">{date}</span>
+                </h5>
+            </div>
+        </motion.div>
+    );
 };
 
 // Dummy articles data
+
 // const articlePosts = [
 //   // Post 1
 //   {
@@ -109,28 +131,3 @@ const ArticleCard = ({ post }) => {
 //     articleImage_url: articleImg1,
 //     avatar_url: avatarImg1,
 //   },
-
-//   // Post 2
-//   {
-//     id: 2,
-//     title: "Tips for Healthy Living",
-//     description:
-//       "Discover simple habits that contribute to a healthier and happier lifestyle.",
-//     author: "Jane Smith",
-//     date: "2023-02-20",
-//     articleImage_url: articleImg2,
-//     avatar_url: avatarImg1,
-//   },
-
-//   // Post 3
-//   {
-//     id: 3,
-//     title: "Programming Best Practices",
-//     description:
-//       "Learn about coding practices and techniques to write clean and efficient code.",
-//     author: "Alex Johnson",
-//     date: "2023-03-10",
-//     articleImage_url: articleImg3,
-//     avatar_url: avatarImg1,
-//   },
-// ];
