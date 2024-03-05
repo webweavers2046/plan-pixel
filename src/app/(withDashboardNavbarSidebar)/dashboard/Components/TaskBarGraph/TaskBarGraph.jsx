@@ -6,11 +6,13 @@ import useAllTasks from "@/hooks/useAllTasks";
 import useFilterTasks from "@/hooks/useFilterTasks";
 import { useContext } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import useDateTime from "../Hooks/useDateTime";
 
 const TaskBarGraph = () => {
 
     const { allWorkspaceTasks } = useContext(ablyContext);
     const { activeWorkspaceTasks } = useContext(globalContext);
+    const {currentDate} = useDateTime();
 
     if (!activeWorkspaceTasks) return;
 
@@ -54,12 +56,12 @@ const TaskBarGraph = () => {
     ]
 
     return (
-        <div className="w-full border-2 border-[#E6E8EC] rounded-lg p-5">
-            <div className="flexjustify-between items-center">
+        <div className="w-full h-80 border-2 border-[#E6E8EC] rounded-lg p-5">
+            <div className="flex justify-between items-center">
                 <h3 className="text-lg font-bold">Teams Strength</h3>
                 <div className="text-[#00000099] flex gap-2 items-center">
-                    <p>22 Apr 2024</p>
-                    <IoIosArrowDown className="text"></IoIosArrowDown>
+                    <p>{currentDate}</p>
+                    {/* <IoIosArrowDown className="text"></IoIosArrowDown> */}
                 </div>
             </div>
             {/* Bar Chart */}

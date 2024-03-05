@@ -174,37 +174,4 @@ function TeamMember({ name, userEmail, avatar }) {
     );
 }
 
-// const teamMemberData = [
-//     {
-//         name: "Sabbir Mohammad Sami",
-//         email: "smd71430@gmail.com",
-//         avatar: member01Img,
-//     },
-//     {
-//         name: "Mazharul Shishir",
-//         email: "mdmazharulislam2046@gmail.com",
-//         avatar: member02Img,
-//     },
-//     {
-//         name: "MD Rahim",
-//         email: "alamin102410@gmail.com",
-//         avatar: member03Img,
-//     },
-//     {
-//         name: "Shakil Ahmmed",
-//         email: "shakilahmmed8882@gmail.com",
-//         avatar: member04Img,
-//     },
 
-//     {
-//         name: "Ahetesham Sajid",
-//         email: "ahteshamsajid8@gmail.com",
-//         avatar: member05Img,
-//     },
-
-//     {
-//         name: "Forhad hossain",
-//         email: "forhadairdrop@gmail.com",
-//         avatar: member06Img,
-//     },
-// ];

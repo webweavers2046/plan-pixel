@@ -35,14 +35,14 @@ const Meeting = () => {
   
 
   return (
-    <section className="px-4">
+    <section className="mt-5">
       <div className="grid grid-cols-7 gap-x-6 ">
         <div className="col-span-2 border-2 rounded-lg p-6  ">
           <div className="min-h-screen-custom">
             <Modal show={openModal}>
               {/* <Modal.Header className="text-3xl ">Schedule Meeting</Modal.Header> */}
               <Modal.Body>
-                <div className="flex justify-end ">
+                <div className="flex justify-end">
                   <div
                     className="cursor-pointer hover:bg-gray-100 rounded-sm p-1 transition duration-200"
                     onClick={() => {
