@@ -6,7 +6,7 @@ import "./customCalender.css"
 const Calender = ({ setDate, date }) => {
   // const [date, setDate] = useState(new Date());
   return (
-    <div className="calendar-container mb-10">
+    <div className="calendar-container mb-10 border-2 rounded-lg">
       <Calendar onChange={setDate} value={date} />
     </div>
   );

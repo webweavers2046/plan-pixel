@@ -18,6 +18,7 @@ const MyTask = ({ date }) => {
   const apiEndpoint = `/tasksFiltered?targetDate=${modifyDate}&tasksOwner=${user?.email}`;
   const { data, refetch, isLoading } = useTranstackData(apiEndpoint, "tasks");
   const [tasks, setTasks] = useState(data);
+  console.log(date, "from my task");
 
   useEffect(() => {
     if (data) {
