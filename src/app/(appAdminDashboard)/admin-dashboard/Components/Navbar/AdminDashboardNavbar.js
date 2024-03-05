@@ -21,8 +21,8 @@ const AdminDashboardNavbar = () => {
 
     const defaultProfileImage =
         "https://i.ibb.co/dm0hZVk/92-K4-Yh-Iz-200x200.jpg";
-    // const {data : userData} = useUser(user?.email)
-    // console.log(userData);
+    const { data: userData } = useUser(user?.email);
+    console.log(userData);
     const router = useRouter();
 
     const handleLogOut = () => {
