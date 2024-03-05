@@ -50,57 +50,57 @@ const MeetingDetails = ({
       <h3 className="text-xl font-semibold opacity-45">Meeting Details</h3>
       <div className="">
         <div className="pt-6">
-          <h2 className="text-5xl font-semibold">
+          <h2 className="md:text-3xl lg:text-5xl font-semibold">
             {activeWorkspace?.title ===
               singleMeeting?.newMeeting?.activeWorkspace?.title &&
               singleMeeting?.newMeeting?.title}
           </h2>
         </div>
-        <div className="grid grid-cols-4 gap-6 my-10">
-          <div className="flex gap-3 text-left items-center  bg-gray-100 rounded-lg py-3 px-4">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-x-2 lg:gap-6 my-10">
+          <div className="flex lg:gap-x-3 gap-x-2 text-left items-center bg-gray-100 rounded-lg p-1 lg:py-3 lg:px-4">
             <div className="">
-              <BsCalendarDate className="text-2xl" />
+              <BsCalendarDate className="md:text-xl lg:text-2xl" />
             </div>
             <div className="">
-              <p className="opacity-75 mb-0">Date:</p>
-              <h5 className="text-lg font-semibold -mt-1">
+              <p className="opacity-75">Date:</p>
+              <h5 className="md:text-sm lg:text-lg font-semibold ">
                 {activeWorkspace?.title ===
                   singleMeeting?.newMeeting?.activeWorkspace?.title &&
                   singleMeeting?.newMeeting?.date}
               </h5>
             </div>
           </div>
-          <div className="flex gap-3 text-left items-center  bg-gray-100 rounded-lg py-3 px-4">
+          <div className="flex lg:gap-x-3 gap-x-2 text-left items-center  bg-gray-100 rounded-lg p-1 lg:py-3 lg:px-4">
             <div className="">
-              <MdOutlineAccessTime className="text-2xl" />
+              <MdOutlineAccessTime className="md:text-xl lg:text-2xl" />
             </div>
             <div className="">
-              <p className="opacity-75 mb-0">Time:</p>
-              <h5 className="text-lg font-semibold -mt-1">
+              <p className="opacity-75 ">Time:</p>
+              <h5 className="md:text-sm lg:text-lg font-semibold -mt-1">
                 {activeWorkspace?.title ===
                   singleMeeting?.newMeeting?.activeWorkspace?.title &&
                   singleMeeting?.newMeeting?.time}
               </h5>
             </div>
           </div>
-          <div className="flex gap-3 text-left items-center bg-gray-100 rounded-lg py-3 px-4">
+          <div className="flex lg:gap-x-3 gap-x-2 text-left items-center bg-gray-100 rounded-lg  p-1 lg:py-3 lg:px-4">
             <div className="">
-              <BiCurrentLocation className="text-2xl" />
+              <BiCurrentLocation className="md:text-xl lg:text-2xl" />
             </div>
             <div className="">
-              <p className="opacity-75 mb-0">Platform:</p>
-              <h5 className="text-lg font-semibold -mt-1">
+              <p className="opacity-75 ">Platform:</p>
+              <h5 className="md:text-sm lg:text-lg font-semibold -mt-1">
                 {activeWorkspace?.title ===
                   singleMeeting?.newMeeting?.activeWorkspace?.title &&
                   singleMeeting?.newMeeting?.platform}
               </h5>
             </div>
           </div>
-          <div className="flex items-center justify-center bg-gray-100 rounded-lg py-3 px-4">
+          <div className="flex items-center justify-center bg-gray-100 rounded-lg px-1 lg:py-3 lg:px-4">
             <div className="">
               {/* <p className="opacity-75 mb-0 text">Join</p> */}
               <a
-                className="text-lg hover:text-green-400 transition duration-300"
+                className="text-lg font-semibold hover:text-green-400 transition duration-300"
                 target="_blank"
                 href={
                   activeWorkspace?.title ===

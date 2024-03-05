@@ -35,9 +35,9 @@ const Meeting = () => {
   
 
   return (
-    <section className="px-4">
-      <div className="grid grid-cols-7 gap-x-6 ">
-        <div className="col-span-2 border-2 rounded-lg p-6  ">
+    <section className="lg:px-4 md:px-20">
+      <div className="grid lg:grid-cols-7 lg:gap-x-6 gap-y-5 ">
+        <div className="lg:col-span-2 border-2 rounded-lg p-6  ">
           <div className="min-h-screen-custom">
             <Modal show={openModal}>
               {/* <Modal.Header className="text-3xl ">Schedule Meeting</Modal.Header> */}
@@ -125,7 +125,7 @@ const Meeting = () => {
             </div>
           </div>
         </div>
-        <div className={`col-span-5 border-2 rounded-lg p-6 min-h-screen-custom`}>
+        <div className={` lg:col-span-5 border-2 rounded-lg p-6 min-h-screen-custom`}>
           <MeetingDetails
             meetings={allMeetings}
             singleMeeting={singleMeeting}
