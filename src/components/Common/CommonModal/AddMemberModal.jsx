@@ -10,11 +10,10 @@ export function AddMemberModal({
 }) {
   return (
     <div
-      className={`transition-all duration-200 ${
-        WillAddMember ? "visible opacity-100" : "invisible opacity-0"
-      } bg-transparent  px-1 rounded-sm  absolute top-20 -right-[530px]  h-96 items-center gap-4`}
+      className={`transition-all duration-200 absolute ${WillAddMember ? "block" : "hidden top-20 -right-[700px]"
+        } bg-transparent  px-1 rounded-sm h-96 items-center gap-4`}
     >
-      {/* All the memebers list  */}
+      {/* All the members list  */}
       <MemberList
         setWillAddMember={setWillAddMember}
         handleAddMember={handleAddMember}
@@ -30,16 +29,16 @@ import { Card } from "flowbite-react";
 import Image from "next/image";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import {  useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchMember from "../Search/SearchMember";
 import useAxios from "@/hooks/useAxios";
 import TeamMembers from "@/app/(withDashboardNavbarSidebar)/dashboard/members/Components/TeamMembers";
 import AssignColorAndStyle from "./AsignAlphabelColor";
 
 
-function MemberList({ handleAddMember, setWillAddMember,WillAddMember}) {
+function MemberList({ handleAddMember, setWillAddMember, WillAddMember }) {
 
-  const { clickedWorkspaceId,activeWorkspace} = useGlobalContext();
+  const { clickedWorkspaceId, activeWorkspace } = useGlobalContext();
 
   const xios = useAxios();
   const [suggestions, setSuggestions] = useState([]);
@@ -56,118 +55,117 @@ function MemberList({ handleAddMember, setWillAddMember,WillAddMember}) {
 
   // close the add member side bar in onblur 
   const addMemberRef = useRef()
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (addMemberRef.current && !addMemberRef.current.contains(event.target)) {
-      // Clicked outside of the modal, close the filter & remove the highlighted id
-      setWillAddMember(false)
-    }
-  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (addMemberRef.current && !addMemberRef.current.contains(event.target)) {
+        // Clicked outside of the modal, close the filter & remove the highlighted id
+        setWillAddMember(false)
+      }
+    };
 
-  // Add event listener to the document body
-  document.addEventListener("mousedown", handleClickOutside);
+    // Add event listener to the document body
+    document.addEventListener("mousedown", handleClickOutside);
 
-  // Remove the event listener on component unmount
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, [setWillAddMember,WillAddMember]);
+    // Remove the event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setWillAddMember, WillAddMember]);
 
 
   return (
     <div
-    ref={addMemberRef}
-    
+      ref={addMemberRef}
+
     >
-    <Card
-    className=" mt-2 z-50 fixed w-[370px] right-0 top-0 overflow-auto ">
-      <div 
-    
-      
-      className="mb-4 flex gap-2  justify-between">
-        <h5 className="text-xl font-serif font-semibold leading-none text-gray-900">
-          Add members{" "}
-        </h5>
-        <a href="#" className="text-sm  text-primary ml-20 ">
-          See all
-        </a>
-        <button
-          // close the add memeber list
-          onClick={() => setWillAddMember(false)}
-          className="rounded-full z-50 cursor-pointer flex items-center justify-center bg-white p-3 text-primary "
-        >
-          <IoIosCloseCircleOutline className="text-[24px] absolute top-5 right-5 cursor-pointer text-red-500" />
-        </button>
-      </div>
+      <Card
+        className=" mt-2 z-50 fixed md:w-[370px] w-72 right-0 top-0  ">
+        <div
 
-      {/* Your search input to find the members to add */}
-      <SearchMember handleInputChange={handleInputChange} />
 
-      <ul className="divide-y ">
-        {suggestions?.map((user) => {
-          const isMemberAlreadyExist = activeWorkspace?.members?.find(member => member === user?.email)
-          return <li key={user._id} className="py-3 sm:py-4">
-          <div className="flex items-center space-x-4">
-            <AssignColorAndStyle user={user} />
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                {user?.name}
-              </p>
-              <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                {user?.email}
-              </p>
-            </div>
-            {!isMemberAlreadyExist?
-              <div
-                onClick={() =>
-                  handleAddMember(clickedWorkspaceId, user?.email, user?.name)
+          className="mb-4 flex gap-2  justify-between">
+          <h5 className="md:text-xl font-serif font-semibold leading-none text-gray-900">
+            Add members{" "}
+          </h5>
+          <a href="#" className="text-sm  text-primary md:ml-20 ">
+            See all
+          </a>
+          <button
+            // close the add member list
+            onClick={() => setWillAddMember(false)}
+            className="rounded-full z-50 cursor-pointer flex items-center justify-center bg-white p-3 text-primary "
+          >
+            <IoIosCloseCircleOutline className="text-[24px] absolute top-5 right-5 cursor-pointer text-red-500" />
+          </button>
+        </div>
+
+        {/* Your search input to find the members to add */}
+        <SearchMember handleInputChange={handleInputChange} />
+
+        <ul className="divide-y ">
+          {suggestions?.map((user) => {
+            const isMemberAlreadyExist = activeWorkspace?.members?.find(member => member === user?.email)
+            return <li key={user._id} className="py-3 sm:py-4">
+              <div className="flex items-center space-x-4">
+                <AssignColorAndStyle user={user} />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                    {user?.name}
+                  </p>
+                  <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                    {user?.email}
+                  </p>
+                </div>
+                {!isMemberAlreadyExist ?
+                  <div
+                    onClick={() =>
+                      handleAddMember(clickedWorkspaceId, user?.email, user?.name)
+                    }
+                    className={`text-[13px] inline-flex cursor-pointer items-center ${isMemberAlreadyExist
+                        ? "text-red-600 cursor-not-allowed"
+                        : "text-gray-900"
+                      }`}
+                    // Disable the button if the user is already added
+                    disabled={isMemberAlreadyExist}
+                  >
+                    +Add
+                  </div> :
+                  <div className="text-[#50B577]">
+                    <TiTick />
+                  </div>
+
+
                 }
-                className={`text-[13px] inline-flex cursor-pointer items-center ${
-                  isMemberAlreadyExist
-                    ? "text-red-600 cursor-not-allowed"
-                    : "text-gray-900"
-                }`}
-                // Disable the button if the user is already added
-                disabled={isMemberAlreadyExist}
-              >
-                +Add
-              </div>:
-              <div className="text-[#50B577]">
-              <TiTick />
-            </div>
-            
+              </div>
+            </li>
+          })}
+        </ul>
 
-            }
+        <ul className="h-screen bg-transparent relative">
+          <div className="absolute top-32">
+            {/* Search */}
+            <PaperPieces />
           </div>
-        </li>
-        })}
-      </ul>
+        </ul>
 
-      <ul className="h-screen bg-transparent relative">
-        <div className="absolute top-32">
-          {/* Search */}
+        <TeamMembers />
+        <div className="pt-14 relative overflow-hidden">
           <PaperPieces />
         </div>
-      </ul>
-
-      <TeamMembers />
-      <div className="pt-14 relative overflow-hidden">
-        <PaperPieces />
-      </div>
-      {suggestions?.length <= 0 && (
-        <div className="absolute -z-20 top-[280px]">
-          <Image
-            className=" opacity-50 mx-auto w-32 h-32   "
-            src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
-            height={100}
-            width={100}
-          />
-          <p className="text-center text-gray-500">
-            No matching members found.(name,email,skills or location)
-          </p>
-        </div>
-      )}
-    </Card>
+        {suggestions?.length <= 0 && (
+          <div className="absolute -z-20 top-[280px]">
+            <Image
+              className=" opacity-50 mx-auto w-32 h-32   "
+              src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
+              height={100}
+              width={100}
+            />
+            <p className="text-center text-gray-500">
+              No matching members found.(name,email,skills or location)
+            </p>
+          </div>
+        )}
+      </Card>
     </div>
   );
 }

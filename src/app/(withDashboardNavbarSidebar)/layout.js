@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }) {
     return (
         <section>
             <PrivateRoute>
-                <div className="grid grid-cols-12 min-h-screen relative">
+                <div className="grid grid-cols-12 min-h-screen w-full">
                     {openSidebar && (
                         <div className="absolute w-full left-0 top-0 h-screen bg-slate-200/10 backdrop-blur-2xl z-50 xl:hidden block">
                             <div className="w-80 bg-white h-full relative">
@@ -38,13 +38,13 @@ export default function DashboardLayout({ children }) {
                         <DashboardSidebar />
                     </div>
 
-                    <div className="xl:col-span-10 col-span-12 xl:ms-0 ms-5">
+                    <div className="xl:col-span-10 col-span-12 lg:py-4 py-2 lg:px-3 md:pl-11 md:pr-5 pl-9 pr-4">
                         <div className={`flex`}>
-                            <div className="sticky top-0">
-                                <div className="w-4 h-screen border-r-2 xl:hidden block relative">
+                            <div className="fixed top-0 md:left-2 left-1">
+                                <div className="w-4 h-screen border-r-2 lg:hidden block relative">
                                     <button
                                         onClick={toggleSidebar}
-                                        className="border-2 p-1 flex items-center justify-center absolute bg-white rounded-full top-1/4 transform -translate-y-1/2 -left-0 "
+                                        className="border-2 p-1 flex items-center justify-center absolute bg-[#50B577] rounded-full top-1/4 transform -translate-y-1/2 -left-0 "
                                     >
                                         <IoIosArrowForward className="inline text-xl" />
                                     </button>
@@ -55,13 +55,15 @@ export default function DashboardLayout({ children }) {
                                     <DashboardNavbar />
                                 </div>
                                 <TanstackProvider>
-                                    <div className="p-4">{children}</div>
+                                    <div>{children}</div>
                                 </TanstackProvider>
                             </div>
                         </div>
                     </div>
+                     {/* <div className="w-full bg-red-500 xl:col-span-10 col-span-12">kire</div> */}
                 </div>
             </PrivateRoute>
         </section>
+        
     );
 }

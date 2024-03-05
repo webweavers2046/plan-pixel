@@ -50,11 +50,11 @@ const DashboardNavbar = () => {
     const handleNotificationClick = () => {
         setIsOpen(!isOpen);
     };
-    console.log(notifications);
+    // console.log(notifications);
 
     // notification Sorting
     const [yourNotifications, setYourNotifications] = useState([]);
-    console.log(notifications);
+    // console.log(notifications);
     useEffect(() => {
         if (notifications) {
             const newNotifications = notifications?.filter((notification) => {
@@ -71,7 +71,7 @@ const DashboardNavbar = () => {
         }
     }, [notifications, user, activeWorkspace]);
 
-    console.log(activeWorkspace);
+    // console.log(activeWorkspace);
     // console.log(yourNotifications);
     // console.log(notifications);
 
@@ -171,19 +171,21 @@ const DashboardNavbar = () => {
     };
 
     return (
-        <div className="flex relative justify-between items-center p-4 gap-6">
+        <div className="flex relative justify-between items-center lg:gap-6 md:gap-4 gap-3">
             <div
                 onClick={handleDropdownClick}
-                className="py-2 px-3 relative rounded-lg"
+                className="py-2 relative rounded-lg"
             >
                 <div
                     onClick={() => setDropdownOpen(!isDropdownOpen)}
-                    className="text-start flex gap-2 items-center w-32"
+                    className="text-start flex gap-2 items-center px-4 py-3 rounded-lg border-2 "
                 >
-                    <p className=" cursor-pointer opacity-55 text-[15px] ">
-                        {activeWorkspace?.title?.length > 12
+                    <p className="cursor-pointer opacity-55 text-[15px] md:w-20 w-12 h-5 overflow-hidden">
+                        {/* {activeWorkspace?.title?.length > 12
                             ? activeWorkspace?.title?.slice(0, 11) + ".."
-                            : activeWorkspace?.title || "Workspace"}
+                            : activeWorkspace?.title || "Workspace"} */}
+                            {/* { activeWorkspace?.title || "Workspace"}  */}
+                            kire vai kemon
                     </p>
                     <IoIosArrowDown
                         className={` cursor-pointer ${
@@ -261,8 +263,8 @@ const DashboardNavbar = () => {
                     setWillAddMember={setWillAddMember}
                 />
             </div>
-            <div className="grow">
-                <div className="absolute ml-[20px] mt-[17px]">
+            <div className="grow md:ml-4 ml-2">
+                {/* <div className="absolute ml-[20px] mt-[17px]">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -277,7 +279,7 @@ const DashboardNavbar = () => {
                             strokeLinecap="round"
                         />
                     </svg>
-                </div>
+                </div> */}
                 {/* search component */}
                 <Search></Search>
             </div>
@@ -339,7 +341,7 @@ const DashboardNavbar = () => {
                 </div>
             </div>
 
-            <div className="border md:flex hidden py-2 px-3 rounded-lg bg-[white]">
+            <div className="border lg:flex hidden py-2 px-3 rounded-lg bg-[white]">
                 <Dropdown
                     className="bg-white rounded-lg"
                     inline

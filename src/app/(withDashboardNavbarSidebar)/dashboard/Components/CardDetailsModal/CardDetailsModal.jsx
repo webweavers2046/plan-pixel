@@ -72,9 +72,6 @@ const CardDetailsModal = () => {
                                 )
                             }
 
-                            {/* <p className="bg-[#FBBC0540] text-[10px] font-semibold px-3 py-2  rounded-md">user story</p>
-                            <p className="bg-[#93C64840] text-[10px] font-semibold px-3 py-2  rounded-md">Motivations</p>
-                            <p className="bg-[#50B57780] text-[10px] font-semibold px-3 py-2  rounded-md">Attitudes</p> */}
                         </div>
                         {/* members */}
                         <div className="pt-1">

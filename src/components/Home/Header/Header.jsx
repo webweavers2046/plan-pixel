@@ -11,11 +11,11 @@ const Header = () => {
     return (
         <div
             className="pt-14 md:px-24 px-6 text-center border-b-2 banner-bg"
-            // style={{
-            //     backgroundImage: `url(${bg.src})`,
-            //     backgroundRepeat: "no-repeat",
-            //     backgroundSize: "contain",
-            // }}
+        // style={{
+        //     backgroundImage: `url(${bg.src})`,
+        //     backgroundRepeat: "no-repeat",
+        //     backgroundSize: "contain",
+        // }}
         >
             <div className="flex flex-col items-center">
                 <h4 className="py-2 px-5 bg-[#E9F5E3] rounded-md mb-8 text-xs font-medium">
@@ -37,6 +37,7 @@ const Header = () => {
             <div className="flex justify-center lg:gap-8 md:gap-4 gap-2 mt-20">
                 <div className="flex items-center justify-center mb-8">
                     <Image
+                        width={1000}
                         className="w-32 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic2}
                         alt="pic1"
@@ -44,6 +45,7 @@ const Header = () => {
                 </div>
                 <div className="flex items-end">
                     <Image
+                        width={1000}
                         className="w-80 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic3}
                         alt="pic2"
@@ -51,6 +53,7 @@ const Header = () => {
                 </div>
                 <div className="flex items-end justify-center">
                     <Image
+                        width={1000}
                         className="w-80 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic4}
                         alt="pic3"
@@ -58,6 +61,7 @@ const Header = () => {
                 </div>
                 <div className="flex items-end justify-center mb-6">
                     <Image
+                        width={1000}
                         className="w-32 xl:rounded-t-3xl md:rounded-t-xl"
                         src={bannerPic5}
                         alt="pic4"
@@ -65,6 +69,7 @@ const Header = () => {
                 </div>
                 <div className="lg:flex hidden items-end justify-end">
                     <Image
+                        width={1000}
                         src={bannerPie}
                         alt="pic4"
                         className="w-72 xl:rounded-t-3xl md:rounded-t-xl"
