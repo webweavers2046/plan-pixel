@@ -16,12 +16,12 @@ const MeetingDetails = ({
   refetch,
 }) => {
   const xios = useAxios();
-  console.log(singleMeeting);
+  // console.log(singleMeeting);
   // const { data, refetch } = useAllMeetings();
   const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
-  console.log(activeWorkspace?.title);
+  // console.log(activeWorkspace?.title);
   const handleMeetingDelete = (id) => {
-    console.log("delete id", id);
+    // console.log("delete id", id);
 
     Swal.fire({
       title: "Are you sure?",
@@ -149,7 +149,7 @@ const MeetingDetails = ({
             className="px-8 py-4 bg-rose-600 rounded-lg text-white"
           >
             Delete Meeting
-          </button>:
+          </button>
           
 
           

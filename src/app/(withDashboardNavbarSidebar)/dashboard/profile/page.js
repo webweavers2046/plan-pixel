@@ -10,14 +10,14 @@ import AllWorkspace from "./AllWorkspace/AllWorkspace";
 const page = () => {
     const [editProfile, setEditProfile] = useState(false)
     return (
-        <div className='p-4 mt-10 flex gap-12'>
+        <div className=' mt-10 flex flex-col md:flex-row justify-between gap-5 w-full'>
             {
                 editProfile ?
                     <UpdateProfile editProfile={editProfile} setEditProfile={setEditProfile}></UpdateProfile>
                     :
                     <Profile editProfile={editProfile} setEditProfile={setEditProfile}></Profile>
             }
-            <div className='w-full'>
+            <div className='w-full xl:pl-8'>
                 <TaskStats></TaskStats>
                 <AllWorkspace></AllWorkspace>
             </div>

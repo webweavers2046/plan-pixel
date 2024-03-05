@@ -115,9 +115,9 @@ const UpdateProfile = ({ editProfile, setEditProfile }) => {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full">
       <div className="flex justify-between">
-        <h4 className="text-2xl font-bold">Edit Profile</h4>
+        <h4 className="md:text-2xl text-lg font-bold">Edit Profile</h4>
         <button className="flex items-center justify-center text-[#00A13E] ">
           <IoIosArrowBack className="text-xl"></IoIosArrowBack>
           <span

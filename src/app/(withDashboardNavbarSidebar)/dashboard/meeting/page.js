@@ -42,7 +42,7 @@ const Meeting = () => {
             <Modal show={openModal}>
               {/* <Modal.Header className="text-3xl ">Schedule Meeting</Modal.Header> */}
               <Modal.Body>
-                <div className="flex justify-end ">
+                <div className="flex justify-end">
                   <div
                     className="cursor-pointer hover:bg-gray-100 rounded-sm p-1 transition duration-200"
                     onClick={() => {

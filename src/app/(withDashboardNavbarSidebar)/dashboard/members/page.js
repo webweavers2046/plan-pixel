@@ -24,18 +24,17 @@ const page = () => {
 
 
   return (
-    <div className="flex gap-x-5 p-5">
-      <div className="">
+    <div className="flex flex-col xl:flex-row gap-5 mt-4">
+      <div className="xl:w-1/2 w-full h-full">
         <TeamMembers />
       </div>
-      <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border w-full">
+      <div className="shadow-sm rounded-xl p-6  overscroll-auto border min-h-[80vh] w-full">
         <div className="bg-gray-200 w-fit pr-6 py-3 rounded-md shadow-md">
           <Dropdown
             className="bg-gray-100 py-2 px-3 rounded-lg mt-4"
             inline
             label={
               <div className="text-start px-6 ">
-                {/* <p className="text-xs opacity-55">workspace -</p> */}
                 <h2 className="capitalize">{filter}</h2>
               </div>
             }
@@ -44,7 +43,7 @@ const page = () => {
               className="hover:text-green-600 font-semibold"
               onClick={() => {
                 setFilter("to-do");
-                // setHeading('To-do')
+              
               }}
             >
               To-do
@@ -53,7 +52,7 @@ const page = () => {
               className="hover:text-green-600 font-semibold"
               onClick={() => {
                 setFilter("doing");
-                // setHeading('Doing')
+                
               }}
             >
               Doing
@@ -62,7 +61,7 @@ const page = () => {
               className="hover:text-green-600 font-semibold"
               onClick={() => {
                 setFilter("done");
-                // setHeading('Done');
+               
               }}
             >
               Done

@@ -50,7 +50,7 @@ const SingleLabel = ({ label, card, index, taskRefetch}) => {
 
     const handleCheckboxChange = (e) => {
         const checked = e?.target?.checked;
-        console.log('value of checkbox :', e.target.checked);
+        // console.log('value of checkbox :', e.target.checked);
 
         axiosPublic.put(`/check-label/${card?._id}`, {checked, index})
         .then(res => {
