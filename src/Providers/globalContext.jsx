@@ -311,11 +311,13 @@ const GlobalContext = ({ children }) => {
         //     console.log(data);
         // })
         xios?.get(`/api/notifications/${activeWorkspaceReal?._id}`)
-            .then(res => { console.log(res?.data) })
+            .then(res => { 
+                // console.log(res?.data)
+             })
     }, [activeWorkspaceReal])
     // console.log(notifications);
     // console.log(activeWorkspaceReal);
-    console.log(activeWorkspaceTasks);
+    // console.log(activeWorkspaceTasks);
     const data = {
         activeWorkspace,
         setActiveWorkspace,

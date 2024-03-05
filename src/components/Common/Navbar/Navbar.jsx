@@ -92,7 +92,7 @@ const Navbar = () => {
                     </div>
                     {/* for mobile sidebar  */}
                     <div
-                        className={`fixed top-0 right-0 h-screen overflow-hidden ${
+                        className={`fixed z-40 top-0 right-0 h-screen overflow-hidden ${
                             isMenuOpen ? "w-full" : "w-0"
                         } transition-all duration-300`}
                     >

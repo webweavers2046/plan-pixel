@@ -22,7 +22,7 @@ const AllWorkspace = () => {
   const { title,description, members } = activeWorkspace || {title:"",description:"",members:[]}
 
   return (
-    <div className="w-full px-10 mt-10">
+    <div className="w-full mt-10">
     <h3 className="text-xl font-semibold mb-5">All workspace</h3>
     {userWokspaceList?.map((workspace) => {
       return (

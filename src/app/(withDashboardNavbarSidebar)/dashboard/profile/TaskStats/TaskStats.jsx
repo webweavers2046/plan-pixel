@@ -19,10 +19,10 @@ const TaskStats = () => {
     const doing = workspaceAllTasks?.filter(task => task?.status === "doing");
 
     return (
-        <div className="grid grid-cols-2 px-10  gap-5">
-            <div className="bg-[#50B57759] flex flex-col justify-center items-center font-semibold p-5 rounded-lg">
-                <h5 className="text-xl">Total Finished Task:</h5>
-                <h4 className="text-6xl mt-2">
+        <div className="grid lg:grid-cols-2 grid-cols-2 md:grid-cols-1  gap-5">
+            <div className="bg-[#50B57759] flex flex-col justify-center items-center font-semibold md:p-5 p-3 rounded-lg">
+                <h5 className="lg:text-xl text-lg">Total Finished Task:</h5>
+                <h4 className="lg:text-6xl text-4xl text mt-2">
                     {
                         done?.length < 10 ?
                             '0' + done?.length
@@ -31,9 +31,9 @@ const TaskStats = () => {
                     }
                 </h4>
             </div>
-            <div className="bg-[#FBBC0559] flex flex-col justify-center items-center font-semibold p-5 rounded-lg">
-                <h5 className="text-xl">Total Unfinished Task:</h5>
-                <h4 className="text-6xl mt-2">
+            <div className="bg-[#FBBC0559] flex flex-col justify-center items-center font-semibold md:p-5 p-3 rounded-lg">
+                <h5 className="lg:text-xl text-lg">Total Unfinished Task:</h5>
+                <h4 className="lg:text-6xl text-4xl text mt-2">
                     {
                         doing?.length + todo?.length < 10 ?
                             '0' + (doing?.length + todo?.length)
