@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { TbMenu } from "react-icons/tb";
-import { IoClose } from "react-icons/io5";
 import logo from "@/assets/Logo.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/Providers/AuthProviders";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,31 +20,36 @@ const Navbar = () => {
         { route: "Contact Us", path: "/contact" },
     ];
 
+    const pathname = usePathname();
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
     return (
         <header className="border-b-2">
-            <div className="container mx-auto relative py-4 px-7">
-                <div className="rounded-full pt-4 pb-4 text-base font-semibold">
+            <div className="container relative mx-auto px-7 py-4 md:px-24">
+                <div className="rounded-full pb-4 pt-4 text-base font-semibold">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-16">
                             <div className="">
                                 <Link href={"/"}>
                                     <Image
-                                        className="h-10 w-auto lg:mb-0.5  mb-2.5"
+                                        className="mb-2.5 h-10 w-auto  lg:mb-0.5"
                                         src={logo}
                                         alt="heartbeat givers' logo"
                                     ></Image>
                                 </Link>
                             </div>
-                            <nav className="lg:block hidden">
+                            <nav className="hidden lg:block">
                                 <ul className="flex gap-2">
                                     {navLinks.map((link, idx) => (
                                         <Link
                                             href={link.path}
-                                            className="px-3 text-base font-medium"
+                                            className={`px-3 text-base font-medium ${
+                                                pathname == link.path
+                                                    ? "activeNav"
+                                                    : "inactiveNav"
+                                            } `}
                                             key={idx}
                                         >
                                             {link.route}
@@ -54,14 +58,22 @@ const Navbar = () => {
                                     {isAdmin ? (
                                         <Link
                                             href={"/admin-dashboard"}
-                                            className="px-3 text-base font-medium"
+                                            className={` ${
+                                                pathname == "/admin-dashboard"
+                                                    ? "activeNav"
+                                                    : "inactiveNav"
+                                            } px-3 text-base font-medium`}
                                         >
                                             Dashboard
                                         </Link>
                                     ) : (
                                         <Link
                                             href={"/dashboard"}
-                                            className="px-3 text-base font-medium"
+                                            className={` ${
+                                                pathname == "/dashboard"
+                                                    ? "activeNav"
+                                                    : "inactiveNav"
+                                            } px-3 text-base font-medium`}
                                         >
                                             Dashboard
                                         </Link>
@@ -69,9 +81,9 @@ const Navbar = () => {
                                 </ul>
                             </nav>
                         </div>
-                        <div className="lg:block hidden items-center gap-3">
+                        <div className="hidden items-center gap-3 lg:block">
                             <Link
-                                className="py-3 px-6 bg-gradient-to-br from-[#93C648] to-[#50B577] text-white font-bold text-base rounded-sm"
+                                className="rounded-sm bg-gradient-to-br from-[#93C648] to-[#50B577] px-6 py-3 text-base font-bold text-white"
                                 href={`${user ? "/dashboard" : "/sign-in"}`}
                             >
                                 Get Started
@@ -80,7 +92,7 @@ const Navbar = () => {
                         {/* mobile menu button  */}
                         <div className="block lg:hidden">
                             <button
-                                className=" font-bold text-2xl text-primary rounded-full"
+                                className=" rounded-full text-2xl font-bold text-primary"
                                 onClick={toggleMenu}
                             >
                                 <div className="space-y-2">
@@ -97,15 +109,15 @@ const Navbar = () => {
                         } transition-all duration-300`}
                     >
                         <div
-                            className="bg-black bg-opacity-50 absolute top-0 right-0 h-full w-full"
+                            className="absolute right-0 top-0 h-full w-full bg-black bg-opacity-50"
                             onClick={toggleMenu}
                         ></div>
-                        <div className="bg-white h-full w-80 transform transition-transform ease-in-out">
-                            <div className="flex justify-between p-10 items-end">
+                        <div className="h-full w-80 transform bg-white transition-transform ease-in-out">
+                            <div className="flex items-end justify-between p-10">
                                 <div className="">
                                     <Link href={"/"} onClick={toggleMenu}>
                                         <Image
-                                            className="h-8 w-auto mb-2.5"
+                                            className="mb-2.5 h-8 w-auto"
                                             src={logo}
                                             alt="heartbeat givers' logo"
                                         ></Image>
@@ -117,14 +129,14 @@ const Navbar = () => {
                                         className=" mb-5"
                                     >
                                         <div className="space-y-2 ">
-                                            <div className="h-0.5 w-8 bg-black rotate-45"></div>
-                                            <div className="h-0.5 w-8 bg-black -rotate-45 "></div>
+                                            <div className="h-0.5 w-8 rotate-45 bg-black"></div>
+                                            <div className="h-0.5 w-8 -rotate-45 bg-black "></div>
                                         </div>
                                     </button>
                                 </div>
                             </div>
                             <nav className="ps-1">
-                                <ul className="flex flex-col px-10 gap-y-2">
+                                <ul className="flex flex-col gap-y-2 px-10">
                                     {navLinks.map((link, idx) => (
                                         <Link
                                             href={link.path}
@@ -137,7 +149,7 @@ const Navbar = () => {
                                     ))}
                                 </ul>
                             </nav>
-                            <nav className="ps-11 mt-3">
+                            <nav className="mt-3 ps-11">
                                 <ul className="flex gap-2">
                                     {isAdmin ? (
                                         <Link
@@ -156,13 +168,11 @@ const Navbar = () => {
                                     )}
                                 </ul>
                             </nav>
-                            <div className="ps-10 mt-5">
+                            <div className="mt-5 ps-10">
                                 <div className=" items-center gap-3">
                                     <Link
-                                        className="py-3 px-6 bg-gradient-to-br from-[#93C648] to-[#50B577] text-white font-bold text-base rounded-sm"
-                                        href={`${
-                                            user ? "/dashboard" : "/sign-in"
-                                        }`}
+                                        className="rounded-sm bg-gradient-to-br from-[#93C648] to-[#50B577] px-6 py-3 text-base font-bold text-white"
+                                        href={`${user ? "/dashboard" : "/sign-in"}`}
                                     >
                                         Get Started
                                     </Link>

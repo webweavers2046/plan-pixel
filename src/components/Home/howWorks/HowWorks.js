@@ -1,6 +1,7 @@
-import index from "@/app/(withLayout)/about-us/page";
-import Container from "@/components/Common/Container/Container";
-import SectionTitle from "@/components/Common/sectionTitle/SectionTitle";
+"use client";
+
+import { useRef } from "react";
+import { motion } from "framer-motion";
 
 const HowWorks = () => {
     return (
@@ -35,22 +36,37 @@ const HowWorks = () => {
 };
 export default HowWorks;
 
-const Card = ({ index, title, description }) => (
-    <div
-        className={`mx-4 lg:mx-0  p-10 rounded-b-2xl rounded-tr-2xl ${
-            index === 1 && "bg-[#93C648]/30"
-        } ${index === 2 ? "bg-[#50B577]/30" : "bg-[#FBBC05]/30"} `}
-    >
-        <div className="flex items-center lg:hidden gap-3 my-4 ">
-            <span className="bg-[#FBBC05]  px-3 py-1 text-white rounded-full">
-                {index + 1}
-            </span>
-            <span className=" border-t-2 flex  border-dashed border-black  grow"></span>
-        </div>
-        <h3 className="text-2xl font-bold md:text-[25px]">{title}</h3>
-        <p className="text-[16px] text-[#494949] mt-2 md:mt-3">{description}</p>
-    </div>
-);
+const Card = ({ index, title, description }) => {
+    const speed = index * 0.3;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: 90 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 + speed }}
+            className={`mx-4 lg:mx-0 p-10 rounded-b-2xl rounded-tr-2xl ${
+                index === 0
+                    ? "bg-[rgba(147,198,72,0.3)]"
+                    : index === 1
+                      ? "bg-[rgba(80,181,119,0.3)]"
+                      : "bg-[rgba(251,188,5,0.3)]"
+            }`}
+        >
+            <div>
+                <div className="flex items-center lg:hidden gap-3 my-4 ">
+                    <span className="bg-[#FBBC05]  px-3 py-1 text-white rounded-full">
+                        {index + 1}
+                    </span>
+                    <span className=" border-t-2 flex  border-dashed border-black  grow"></span>
+                </div>
+                <h3 className="text-2xl font-bold md:text-[25px]">{title}</h3>
+                <p className="text-[16px] text-[#494949] mt-2 md:mt-3">
+                    {description}
+                </p>
+            </div>
+        </motion.div>
+    );
+};
 
 const cardsData = [
     {

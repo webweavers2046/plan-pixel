@@ -21,6 +21,15 @@ body {
 .inactive:hover {
     background-color: #f3f4f6;
 }
+.activeNav {
+    color: #50b577;
+    font-weight: 700;
+}
+.inactiveNav:hover {
+    color: #50b577;
+}
 .min-h-screen-custom {
-    min-height: calc(100vh - 150px); /* Subtract 100px from the viewport height */
-  }
+    min-height: calc(
+        100vh - 150px
+    ); /* Subtract 100px from the viewport height */
+}
