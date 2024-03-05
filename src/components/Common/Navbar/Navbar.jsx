@@ -5,6 +5,7 @@ import Link from "next/link";
 import logo from "@/assets/Logo.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/Providers/AuthProviders";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,6 +20,7 @@ const Navbar = () => {
         { route: "Contact Us", path: "/contact" },
     ];
 
+    const pathname = usePathname();
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -43,7 +45,11 @@ const Navbar = () => {
                                     {navLinks.map((link, idx) => (
                                         <Link
                                             href={link.path}
-                                            className="px-3 text-base font-medium"
+                                            className={`px-3 text-base font-medium ${
+                                                pathname == link.path
+                                                    ? "activeNav"
+                                                    : "inactiveNav"
+                                            } `}
                                             key={idx}
                                         >
                                             {link.route}
@@ -52,14 +58,22 @@ const Navbar = () => {
                                     {isAdmin ? (
                                         <Link
                                             href={"/admin-dashboard"}
-                                            className="px-3 text-base font-medium"
+                                            className={` ${
+                                                pathname == "/admin-dashboard"
+                                                    ? "activeNav"
+                                                    : "inactiveNav"
+                                            } px-3 text-base font-medium`}
                                         >
                                             Dashboard
                                         </Link>
                                     ) : (
                                         <Link
                                             href={"/dashboard"}
-                                            className="px-3 text-base font-medium"
+                                            className={` ${
+                                                pathname == "/dashboard"
+                                                    ? "activeNav"
+                                                    : "inactiveNav"
+                                            } px-3 text-base font-medium`}
                                         >
                                             Dashboard
                                         </Link>
