@@ -9,7 +9,7 @@ export default function Dropdown({setSelectedTask,task,handleUpdate,setIsOpen,ha
     <div className="fixed z-50 w-56 text-right">
       <Menu as="div" className=" relative inline-block text-left">
         <div>
-          <Menu.Button className=" absolute right-9 -top-4 ">
+          <Menu.Button className=" absolute -right-6 -top-4 ">
             <BsThreeDotsVertical/>
           </Menu.Button>
         </div>
@@ -47,7 +47,7 @@ export default function Dropdown({setSelectedTask,task,handleUpdate,setIsOpen,ha
                   </button>
                 )}
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <button
                     className={`${
@@ -68,7 +68,7 @@ export default function Dropdown({setSelectedTask,task,handleUpdate,setIsOpen,ha
                     Duplicate
                   </button>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
             </div>
             <div className="px-1 py-1">
               <Menu.Item>

@@ -4,21 +4,30 @@ import IndividualCardTasks from "./IndividualCardTasks";
 import member03Img from "@/assets/team-members/rahim.jpg";
 import useCardTasks from "@/hooks/useCardTasks";
 import useGlobalContext from "@/hooks/useGlobalContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import { AuthContext } from "@/Providers/AuthProviders";
+import { RiCompassDiscoverLine } from "react-icons/ri";
+import { IoIosPeople } from "react-icons/io";
+import { RxAvatar } from "react-icons/rx";
 import useUser from "@/hooks/useUser";
 import useSingleTask from "@/hooks/useSingleTask";
 import Comments from "./Comments";
+import Labels from "./Labels";
 
 const CardDetailsModal = () => {
+    const [openLabels, setOpenLabels] = useState(false)
 
     const { user, openCardDetails, setOpenCardDetails, cardId } = useContext(AuthContext);
     const { data: cardTasks, refetch } = useCardTasks(cardId);
-    const { data: card } = useSingleTask(cardId);
+    const { data: card, refetch: taskRefetch } = useSingleTask(cardId);
     // console.log(card);
     // console.log(cardTasks);
-    
+    const labels = card?.labels;
+    const checkedLabels = labels?.filter(label => label?.labelCheck)
+    // console.log(labels);
+    console.log(checkedLabels);
+
 
     const { activeWorkspace } = useGlobalContext()
     const { title, description, members } = activeWorkspace || { title: "", description: "", members: [] }
@@ -55,10 +64,17 @@ const CardDetailsModal = () => {
                         <p className="text-2xl font-semibold">{card?.title}</p>
                         <p>{card?.description}</p>
                         <div className="flex gap-1">
-                            <p className="bg-[#50B57733] text-[10px] font-semibold px-3 py-2  rounded-md">Denographics</p>
-                            <p className="bg-[#FBBC0540] text-[10px] font-semibold px-3 py-2  rounded-md">user story</p>
+                            {
+                                checkedLabels?.map(label => <p key={label}
+                                    className={`bg-[${label?.bgColor}] text-[10px] font-semibold px-3 py-2  rounded-md`}>
+                                    {label?.labelTitle}
+                                </p>
+                                )
+                            }
+
+                            {/* <p className="bg-[#FBBC0540] text-[10px] font-semibold px-3 py-2  rounded-md">user story</p>
                             <p className="bg-[#93C64840] text-[10px] font-semibold px-3 py-2  rounded-md">Motivations</p>
-                            <p className="bg-[#50B57780] text-[10px] font-semibold px-3 py-2  rounded-md">Attitudes</p>
+                            <p className="bg-[#50B57780] text-[10px] font-semibold px-3 py-2  rounded-md">Attitudes</p> */}
                         </div>
                         {/* members */}
                         <div className="pt-1">
@@ -86,45 +102,42 @@ const CardDetailsModal = () => {
 
 
                     {/* Date Time */}
-                    <div className="h-full w-[250px] font-semibold">
-                        <div className="bg-[#D9D9D966] h-full w-full  p-4 rounded-lg">
-                            <h4 className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6">Join</h4>
-                            <h4 className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-2">Members</h4>
+                    <div className="h-full w-[350px] font-semibold">
+                        <div className="bg-[#D9D9D966] h-fit w-full  px-4 py-2 rounded-lg">
+                            <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
+                                <RxAvatar className="text-2xl"></RxAvatar>
+                                <span>Join</span>
+                            </button>
+                            <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
+                                <IoIosPeople className="text-2xl"></IoIosPeople>
+                                <span>Members</span>
+                            </button>
                             <div className="border-2 mt-6 border-[#D9D9D9]"></div>
                             {/* dates */}
                             <div className=" mt-4">
                                 <p className="">Assign Date:</p>
-                                <h4 className="text-2xl mt-2">{card?.dates?.startDate}</h4>
+                                <h4 className="text-xl mt-2">{card?.dates?.startDate}</h4>
                             </div>
                             <div className=" mt-4">
                                 <p className="">Deadline:</p>
-                                <h4 className="text-2xl mt-2">{card?.dates?.dueDate}</h4>
+                                <h4 className="text-xl mt-2">{card?.dates?.dueDate}</h4>
                             </div>
 
-                            <button className=" w-full bg-[#D9D9D9] rounded-lg p-3 pl-6 mt-5">Add Labels</button>
+                            {/* Labels */}
 
-                            <div>
-                                <h3>Labels</h3>
-                                <div>
-                                    <div className="flex justify-between">
-                                        <input type="checkbox" />
-                                        <label>Label1</label>
-                                        <button>Edit</button>
-                                    </div>
-                                </div>
-                                <input type="text" name="" id="" />
-                                <div className="grid grid-cols-4 w-full gap-4">
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                    <div className="h-2 w-4 bg-black"></div>
-                                </div>
-                                <input type="submit" value="Create" />
-                            </div>
+                            {
+                                openLabels ?
+                                    <Labels setOpenLabels={setOpenLabels} card={card} taskRefetch={taskRefetch}></Labels>
+                                    :
+                                    <button onClick={() => setOpenLabels(!openLabels)} className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
+                                        <RiCompassDiscoverLine className="text-2xl"></RiCompassDiscoverLine>
+                                        <span>Add Labels</span>
+                                    </button>
+                            }
 
 
                         </div>
-                        <button className="w-full bg-[#50B577] rounded-lg py-3 text-white mt-6">Save Task</button>
+                        {/* <button className="w-full bg-[#50B577] rounded-lg py-3 text-white mt-6">Save Task</button> */}
                     </div>
                 </div>
 

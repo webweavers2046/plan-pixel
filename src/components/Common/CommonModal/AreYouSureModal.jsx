@@ -9,12 +9,16 @@ export default function AreYouSureModal({setReason,type,title,id,isOpen,setIsOpe
     setIsOpen(false)
   }
 
+  // const handler = () =>{
+
+  // }
+
   return (
     <>
 
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={onClose}>
+        <Dialog as="div" className="relative z-40" onClose={onClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300 "
@@ -47,15 +51,14 @@ export default function AreYouSureModal({setReason,type,title,id,isOpen,setIsOpe
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      If you archive this task that will be displayed in the archive box . 
-                      If you are damn sure about archiving please drop a reason below. 
+                      If you archive this task that will be displayed in the archive box.
                     </p>
                   </div>
-
+{/* 
                   {
                     type === "archive" &&
                   <Reason setReason={setReason}/>
-                  }
+                  } */}
 
 
                   <div className="mt-4 flex gap-2">

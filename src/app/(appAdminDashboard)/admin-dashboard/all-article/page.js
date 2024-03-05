@@ -7,6 +7,8 @@ import { RiCloseLine } from "react-icons/ri";
 import useDynamicData from "../Components/Hooks/useDynamicData";
 import useAxios from "@/hooks/useAxios";
 import Swal from "sweetalert2";
+import { GoLinkExternal } from "react-icons/go";
+import Link from "next/link";
 
 const page = () => {
     const {
@@ -51,6 +53,7 @@ const ArticleCard = ({ post, refetch }) => {
     } = post;
     const axiosAdmin = useAxios();
     const [isDeleting, setIsDeleting] = useState(false);
+    const [seeMore, setSeeMore] = useState(true);
     const handleDeleteArticle = (id) => {
         console.log(id);
         setIsDeleting(true);
@@ -86,7 +89,7 @@ const ArticleCard = ({ post, refetch }) => {
     };
 
     return (
-        <div className="lg:max-w-[364px] max-w-[345px] rounded-lg overflow-hidden border-2 bg-white mb-6 relative">
+        <div className=" rounded-lg overflow-hidden border-2 bg-white mb-4 relative">
             <button
                 onClick={() => handleDeleteArticle(_id)}
                 className=" bg-rose-600 border-4 border-white rounded-2xl p-1.5 flex items-center justify-center absolute -top-2 -right-2 text-2xl text-white"
@@ -123,23 +126,38 @@ const ArticleCard = ({ post, refetch }) => {
                 alt="Illustration"
             />
             <div className="px-5 py-4">
-                <h3 className="text-xl font-bold ">{title}</h3>
-                <p className="text-sm ">{description}</p>
+                <h3 className="text-xl font-bold ">
+                    {title.length <= 30 ? title : title.slice(0, 30)}
+                    {title.length >= 30 && <span>...</span>}
+                </h3>
+                <p className="text-sm ">
+                    {description.length <= 90
+                        ? description
+                        : description.slice(0, 90)}
+                    ,{description.length >= 90 && <span>...</span>}
+                </p>
             </div>
-            <div className="px-6 flex items-center gap-3 pb-8">
-                <div className="w-10 h-10 border rounded-full flex items-center justify-center">
-                    <Image
-                        className="w-8 h-8 rounded-full object-cover"
-                        src={avatar_url}
-                        alt="Author"
-                        width={32}
-                        height={32}
-                    />
+            <div className="flex items-center justify-between">
+                <div className="px-6 flex items-center gap-3 pb-8">
+                    <div className="w-10 h-10 border rounded-full flex items-center justify-center">
+                        <Image
+                            className="w-8 h-8 rounded-full object-cover"
+                            src={avatar_url}
+                            alt="Author"
+                            width={32}
+                            height={32}
+                        />
+                    </div>
+                    <h5 className="ml-2 text-sm font-bold">
+                        {author} <br />{" "}
+                        <span className="font-normal text-sm">{date}</span>
+                    </h5>
                 </div>
-                <h5 className="ml-2 text-sm font-bold">
-                    {author} <br />{" "}
-                    <span className="font-normal text-sm">{date}</span>
-                </h5>
+                <div className="pb-8">
+                    <Link id={post._id} href={`/article-details/${post._id}`}>
+                        <GoLinkExternal className="text-2xl me-6" />
+                    </Link>
+                </div>
             </div>
         </div>
     );

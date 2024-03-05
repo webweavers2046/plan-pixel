@@ -6,27 +6,20 @@ import TittleAndDescripton from "./TittleAndDescripton";
 import GradientBg from "@/components/Common/gradient/GradientBg";
 import TimeBasedTasks from "./TimeBasedTasks";
 import ArchiveGridTasks from "./ArchiveGridTasks";
+import useArchivedTasks from "@/hooks/useArchivedTasks";
 
 const ArchivedTasks = () => {
   const {
-    archivedTasks,
+    // archivedTasks,
     handleUnarchive,
     isTogglerEnabled,
   } = useContext(globalContext);
   const [isOpen, setIsOpen] = useState(false);
 
-  // completed task analytics for chart view graph
-  let completedTasks = 0;
-  let totalTasks = 10;
+  const { data: archivedTasks, refetch } = useArchivedTasks();
+  // console.log(archivedTasks);
 
 
-  // if(archivedTasks?.length > 0){
-    
-
-  //   // completedTasks = archivedTasks?.filter()
-
-  //   totalTasks = archivedTasks?.length;
-  // }
 
 
   const handleSelectedIdsChanges = async (e, taskId) => {
@@ -54,29 +47,30 @@ const ArchivedTasks = () => {
 
   return (
     <div className=" relative bg-gradient-to-br  min-h-screen w-full">
-      <div className="flex justify-between items-center">
+      {/* <div className="flex justify-between items-center">
         <TimeBasedTasks />
-      
-      </div>
+
+      </div> */}
 
       <div className="flex justify-center "></div>
       <TittleAndDescripton />
       <GradientBg />
-      <div className="grid grid-cols-3 mt-11">
+      <div className="mt-11">
 
-        <div className="col-span-2">
-        <ArchiveGridTasks
-          handleSelectedIdsChanges={handleSelectedIdsChanges}
-          archivedTasks={archivedTasks}
-          handleUnarchive={handleUnarchive}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-        />
+        <div>
+          <ArchiveGridTasks
+            handleSelectedIdsChanges={handleSelectedIdsChanges}
+            archivedTasks={archivedTasks}
+            refetch={refetch}
+            handleUnarchive={handleUnarchive}
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
+          />
 
 
         </div>
 
-        <div className="bg-[#FFFFFF] md:block hidden w-80 min-h-[90vh]">
+        {/* <div className="bg-[#FFFFFF] md:block hidden w-80 min-h-[90vh]">
           <CompletedTasksChart
             completedTasks={completedTasks}
             totalTasks={totalTasks}
@@ -88,7 +82,7 @@ const ArchivedTasks = () => {
             </h1>
             <div className=" bg-white flex flex-col gap-2 p-2 rounded-sm">
               <div className="flex gap-2 shadow-sm justify-between">
-                {/*  */}
+
                 <div className="flex gap-2">
                   <div className="h-8 w-8 rounded-full bg-gray-200 "></div>
                   <div>
@@ -100,9 +94,9 @@ const ArchivedTasks = () => {
                   Notes
                 </button>
               </div>
-              {/*  */}
+
               <div className="flex gap-2 shadow-sm justify-between">
-                {/*  */}
+
                 <div className="flex gap-2">
                   <div className="h-8 w-8 rounded-full bg-gray-200 "></div>
                   <div>
@@ -114,9 +108,9 @@ const ArchivedTasks = () => {
                   Notes
                 </button>
               </div>
-              {/*  */}
+
               <div className="flex gap-2 shadow-sm justify-between">
-                {/*  */}
+
                 <div className="flex gap-2">
                   <div className="h-8 w-8 rounded-full bg-gray-200 "></div>
                   <div>
@@ -128,10 +122,11 @@ const ArchivedTasks = () => {
                   Notes
                 </button>
               </div>
-              {/*  */}
+            
             </div>
           </div>
-        </div>
+          
+        </div> */}
       </div>
     </div>
   );

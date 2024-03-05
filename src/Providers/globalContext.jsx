@@ -12,18 +12,18 @@ const GlobalContext = ({ children }) => {
     const [newTask, setNewTask] = useState("");
     const xios = useAxios();
     const { user } = useContext(AuthContext);
-    
+
     const [clickedWorkspaceId, setClickedWorkspaceId] = useState([]);
     const [isWorkspaceSwitched, setSwitchWorkspace] = useState(false);
 
 
-// Archived tasks state
-  const [archivedTasks,setArchivedTasks] =  useState([])
-  const [archiveTaskId, setArchiveTaskId] = useState("")
-  const [isTogglerEnabled,setIsTogglerEnabled] = useState(false)
+    // Archived tasks state
+    const [archivedTasks, setArchivedTasks] = useState([])
+    const [archiveTaskId, setArchiveTaskId] = useState("")
+    const [isTogglerEnabled, setIsTogglerEnabled] = useState(false)
 
-  //Add member openning a modal
-  const [WillAddMember, setWillAddMember] = useState(false);
+    //Add member openning a modal
+    const [WillAddMember, setWillAddMember] = useState(false);
 
     const [activeWorkspace, setActiveWorkspace] = useState({});
     const [userWokspaceList, setUserWokspaceList] = useState([]);
@@ -35,26 +35,26 @@ const GlobalContext = ({ children }) => {
 
 
     // Get real time tasks state using ably 
-    const {allWorkspaceTasks} = useContext(ablyContext)
+    const { allWorkspaceTasks } = useContext(ablyContext)
 
-    
 
-  // Tab view 
-  const [isActive,setIsActive] = useState("all-tasks")
-  // when click in filterd task to scrolled into view
-  const [shouldScrollIntoView,setShouldScrollIntoView] = useState(false)
-  
-  //see..
-  const [loading, setLoading] = useState(true);
-  let isMounted = true;
-  const [userSearchHistory,setUserSearchHistory] = useState([])
 
-// this function fetch the latest data 
-const fetchLatestData = async () => {
-  try {
-    const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
+    // Tab view 
+    const [isActive, setIsActive] = useState("all-tasks")
+    // when click in filterd task to scrolled into view
+    const [shouldScrollIntoView, setShouldScrollIntoView] = useState(false)
 
-   
+    //see..
+    const [loading, setLoading] = useState(true);
+    let isMounted = true;
+    const [userSearchHistory, setUserSearchHistory] = useState([])
+
+    // this function fetch the latest data 
+    const fetchLatestData = async () => {
+        try {
+            const userWorkspaces = await xios.get(`/api/active-workspace?userEmail=${user && user.email}`);
+
+
 
             // Only when component mounted trigger to set the latest data
             if (isMounted) {
@@ -76,11 +76,11 @@ const fetchLatestData = async () => {
 
 
 
-// get all the arvhived data
-const fetchArchivedData = async()=>  {
-    const response = await xios?.get("/api/read/archive-tasks")
-    setArchivedTasks(response?.data)
-  }
+    // get all the arvhived data
+    const fetchArchivedData = async () => {
+        const response = await xios?.get("/api/read/archive-tasks")
+        setArchivedTasks(response?.data)
+    }
 
 
     // this funciton fetch the latest user search history
@@ -112,14 +112,14 @@ const fetchArchivedData = async()=>  {
         shouldScrollIntoView
     ]);
 
-    useEffect(()=> {
-        if(allWorkspaceTasks?.length > 0) {
+    useEffect(() => {
+        if (allWorkspaceTasks?.length > 0) {
             setActiveWorkspaceTasks(allWorkspaceTasks)
         } else {
             fetchLatestData()
         }
 
-    },[
+    }, [
         // allWorkspaceTasks
     ])
 
@@ -151,8 +151,7 @@ const fetchArchivedData = async()=>  {
         setClickedWorkspaceId(_id);
         // console.log("__________________________", user?.email);
         await xios.get(
-            `/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${
-                user?.email
+            `/api/active-workspace?switchActiveWorkspace=${true}&workspaceId=${_id}&userEmail=${user?.email
             }`
         );
 
@@ -188,8 +187,7 @@ const fetchArchivedData = async()=>  {
     // delete a member from a workspace
     const handleDeleteMember = async (e, member, isDelete) => {
         const response = await xios.delete(
-            `deleteMember/${activeWorkspace?._id}/${
-                user && user.email
+            `deleteMember/${activeWorkspace?._id}/${user && user.email
             }/${member}`
         );
         if (response?.data?.error) {
@@ -228,94 +226,96 @@ const fetchArchivedData = async()=>  {
 
 
     // Archive handler 
-// handle unArchiving single task
-const handleUnarchive = async() => {
+    // handle unArchiving single task
+    const handleUnarchive = async () => {
 
-    const info = {
-        taskId:archiveTaskId
+        const info = {
+            taskId: archiveTaskId
+        }
+        const filteredTasks = archivedTasks?.filter(task => task?.taskId !== archiveTaskId)
+        setArchivedTasks(filteredTasks)
+        const response = await xios.post(`/api/tasks/archive`, info)
+        console.log(response.data)
     }
-    const filteredTasks = archivedTasks?.filter(task => task?.taskId !== archiveTaskId)
-    setArchivedTasks(filteredTasks)
-    const response = await xios.post(`/api/tasks/archive`,info)
-    console.log(response.data)
-  }
-  
-  
-  // handle multi-select archive (from the task.jsx)
-  const handleMultipleArchive = async() => {
-    const AllSelectedTaskstoArchive= JSON.parse(localStorage.getItem('selectedTasks')) || [];
-    // sending api request to archive multiple tasks
-    const response = await xios.post(`/api/tasks/archive?isArchive=${true}`,AllSelectedTaskstoArchive)
-  
-    if(response.data.insertedCount >= 1 ){
-      fetchLatestData()
-      fetchArchivedData()
-      toast.success("Archived",{position:"top-right"})
-    //   setIsActive("archived-tasks")
-      
-      
-    localStorage.removeItem("selectedTasks");
+
+
+    // handle multi-select archive (from the task.jsx)
+    const handleMultipleArchive = async () => {
+        const AllSelectedTaskstoArchive = JSON.parse(localStorage.getItem('selectedTasks')) || [];
+        // sending api request to archive multiple tasks
+        const response = await xios.post(`/api/tasks/archive?isArchive=${true}`, AllSelectedTaskstoArchive)
+
+        if (response.data.insertedCount >= 1) {
+            fetchLatestData()
+            fetchArchivedData()
+            toast.success("Archived", { position: "top-right" })
+            //   setIsActive("archived-tasks")
+
+
+            localStorage.removeItem("selectedTasks");
+        }
     }
-  }
-  // handle multi-select archive (from the task.jsx)
-  const handleMultipleUnArchive = async() => {
-    const AllSelectedTaskstoUnArchive = JSON.parse(localStorage.getItem('unarchiveTaskIds')) || [];
-    // sending api request to archive multiple tasks
-    const response = await xios.post(`/api/tasks/archive`,AllSelectedTaskstoUnArchive)
-  
-    if(response.data.deletedCount >= 1 ){
-      fetchLatestData()
-      fetchArchivedData()
-      toast.success("unArchived",{position:"top-right"})
-      setIsActive("all-tasks")
-    localStorage.removeItem("unarchiveTaskIds");
+    // handle multi-select archive (from the task.jsx)
+    const handleMultipleUnArchive = async () => {
+        const AllSelectedTaskstoUnArchive = JSON.parse(localStorage.getItem('unarchiveTaskIds')) || [];
+        // sending api request to archive multiple tasks
+        const response = await xios.post(`/api/tasks/archive`, AllSelectedTaskstoUnArchive)
+
+        if (response.data.deletedCount >= 1) {
+            fetchLatestData()
+            fetchArchivedData()
+            toast.success("unArchived", { position: "top-right" })
+            setIsActive("all-tasks")
+            localStorage.removeItem("unarchiveTaskIds");
+        }
     }
-  }
 
 
 
 
-    
+
 
 
 
 
     // Notification Informations
 
-    const [notifications, setNotifications] = useState();
+    const [notifications, setNotifications] = useState([]);
 
-    
-    
+
+
     // console.log(user?.email);
 
 
 
     // active workspace for notification
     const [activeWorkspaceReal, setActiveWorkspaceReal] = useState({})
-    useEffect(()=> {
+    useEffect(() => {
         fetch(
             `https://plan-pixel-backend.vercel.app/api/workspaces/active/${user?.email}`
         )
-        .then(res=> res.json())
-        .then((data)=> {
-            setActiveWorkspaceReal(data);
-            console.log(data);
-        })
-    },[user])
-
-    useEffect(()=> {
-            fetch(
-                `https://plan-pixel-backend.vercel.app/api/notifications/${activeWorkspaceReal?._id}`
-            )
-            .then(res=> res.json())
+            .then(res => res.json())
             .then((data) => {
-                setNotifications(data)
+                setActiveWorkspaceReal(data);
                 console.log(data);
             })
-    }, [activeWorkspaceReal])
-    console.log(notifications);
-    console.log(activeWorkspaceReal);
+    }, [user])
 
+    useEffect(() => {
+        // fetch(
+        //     `https://plan-pixel-backend.vercel.app/api/notifications/${activeWorkspaceReal?._id}`
+        // )
+        // .then(res=> res.json())
+        // .then((data) => {
+        //     setNotifications(data)
+        //     console.log(data);
+        // })
+        xios?.get(`/api/notifications/${activeWorkspaceReal?._id}`)
+            .then(res => { console.log(res?.data) })
+    }, [activeWorkspaceReal])
+    // console.log(notifications);
+    // console.log(activeWorkspaceReal);
+    console.log(activeWorkspaceTasks);
     const data = {
         activeWorkspace,
         setActiveWorkspace,
@@ -339,10 +339,10 @@ const handleUnarchive = async() => {
         searchQueryFromHistory,
         setWillAddMember,
         WillAddMember,
-            
+
         // tab view / archive data
         setIsActive,
-        isActive, 
+        isActive,
         archivedTasks,
         fetchArchivedData,
         handleUnarchive,
@@ -366,7 +366,7 @@ const handleUnarchive = async() => {
         isWorkspaceSwitched,
         handleDeleteWorkspace,
 
-       
+
 
         notifications,
         activeWorkspaceReal
@@ -375,6 +375,6 @@ const handleUnarchive = async() => {
     return (
         <globalContext.Provider value={data}>{children}</globalContext.Provider>
     );
-    
+
 }
 export default GlobalContext;

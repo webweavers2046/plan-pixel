@@ -23,7 +23,7 @@ const Articles = () => {
   const xios = useAxios();
   useEffect(() => {
     xios.get("/api/articles").then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setArticles(res.data);
     });
   }, []);

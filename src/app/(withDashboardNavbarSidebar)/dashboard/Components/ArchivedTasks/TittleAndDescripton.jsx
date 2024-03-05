@@ -6,7 +6,7 @@ const TittleAndDescripton = () => {
         <h1 className="text-[20px] sm:text-2xl md:text-3xl font-bold">All you archives tasks are here</h1>
         <p className="text-[#6E6D7A] text-left md:text-center text-[15px] md:text-16 my-2 relative">
           Are you looking for the files were archived? Don't worry we store all of your files with great details. 
-        <AutoCompleteSearch />
+        {/* <AutoCompleteSearch /> */}
         </p>
       </div>
 

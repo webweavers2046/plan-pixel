@@ -10,7 +10,7 @@ import "@/styles/globals.css";
 const Header = () => {
     return (
         <div
-            className="pt-14 md:px-24 px-6 text-center border-t-2 border-b-2 banner-bg"
+            className="pt-14 md:px-24 px-6 text-center border-b-2 banner-bg"
             // style={{
             //     backgroundImage: `url(${bg.src})`,
             //     backgroundRepeat: "no-repeat",
@@ -34,7 +34,7 @@ const Header = () => {
                     Get Started Today
                 </button>
             </div>
-            <div className="flex justify-center gap-8 mt-20">
+            <div className="flex justify-center lg:gap-8 md:gap-4 gap-2 mt-20">
                 <div className="flex items-center justify-center mb-8">
                     <Image
                         className="w-32 xl:rounded-t-3xl md:rounded-t-xl"

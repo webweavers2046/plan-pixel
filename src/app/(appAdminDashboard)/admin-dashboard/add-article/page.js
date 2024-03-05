@@ -12,6 +12,8 @@ import useAxios from "@/hooks/useAxios";
 
 const page = () => {
     const image_hosting_key = "7e12ab75560d62e6ad9d88e0d09f9e38";
+    const defaultProfileImage =
+        "https://i.ibb.co/dm0hZVk/92-K4-Yh-Iz-200x200.jpg";
     const { currentDate } = useDateTime();
     const {
         register,
@@ -50,28 +52,31 @@ const page = () => {
             })
                 .then((response) => response.json())
                 .then((result) => {
-                    console.log(result.data.url);
                     const newArticle = {
                         title: data.title,
                         description: data.description,
-                        author: user.displayName,
+                        author: user.displayName
+                            ? user.displayName
+                            : "Unknown Person",
                         date: currentDate,
                         articleImage_url: result.data.url,
-                        avatar_url: user.photoURL,
+                        avatar_url: user.photoURL
+                            ? user.photoURL
+                            : defaultProfileImage,
                     };
+
                     axiosAdmin
                         .post("/api/articles", newArticle)
                         .then((res) => {
-                            console.log(res.data);
                             toast.success("Add Successfully", {
                                 duration: 2000,
                                 className: "mt-32",
                             });
+                            setUploadedImage(null);
                         })
                         .catch((err) => {
-                            console.log(err);
+                            console.log("error to add new article ", err);
                         });
-                    console.log(newArticle);
                 })
                 .finally(() => {
                     setButtonLoading(false);
@@ -91,7 +96,7 @@ const page = () => {
                                 <img
                                     src={uploadFile}
                                     alt="Uploaded"
-                                    className="w-full h-full rounded-md m-2"
+                                    className="w-full h-full rounded-md m-2 object-cover"
                                 />
                             ) : (
                                 <div className="w-full h-full absolute top-0 left-0">
