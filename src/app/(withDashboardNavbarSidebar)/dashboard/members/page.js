@@ -24,11 +24,11 @@ const page = () => {
 
 
   return (
-    <div className="flex flex-col lg:flex-row gap-5 mt-4">
-      <div className="lg:w-1/2 w-full">
+    <div className="flex flex-col xl:flex-row gap-5 mt-4">
+      <div className="xl:w-1/2 w-full h-full">
         <TeamMembers />
       </div>
-      <div className="shadow-sm rounded-xl p-6 max-h-dvh overscroll-auto border min-h-[80vh] w-full">
+      <div className="shadow-sm rounded-xl p-6  overscroll-auto border min-h-[80vh] w-full">
         <div className="bg-gray-200 w-fit pr-6 py-3 rounded-md shadow-md">
           <Dropdown
             className="bg-gray-100 py-2 px-3 rounded-lg mt-4"

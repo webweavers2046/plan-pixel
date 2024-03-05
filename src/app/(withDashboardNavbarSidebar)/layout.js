@@ -40,10 +40,10 @@ export default function DashboardLayout({ children }) {
                         <DashboardSidebar />
                     </div>
 
-                    <div className="xl:col-span-10 col-span-12 lg:py-4 py-2 lg:px-3 md:pl-11 md:pr-5 pl-9 pr-4">
+                    <div className="xl:col-span-10 col-span-12 xl:py-4 py-2 xl:px-3 lg:pl-11 lg:pr-5 pl-9 pr-4">
                         <div className={`flex`}>
                             <div className="fixed top-0 md:left-2 left-1">
-                                <div className="w-4 flex items-center justify-center h-screen border-r-2 lg:hidden relative">
+                                <div className="w-4 flex items-center justify-center h-screen border-r-2 xl:hidden relative">
                                     <button
                                         onClick={toggleSidebar}
                                         className="border-2 p-1 flex items-center justify-center absolute bg-[#50B577] text-white rounded-full transform -translate-y-1/2 -left-0"

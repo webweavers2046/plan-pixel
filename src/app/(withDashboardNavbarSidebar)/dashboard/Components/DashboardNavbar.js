@@ -341,7 +341,7 @@ const DashboardNavbar = () => {
                 </div>
             </div>
 
-            <div className="border lg:flex hidden py-2 px-3 rounded-lg bg-[white]">
+            <div className="border xl:flex hidden py-2 px-3 rounded-lg bg-[white]">
                 <Dropdown
                     className="bg-white rounded-lg"
                     inline
