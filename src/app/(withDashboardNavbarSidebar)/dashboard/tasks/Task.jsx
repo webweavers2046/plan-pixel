@@ -42,6 +42,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
     const [selectedTask, setSelectedTask] = useState({});
     const [reason, setReason] = useState("");
     const [isArchived, setIsArchived] = useState(false);
+    const [openDropDown, setOpenDropDown] = useState(false);
 
     const handleDeleteTask = (id) => {
         // console.log(id);
@@ -117,8 +118,8 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
         const updatedSelectedIds = isChecked
             ? [...existingSelectedTasks, newArchiveTask]
             : existingSelectedTasks.filter(
-                  (Etask) => Etask?.taskId !== task?._id
-              );
+                (Etask) => Etask?.taskId !== task?._id
+            );
 
         // Save the updated selected IDs to local storage
         localStorage.setItem(
@@ -153,11 +154,10 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
       border 
             task-container
             mt-4 cursor-grabbing overflow-hidden relative transform transition-all bg-[#f6f7f8] 0.5s 
-            ease-in-out ${
-                clickBaseFilterTaskId === task?._id
+            ease-in-out ${clickBaseFilterTaskId === task?._id
                     ? "bg-[#E8F0FE]  shadow-lg "
                     : "bg-[#ffffff]"
-            }  rounded-md px-4 py-4 text-black 
+                }  rounded-md px-4 py-4 text-black 
             ${isDropped ? "transition-all linear 1s" : ""} 
             `}
         >
@@ -173,35 +173,47 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
 
             <div className=" flex items-center gap-2 relative justify-between">
                 <h2
-                    className={`font-semibold text-lg ${
-                        clickBaseFilterTaskId === task?._id
-                            ? "text-[#1558D6]"
-                            : ""
-                    }`}
+                    className={`font-semibold text-lg ${clickBaseFilterTaskId === task?._id
+                        ? "text-[#1558D6]"
+                        : ""
+                        }`}
                 >
                     {task.title}
                 </h2>
-                <div className="flex">
-                    <p className=" flex items-center gap-2 mr-3">
-                        <span className="text-sm pt-0.5">{task.priority}</span>
-                        {task?.priority == "High" ? (
-                            <MdDoubleArrow className="-rotate-90 text-red-500" />
-                        ) : task?.priority == "Low" ? (
-                            <MdDoubleArrow className="rotate-90 text-[#93C648]" />
-                        ) : (
-                            <FaEquals className="text-red-500" />
-                        )}
-                    </p>
+
+
+
+                <div className="flex ">
+                    <div className="flex">
+                        <p className=" flex items-center gap-2 mr-3">
+                            <span className="text-sm pt-0.5">{task.priority}</span>
+                            {task?.priority == "High" ? (
+                                <MdDoubleArrow className="-rotate-90 text-red-500" />
+                            ) : task?.priority == "Low" ? (
+                                <MdDoubleArrow className="rotate-90 text-[#93C648]" />
+                            ) : (
+                                <FaEquals className="text-red-500" />
+                            )}
+                        </p>
+                    </div>
+                    <button onClick={() => setOpenDropDown(!openDropDown)}>
+                        <BsThreeDotsVertical></BsThreeDotsVertical>
+                    </button>
+
                 </div>
-                <Dropdown
-                    className="block"
-                    id={task?._id}
-                    handleDeleteTask={handleDeleteTask}
-                    handleUpdate={handleUpdate}
-                    setIsOpen={setIsOpen}
-                    setSelectedTask={setSelectedTask}
-                    task={task}
-                ></Dropdown>
+
+                {
+                    openDropDown &&
+                    <Dropdown
+                        className="block"
+                        id={task?._id}
+                        handleDeleteTask={handleDeleteTask}
+                        handleUpdate={handleUpdate}
+                        setIsOpen={setIsOpen}
+                        setSelectedTask={setSelectedTask}
+                        task={task}
+                    ></Dropdown>
+                }
                 
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
