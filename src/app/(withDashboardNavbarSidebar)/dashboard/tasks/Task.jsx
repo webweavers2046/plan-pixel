@@ -150,9 +150,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
             id={task._id}
             onDragOver={(e) => draggingOver(e, task._id)}
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
-            className={` 
-      border 
-            task-container
+            className={` w-full border task-container
             mt-4 cursor-grabbing overflow-hidden relative transform transition-all bg-[#f6f7f8] 0.5s 
             ease-in-out ${clickBaseFilterTaskId === task?._id
                     ? "bg-[#E8F0FE]  shadow-lg "
@@ -214,7 +212,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                         task={task}
                     ></Dropdown>
                 }
-                
+
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
             <div className="flex justify-between items-center">
@@ -227,36 +225,6 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
             </div>
             <hr className="mt-5 bg-black/15 h-[2px]" />
             <div className="flex items-center mt-4 justify-end">
-                {/* <div className="flex -space-x-4 rtl:space-x-reverse">
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member01Img}
-            alt=""
-          />
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member02Img}
-            alt=""
-          />
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member03Img}
-            alt=""
-          />
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member04Img}
-            alt=""
-          />
-        </div> */}
                 {/* <p></p> */}
                 <button onClick={handleCard}>
                     <GrTasks className="text-xl opacity-40" />

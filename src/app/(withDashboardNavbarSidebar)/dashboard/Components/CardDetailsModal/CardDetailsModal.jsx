@@ -39,9 +39,9 @@ const CardDetailsModal = () => {
     return (
         <div
             className={`${openCardDetails ? "block" : "hidden"} 
-        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed lg:px-40 px-24  py-16`}
+        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed xl:px-40 xl:py-16  lg:px-16 lg:py-10 md:px-10 md:py-10 p-7`}
         >
-            <div className=" bg-[#FFFFFF] w-[900px] mx-auto h-full rounded-2xl overflow-auto ">
+            <div className=" bg-[#FFFFFF] lg:w-[900px]  mx-auto h-full rounded-2xl overflow-auto ">
                 <div className="flex justify-end mt-2 mr-4">
                     <button onClick={() => setOpenCardDetails(false)}>
                         <svg
@@ -58,7 +58,7 @@ const CardDetailsModal = () => {
                         </svg>
                     </button>
                 </div>
-                <div className="flex justify-between w-full  h-full py-4 pl-12 pr-8 gap-6">
+                <div className="flex flex-col md:flex-row justify-between w-full  h-full py-4 md:pl-12 md:pr-8 px-5 gap-6">
                     <div className="space-y-3 w-full">
                         {/* card name, description and other info */}
                         <p className="text-2xl font-semibold">{card?.title}</p>
@@ -99,7 +99,7 @@ const CardDetailsModal = () => {
 
 
                     {/* Date Time */}
-                    <div className="h-full w-[350px] font-semibold">
+                    <div className="h-full md:w-[350px] pb-5 md:pb-0 font-semibold">
                         <div className="bg-[#D9D9D966] h-fit w-full  px-4 py-2 rounded-lg">
                             <button className=" w-full flex items-center gap-2 bg-[#D9D9D9] rounded-lg p-3 mt-5">
                                 <RxAvatar className="text-2xl"></RxAvatar>
