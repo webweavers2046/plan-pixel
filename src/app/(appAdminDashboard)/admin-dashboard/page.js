@@ -5,6 +5,7 @@ import AdminOverviewWidget from "./Components/AdminOverviewWidget/AdminOverviewW
 import useDynamicData from "./Components/Hooks/useDynamicData";
 import UsersOverview from "./Components/UsersOverview/UsersOverview";
 import LastFivePremium from "./Components/lastFivePremiumMembers/LastFivePremium";
+import PlanDistribution from "./Components/PlanDistribution/PlanDistribution";
 
 const AdminDashboard = () => {
     const { data: premiumMembersAmount, isLoading } = useDynamicData(
@@ -41,7 +42,9 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-4">
                     <LastFivePremium />
                 </div>
-                <div className="lg:col-span-5">LastFivePremium</div>
+                <div className="lg:col-span-5">
+                    <PlanDistribution />
+                </div>
             </div>
         </section>
     );
