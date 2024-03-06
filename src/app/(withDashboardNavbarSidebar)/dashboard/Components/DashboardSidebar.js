@@ -289,9 +289,9 @@ const DashboardSidebar = () => {
                                 backgroundPosition: "center",
                                 backgroundRepeat: "no-repeat",
                             }}
-                            className=" ms-6 me-6 bg-secondary/15 border-2 border-secondary flex flex-col items-center justify-between rounded-xl px-6 py-8 gap-3"
+                            className="relative ms-6 me-6 bg-secondary/15 border-2 border-secondary flex flex-col items-center justify-between rounded-xl px-6 py-8 gap-3"
                         >
-                            <div className="p-2  text-xl bg-gradient-to-tr from-primary to-secondary rounded-full inline-block  text-white">
+                            <div className=" absolute -top-5 p-2.5  text-xl bg-gradient-to-tr from-primary to-secondary rounded-full inline-block  text-white">
                                 <BsStars />
                             </div>
                             <h3 className=" text-xl font-bold text-center pb-1">
