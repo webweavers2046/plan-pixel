@@ -51,9 +51,9 @@ const TaskModal = ({ openModal, setOpenModal }) => {
     return (
         <div
             className={`${openModal ? "block" : "hidden"} 
-        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed lg:px-40 px-24 lg:py-24 py-16`}
+        bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed xl:px-40 xl:py-24 lg:py-16 md:px-10 md:py-10 p-6`}
         >
-            <div className=" bg-[#FFFFFF] w-8/12 mx-auto h-full rounded-2xl overflow-auto p-6">
+            <div className=" bg-[#FFFFFF] md:w-8/12 mx-auto h-full rounded-2xl overflow-auto p-6">
                 <div className="flex justify-between items-center border-b pb-4">
                     <p className="text-xl font-bold ">Add New Task</p>
                     <button onClick={() => setOpenModal(false)}>
@@ -72,7 +72,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
                     </button>
                 </div>
                 {/* update form */}
-                <form onSubmit={handleSubmit(onSubmit)} className=" mt-8 px-4">
+                <form onSubmit={handleSubmit(onSubmit)} className=" mt-8 md:px-4">
                     {/* form info */}
                     <div className=" grid grid-cols-1 gap-5">
                         {/* task name */}
@@ -117,7 +117,7 @@ const TaskModal = ({ openModal, setOpenModal }) => {
                             </select>
                         </div>
                         {/* Starting Date */}
-                        <div className="flex items-center justify-between gap-6">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                             <div className="grow">
                                 <h4 className="text-sm font-semibold">
                                     Start Date{" "}

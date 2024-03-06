@@ -1,7 +1,10 @@
+"use client";
+
 import featureImage01 from "@/assets/features/f2.png";
 import featureImage02 from "@/assets/features/f1.png";
 import featureImage03 from "@/assets/features/f3.png";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Features = () => {
     return (
@@ -15,7 +18,12 @@ const Features = () => {
                 </h2>
             </div>
             <div className="md:mt-20 mt-6 mb-10">
-                <div className="bg-[#50B577]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-7 justify-between items-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 180 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    className="bg-[#50B577]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-7 justify-between items-center"
+                >
                     <div className="col-span-5 md:px-6 space-y-4">
                         <div className="flex gap-6">
                             <div className="md:flex hidden flex-col items-center gap-2">
@@ -70,8 +78,13 @@ const Features = () => {
                             alt="Feature Image"
                         ></Image>
                     </div>
-                </div>
-                <div className="bg-[#FBBC05]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-8 justify-between items-center md:mt-16 mt-6">
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, y: 180 }}
+                    transition={{ duration: 1 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="bg-[#FBBC05]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-8 justify-between items-center md:mt-16 mt-6"
+                >
                     <div className="xl:col-span-4 lg:col-span-5 md:px-6 space-y-4">
                         <div className="flex md:gap-6">
                             <div className="md:flex hidden flex-col items-center gap-2">
@@ -128,8 +141,13 @@ const Features = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="bg-[#93C648]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-8 justify-between items-center md:mt-16 mt-6">
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, y: 180 }}
+                    transition={{ duration: 1 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="bg-[#93C648]/30 rounded-xl xl:px-16 md:px-10 px-6 xl:py-16 md:py-16 py-8 lg:grid grid-cols-8 justify-between items-center md:mt-16 mt-6"
+                >
                     <div className="col-span-3 me-0 relative ms-6">
                         <Image
                             className="-mt- me-0"
@@ -204,7 +222,7 @@ const Features = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

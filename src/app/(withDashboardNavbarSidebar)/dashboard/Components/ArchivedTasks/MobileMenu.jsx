@@ -66,9 +66,9 @@ const MobileMenu = ({setOpenFilter,openFilter,openModal,setOpenModal}) => {
               </button>
 
 
-          <div>
+          {/* <div>
             <Toggler enabled={isTogglerEnabled} setEnabled={setIsTogglerEnabled}/>
-          </div>
+          </div> */}
         </div>
       </div>
     );

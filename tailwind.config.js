@@ -26,6 +26,10 @@ module.exports = {
                 darkParaColor: "",
                 inputBg: "#ECECEC"
             },
+            screens: {
+                'tablet': '1000px',
+            },
+            scrollbar: ['tablet'],
         },
     },
     plugins: [require("flowbite/plugin"), require('tailwind-scrollbar')],
