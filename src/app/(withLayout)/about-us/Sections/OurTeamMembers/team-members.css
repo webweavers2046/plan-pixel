@@ -8,13 +8,20 @@
     align-items: center;
     overflow: hidden;
     width: auto;
-    max-width: 32px; /** I'm animating max-width because width needs to be auto, and auto can't be animated **/
+    max-width: 32px;
+    /** I'm animating max-width because width needs to be auto, and auto can't be animated **/
     -webkit-transition: max-width 0.5s;
     transition: max-width 0.5s;
 }
 
 .social-button:hover {
     max-width: 300px;
+}
+
+.social-button:hover {
+    .text {
+        display: block;
+    }
 }
 
 .icon {
@@ -28,4 +35,5 @@
 .text {
     white-space: nowrap;
     padding-right: 15px;
+    display: none;
 }

@@ -39,7 +39,7 @@ const OurTeamMembers = () => {
         {
             name: "Mohammad Rahim",
             address: "Narayanganj, Dhaka",
-            designation: "Back-end Developer",
+            designation: "Full Stack Developer",
             image: rahim,
             email: "alamin102410@gmail.com",
             github: "https://github.com/Thejellyfish1024",
