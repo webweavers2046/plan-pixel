@@ -151,6 +151,21 @@ const Drawer = () => {
                                 </div>
                             </Link>
                         </li>
+                        <li>
+                            <Link
+                                className={`flex items-center  gap-x-4 ${
+                                    pathname == "/dashboard/add-feedback"
+                                        ? "active"
+                                        : "inactive"
+                                }  px-4 py-3 rounded-md cursor-pointer font-semibold`}
+                                href="/dashboard/add-feedback"
+                            >
+                                <div className="flex items-center">
+                                    <TbHelpSquareRoundedFilled className="text-[2.5rem] me-3 -ms-0.5" />
+                                    <p>Add Feedback</p>
+                                </div>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>
