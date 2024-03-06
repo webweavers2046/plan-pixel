@@ -35,7 +35,7 @@ const Header = () => {
                     transition={{ duration: 0.8 }}
                     className="mt-5 2xl:mb-12 mb-8 leading-relaxed md:text-base text-sm"
                 >
-                    Boost productivity with TaskTo., the ultimate task
+                    Boost productivity with Plan Pixel, the ultimate task
                     management solution. <br /> Effortlessly organize,
                     prioritize, and track tasks for seamless project success.{" "}
                     <br />{" "}
