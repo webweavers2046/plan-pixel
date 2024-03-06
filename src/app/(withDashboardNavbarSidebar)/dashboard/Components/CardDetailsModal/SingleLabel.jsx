@@ -3,7 +3,7 @@ import { MdOutlineModeEdit } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import useAxios from "@/hooks/useAxios";
 
-const SingleLabel = ({ label, card, index, taskRefetch}) => {
+const SingleLabel = ({ label, card, index, taskRefetch }) => {
 
     const [openEdit, setOpenEdit] = useState(false)
     const inputRef = useRef(null);
@@ -20,10 +20,10 @@ const SingleLabel = ({ label, card, index, taskRefetch}) => {
         // console.log(labelValue);
 
         const newLabel = {
-            index : index,
-            labelTitle : labelValue,
-            bgColor : label?.bgColor,
-            labelCheck : isChecked ? true : false
+            index: index,
+            labelTitle: labelValue,
+            bgColor: label?.bgColor,
+            labelCheck: isChecked ? true : false
         }
 
         axiosPublic.put(`/create-label/${card?._id}`, newLabel)
@@ -52,14 +52,14 @@ const SingleLabel = ({ label, card, index, taskRefetch}) => {
         const checked = e?.target?.checked;
         // console.log('value of checkbox :', e.target.checked);
 
-        axiosPublic.put(`/check-label/${card?._id}`, {checked, index})
-        .then(res => {
-            // console.log(res?.data);
-            if (res?.data?.modifiedCount) {
-                taskRefetch();
-                // inputRef.current.value = '';
-            }
-        })
+        axiosPublic.put(`/check-label/${card?._id}`, { checked, index })
+            .then(res => {
+                // console.log(res?.data);
+                if (res?.data?.modifiedCount) {
+                    taskRefetch();
+                    // inputRef.current.value = '';
+                }
+            })
     }
 
     return (
@@ -68,10 +68,11 @@ const SingleLabel = ({ label, card, index, taskRefetch}) => {
                 openEdit ?
                     <div>
                         <input type="text"
+                            style={{ backgroundColor: label?.bgColor }}
                             defaultValue={SingleLabel?.labelTitle}
                             ref={inputRef}
                             id="inputBox"
-                            className={`w-full h-8 text-sm border-none rounded-md bg-[${label?.bgColor}]`} />
+                            className={`w-full h-8 text-sm border-none rounded-md`} />
                         <div className="mt-2">
                             <button onClick={handleSave} className="ml-1 font-semibold text-xs w-fit h-fit px-3 py-1 bg-[#50B577] text-white rounded-md hover:bg-green-500 ">
                                 <FaCheck></FaCheck>
@@ -83,10 +84,12 @@ const SingleLabel = ({ label, card, index, taskRefetch}) => {
                     :
                     <div className="flex w-full items-center gap-2">
                         <input type="checkbox"
-                        defaultChecked={isChecked}
-                         onChange={handleCheckboxChange}
-                         className='rounded-sm' />
-                        <p className={`w-full py-2 pl-2 h-8 text-gray-700 text-sm border-none rounded-md bg-[${label?.bgColor}]`}>{SingleLabel?.labelTitle}</p>
+                            defaultChecked={isChecked}
+                            onChange={handleCheckboxChange}
+                            className='rounded-sm' />
+                        <p
+                            style={{ backgroundColor: label?.bgColor }}
+                            className={`w-full py-2 pl-2 h-8 text-gray-700 text-sm border-none rounded-md`}>{SingleLabel?.labelTitle}</p>
                         <button onClick={handleEditLabel}>
                             <MdOutlineModeEdit></MdOutlineModeEdit>
                         </button>

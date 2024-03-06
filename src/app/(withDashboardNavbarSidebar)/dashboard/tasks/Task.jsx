@@ -42,6 +42,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
     const [selectedTask, setSelectedTask] = useState({});
     const [reason, setReason] = useState("");
     const [isArchived, setIsArchived] = useState(false);
+    const [openDropDown, setOpenDropDown] = useState(false);
 
     const handleDeleteTask = (id) => {
         // console.log(id);
@@ -117,8 +118,8 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
         const updatedSelectedIds = isChecked
             ? [...existingSelectedTasks, newArchiveTask]
             : existingSelectedTasks.filter(
-                  (Etask) => Etask?.taskId !== task?._id
-              );
+                (Etask) => Etask?.taskId !== task?._id
+            );
 
         // Save the updated selected IDs to local storage
         localStorage.setItem(
@@ -149,15 +150,12 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
             id={task._id}
             onDragOver={(e) => draggingOver(e, task._id)}
             onDragStart={(e) => draggingStarted(e, task?._id, task?.status)}
-            className={` 
-      border 
-            task-container
+            className={` w-full border task-container
             mt-4 cursor-grabbing overflow-hidden relative transform transition-all bg-[#f6f7f8] 0.5s 
-            ease-in-out ${
-                clickBaseFilterTaskId === task?._id
+            ease-in-out ${clickBaseFilterTaskId === task?._id
                     ? "bg-[#E8F0FE]  shadow-lg "
                     : "bg-[#ffffff]"
-            }  rounded-md px-4 py-4 text-black 
+                }  rounded-md px-4 py-4 text-black 
             ${isDropped ? "transition-all linear 1s" : ""} 
             `}
         >
@@ -173,36 +171,48 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
 
             <div className=" flex items-center gap-2 relative justify-between">
                 <h2
-                    className={`font-semibold text-lg ${
-                        clickBaseFilterTaskId === task?._id
-                            ? "text-[#1558D6]"
-                            : ""
-                    }`}
+                    className={`font-semibold text-lg ${clickBaseFilterTaskId === task?._id
+                        ? "text-[#1558D6]"
+                        : ""
+                        }`}
                 >
                     {task.title}
                 </h2>
-                <div className="flex">
-                    <p className=" flex items-center gap-2 mr-3">
-                        <span className="text-sm pt-0.5">{task.priority}</span>
-                        {task?.priority == "High" ? (
-                            <MdDoubleArrow className="-rotate-90 text-red-500" />
-                        ) : task?.priority == "Low" ? (
-                            <MdDoubleArrow className="rotate-90 text-[#93C648]" />
-                        ) : (
-                            <FaEquals className="text-red-500" />
-                        )}
-                    </p>
+
+
+
+                <div className="flex ">
+                    <div className="flex">
+                        <p className=" flex items-center gap-2 mr-3">
+                            <span className="text-sm pt-0.5">{task.priority}</span>
+                            {task?.priority == "High" ? (
+                                <MdDoubleArrow className="-rotate-90 text-red-500" />
+                            ) : task?.priority == "Low" ? (
+                                <MdDoubleArrow className="rotate-90 text-[#93C648]" />
+                            ) : (
+                                <FaEquals className="text-red-500" />
+                            )}
+                        </p>
+                    </div>
+                    <button onClick={() => setOpenDropDown(!openDropDown)}>
+                        <BsThreeDotsVertical></BsThreeDotsVertical>
+                    </button>
+
                 </div>
-                <Dropdown
-                    className="block"
-                    id={task?._id}
-                    handleDeleteTask={handleDeleteTask}
-                    handleUpdate={handleUpdate}
-                    setIsOpen={setIsOpen}
-                    setSelectedTask={setSelectedTask}
-                    task={task}
-                ></Dropdown>
-                
+
+                {
+                    openDropDown &&
+                    <Dropdown
+                        className="block"
+                        id={task?._id}
+                        handleDeleteTask={handleDeleteTask}
+                        handleUpdate={handleUpdate}
+                        setIsOpen={setIsOpen}
+                        setSelectedTask={setSelectedTask}
+                        task={task}
+                    ></Dropdown>
+                }
+
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
             <div className="flex justify-between items-center">
@@ -215,36 +225,6 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
             </div>
             <hr className="mt-5 bg-black/15 h-[2px]" />
             <div className="flex items-center mt-4 justify-end">
-                {/* <div className="flex -space-x-4 rtl:space-x-reverse">
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member01Img}
-            alt=""
-          />
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member02Img}
-            alt=""
-          />
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member03Img}
-            alt=""
-          />
-          <Image
-            width={30}
-            height={30}
-            className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-            src={member04Img}
-            alt=""
-          />
-        </div> */}
                 {/* <p></p> */}
                 <button onClick={handleCard}>
                     <GrTasks className="text-xl opacity-40" />
