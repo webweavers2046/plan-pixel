@@ -66,7 +66,8 @@ const CardDetailsModal = () => {
                         <div className="flex gap-1">
                             {
                                 checkedLabels?.map(label => <p key={label}
-                                    className={`bg-[${label?.bgColor}] text-[10px] font-semibold px-3 py-2  rounded-md`}>
+                                    style={{backgroundColor: label?.bgColor}}
+                                    className={`text-[10px] font-semibold px-3 py-2  rounded-md`}>
                                     {label?.labelTitle}
                                 </p>
                                 )
