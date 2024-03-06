@@ -14,7 +14,6 @@ import Link from "next/link";
 
 const Articles = () => {
     const [seeMore, setSeeMore] = useState(4);
-    
     const [articles, setArticles] = useState([]);
     const articleAxios = useAxios();
     useEffect(() => {
@@ -111,17 +110,3 @@ const ArticleCard = ({ post, idx }) => {
     );
 };
 
-// Dummy articles data
-
-// const articlePosts = [
-//   // Post 1
-//   {
-//     id: 1,
-//     title: "The Future of Remote Work",
-//     description:
-//       "Explore effective strategies for prioritizing tasks to maximize productivity.",
-//     author: "John Doe",
-//     date: "2023-01-15",
-//     articleImage_url: articleImg1,
-//     avatar_url: avatarImg1,
-//   },

@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAxios from "@/hooks/useAxios";
 import useAllMeetings from "@/hooks/useAllMeetings";
+import { useState } from "react";
 
 const MeetingDetails = ({
   singleMeeting,
@@ -16,7 +17,9 @@ const MeetingDetails = ({
   refetch,
 }) => {
   const xios = useAxios();
-  // console.log(singleMeeting);
+  console.log(singleMeeting);
+  const [hello, setHello] = useState(true);
+
   // const { data, refetch } = useAllMeetings();
   const { activeWorkspaceMembers, activeWorkspace } = useGlobalContext();
   // console.log(activeWorkspace?.title);
@@ -100,7 +103,8 @@ const MeetingDetails = ({
             <div className="">
               {/* <p className="opacity-75 mb-0 text">Join</p> */}
               <a
-                className="text-lg font-semibold hover:text-green-400 transition duration-300"
+                className={`text-lg ${activeWorkspace?.title ===
+                  singleMeeting?.newMeeting?.activeWorkspace?.title && "text-green-400 font-bold md:text-2xl"}`}
                 target="_blank"
                 href={
                   activeWorkspace?.title ===
@@ -142,16 +146,19 @@ const MeetingDetails = ({
           </div>
         </div>
         <div className="pt-6 text-end">
-         
+          {activeWorkspace?.title ===
+          singleMeeting?.newMeeting?.activeWorkspace?.title ? (
             <button
-          
-            onClick={() => handleMeetingDelete(singleMeeting?._id)}
-            className="px-8 py-4 bg-rose-600 rounded-lg text-white"
-          >
-            Delete Meeting
-          </button>
-          
-
+              onClick={() => handleMeetingDelete(singleMeeting?._id)}
+              className="px-8 py-4 bg-rose-600 rounded-lg text-white"
+            >
+              Delete Meeting
+            </button>
+          ) : (
+            <button className="px-8 py-4 bg-gray-400 rounded-lg text-white">
+              Delete Meeting
+            </button>
+          )}
           
         </div>
       </div>

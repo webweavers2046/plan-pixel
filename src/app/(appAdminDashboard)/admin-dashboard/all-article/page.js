@@ -29,6 +29,7 @@ const page = () => {
                 <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:grid-cols-3 items-start justify-between pt-6 2xl:gap-6 gap-3">
                     {articles.map((post) => (
                         <ArticleCard
+                        
                             key={post._id}
                             post={post}
                             refetch={refetch}
@@ -89,7 +90,7 @@ const ArticleCard = ({ post, refetch }) => {
     };
 
     return (
-        <div className=" rounded-lg overflow-hidden border-2 bg-white mb-4 relative">
+        <div className="h-full rounded-lg overflow-hidden border-2 bg-white mb-1 relative">
             <button
                 onClick={() => handleDeleteArticle(_id)}
                 className=" bg-rose-600 border-4 border-white rounded-2xl p-1.5 flex items-center justify-center absolute -top-2 -right-2 text-2xl text-white"
@@ -138,7 +139,7 @@ const ArticleCard = ({ post, refetch }) => {
                 </p>
             </div>
             <div className="flex items-center justify-between">
-                <div className="px-6 flex items-center gap-3 pb-8">
+                <div className="px-6 flex items-center gap-3 pb-4">
                     <div className="w-10 h-10 border rounded-full flex items-center justify-center">
                         <Image
                             className="w-8 h-8 rounded-full object-cover"
