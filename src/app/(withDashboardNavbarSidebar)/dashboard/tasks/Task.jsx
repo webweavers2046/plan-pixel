@@ -194,7 +194,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                             )}
                         </p>
                     </div>
-                    <button onClick={() => setOpenDropDown(!openDropDown)}>
+                    <button onClick={() => setOpenDropDown(!openDropDown)} onBlur={()=> setOpenDropDown(false)}>
                         <BsThreeDotsVertical></BsThreeDotsVertical>
                     </button>
 

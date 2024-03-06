@@ -121,7 +121,7 @@ const Tasks = () => {
 
           <RiMenu2Line
             onClick={() => setIsArchiveMenu(!isArchiveMenuOpen)}
-            className="flex cursor-pointer md:hidden absolute right-2 z-50 "
+            className="flex cursor-pointer md:hidden absolute right-2 z-30 "
           />
 
           <div

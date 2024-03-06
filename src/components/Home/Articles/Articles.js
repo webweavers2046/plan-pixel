@@ -91,9 +91,9 @@ const ArticleCard = ({ post, idx }) => {
                         : description.slice(0, 80)}
                     <Link id={_id} href={`/article-details/${_id}`}>
                         {" "}
-                        <span className="cursor-pointer text-red-700">
+                        <span className="cursor-pointer text-red-700 font-semibold">
                             {" "}
-                            {description?.length > 80 ? "See More..." : ""}
+                            {description?.length > 80 ? "See more..." : ""}
                         </span>
                     </Link>
                 </p>
@@ -116,18 +116,3 @@ const ArticleCard = ({ post, idx }) => {
         </motion.div>
     );
 };
-
-// Dummy articles data
-
-// const articlePosts = [
-//   // Post 1
-//   {
-//     id: 1,
-//     title: "The Future of Remote Work",
-//     description:
-//       "Explore effective strategies for prioritizing tasks to maximize productivity.",
-//     author: "John Doe",
-//     date: "2023-01-15",
-//     articleImage_url: articleImg1,
-//     avatar_url: avatarImg1,
-//   },

@@ -9,6 +9,7 @@ import { IoClose, IoSettingsSharp } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { FaUsers } from "react-icons/fa6";
 import phoneIcon from "@/assets/icons/phone.png";
+import { TbHelpSquareRoundedFilled } from "react-icons/tb";
 
 const Drawer = () => {
     const pathname = usePathname();
