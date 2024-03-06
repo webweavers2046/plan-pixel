@@ -202,7 +202,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                     setSelectedTask={setSelectedTask}
                     task={task}
                 ></Dropdown>
-                {""}
+                
             </div>
             <p className="text-xs opacity-65 pt-4">{task.description}</p>
             <div className="flex justify-between items-center">
