@@ -83,7 +83,7 @@ const Navbar = () => {
                         </div>
                         <div className="hidden items-center gap-3 lg:block">
                             <Link
-                                className="rounded-sm bg-gradient-to-br from-[#93C648] to-[#50B577] px-6 py-3 text-base font-bold text-white"
+                                className="rounded-xl bg-gradient-to-br from-[#93C648] to-[#50B577] px-8 py-3.5 text-base font-bold text-white"
                                 href={`${user ? "/dashboard" : "/sign-in"}`}
                             >
                                 Get Started
