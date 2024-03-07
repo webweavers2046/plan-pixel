@@ -294,7 +294,7 @@ const DashboardSidebar = () => {
                             <div className=" absolute -top-5 p-2.5  text-xl bg-gradient-to-tr from-primary to-secondary rounded-full inline-block  text-white">
                                 <BsStars />
                             </div>
-                            <h3 className=" text-xl font-bold text-center pb-1">
+                            <h3 className=" md:text-lg font-bold text-center pb-1">
                                 Get Plan Pixel Premium Version
                             </h3>
                             <div className="">

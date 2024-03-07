@@ -7,10 +7,12 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const UpdateTask = ({ updateId, openUpdateModal, setOpenUpdateModal }) => {
+const UpdateTask = () => {
+  const {updateId,setUpdateId, openUpdateModal, setOpenUpdateModal } = useContext(AuthContext);
   const xios = useAxios();
   const { data: task } = useSingleTask(updateId);
-  console.log('update task', task);
+  // console.log(openUpdateModal);
+  // console.log('update task', task);
 
   const {
     register,
@@ -19,18 +21,21 @@ const UpdateTask = ({ updateId, openUpdateModal, setOpenUpdateModal }) => {
     reset,
   } = useForm();
   const { user } = useContext(AuthContext);
-  // console.log('user', user)
-  // console.log("updated task", task);
   const title = task?.title;
   const priority = task?.priority;
   const description = task?.description;
   const dates = task?.dates;
   const _id = task?._id;
-  console.log(priority);
+
 
 
   const onSubmit = async (data) => {
+
+    const {_id,title,description, dates, priority, status, ...rest} = task;
+    // console.log(rest);
+
     const updateTask = {
+      ...rest,
       title: data?.title,
       description: data?.description,
       dates: {
@@ -38,16 +43,15 @@ const UpdateTask = ({ updateId, openUpdateModal, setOpenUpdateModal }) => {
         dueDate: data?.dueDate,
       },
       priority: data?.priority,
-
-      userEmail: user?.email,
     };
     // console.log("updated task", updateTask);
 
-    await xios.put(`/updateTask/${_id}`, updateTask).then((res) => {
+    await xios.put(`/tasks/updateTask/${_id}`, updateTask).then((res) => {
       // console.log(res.data);
       if (res?.data?.modifiedCount > 0) {
         reset();
         setOpenUpdateModal(false)
+        setUpdateId("")
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -63,7 +67,7 @@ const UpdateTask = ({ updateId, openUpdateModal, setOpenUpdateModal }) => {
 
     <div
       className={`${openUpdateModal ? "block" : "hidden"}
-    bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-30 fixed lg:px-40 px-24 lg:py-24 py-16`}
+    bg-[#02001A33] backdrop-blur-[9px] text-black w-screen h-screen top-0 left-0 z-50 fixed lg:px-40 px-24 lg:py-24 py-16`}
     >
       <div className=" bg-[#FFFFFF] w-full h-full rounded-2xl overflow-auto p-6">
         <div className="flex justify-between items-center">
