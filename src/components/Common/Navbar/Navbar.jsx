@@ -83,7 +83,7 @@ const Navbar = () => {
                         </div>
                         <div className="hidden items-center gap-3 lg:block">
                             <Link
-                                className="rounded-xl bg-gradient-to-br from-[#93C648] to-[#50B577] px-8 py-3.5 text-base font-bold text-white"
+                                className="rounded-lg bg-gradient-to-br  from-[#93C648] to-[#50B577] px-7 py-[13px] text-base font-semibold text-white"
                                 href={`${user ? "/dashboard" : "/sign-in"}`}
                             >
                                 Get Started
@@ -128,9 +128,9 @@ const Navbar = () => {
                                         onClick={toggleMenu}
                                         className=" mb-5"
                                     >
-                                        <div className="space-y-2 ">
-                                            <div className="h-0.5 w-8 rotate-45 bg-black"></div>
-                                            <div className="h-0.5 w-8 -rotate-45 bg-black "></div>
+                                        <div className="relative w-10 h-10">
+                                            <div className="absolute top-1/2 left-1/2 w-full h-0.5 bg-black transform -translate-x-1/2 -translate-y-1/2 rotate-45"></div>
+                                            <div className="absolute top-1/2 left-1/2 w-full h-0.5 bg-black transform -translate-x-1/2 -translate-y-1/2 -rotate-45"></div>
                                         </div>
                                     </button>
                                 </div>

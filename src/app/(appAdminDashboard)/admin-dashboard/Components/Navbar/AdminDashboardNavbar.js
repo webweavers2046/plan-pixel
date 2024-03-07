@@ -51,7 +51,9 @@ const AdminDashboardNavbar = () => {
         <div className="flex relative justify-between items-center p-4 gap-6">
             {openNavbar && (
                 <div className="absolute w-full top-0 h-2/5  bg-indigo-950/10 backdrop-blur-sm z-50 xl:hidden block">
-                    <div className="w-80 bg-white h-full relative">button</div>
+                    <div className="w-80 bg-white text-white h-full relative">
+                        -
+                    </div>
                 </div>
             )}
             <DateTimeDisplay />
