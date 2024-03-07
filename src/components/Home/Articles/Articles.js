@@ -14,13 +14,6 @@ import Link from "next/link";
 
 const Articles = () => {
     const [seeMore, setSeeMore] = useState(4);
-    // const {
-    //     data: articles,
-    //     isLoading,
-    //     refetch,
-    // } = useDynamicData("articles", "/api/articles");
-    // console.log(articles);
-    // const {data: articles} = useGetArticle();
     const [articles, setArticles] = useState([]);
     const articleAxios = useAxios();
     useEffect(() => {
@@ -116,3 +109,4 @@ const ArticleCard = ({ post, idx }) => {
         </motion.div>
     );
 };
+
