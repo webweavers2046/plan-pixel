@@ -11,13 +11,13 @@ import { motion } from "framer-motion";
 
 const Header = () => {
     return (
-        <div className="pt-14 md:px-24 px-6 text-center border-b-2 banner-bg">
+        <div className="pt-8 lg:px-24 px-8 text-center border-b-2 banner-bg">
             <div className="flex flex-col items-center">
                 <motion.h4
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="py-2 px-5 bg-[#E9F5E3] rounded-xl mb-8 text-xs font-semibold"
+                    className="py-2 px-5 bg-[#E9F5E3] rounded-xl mb-4 text-xs font-semibold"
                 >
                     Version 2.4 Released
                 </motion.h4>
@@ -25,7 +25,7 @@ const Header = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="font-extrabold xl:text-7xl lg:text-6xl md:text-5xl text-2xl md:leading-[76px]"
+                    className="font-extrabold xl:text-6xl lg:text-5xl md:text-5xl text-2xl md:leading-[76px]"
                 >
                     Manage all your task <br /> activities in one place
                 </motion.h1>
@@ -33,12 +33,12 @@ const Header = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="mt-5 2xl:mb-12 mb-8 leading-relaxed md:text-base text-sm"
+                    className="mt-5 mb-8 leading-relaxed md:text-base text-sm"
                 >
                     Boost productivity with Plan Pixel, the ultimate task
-                    management solution. <br /> Effortlessly organize,
+                    management solution. Effortlessly organize,  <br />
                     prioritize, and track tasks for seamless project success.{" "}
-                    <br />{" "}
+                    {" "}
                     <span className="2xl:inline hidden">
                         {" "}
                         Try it now for streamlined efficiency!
@@ -53,7 +53,7 @@ const Header = () => {
                     Get Started Today
                 </motion.button>
             </div>
-            <div className="flex justify-center lg:gap-6 md:gap-4 gap-2 2xl:mt-20 mt-16">
+            <div className="flex justify-center lg:gap-6 md:gap-4 gap-2  mt-12">
                 <div className="flex items-center justify-center mb-8">
                     <Image
                         width={1000}

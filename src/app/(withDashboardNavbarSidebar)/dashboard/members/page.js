@@ -7,6 +7,7 @@ import TaskCard from "./Components/TaskCard";
 import useFilterTasks from "@/hooks/useFilterTasks";
 import { ablyContext } from "@/components/ably/AblyProvider";
 import { globalContext } from "@/Providers/globalContext";
+import Task from "../tasks/Task";
 
 const page = () => {
   
@@ -24,8 +25,8 @@ const page = () => {
 
 
   return (
-    <div className="flex flex-col xl:flex-row gap-5 mt-4">
-      <div className="xl:w-1/2 w-full h-full">
+    <div className="flex flex-col xl:flex-row  gap-5 mt-4">
+      <div className="xl:w-1/2 w-full  ">
         <TeamMembers />
       </div>
       <div className="shadow-sm rounded-xl p-6  overscroll-auto border min-h-[80vh] w-full">
@@ -72,6 +73,7 @@ const page = () => {
         <div className="grid grid-cols-3 gap-x-4 flex-wrap">
           {tasks?.map((task, idx) => (
             <TaskCard key={idx} task={task} />
+            // <Task task={task}></Task>
           ))}
         </div>
       </div>

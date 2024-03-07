@@ -38,7 +38,7 @@ const PlanDistribution = () => {
     }
 
     return (
-        <div className="rounded-xl p-6 border-2 border-primary bg-primary/5">
+        <div className="rounded-xl p-6 border-2 border-primary bg-primary/5 hidden md:block">
             <h1 className="text-2xl font-bold mb-4">User Plan Distribution</h1>
             <div>
                 <ChartComponent

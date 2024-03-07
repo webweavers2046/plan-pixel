@@ -33,15 +33,24 @@ const TimeTruck = () => {
     return (
         <div className="shadow-md rounded-xl p-6 min-h-80 border-2 border-tertiary bg-tertiary/5 ">
             <h1 className=" text-2xl font-bold p-4">Time Track</h1>
-            {tasks?.map((task) => (
-                <Task
-                    key={task?._id}
-                    title={task.title}
-                    done={task.done}
-                    onDone={() => handleDoneTask(task._id)}
-                    onDelete={() => handleDeleteTask(task._id)}
-                />
-            ))}
+            {
+                tasks?.length > 0
+                    ?
+                    <>
+                        {tasks?.map((task) => (
+                            <Task
+                                key={task?._id}
+                                title={task.title}
+                                done={task.done}
+                                onDone={() => handleDoneTask(task._id)}
+                                onDelete={() => handleDeleteTask(task._id)}
+                            />
+                        ))}
+                    </>
+                    :
+                    <p className=" p-4 font-semibold text-gray-600">There is no ongoing task right now</p>
+            }
+
         </div>
     );
 };
@@ -141,7 +150,6 @@ function formatTime(time) {
     const minutes = Math.floor((time / 1000 / 60) % 60);
     const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
 
-    return `${hours < 10 ? "0" + hours : hours}:${
-        minutes < 10 ? "0" + minutes : minutes
-    }:${seconds < 10 ? "0" + seconds : seconds}`;
+    return `${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes
+        }:${seconds < 10 ? "0" + seconds : seconds}`;
 }

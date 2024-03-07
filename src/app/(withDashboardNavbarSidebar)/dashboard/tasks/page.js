@@ -30,11 +30,11 @@ import doingIcon from "@/assets/icons/doingIcon.png";
 import { RiMenu2Line } from "react-icons/ri";
 import MobileMenu from "../Components/ArchivedTasks/MobileMenu";
 import { PiChartLineUp } from "react-icons/pi";
+import { AuthContext } from "@/Providers/AuthProviders";
 
 const Tasks = () => {
   // manage all your state here..
   const [openModal, setOpenModal] = useState(false);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [isArchiveMenuOpen, setIsArchiveMenu] = useState(false);
 
   const {
@@ -121,7 +121,7 @@ const Tasks = () => {
 
           <RiMenu2Line
             onClick={() => setIsArchiveMenu(!isArchiveMenuOpen)}
-            className="flex cursor-pointer md:hidden absolute right-2 z-50 "
+            className="flex cursor-pointer md:hidden absolute right-2 z-30 "
           />
 
           <div
@@ -130,18 +130,16 @@ const Tasks = () => {
             <div className=" flex  gap-2.5 text-[16px]">
               <div
                 onClick={() => setIsActive("all-tasks")}
-                className={`flex items-center gap-x-2 ${
-                  isActive === "all-tasks" ? "bg-white" : ""
-                } py-2.5 px-6 cursor-pointer rounded-md transition-all duration-300`}
+                className={`flex items-center gap-x-2 ${isActive === "all-tasks" ? "bg-white" : ""
+                  } py-2.5 px-6 cursor-pointer rounded-md transition-all duration-300`}
               >
                 <GoTasklist className="text-base" />
                 All tasks
               </div>
               <div
                 onClick={() => setIsActive("archived-tasks")}
-                className={`${
-                  isActive === "archived-tasks" ? "bg-white" : ""
-                } p-2 px-3 rounded-md flex items-center gap-1 cursor-pointer transition-all duration-300 hover:bg-white/80`}
+                className={`${isActive === "archived-tasks" ? "bg-white" : ""
+                  } p-2 px-3 rounded-md flex items-center gap-1 cursor-pointer transition-all duration-300 hover:bg-white/80`}
               >
                 <HiOutlineArchiveBox />
                 Archived tasks
@@ -151,18 +149,16 @@ const Tasks = () => {
             <div className="flex justify-end gap-1 lg:w-72 items-center">
               <div
                 onClick={() => setOpenFilter(!openFilter)}
-                className={`${
-                  openFilter ? "bg-white" : ""
-                } py-2.5 px-4 rounded-md flex items-center gap-3 cursor-pointer hover:bg-white/80`}
+                className={`${openFilter ? "bg-white" : ""
+                  } py-2.5 px-4 rounded-md flex items-center gap-3 cursor-pointer hover:bg-white/80`}
               >
                 <IoFilterOutline />
                 <span>Filter</span>
                 {/* Filtering modal */}
               </div>
               <div
-                className={`${
-                  openFilter ? "visible opacity-100" : "invisible opacity-0"
-                } transition-all duration-300`}
+                className={`${openFilter ? "visible opacity-100" : "invisible opacity-0"
+                  } transition-all duration-300`}
               >
                 {
                   <FilterModal
@@ -188,9 +184,8 @@ const Tasks = () => {
           {/* Mobile Menu */}
           {
             <div
-              className={`${
-                isArchiveMenuOpen ? "w-72 " : "opacity-0 w-0 invisible"
-              } duration-300 transition-all`}
+              className={`${isArchiveMenuOpen ? "w-72 " : "opacity-0 w-0 invisible"
+                } duration-300 transition-all`}
             >
               <MobileMenu
                 setOpenFilter={setOpenFilter}
@@ -202,11 +197,10 @@ const Tasks = () => {
           }
 
           <div
-            className={` ${
-              isActive === "all-tasks"
-                ? "translate-x-0 opacity-100 visible"
-                : "translate-x-[300px] opacity-0 invisible"
-            } transition-all duration-700 ease-liner`}
+            className={` ${isActive === "all-tasks"
+              ? "translate-x-0 opacity-100 visible"
+              : "translate-x-[300px] opacity-0 invisible"
+              } transition-all duration-700 ease-liner`}
           >
             {isActive === "all-tasks" && (
               <div
@@ -218,16 +212,13 @@ const Tasks = () => {
                   onDragOver={(e) => draggingOver(e)}
                   onDrop={(e) => dropOn(e)}
                   id="upcoming"
-                  className={`min-h-screen ${
-                    isDragging ? " relative" : ""
-                  } rounded-lg transition-all duration-1000 ${
-                    dragOverElementName === "upcoming" ? "bg-[#E3E4E6]" : ""
-                  }`}
+                  className={`min-h-screen ${isDragging ? " relative" : ""
+                    } rounded-lg transition-all duration-1000 ${dragOverElementName === "upcoming" ? "bg-[#E3E4E6]" : ""
+                    }`}
                 >
                   <div
-                    className={`bg-gray-300/20 text-black px-6 py-4 flex items-center mt-2 gap-4 rounded-md ${
-                      dragOverElementName == "upcoming" ? "bg-[white]" : ""
-                    }`}
+                    className={`bg-gray-300/20 text-black px-6 py-4 flex items-center mt-2 gap-4 rounded-md ${dragOverElementName == "upcoming" ? "bg-[white]" : ""
+                      }`}
                   >
                     <IoPlayForwardOutline className="text-2xl" />{" "}
                     <h2 className="">Upcoming</h2>
@@ -239,14 +230,7 @@ const Tasks = () => {
                         idx={idx}
                         key={task._id}
                         task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
                       />
-                      <UpdateTask
-                        task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
-                      ></UpdateTask>
                     </div>
                   ))}
                 </div>
@@ -256,16 +240,13 @@ const Tasks = () => {
                   onDragOver={(e) => draggingOver(e)}
                   onDrop={(e) => dropOn(e)}
                   id="to-do"
-                  className={`min-h-screen  ${
-                    dragOverElementName && "realative "
-                  } rounded-lg transition-all duration-1000 ${
-                    dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""
-                  }`}
+                  className={`min-h-screen  ${dragOverElementName && "realative "
+                    } rounded-lg transition-all duration-1000 ${dragOverElementName === "to-do" ? "bg-[#E3E4E6]" : ""
+                    }`}
                 >
                   <div
-                    className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${
-                      dragOverElementName == "to-do" ? "bg-[white]" : ""
-                    }`}
+                    className={`bg-gray-300/20 text-black px-6 mt-2 py-4 flex items-center gap-4 rounded-md ${dragOverElementName == "to-do" ? "bg-[white]" : ""
+                      }`}
                   >
                     <LuListTodo className="text-2xl" />{" "}
                     <h2 className="font-semibold">To-do</h2>
@@ -277,14 +258,7 @@ const Tasks = () => {
                         idx={idx}
                         key={task._id}
                         task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
                       />
-                      <UpdateTask
-                        task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
-                      ></UpdateTask>
                     </div>
                   ))}
                 </div>
@@ -294,14 +268,12 @@ const Tasks = () => {
                   onDragOver={(e) => draggingOver(e)}
                   onDrop={(e) => dropOn(e)}
                   id="doing"
-                  className={`min-h-screen  rounded-lg transition-all duration-1000 ${
-                    dragOverElementName === "doing" ? "bg-[#E3E4E6]" : ""
-                  }`}
+                  className={`min-h-screen  rounded-lg transition-all duration-1000 ${dragOverElementName === "doing" ? "bg-[#E3E4E6]" : ""
+                    }`}
                 >
                   <div
-                    className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${
-                      dragOverElementName == "doing" ? "bg-[white]" : ""
-                    }`}
+                    className={`bg-gray-300/20 mt-2 text-black px-6 py-4 flex items-center gap-4 rounded-md ${dragOverElementName == "doing" ? "bg-[white]" : ""
+                      }`}
                   >
                     <PiChartLineUp className="text-2xl" />{" "}
                     <h2 className="font-semibold">Doing</h2>
@@ -313,14 +285,7 @@ const Tasks = () => {
                         idx={idx}
                         key={task._id}
                         task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
                       />
-                      <UpdateTask
-                        task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
-                      ></UpdateTask>
                     </div>
                   ))}
                 </div>
@@ -330,14 +295,12 @@ const Tasks = () => {
                   onDragOver={(e) => draggingOver(e)}
                   onDrop={(e) => dropOn(e)}
                   id="done"
-                  className={` min-h-screen rounded-lg transition-all duration-1000 ${
-                    dragOverElementName === "done" ? "bg-[#E3E4E6]" : ""
-                  }`}
+                  className={` min-h-screen rounded-lg transition-all duration-1000 ${dragOverElementName === "done" ? "bg-[#E3E4E6]" : ""
+                    }`}
                 >
                   <div
-                    className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${
-                      dragOverElementName == "done" ? "bg-[white]" : ""
-                    }`}
+                    className={`bg-gray-300/20 text-black px-6 py-4 mt-2 flex items-center gap-4 rounded-md ${dragOverElementName == "done" ? "bg-[white]" : ""
+                      }`}
                   >
                     <BsCheck2Square className="text-2xl" />{" "}
                     <h2 className="font-semibold">Done</h2>
@@ -349,14 +312,7 @@ const Tasks = () => {
                         idx={idx}
                         key={task._id}
                         task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
                       />
-                      <UpdateTask
-                        task={task}
-                        openUpdateModal={openUpdateModal}
-                        setOpenUpdateModal={setOpenUpdateModal}
-                      ></UpdateTask>
                     </div>
                   ))}
                 </div>
@@ -364,11 +320,10 @@ const Tasks = () => {
             )}
           </div>
           <div
-            className={` ${
-              isActive === "archived-tasks"
-                ? "translate-x-0 opacity-100 visible"
-                : "translate-x-[300px] opacity-0 invisible"
-            } transition-all duration-700 ease-liner`}
+            className={` ${isActive === "archived-tasks"
+              ? "translate-x-0 opacity-100 visible"
+              : "translate-x-[300px] opacity-0 invisible"
+              } transition-all duration-700 ease-liner`}
           >
             {isActive === "archived-tasks" && <ArchivedTasks />}
           </div>
@@ -378,6 +333,7 @@ const Tasks = () => {
           ></TaskModal>
 
           <CardDetailsModal></CardDetailsModal>
+          <UpdateTask></UpdateTask>
           {/* {
                 isTogglerEnabled &&
                 <button onClick={ isActive === "all-tasks"? handleMultipleArchive:handleMultipleUnArchive} className="bg-rose-600 fixed bottom-8 right-2 z-50 text-white p-2 rounded-lg">{

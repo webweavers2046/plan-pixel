@@ -71,7 +71,7 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
             />
           </div>
           {/* Date */}
-          <div className="flex gap-x-2 justify-between ">
+          <div className="md:flex gap-x-2 justify-between ">
             <div className="w-full">
               <h4 className="text-sm font-semibold">
                 Date{" "}
@@ -154,7 +154,7 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
           {activeWorkspaceMembers.map((member) => (
             <>
               <div className="flex justify-between items-center py-2">
-                <div className="flex gap-x-5">
+                <div className="flex gap-2 md:gap-x-5 items-center">
                   <Image
                     width={30}
                     height={30}
@@ -172,7 +172,7 @@ const MeetingsForm = ({ setOpenModal, refetch, meeting }) => {
         </div>
         {/* submit button */}
         <div className="flex justify-end items-end mt-4">
-          <button className="bg-[#50B577] py-4 px-8 text-white rounded-lg">
+          <button className="bg-[#50B577] py-2 px-3 md:py-4 md:px-8 text-white rounded-lg">
             Set Meeting
           </button>
         </div>

@@ -1,10 +1,13 @@
+import { AuthContext } from "@/Providers/AuthProviders";
+import { useContext } from "react";
 
-export default function Dropdown({ setSelectedTask, task, handleUpdate, setIsOpen, handleDeleteTask, id }) {
+export default function Dropdown({ setSelectedTask, task, setIsOpen, handleDeleteTask , handleUpdate}) {
+  // const { setUpdateId, openUpdateModal, setOpenUpdateModal } = useContext(AuthContext);
 
   return (
     <div className="absolute top-10 border shadow-lg rounded-md z-40 w-56 text-right bg-white">
       <button
-        onClick={() => handleUpdate(id)}
+        onClick={() => handleUpdate()}
         className={`hover:bg-[#f7f7f7] hover:text-black text-gray-900 group flex w-full items-center  px-2 py-2 text-sm  border-b`}
       >
         <EditActiveIcon
@@ -27,7 +30,7 @@ export default function Dropdown({ setSelectedTask, task, handleUpdate, setIsOpe
         Archive
       </button>
       <button
-         onClick={() => handleDeleteTask(id)}
+        onClick={() => handleDeleteTask(id)}
         className={`hover:bg-[#f7f7f7] hover:text-black text-gray-900 group flex w-full items-center  px-2 py-2 text-sm`}
       >
         <DeleteActiveIcon

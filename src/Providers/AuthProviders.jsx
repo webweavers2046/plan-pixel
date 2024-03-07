@@ -23,6 +23,9 @@ const AuthProviders = ({ children }) => {
     // card details modal related 
     const [openCardDetails, setOpenCardDetails] = useState(false);
     const [cardId, setCardId] = useState("");
+    const [updateId, setUpdateId] = useState("");
+    const [openUpdateModal, setOpenUpdateModal] = useState(false);
+
 
 
     const provider = new GoogleAuthProvider();
@@ -68,7 +71,11 @@ const AuthProviders = ({ children }) => {
         openCardDetails,
         setOpenCardDetails,
         cardId,
-        setCardId
+        setCardId,
+        setUpdateId,
+        updateId,
+        openUpdateModal,
+        setOpenUpdateModal
     };
     return (
         <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
