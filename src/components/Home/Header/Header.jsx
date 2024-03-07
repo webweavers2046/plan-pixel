@@ -17,7 +17,7 @@ const Header = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="py-2 px-5 bg-[#E9F5E3] rounded-md mb-8 text-xs font-medium"
+                    className="py-2 px-5 bg-[#E9F5E3] rounded-xl mb-8 text-xs font-semibold"
                 >
                     Version 2.4 Released
                 </motion.h4>
@@ -27,29 +27,33 @@ const Header = () => {
                     transition={{ duration: 0.6 }}
                     className="font-extrabold xl:text-7xl lg:text-6xl md:text-5xl text-2xl md:leading-[76px]"
                 >
-                    Manage all of your <br /> task activities in one place
+                    Manage all your task <br /> activities in one place
                 </motion.h1>
                 <motion.p
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="mt-5 mb-12 leading-relaxed md:text-base text-sm"
+                    className="mt-5 2xl:mb-12 mb-8 leading-relaxed md:text-base text-sm"
                 >
-                    Boost productivity with TaskTo., the ultimate task
+                    Boost productivity with Plan Pixel, the ultimate task
                     management solution. <br /> Effortlessly organize,
                     prioritize, and track tasks for seamless project success.{" "}
-                    <br /> Try it now for streamlined efficiency!
+                    <br />{" "}
+                    <span className="2xl:inline hidden">
+                        {" "}
+                        Try it now for streamlined efficiency!
+                    </span>
                 </motion.p>
                 <motion.button
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
-                    className="py-4 px-8 rounded-md bg-gradient-to-br from-[#93C648] to-[#50B577] text-white font-bold"
+                    className="py-4 px-8 rounded-xl bg-gradient-to-br from-[#93C648] to-[#50B577] text-white font-bold"
                 >
                     Get Started Today
                 </motion.button>
             </div>
-            <div className="flex justify-center lg:gap-8 md:gap-4 gap-2 mt-20">
+            <div className="flex justify-center lg:gap-6 md:gap-4 gap-2 2xl:mt-20 mt-16">
                 <div className="flex items-center justify-center mb-8">
                     <Image
                         width={1000}

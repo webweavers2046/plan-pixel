@@ -4,12 +4,6 @@
 import Image from "next/image";
 import { IoSend } from "react-icons/io5";
 import emailjs from "@emailjs/browser";
-import member01Img from "@/assets/team-members/sami.jpg";
-import member02Img from "@/assets/team-members/mazharul.jpg";
-import member03Img from "@/assets/team-members/rahim.jpg";
-import member04Img from "@/assets/team-members/shakil.jpg";
-import member05Img from "@/assets/team-members/sajid.jpg";
-import member06Img from "@/assets/team-members/forhad.jpg";
 import { MdDelete } from "react-icons/md";
 
 import MassageIcon from "@/assets/dashboard/Message.svg";
@@ -28,7 +22,7 @@ const TeamMembers = () => {
 
   // console.log(selectedMember)
   return (
-    <div className="shadow-sm rounded-xl md:p-6 p-4 overscroll-auto border">
+    <div className="shadow-sm min-h-[80vh] rounded-xl md:p-6 p-4 overscroll-auto border">
       <h1 className=" text-2xl font-bold mb-2">Team Members</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 w-full">
       {activeWorkspaceMembers?.map((member, index) => (

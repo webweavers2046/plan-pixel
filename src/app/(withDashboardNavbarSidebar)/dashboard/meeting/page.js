@@ -35,7 +35,7 @@ const Meeting = () => {
   
 
   return (
-    <section className="lg:px-4 md:px-20">
+    <section className="lg:px-0 md:px-20">
       <div className="grid lg:grid-cols-7 lg:gap-x-6 gap-y-5 ">
         <div className="lg:col-span-2 border-2 rounded-lg p-6  ">
           <div className="min-h-screen-custom">

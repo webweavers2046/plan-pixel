@@ -24,8 +24,8 @@ const page = () => {
 
 
   return (
-    <div className="flex flex-col xl:flex-row gap-5 mt-4">
-      <div className="xl:w-1/2 w-full h-full">
+    <div className="flex flex-col xl:flex-row  gap-5 mt-4">
+      <div className="xl:w-1/2 w-full  ">
         <TeamMembers />
       </div>
       <div className="shadow-sm rounded-xl p-6  overscroll-auto border min-h-[80vh] w-full">
