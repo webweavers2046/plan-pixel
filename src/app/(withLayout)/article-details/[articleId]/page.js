@@ -26,7 +26,7 @@ const page = ({ params }) => {
   );
   // console.log(singleArticle);
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto mt-5">
 
       <div className="flex items-center gap-x-4 pl-4 mb-5">
         <Image

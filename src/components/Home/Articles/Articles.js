@@ -84,9 +84,9 @@ const ArticleCard = ({ post, idx }) => {
                         : description.slice(0, 80)}
                     <Link id={_id} href={`/article-details/${_id}`}>
                         {" "}
-                        <span className="cursor-pointer text-red-700">
+                        <span className="cursor-pointer text-red-700 font-semibold">
                             {" "}
-                            {description?.length > 80 ? "See More..." : ""}
+                            {description?.length > 80 ? "See more..." : ""}
                         </span>
                     </Link>
                 </p>
