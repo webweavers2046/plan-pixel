@@ -39,7 +39,7 @@ const TaskCard = ({ task }) => {
 
             </div>
             <hr className="mt-5 bg-black/15 h-[2px]" />
-            <div className="flex items-center justify-between mt-4">
+            {/* <div className="flex items-center justify-between mt-4">
                 <div className="flex -space-x-4 rtl:space-x-reverse">
                     {
                         activeWorkspaceMembers.map(member => (
@@ -55,7 +55,7 @@ const TaskCard = ({ task }) => {
                     
                 </div>
                 <BiSolidMessageSquareDetail className="text-xl opacity-40" />
-            </div>
+            </div> */}
         </div>
     );
 };

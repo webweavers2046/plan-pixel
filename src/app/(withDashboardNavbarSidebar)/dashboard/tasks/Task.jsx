@@ -21,8 +21,8 @@ import AreYouSureModal from "@/components/Common/CommonModal/AreYouSureModal";
 import Dropdown from "@/components/Common/CommonModal/Dropdown";
 import toast from "react-hot-toast";
 
-const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
-    const { openCardDetails, setOpenCardDetails, cardId, setCardId } =
+const Task = ({ task }) => {
+    const { openCardDetails, setOpenCardDetails, cardId, setCardId , setUpdateId, openUpdateModal, setOpenUpdateModal} =
         useContext(AuthContext);
 
     // manage all you state here
@@ -70,15 +70,17 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
         });
     };
 
-    const handleUpdate = (id) => {
-        setOpenUpdateModal(!openUpdateModal);
-    };
-
     const handleCard = () => {
         setCardId(task?._id);
         setOpenCardDetails(!openCardDetails);
     };
 
+    const handleUpdate = () => {
+        // console.log("clicked");
+        setUpdateId(task?._id);
+        setOpenUpdateModal(!openUpdateModal);
+
+    }
     // handle Archive (this funciton will archive the task)
 
     const handleArchive = async () => {
@@ -194,7 +196,7 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                             )}
                         </p>
                     </div>
-                    <button onClick={() => setOpenDropDown(!openDropDown)} onBlur={()=> setOpenDropDown(false)}>
+                    <button onClick={() => setOpenDropDown(!openDropDown)}>
                         <BsThreeDotsVertical></BsThreeDotsVertical>
                     </button>
 
@@ -205,8 +207,8 @@ const Task = ({ setUpdateId, task, openUpdateModal, setOpenUpdateModal }) => {
                     <Dropdown
                         className="block"
                         id={task?._id}
+                        handleUpdate ={handleUpdate}
                         handleDeleteTask={handleDeleteTask}
-                        handleUpdate={handleUpdate}
                         setIsOpen={setIsOpen}
                         setSelectedTask={setSelectedTask}
                         task={task}
