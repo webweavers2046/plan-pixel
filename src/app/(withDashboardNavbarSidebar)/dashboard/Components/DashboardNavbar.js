@@ -39,6 +39,7 @@ const DashboardNavbar = () => {
   const [isCreateWokspace, setIsCreateWorkSpace] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
   const xios = useAxios();
   const { fetchLatestData } = useContext(globalContext);
   // const [notification, setNotification] = useState(true); // Keep this for the original notification
@@ -169,29 +170,25 @@ const DashboardNavbar = () => {
 
   return (
     <div className="flex relative justify-between items-center lg:gap-6 md:gap-4 gap-3">
-      <div onClick={handleDropdownClick} className="py-2 relative rounded-lg">
+      <div onClick={handleDropdownClick} className={`py-2 relative rounded-lg ${openSearch ? "opacity-0" : "opacity-100"}`}>
         <div
           onClick={() => setDropdownOpen(!isDropdownOpen)}
-          className="text-start flex gap-2 items-center px-4 py-3 rounded-lg border-2 "
+          className="text-start flex gap-2 items-center md:px-4 md:py-3 p-2 rounded-lg border-2 "
         >
           <p className="cursor-pointer opacity-55 text-[15px] md:w-24 w-12 h-5 overflow-hidden">
-            {/* {activeWorkspace?.title?.length > 12
-                            ? activeWorkspace?.title?.slice(0, 11) + ".."
-                            : activeWorkspace?.title || "Workspace"} */}
+
             {activeWorkspace?.title || "Workspace"}
           </p>
           <IoIosArrowDown
-            className={` cursor-pointer ${
-              isDropdownOpen ? "rotate-180" : "rotate-0"
-            } transition-all duration-300`}
+            className={` cursor-pointer ${isDropdownOpen ? "rotate-180" : "rotate-0"
+              } transition-all duration-300`}
           />
         </div>
 
         <div
           ref={workspaceListRef}
-          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${
-            isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
-          } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
+          className={`  transition-all duration-200 bg-[white] min-h-36 grid items-end ${isDropdownOpen ? "visible opacity-100" : "invisible opacity-0"
+            } absolute z-50 shadow-lg list-none  w-60 overflow-hidden  py-4 rounded-lg mt-4`}
         >
           {userWokspaceList?.map((workspace, index) => {
             return (
@@ -207,9 +204,8 @@ const DashboardNavbar = () => {
                 <span className="block border border-b-1 w-full -bottom-0 absolute border-[#8080801a]"></span>
                 <span
                   onClick={() => setWillAddMember(!WillAddMember)}
-                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${
-                    isHovered === index ? "opacity-100" : ""
-                  }`}
+                  className={`ml-auto z-50 w-4 h-4 items-center justify-center border p-1 border-black flex rounded-full transition-all duration-300 opacity-0 ${isHovered === index ? "opacity-100" : ""
+                    }`}
                 >
                   +
                 </span>
@@ -239,32 +235,26 @@ const DashboardNavbar = () => {
             </div>
           )}
         </div>
-        {/* Add member modal */}
+
         <AddMemberModal
           handleAddMember={handleAddMember}
           WillAddMember={WillAddMember}
           setWillAddMember={setWillAddMember}
         />
       </div>
-      <div className="grow md:ml-4 ml-2">
-        {/* <div className="absolute ml-[20px] mt-[17px]">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 19 19"
-                        fill="none"
-                    >
-                        <path
-                            d="M18 18L13.9865 13.9795M16.2105 8.60526C16.2105 12.8055 12.8055 16.2105 8.60526 16.2105C4.40499 16.2105 1 12.8055 1 8.60526C1 4.40499 4.40499 1 8.60526 1C12.8055 1 16.2105 4.40499 16.2105 8.60526Z"
-                            stroke="black"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                </div> */}
-        {/* search component */}
+      <div className="grow md:ml-4 ml-2 hidden md:block">
         <Search></Search>
+      </div>
+      <div className="md:hidden flex justify-end items-center gap-2 w-[80%] absolute">
+        <div className={` grow md:ml-4 ml-2 ${openSearch ? 'block' : 'hidden'}`}>
+          <Search></Search>
+        </div>
+        {
+          openSearch ?
+            <button onClick={() => setOpenSearch(false)} className="font-bold text-lg text-red-500">X</button>
+            :
+            <button onClick={() => setOpenSearch(true)} className="font-bold text-lg text-green-400">Q</button>
+        }
       </div>
 
       {/* ==================== Notification ===================== */}
@@ -304,9 +294,8 @@ const DashboardNavbar = () => {
 
         {/* Modal Of Notification */}
         <div
-          className={`${
-            !isOpen && "hidden"
-          } w-96 absolute top-16 right-0 z-40 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}
+          className={`${!isOpen && "hidden"
+            } w-96 absolute top-16 right-0 z-40 rounded-xl grid grid-cols-1 gap-y-3 shadow-lg bg-gray-100 py-2 px-2`}
         >
           {yourNotifications?.length > 0 ? (
             yourNotifications?.map((notification) => (
