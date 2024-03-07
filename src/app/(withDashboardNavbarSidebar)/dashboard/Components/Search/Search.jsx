@@ -62,9 +62,9 @@ const Search = () => {
                                 </div>
                             </div>
                             :
-                            <div className="w-full max-h-96 overflow-auto mt-2 rounded-lg absolute bg-[#FFFFFFFF] border shadow-lg text-gray-700 min-h-48 flex flex-col justify-center items-center">
+                            <div className="w-full max-h-96 overflow-auto mt-2 rounded-lg absolute bg-[#FFFFFFFF] border shadow-lg text-gray-700 min-h-48 flex flex-col justify-center items-center px-3 md:px-0">
                                 <Image
-                                    className=" opacity-50 mx-auto w-32 h-32   "
+                                    className=" opacity-50 mx-auto md:w-32 md:h-32 w-16 h-16  "
                                     src={"https://i.ibb.co/mtGpTfj/icons8-search-250.png"}
                                     height={100}
                                     width={100}
