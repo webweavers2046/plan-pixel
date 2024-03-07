@@ -3,15 +3,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import emailjs from "@emailjs/browser";
+import toast from "react-hot-toast";
 
 const MessageForm = () => {
     const [buttonLoading, setButtonLoading] = useState(false);
+    const [isMessageSend, setIsMessageSend] = useState(false);
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
     } = useForm();
+
     const serviceId = "service_2whe5f8";
     const publicKey = "0vMK8CqEQPg9bKP9B";
     const templateId = "template_xpon2ll";
@@ -34,7 +37,11 @@ const MessageForm = () => {
                     duration: 2000,
                     // className: "mt-32",
                 });
-                setButtonLoading(false);
+                setIsMessageSend(true);
+                toast.success("Message sended");
+                setTimeout(() => {
+                    setIsMessageSend(false);
+                }, 4000);
             })
             .catch((error) => {
                 console.error("Error sending email:", error);
@@ -112,7 +119,13 @@ const MessageForm = () => {
                                 </div>
                             </div>
                         ) : (
-                            <span> Submit</span>
+                            <span>
+                                {isMessageSend ? (
+                                    <span>Message Sended</span>
+                                ) : (
+                                    <span>Submit</span>
+                                )}
+                            </span>
                         )}
                     </button>
                 </div>
