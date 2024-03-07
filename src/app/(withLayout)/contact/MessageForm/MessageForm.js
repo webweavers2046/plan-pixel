@@ -37,7 +37,7 @@ const MessageForm = () => {
                     duration: 2000,
                     // className: "mt-32",
                 });
-                setIsMessageSend(true);
+                setButtonLoading(true);
                 toast.success("Message sended");
                 setTimeout(() => {
                     setIsMessageSend(false);

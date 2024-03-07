@@ -14,13 +14,6 @@ import Link from "next/link";
 
 const Articles = () => {
     const [seeMore, setSeeMore] = useState(4);
-    // const {
-    //     data: articles,
-    //     isLoading,
-    //     refetch,
-    // } = useDynamicData("articles", "/api/articles");
-    // console.log(articles);
-    // const {data: articles} = useGetArticle();
     const [articles, setArticles] = useState([]);
     const articleAxios = useAxios();
     useEffect(() => {
@@ -36,7 +29,7 @@ const Articles = () => {
             <SectionTitle title="Latest Articles" />
 
             {/* className="flex flex-wrap justify-center gap-6" */}
-            <div className="grid grid-cols-4 justify-between gap-6 ">
+            <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 justify-between gap-6 ">
                 {sortedArticles.slice(0, seeMore).map((post, idx) => (
                     <ArticleCard key={post.id} post={post} idx={idx} />
                 ))}
