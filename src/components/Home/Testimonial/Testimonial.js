@@ -1,6 +1,11 @@
 "use client";
 
 import avatar from "@/assets/person/avatar.jpg";
+import avatar2 from "@/assets/team-members/mazharul.jpg";
+import avatar3 from "@/assets/team-members/rahim.jpg";
+import avatar4 from "@/assets/team-members/sajid.jpg";
+import avatar5 from "@/assets/team-members/sami.jpg";
+import avatar6 from "@/assets/team-members/shakil.jpg";
 import Image from "next/image";
 import bgPattern from "@/assets/pattern.png";
 import { MdOutlineFormatQuote } from "react-icons/md";
@@ -47,16 +52,16 @@ const Testimonial = () => {
                                         <div className="">
                                             <Image
                                                 className="w-10 h-10 rounded-full"
-                                                src={avatar}
+                                                src={avatar2}
                                                 alt="avatar"
                                             ></Image>
                                         </div>
                                         <div className="">
                                             <h6 className="font-semibold 2xl:text-base text-sm">
-                                                Johnathan Winters
+                                                Mazharul Islam
                                             </h6>
                                             <p className="opacity-45 text-xs">
-                                                Project Manager
+                                                02 Feb, 2024
                                             </p>
                                         </div>
                                     </div>
@@ -81,16 +86,16 @@ const Testimonial = () => {
                                         <div className="">
                                             <Image
                                                 className="w-10 h-10 rounded-full"
-                                                src={avatar}
+                                                src={avatar3}
                                                 alt="avatar"
                                             ></Image>
                                         </div>
                                         <div className="">
                                             <h6 className="font-semibold 2xl:text-base text-sm">
-                                                Johnathan Winters
+                                                Sajid Ahmmed
                                             </h6>
                                             <p className="opacity-45 text-xs">
-                                                Project Manager
+                                                06 Feb, 2024
                                             </p>
                                         </div>
                                     </div>
@@ -117,16 +122,16 @@ const Testimonial = () => {
                                     <div className="">
                                         <Image
                                             className="w-10 h-10 rounded-full"
-                                            src={avatar}
+                                            src={avatar4}
                                             alt="avatar"
                                         ></Image>
                                     </div>
                                     <div className="">
                                         <h6 className="font-semibold 2xl:text-base text-sm">
-                                            Johnathan Winters
+                                            Mohammad Rahim
                                         </h6>
                                         <p className="opacity-45 text-xs">
-                                            Project Manager
+                                            02 Jan, 2024
                                         </p>
                                     </div>
                                 </div>
@@ -148,16 +153,16 @@ const Testimonial = () => {
                                     <div className="">
                                         <Image
                                             className="w-10 h-10 rounded-full"
-                                            src={avatar}
+                                            src={avatar5}
                                             alt="avatar"
                                         ></Image>
                                     </div>
                                     <div className="">
                                         <h6 className="font-semibold 2xl:text-base text-sm">
-                                            Johnathan Winters
+                                            Mohammad Sami
                                         </h6>
                                         <p className="opacity-45 text-xs">
-                                            Project Manager
+                                            22 Apr, 2024
                                         </p>
                                     </div>
                                 </div>
@@ -190,7 +195,7 @@ const Testimonial = () => {
                                             Johnathan Winters
                                         </h6>
                                         <p className="opacity-45 text-xs">
-                                            Project Manager
+                                            02 Feb, 2024
                                         </p>
                                     </div>
                                 </div>
@@ -212,16 +217,16 @@ const Testimonial = () => {
                                     <div className="">
                                         <Image
                                             className="w-10 h-10 rounded-full"
-                                            src={avatar}
+                                            src={avatar6}
                                             alt="avatar"
                                         ></Image>
                                     </div>
                                     <div className="">
                                         <h6 className="font-semibold 2xl:text-base text-sm">
-                                            Johnathan Winters
+                                            Shikilu Winters
                                         </h6>
                                         <p className="opacity-45 text-xs">
-                                            Project Manager
+                                            02 Feb, 2024
                                         </p>
                                     </div>
                                 </div>
