@@ -31,7 +31,7 @@ const Articles = () => {
             {/* className="flex flex-wrap justify-center gap-6" */}
             <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 justify-between gap-6 ">
                 {sortedArticles.slice(0, seeMore).map((post, idx) => (
-                    <ArticleCard key={post.id} post={post} idx={idx} />
+                    <ArticleCard key={post?.id} post={post} idx={idx} />
                 ))}
             </div>
             <div

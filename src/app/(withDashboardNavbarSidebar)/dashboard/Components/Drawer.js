@@ -16,7 +16,7 @@ const Drawer = () => {
     return (
         <div className="w-full">
             <div
-                className={`   h-screen block xl:hidden border-r-2 relative z-30`}
+                className={` h-screen block xl:hidden border-r-2 relative z-30`}
             >
                 <div className="py-4 px-3">
                     <div className="ms-3 mt-1">
