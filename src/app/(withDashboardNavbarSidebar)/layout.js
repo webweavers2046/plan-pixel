@@ -8,11 +8,9 @@ import TanstackProvider from "@/Providers/TanstackProvider";
 import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
 import Drawer from "./dashboard/Components/Drawer";
-import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({ children }) {
     const [openSidebar, setOpenSidebar] = useState(false);
-    const pathname = usePathname();
 
     const toggleSidebar = () => {
         setOpenSidebar(!openSidebar);
@@ -62,7 +60,6 @@ export default function DashboardLayout({ children }) {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="w-full bg-red-500 xl:col-span-10 col-span-12">kire</div> */}
                 </div>
             </PrivateRoute>
         </section>

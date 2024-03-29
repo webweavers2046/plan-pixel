@@ -272,12 +272,6 @@ const GlobalContext = ({ children }) => {
 
 
 
-
-
-
-
-
-
     // Notification Informations
 
     const [notifications, setNotifications] = useState([]);
@@ -297,27 +291,16 @@ const GlobalContext = ({ children }) => {
             .then(res => res.json())
             .then((data) => {
                 setActiveWorkspaceReal(data);
-                console.log(data);
+                // console.log(data);
             })
     }, [user])
 
     useEffect(() => {
-        // fetch(
-        //     `https://plan-pixel-backend.vercel.app/api/notifications/${activeWorkspaceReal?._id}`
-        // )
-        // .then(res=> res.json())
-        // .then((data) => {
-        //     setNotifications(data)
-        //     console.log(data);
-        // })
         xios?.get(`/api/notifications/${activeWorkspaceReal?._id}`)
             .then(res => { 
                 // console.log(res?.data)
              })
     }, [activeWorkspaceReal])
-    // console.log(notifications);
-    // console.log(activeWorkspaceReal);
-    // console.log(activeWorkspaceTasks);
     const data = {
         activeWorkspace,
         setActiveWorkspace,
