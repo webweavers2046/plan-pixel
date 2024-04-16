@@ -5,7 +5,7 @@ import Link from "next/link";
 import logo from "@/assets/Logo.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/Providers/AuthProviders";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,11 +45,10 @@ const Navbar = () => {
                                     {navLinks.map((link, idx) => (
                                         <Link
                                             href={link.path}
-                                            className={`px-3 text-base font-medium ${
-                                                pathname == link.path
-                                                    ? "activeNav"
-                                                    : "inactiveNav"
-                                            } `}
+                                            className={`px-3 text-base font-medium ${pathname == link.path
+                                                ? "activeNav"
+                                                : "inactiveNav"
+                                                } `}
                                             key={idx}
                                         >
                                             {link.route}
@@ -58,25 +57,23 @@ const Navbar = () => {
                                     {isAdmin ? (
                                         <Link
                                             href={"/admin-dashboard"}
-                                            className={` ${
-                                                pathname == "/admin-dashboard"
-                                                    ? "activeNav"
-                                                    : "inactiveNav"
-                                            } px-3 text-base font-medium`}
+                                            className={` ${pathname == "/admin-dashboard"
+                                                ? "activeNav"
+                                                : "inactiveNav"
+                                                } px-3 text-base font-medium`}
                                         >
                                             Dashboard
                                         </Link>
                                     ) : (
-                                        <Link
+                                        <a
                                             href={"/dashboard"}
-                                            className={` ${
-                                                pathname == "/dashboard"
-                                                    ? "activeNav"
-                                                    : "inactiveNav"
-                                            } px-3 text-base font-medium`}
+                                            className={` ${pathname == "/dashboard"
+                                                ? "activeNav"
+                                                : "inactiveNav"
+                                                } px-3 text-base font-medium`}
                                         >
                                             Dashboard
-                                        </Link>
+                                        </a>
                                     )}
                                 </ul>
                             </nav>
@@ -104,9 +101,8 @@ const Navbar = () => {
                     </div>
                     {/* for mobile sidebar  */}
                     <div
-                        className={`fixed z-40 top-0 right-0 h-screen overflow-hidden ${
-                            isMenuOpen ? "w-full" : "w-0"
-                        } transition-all duration-300`}
+                        className={`fixed z-40 top-0 right-0 h-screen overflow-hidden ${isMenuOpen ? "w-full" : "w-0"
+                            } transition-all duration-300`}
                     >
                         <div
                             className="absolute right-0 top-0 h-full w-full bg-black bg-opacity-50"
