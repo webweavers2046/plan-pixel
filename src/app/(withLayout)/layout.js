@@ -16,12 +16,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en">
-            <body className={`${lato.className}`}>
-                <Navbar />
-                {children}
-                <Footer />
-            </body>
-        </html>
+        // <html lang="en">
+        //     <body className={`${lato.className}`}>
+        //         <Navbar />
+        //         {children}
+        //         <Footer />
+        //     </body>
+        // </html>
+        <>
+            <Navbar />
+            {children}
+            <Footer />
+        </>
     );
 }
