@@ -65,7 +65,7 @@ const Navbar = () => {
                                             Dashboard
                                         </Link>
                                     ) : (
-                                        <a
+                                        <Link
                                             href={"/dashboard"}
                                             className={` ${pathname == "/dashboard"
                                                 ? "activeNav"
@@ -73,7 +73,7 @@ const Navbar = () => {
                                                 } px-3 text-base font-medium`}
                                         >
                                             Dashboard
-                                        </a>
+                                        </Link>
                                     )}
                                 </ul>
                             </nav>
